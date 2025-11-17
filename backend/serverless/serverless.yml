@@ -1,0 +1,64 @@
+# prettier-ignore
+org: ${file(./config.yml):aws.org, 'default-org'}
+# "service" is the name of this project. This will also be added to your AWS resource names.
+service: mojjen
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: eu-north-1
+  iam:
+    role: ${file(./config.yml):aws.role}
+
+functions:
+  # Auth 
+  # Products
+  PostMenuItem:
+    handler: functions/menu/PostMenuItem/index.handler
+    events:
+      - httpApi:
+          path: /api/menu
+          method: POST
+          
+resources:
+  Resources:
+    MojjenTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: mojjen-table
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: PK
+            AttributeType: S
+          - AttributeName: SK
+            AttributeType: S
+          - AttributeName: category #GSI1PK
+            AttributeType: S
+          - AttributeName: id #GSI1SK
+            AttributeType: S
+          - AttributeName: statusCategory #GSI2PK
+            AttributeType: S
+          - AttributeName: status #GSI2SK
+            AttributeType: S
+        KeySchema:
+          - AttributeName: PK
+            KeyType: HASH
+          - AttributeName: SK
+            KeyType: RANGE
+        GlobalSecondaryIndexes:
+          - IndexName: GSI1
+            KeySchema:
+              - AttributeName: category
+                KeyType: HASH
+              - AttributeName: id
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
+          - IndexName: GSI2
+            KeySchema:
+              - AttributeName: statusCategory
+                KeyType: HASH
+              - AttributeName: status
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
