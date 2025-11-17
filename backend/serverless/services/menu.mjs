@@ -51,14 +51,14 @@ export const postProductItem = async () => {
     TableName: 'mojjen-table',
     Item: {
       PK: { S: 'PRODUCT' },
-      SK: { S: 'PRODUCT#prod124' },
+      SK: { S: 'PRODUCT#prod111' },
       attribute: {
         M: {
-          name: { S: 'Korvbröd' },
-          id: { S: 'prod124' },
+          name: { S: 'Kôrv' },
+          id: { S: 'prod111' },
           category: { S: 'products' },
           price: { N: '10' },
-          summary: { S: 'Mjukt och saftigt korvbröd' },
+          summary: { S: 'Det är bara körv' },
           img: { S: 'www.korvbrod.se' },
           allergens: {
             L: [{ S: 'gluten' }, { S: 'ägg' }, { S: 'mjölk' }],
