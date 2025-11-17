@@ -11,15 +11,21 @@ provider:
     role: ${file(./config.yml):aws.role}
 
 functions:
-  # Auth 
+  # Auth
   # Products
+  GetMenu:
+    handler: functions/menu/GetMenu/index.handler
+    events:
+      - httpApi:
+          path: /api/menu
+          method: GET
   PostMenuItem:
     handler: functions/menu/PostMenuItem/index.handler
     events:
       - httpApi:
           path: /api/menu
           method: POST
-          
+
 resources:
   Resources:
     MojjenTable:
