@@ -1,5 +1,5 @@
-import './index.css';
+import './index.scss';
 
 export const HomePage = () => {
-	return <div>Homepage</div>;
+  return <div>Homepage</div>;
 };

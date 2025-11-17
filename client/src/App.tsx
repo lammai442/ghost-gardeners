@@ -1,4 +1,4 @@
-import './App.css';
+import './App.scss';
 import { router } from '@mojjen/router';
 import { RouterProvider } from 'react-router-dom';
 
