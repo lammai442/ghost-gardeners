@@ -1,9 +1,6 @@
 @use '../../../../src/variables.scss' as *;
 
 .product-card {
-	flex: 1 1 calc(25% - 16px);
-	min-width: 120px;
-	max-width: 120px;
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;
@@ -12,19 +9,25 @@
 		width: 100%;
 		aspect-ratio: 1;
 		background-color: $color-cucumber;
-		display: grid;
-		place-content: center;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 		position: relative;
 
+		.product-card__img {
+			width: 50%;
+		}
+
 		.product-card__add-btn {
-			padding: 1rem 2rem;
+			padding: 0.6rem 1.2rem;
 			position: absolute;
 			right: 0;
 			top: 0;
 			background-color: $color-black;
 			color: $color-light-beige;
 			border-radius: 5px 0 0 15px;
-			font-size: 2rem;
+			font-size: 1.2rem;
+			border: none;
 		}
 	}
 
