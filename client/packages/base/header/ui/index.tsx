@@ -1,4 +1,9 @@
 import './index.scss';
+/**
+ * Author: StefanMogren
+ * Created base header component
+ *
+ */
 
 export const HeaderComp = () => {
 	return (
