@@ -1,0 +1,15 @@
+@use '../../../../src/variables.scss' as *;
+
+.main {
+	padding: 1rem;
+	background-color: $color-light-beige;
+}
+
+.product-list {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	// grid-template-columns: repeat(auto-fit, minmax(150px, 152px));
+	gap: 1rem;
+}
