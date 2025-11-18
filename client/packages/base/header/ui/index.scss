@@ -1,0 +1,11 @@
+.header {
+	max-width: 100%;
+	padding: 3rem 1rem;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.header__logo-img {
+	vertical-align: middle;
+}
