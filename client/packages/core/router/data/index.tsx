@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { HomePage } from '@mojjen/homepage';
 import { AuthPage } from '@mojjen/authpage';
 import { UnderConstructionPage } from '@mojjen/under-construction-page';
+import { ErrorPage } from '@mojjen/error-page';
 
 export const router = createBrowserRouter([
 	{
@@ -27,5 +28,9 @@ export const router = createBrowserRouter([
 	{
 		path: '/about',
 		element: <UnderConstructionPage />,
+	},
+	{
+		path: '*',
+		element: <ErrorPage />,
 	},
 ]);
