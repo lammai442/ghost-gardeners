@@ -32,6 +32,9 @@ functions:
           path: /api/menu
           method: POST
 
+plugins:
+  - serverless-offline
+
 resources:
   Resources:
     MojjenTable:
