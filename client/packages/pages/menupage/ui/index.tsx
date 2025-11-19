@@ -38,7 +38,7 @@ export const MenuPage = () => {
 			<main className="main">
 				<section className="product__wrapper">
 					<section className="product-top">
-						<h1>Mojmeny</h1>
+						<h1 className="heading-3">Mojmeny</h1>
 						<button className="filter__btn btn-text text-light-beige btn-base bg-cucumber">
 							<CiFilter className="filter__icon" />
 							<span>Filter</span>

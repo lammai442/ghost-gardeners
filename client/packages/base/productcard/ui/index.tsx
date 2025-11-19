@@ -27,9 +27,9 @@ export const ProductCard = ({
 				<button className="product-card__add-btn">+</button>
 			</section>
 			<section className="product-card__info-box">
-				<h2 className="product-card__title heading-5">{name}</h2>
-				<p className="product-card__summary base-small">{summary}</p>
-				<span className="product-card__price">{price} kr</span>
+				<h2 className="heading-5">{name}</h2>
+				<p className="base-small">{summary}</p>
+				<span className="product-card__price btn-text">{price} kr</span>
 			</section>
 		</section>
 	);
