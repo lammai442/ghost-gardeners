@@ -14,8 +14,6 @@ export const ProductCard = ({
 	img,
 	status,
 }: Meal) => {
-	console.log(classBgColor);
-
 	return (
 		<section
 			className={`product-card ${status === 'inactive' ? 'inactive' : ''}`}

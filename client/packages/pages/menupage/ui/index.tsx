@@ -6,6 +6,8 @@
 import './index.scss';
 import { ProductCard } from '@mojjen/productcard';
 import type { Meal } from '@mojjen/productdata';
+import { useState, useEffect } from 'react';
+import { getMeals } from '@mojjen/apiproducts';
 
 const meals: Meal[] = [
 	{
@@ -50,9 +52,24 @@ const meals: Meal[] = [
 	},
 ];
 
-const bgColors: string[] = ['mustard', 'ketchup', 'cucumber', 'black'];
+const bgColors: string[] = [
+	'bg-mustard',
+	'bg-ketchup',
+	'bg-cucumber',
+	'bg-black',
+];
 
 export const MenuPage = () => {
+	const [mealsData, setMealsData] = useState([]);
+
+	useEffect(() => {
+		const fetchMeals = async () => {
+			const mealsData = await getMeals();
+			console.log(mealsData.data);
+		};
+		fetchMeals();
+	}, []);
+
 	return (
 		<>
 			<main className="main">

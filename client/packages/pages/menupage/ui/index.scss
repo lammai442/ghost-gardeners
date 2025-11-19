@@ -8,6 +8,7 @@
 .product-list {
 	width: 100%;
 	display: grid;
+	place-content: center;
 	grid-template-columns: repeat(auto-fit, minmax(150px, 170px));
 	gap: 1rem;
 }

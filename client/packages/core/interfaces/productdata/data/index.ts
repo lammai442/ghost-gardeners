@@ -1,3 +1,8 @@
+/**
+ * Author: Lam
+ * Interface for Meal products
+ */
+
 export interface Meal {
 	prodId?: string;
 	title: string;
