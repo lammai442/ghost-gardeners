@@ -1,7 +1,7 @@
 import './index.scss';
 /**
  * Author: StefanMogren
- * Created footer component
+ * Created mobile view for footer component
  *
  */
 
