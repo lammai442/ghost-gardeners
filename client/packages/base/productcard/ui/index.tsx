@@ -23,11 +23,7 @@ export const ProductCard = ({
 				</div>
 			)}
 			<section className={`product-card__img-box ${classBgColor}`}>
-				<img
-					className="product-card__img"
-					src={img}
-					alt="Image of meal with sausage icon"
-				/>
+				<img className="product-card__img" src={img} alt="Image of meal" />
 				<button className="product-card__add-btn">+</button>
 			</section>
 			<section className="product-card__info-box">
