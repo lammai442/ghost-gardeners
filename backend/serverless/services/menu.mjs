@@ -1,79 +1,96 @@
+import { marshall } from '@aws-sdk/util-dynamodb';
+import { generateDate, generateId } from '../utils/index.mjs';
 import { client } from './client.mjs';
 import { PutItemCommand } from '@aws-sdk/client-dynamodb';
 
 export const postMenuItem = async () => {
-  const command = new PutItemCommand({
-    TableName: 'mojjen-table',
-    Item: {
-      PK: { S: 'PRODUCT' },
-      SK: { S: 'PRODUCT#meal124' },
-      attribute: {
-        M: {
-          name: { S: 'Vålberg vego' },
-          id: { S: 'meal124' },
-          category: { S: 'meal' },
-          price: { N: '45' },
-          summary: { S: 'Falafelkôrv med harissa och koriander' },
-          details: {
-            S: 'Vår Vålberg Vego är en smakrik falafelkôrv, kryddad med het harissa och färsk koriander för en spännande twist på klassiska smaker. Den serveras med färska grönsaker och en lätt dressing som kompletterar kryddigheten i korven. Perfekt för dig som vill ha en matig, växtbaserad rätt full av smak och textur.',
-          },
-          img: { S: 'www.bild.se' },
-          items: {
-            L: [{ S: 'prod3454' }, { S: 'prod4513' }],
-          },
-          includeDrink: { S: 'drink1451' },
-          createdAt: { S: new Date().toISOString() },
-        },
-      },
-      category: {
-        S: 'MENU',
-      },
-      id: {
-        S: 'meal124',
-      },
-      statusCategory: {
-        S: 'STATUS#PRODUCT',
-      },
-      status: { S: 'active' },
-    },
-  });
+	const command = new PutItemCommand({
+		TableName: 'mojjen-table',
+		Item: {
+			PK: { S: 'PRODUCT' },
+			SK: { S: 'PRODUCT#meal124' },
+			attribute: {
+				M: {
+					name: { S: 'Vålberg vego' },
+					id: { S: 'meal124' },
+					category: { S: 'meal' },
+					price: { N: '45' },
+					summary: { S: 'Falafelkôrv med harissa och koriander' },
+					details: {
+						S: 'Vår Vålberg Vego är en smakrik falafelkôrv, kryddad med het harissa och färsk koriander för en spännande twist på klassiska smaker. Den serveras med färska grönsaker och en lätt dressing som kompletterar kryddigheten i korven. Perfekt för dig som vill ha en matig, växtbaserad rätt full av smak och textur.',
+					},
+					img: { S: 'www.bild.se' },
+					items: {
+						L: [{ S: 'prod3454' }, { S: 'prod4513' }],
+					},
+					includeDrink: { S: 'drink1451' },
+					createdAt: { S: new Date().toISOString() },
+				},
+			},
+			category: {
+				S: 'MENU',
+			},
+			id: {
+				S: 'meal124',
+			},
+			statusCategory: {
+				S: 'STATUS#PRODUCT',
+			},
+			status: { S: 'active' },
+		},
+	});
 
-  try {
-    await client.send(command);
-    return true;
-  } catch (error) {
-    console.log('Error in postMenuItem in client ', error.message);
-  }
+	try {
+		await client.send(command);
+		return true;
+	} catch (error) {
+		console.log('Error in postMenuItem in client ', error.message);
+	}
 };
 
-export const postProductItem = async () => {
-  const command = new PutItemCommand({
-    TableName: 'mojjen-table',
-    Item: {
-      PK: { S: 'PRODUCT' },
-      SK: { S: 'PRODUCT#prod111' },
-      attribute: {
-        M: {
-          name: { S: 'Kôrv' },
-          id: { S: 'prod111' },
-          category: { S: 'products' },
-          price: { N: '10' },
-          summary: { S: 'Det är bara körv' },
-          img: { S: 'www.korvbrod.se' },
-          allergens: {
-            L: [{ S: 'gluten' }, { S: 'ägg' }, { S: 'mjölk' }],
-          },
-          stock: { N: '100' },
-          createdAt: { S: new Date().toISOString() },
-        },
-      },
-    },
-  });
+/**
+ * Author: KlaraSk
+ * Updated the function to accept a full product object. Added utility helpers for id and date generation and now use marshall to convert the payload to DynamoDB-compatible format.
+ */
 
-  try {
-    await client.send(command);
-    return true;
-  } catch (error) {
-    console.log('Error in postMenuItem in client ', error.message);
-  }
+export const postProductItem = async (product) => {
+	const prodId =
+		product.category === 'MEAL' ? generateId('meal') : generateId('prod');
+
+	const command = new PutItemCommand({
+		TableName: 'mojjen-table',
+
+		Item: marshall({
+			PK: `PRODUCT`,
+			SK: `PRODUCT#${prodId}`,
+			attribute: {
+				name: product.name,
+				id: prodId,
+				category: product.category,
+				price: product.price,
+				summary: product.summary,
+				description: product.description,
+				img: product.img,
+				//! For meals, the plan is to add a helper function that collects allergenes from the productId:s in items.
+				allergenes: product.allergenes ? product.allergenes : null,
+				stock: 0,
+				createdAt: generateDate(),
+				...(product.items && { items: product.items }), // Solution from ChatGTP to avoid items: undefined
+				...(product.category === 'MEAL' &&
+					product.includeDrink && { includeDrink: product.includeDrink }),
+			},
+
+			category: product.category,
+			id: prodId,
+			status: 'active',
+			statusCategory: 'STATUS#PRODUCT',
+		}),
+	});
+
+	try {
+		await client.send(command);
+		return true;
+	} catch (error) {
+		console.error('Error in postMenuItem in client ', error.message);
+	}
 };
