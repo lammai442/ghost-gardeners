@@ -63,21 +63,30 @@ export const FooterComp = () => {
 			<section className="flex-column-1-5">
 				<h3 className="heading-4 text-dark-beige">Följ oss</h3>
 				<section className="footer__social-container">
-					<a href="" className="btn-base footer__social-link bg-light-beige">
+					<a
+						href="https://www.facebook.com/"
+						className="btn-base footer__social-link bg-light-beige"
+					>
 						<img
 							src="/assets/facebook-logo.svg"
 							className="footer__social-logo"
 							alt="Facebook logga"
 						/>
 					</a>
-					<a href="" className="btn-base footer__social-link bg-light-beige">
+					<a
+						href="https://www.instagram.com/"
+						className="btn-base footer__social-link bg-light-beige"
+					>
 						<img
 							src="/assets/instagram-logo.svg"
 							className="footer__social-logo"
 							alt="Instagram logga"
 						/>
 					</a>
-					<a href="" className="btn-base footer__social-link bg-light-beige">
+					<a
+						href="https://www.tumblr.com/"
+						className="btn-base footer__social-link bg-light-beige"
+					>
 						<img
 							src="/assets/tumblr-logo.svg"
 							className="footer__social-logo"
