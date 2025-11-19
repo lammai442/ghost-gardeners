@@ -1,4 +1,9 @@
 import './index.scss';
+/**
+ * Author: StefanMogren
+ * Created UnderConstructionPage. Placeholder for every currently unfinished pages.
+ *
+ */
 import { ConstructError } from '@mojjen/construct-error';
 
 export const UnderConstructionPage = () => {
