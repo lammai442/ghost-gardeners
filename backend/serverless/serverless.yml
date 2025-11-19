@@ -19,6 +19,12 @@ functions:
       - httpApi:
           path: /api/menu
           method: GET
+  PostOrder:
+    handler: functions/menu/PostOrder/index.handler
+    events:
+      - httpApi:
+          path: /api/order
+          method: POST
   PostMenuItem:
     handler: functions/menu/PostMenuItem/index.handler
     events:
