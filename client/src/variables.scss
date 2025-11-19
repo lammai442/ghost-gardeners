@@ -9,6 +9,7 @@ $color-brown: #66482b;
 $color-grey: #7e8071;
 $color-black: #2e2e2e;
 $color-light-beige: #f3f0e7;
+$color-super-light-beige: #fafaf8;
 
 // ======================================
 // FONTS
@@ -96,6 +97,15 @@ $h5-bold-weight: 700;
 }
 
 // ======================================
+// Button text
+// ======================================
+.btn-text {
+	font-family: $font-base;
+	font-size: $base-small-size;
+	font-weight: $base-bold-weight;
+}
+
+// ======================================
 // TEXT COLORS
 // ======================================
 .text-mustard {
@@ -149,6 +159,9 @@ $h5-bold-weight: 700;
 }
 .bg-light-beige {
 	background-color: $color-light-beige;
+}
+.bg-super-light-beige {
+	background-color: $color-super-light-beige;
 }
 
 // ======================================
