@@ -4,11 +4,13 @@
  */
 
 export interface Meal {
-	prodId?: string;
-	title: string;
+	id?: string;
+	name: string;
 	summary: string;
+	description?: string;
 	price: number;
 	img: string;
 	classBgColor?: string;
-	status: string;
+	status?: string;
+	items?: string[];
 }

@@ -5,7 +5,7 @@
 
 import axios from 'axios';
 
-export const getMeals = async () => {
+export const apiGetMeals = async () => {
 	const response = await axios
 		.get('https://re7yle0qc7.execute-api.eu-north-1.amazonaws.com/api/menu ')
 		.then((response) => {
