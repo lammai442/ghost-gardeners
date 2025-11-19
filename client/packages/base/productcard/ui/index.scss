@@ -8,11 +8,25 @@
 	.product-card__img-box {
 		width: 100%;
 		aspect-ratio: 1;
-		background-color: $color-cucumber;
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		position: relative;
+
+		&.ketchup {
+			background-color: $color-ketchup;
+		}
+
+		&.mustard {
+			background-color: $color-mustard;
+		}
+
+		&.cucumber {
+			background-color: $color-cucumber;
+		}
+		&.black {
+			background-color: $color-black;
+		}
 
 		.product-card__img {
 			width: 50%;
@@ -36,11 +50,6 @@
 		flex-direction: column;
 		gap: 0.5rem;
 
-		.product-card__title {
-			font-size: $h5-size;
-			font-weight: $h5-bold-weight;
-		}
-
 		.product-card__summary {
 			font-size: $base-small-size;
 		}
@@ -50,4 +59,7 @@
 			font-weight: $base-bold-weight;
 		}
 	}
+}
+
+.inactive {
 }

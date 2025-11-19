@@ -14,7 +14,15 @@ const meals: Meal[] = [
 		summary: 'Falafelkôrv med harissa och koriander',
 		price: 45,
 		img: 'src/assets/icons/sausage-icon.png',
-		classBgColor: 'cucumber',
+		status: 'inactive',
+	},
+	{
+		prodId: 'prod-2313',
+		title: 'Vålberg vego',
+		summary: 'Falafelkôrv med harissa och koriander',
+		price: 45,
+		img: 'src/assets/icons/hotdog.png',
+		status: 'active',
 	},
 	{
 		prodId: 'prod-2313',
@@ -22,9 +30,27 @@ const meals: Meal[] = [
 		summary: 'Falafelkôrv med harissa och koriander',
 		price: 45,
 		img: 'src/assets/icons/sausage-icon.png',
-		classBgColor: 'cucumber',
+		status: 'active',
+	},
+	{
+		prodId: 'prod-2313',
+		title: 'Vålberg vego',
+		summary: 'Falafelkôrv med harissa och koriander',
+		price: 45,
+		img: 'src/assets/icons/sausage-icon.png',
+		status: 'active',
+	},
+	{
+		prodId: 'prod-2313',
+		title: 'Vålberg vego',
+		summary: 'Falafelkôrv med harissa och koriander',
+		price: 45,
+		img: 'src/assets/icons/sausage-icon.png',
+		status: 'inactive',
 	},
 ];
+
+const bgColors: string[] = ['mustard', 'ketchup', 'cucumber', 'black'];
 
 export const MenuPage = () => {
 	return (
@@ -32,14 +58,17 @@ export const MenuPage = () => {
 			<main className="main">
 				<section className="product-list">
 					{meals.map((item, index) => {
+						// Solution from ChatGTP to give a bgColor to every meal
+						const classBgColor = bgColors[index % bgColors.length];
 						return (
 							<ProductCard
 								key={index}
 								title={item.title}
 								summary={item.summary}
-								classBgColor={item.classBgColor}
+								classBgColor={classBgColor}
 								price={item.price}
 								img={item.img}
+								status={item.status}
 							/>
 						);
 					})}

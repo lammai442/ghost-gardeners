@@ -4,5 +4,6 @@ export interface Meal {
 	summary: string;
 	price: number;
 	img: string;
-	classBgColor: string;
+	classBgColor?: string;
+	status: string;
 }
