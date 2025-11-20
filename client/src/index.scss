@@ -1,4 +1,5 @@
 @use './variables' as *;
+// @import './variables.scss';
 
 * {
 	margin: 0;
@@ -44,15 +45,6 @@
 
 	&__col-3 {
 		grid-column: 3;
-	}
-}
-
-.page {
-	height: 100%;
-	margin-top: 2rem;
-
-	&__wrapper {
-		padding: 0rem 10rem;
 	}
 }
 

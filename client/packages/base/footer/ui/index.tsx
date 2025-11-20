@@ -7,7 +7,7 @@ import './index.scss';
 
 export const FooterComp = () => {
 	return (
-		<footer className="footer ">
+		<footer className="footer bg-light-beige">
 			{/**
 			 * * ----- Kontakt -----
 			 */}
