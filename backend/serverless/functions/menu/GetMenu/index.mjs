@@ -3,12 +3,20 @@
  * Function to fetch menu items from the API, as well as map the product IDs to their correct name
  */
 
+/**
+ * Author: ninerino
+ * Function to fetch menu items from the API, including stock-based status
+ */
+
 import { client } from '../../../services/client.mjs';
 import { QueryCommand } from '@aws-sdk/client-dynamodb';
 import { errorHandler } from '../../../middlewares/errorHandler.mjs';
+import {
+	getProductsByIds,
+	getMealStatus,
+} from '../../../utils/orderHelpers.mjs';
 
 export const handler = async () => {
-	// Fetch database items where category is MENU
 	try {
 		const menuResponse = await client.send(
 			new QueryCommand({
@@ -16,16 +24,28 @@ export const handler = async () => {
 				IndexName: 'GSI1',
 				KeyConditionExpression: 'category = :category',
 				ExpressionAttributeValues: {
-					':category': { S: 'MENU' },
+					':category': { S: 'MEAL' },
 				},
 			})
 		);
 
-		// Map through all the attributes in an item
+		//
+		const allProductIds = [
+			...new Set(
+				(menuResponse.Items || []).flatMap((item) => {
+					const a = item.attribute?.M || {};
+					return a.items?.L?.map((i) => i.S) || [];
+				})
+			),
+		];
+
+		//
+		const productMap = await getProductsByIds(allProductIds);
+
+		//
 		const menuItems = (menuResponse.Items || []).map((item) => {
 			const a = item.attribute?.M || {};
-
-			return {
+			const base = {
 				id: a.id?.S || '',
 				name: a.name?.S || '',
 				category: a.category?.S || '',
@@ -37,9 +57,13 @@ export const handler = async () => {
 				createdAt: a.createdAt?.S || '',
 				items: a.items?.L?.map((i) => i.S) || [],
 			};
+
+			//
+			base.status = getMealStatus(base, productMap);
+
+			return base;
 		});
 
-		// Return the menu items as JSON
 		return {
 			statusCode: 200,
 			body: JSON.stringify(menuItems),
