@@ -1,7 +1,8 @@
 import './index.scss';
 import { Page } from '@mojjen/page';
 import { ProductCard } from '@mojjen/productcard';
-import { testMeals } from '../../../../src/testdata';
+import { useCartStore } from '../../../core/stores/usecartstore/data';
+// import { testMeals } from '../../../../src/testdata';
 
 /**
  * Author: Klara Sköld
@@ -12,12 +13,14 @@ import { testMeals } from '../../../../src/testdata';
 const bgColors: string[] = ['bg-mustard', 'bg-ketchup', 'bg-cucumber'];
 
 export const CartPage = () => {
+	const { cart, incrament, decrament } = useCartStore();
+
 	const generateCartProducts = () => {
 		{
 			return (
-				testMeals.length > 0 && (
+				cart.length > 0 && (
 					<section className="product-list">
-						{testMeals.map((item, index) => {
+						{cart.map((item, index) => {
 							// Solution from ChatGTP to give a bgColor to every meal with a pattern
 							const classBgColor = bgColors[index % bgColors.length];
 							return (

@@ -1,0 +1,4 @@
+{
+	"name": "@mojjen/localstorage",
+	"main": "./index.ts"
+}
