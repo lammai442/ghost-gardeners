@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 // ======================================
 // COLORS (namngivna efter utseende)
 // ======================================
@@ -22,6 +24,11 @@ $font-heading: 'Concert One', sans-serif;
 $font-base: 'Open Sans', sans-serif;
 
 // ======================================
+// BORDERS
+// ======================================
+$border-radius: 0.25rem 0.9rem 0rem 0.9rem;
+
+// ======================================
 // FONT SIZES (clamp versions)
 // ======================================
 // Headings – Concert One
@@ -40,7 +47,7 @@ $base-small-size: clamp(0.85rem, 0.8vw, 0.95rem); // 14–15px
 // ======================================
 // FONT WEIGHTS
 // ======================================
-$base-bold-weight: 800; // ExtraBold
+$base-bold-weight: 700; // ExtraBold
 $base-regular-weight: 400;
 $h5-bold-weight: 700;
 
@@ -134,9 +141,23 @@ $h5-bold-weight: 700;
 	color: $color-light-beige;
 }
 
+.text {
+	&__left {
+		text-align: left;
+	}
+	&__right {
+		text-align: right;
+	}
+
+	&__center {
+		text-align: center;
+	}
+}
+
 // ======================================
 // BACKGROUND COLORS
 // ======================================
+
 .bg-mustard {
 	background-color: $color-mustard;
 }
@@ -163,6 +184,16 @@ $h5-bold-weight: 700;
 }
 .bg-super-light-beige {
 	background-color: $color-super-light-beige;
+}
+.bg__light-red {
+	background-color: color.change($color-ketchup, $alpha: 10%);
+}
+
+// ======================================
+// Border radius
+// ======================================
+.border-radius {
+	border-radius: $border-radius;
 }
 
 // ======================================
@@ -194,4 +225,16 @@ $h5-bold-weight: 700;
 	background-color: $color-black;
 	color: $color-white;
 	border-radius: 5px 0 12px 0;
+}
+
+/* Hiding class, making content visible only to screen readers but not visually */
+/* "sr" meaning "screen-reader" */
+.sr-only:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
 }

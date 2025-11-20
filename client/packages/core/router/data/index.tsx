@@ -4,6 +4,7 @@ import { AuthPage } from '@mojjen/authpage';
 import { UnderConstructionPage } from '@mojjen/under-construction-page';
 import { MenuPage } from '@mojjen/menupage';
 import { ErrorPage } from '@mojjen/error-page';
+import { ConfirmedOrderPage } from '@mojjen/confirmedorderpage';
 
 export const router = createBrowserRouter([
 	{
@@ -24,7 +25,7 @@ export const router = createBrowserRouter([
 	},
 	{
 		path: '/order',
-		element: <UnderConstructionPage />,
+		element: <ConfirmedOrderPage />,
 	},
 	{
 		path: '/about',

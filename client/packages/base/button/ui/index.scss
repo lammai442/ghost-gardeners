@@ -1,0 +1,36 @@
+@use 'sass:color';
+@import '../../../../src/variables.scss';
+
+// Inspo from: https://codepen.io/rodica/pen/jWzGvd
+@mixin button-bg($bg) {
+	background: $bg;
+
+	&:hover {
+		// background: darken($bg, 8%);
+		transition: all 0.3s ease;
+		background: color.adjust($bg, $lightness: -8%);
+	}
+	&:active {
+		// background: darken($bg, 25%);
+		background: color.adjust($bg, $lightness: -25%);
+	}
+}
+
+.btn {
+	color: white;
+	text-decoration: none;
+	padding: 1rem 0.5rem;
+	border: none;
+	cursor: pointer;
+}
+
+.btn-green {
+	@include button-bg($color-cucumber);
+}
+.btn-black {
+	@include button-bg($color-black);
+}
+
+.btn-brown {
+	@include button-bg($color-brown);
+}
