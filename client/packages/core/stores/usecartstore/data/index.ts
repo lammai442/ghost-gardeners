@@ -78,3 +78,19 @@ export const useCartStore = create<CartStore>((set) => ({
 			};
 		}),
 }));
+
+/**
+ * Transformerar cart från Zustand till det format som createOrder förväntar sig
+ */
+export function getItemsForOrder() {
+  const { cart } = useCartStore.getState();
+
+  return cart.map(item => ({
+    id: item.id,
+	price: item.price,
+    quantity: item.qty ?? 1,   // qty från store, default 1
+    extras: [],                // tom array tills vi lägger till extra-val
+    without: [],               // tom array tills vi lägger till without-val
+    includeDrink: item.includeDrink ?? null
+  }));
+}
