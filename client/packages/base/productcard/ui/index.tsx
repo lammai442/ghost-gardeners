@@ -1,4 +1,6 @@
 import './index.scss';
+import { Button } from '../../button/ui';
+import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 import type { Meal } from '@mojjen/productdata';
 import { useCartStore } from '../../../core/stores/usecartstore/data';

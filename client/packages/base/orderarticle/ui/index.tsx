@@ -4,6 +4,8 @@ import './index.scss';
  * Author: Klara Sköld
  * Details for each article in the order.
  *
+ * Author: ninerino
+ * Additional functionality to fetch and write to database.
  */
 
 type Props = {
@@ -13,6 +15,7 @@ type Props = {
 		quantity: number;
 		subtotal: number;
 		without: string[];
+		summary: string;
 	};
 };
 
@@ -28,7 +31,7 @@ export const OrderArticle = ({ item }: Props) => {
 				</div>
 
 				<p className="base grid__col-1 grid__row-2">
-					Här ska item.summary stå med
+					{item.summary}
 				</p>
 			</div>
 			<hr className="order__line" />

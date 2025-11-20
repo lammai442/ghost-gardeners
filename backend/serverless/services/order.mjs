@@ -28,6 +28,7 @@ export const createOrder = async ({ items, userComment = "", staffComment = "" }
 
   // Fetch product details
 	const productMap = await getProductsByIds(allIds);
+	console.log('Product map', productMap);
 
 	// Add includeDrinkName where applicable
 	Object.values(productMap).forEach(p => {

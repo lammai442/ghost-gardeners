@@ -35,7 +35,7 @@ export async function getProductsByIds(ids) {
 		acc[id] = {
 			id,
 			name: a.name?.S || '',
-			price: a.price?.N ? Number(a.price.N) : 0,
+			price: a.price?.N ? Number(a.price.N) : (a.price?.S ? Number(a.price.S) : 0),
 			img: a.img?.S || '',
 			stock: a.stock?.N ? Number(a.stock.N) : 0,
 			summary: a.summary?.S || '',
@@ -48,7 +48,7 @@ export async function getProductsByIds(ids) {
 		return acc;
 	}, {});
 
-	// Lägg till status (MEAL och vanliga produkter)
+	// Add status
 	Object.values(productMap).forEach((p) => {
 		p.status = getMealStatus(p, productMap);
 	});
@@ -77,6 +77,7 @@ export function enrichItems(items, productMap) {
 			extras,
 			without,
 			subtotal,
+			summary: base.summary,
 			includesDrinkName: i.includeDrink
 				? productMap[i.includeDrink]?.name || null
 				: null,
