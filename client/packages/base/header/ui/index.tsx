@@ -1,16 +1,19 @@
 import './index.scss';
+import { useCartStore } from '../../../core/stores/usecartstore/data';
 /**
  * Author: StefanMogren
  * Created base header component
  *
  * Modified: Stefan Mogren
  * Added profile placeholder and initial cart button functionality.
+ *
+ * Modified: Lam
+ * Added cartCount from useCartStore
  */
 
-// Behöver fixa att UseCartStore används i varukorgen.
-// import { UseCartStore } from '@mojjen/usecartstore';
-
 export const HeaderComp = () => {
+	const { cartCount } = useCartStore();
+
 	return (
 		<header className="header">
 			<section className="header__container flex flex__space-between bg-ketchup">
@@ -47,7 +50,7 @@ export const HeaderComp = () => {
 				 */}
 				<a href="/cart" className="header__cart flex btn-base ">
 					<img src="/assets/cart-icon.svg" alt="Varukorgsikon" />
-					<h5 className="heading-5">Varukorg {3}</h5>
+					<h5 className="heading-5">Varukorg {cartCount}</h5>
 				</a>
 			</section>
 		</header>
