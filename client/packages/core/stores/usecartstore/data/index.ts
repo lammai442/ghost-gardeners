@@ -13,6 +13,7 @@ type CartStore = {
 	cart: Meal[];
 	incrament: (product: Meal) => void;
 	decrament: (id: string | undefined) => void;
+	emptyCart: () => void;
 };
 
 // Solution from ChatGPT to update the count when refreshing the page
@@ -77,20 +78,31 @@ export const useCartStore = create<CartStore>((set) => ({
 				cartCount: state.cartCount - 1,
 			};
 		}),
+	emptyCart: () =>
+		set((state) => {
+			const emptyArray: Meal[] = [];
+
+			localStorage.setItem('cart', JSON.stringify(emptyArray));
+
+			return {
+				cart: emptyArray,
+				cartCount: 0,
+			};
+		}),
 }));
 
 /**
  * Transformerar cart från Zustand till det format som createOrder förväntar sig
  */
 export function getItemsForOrder() {
-  const { cart } = useCartStore.getState();
+	const { cart } = useCartStore.getState();
 
-  return cart.map(item => ({
-    id: item.id,
-	price: item.price,
-    quantity: item.qty ?? 1,   // qty från store, default 1
-    extras: [],                // tom array tills vi lägger till extra-val
-    without: [],               // tom array tills vi lägger till without-val
-    includeDrink: item.includeDrink ?? null
-  }));
+	return cart.map((item) => ({
+		id: item.id,
+		price: item.price,
+		quantity: item.qty ?? 1, // qty från store, default 1
+		extras: [], // tom array tills vi lägger till extra-val
+		without: [], // tom array tills vi lägger till without-val
+		includeDrink: item.includeDrink ?? null,
+	}));
 }

@@ -13,14 +13,15 @@ import { useNavigate } from 'react-router-dom';
  */
 
 export const CartPage = () => {
-	const { cart, incrament, decrament } = useCartStore();0
+	const { cart, incrament, decrament, emptyCart } = useCartStore();
+	0;
 	const navigate = useNavigate();
 
-const handleSubmit = async () => {
+	const handleSubmit = async () => {
 		try {
 			// Transformera cart → order-format
 			const items = getItemsForOrder();
-			console.log('Items skickade till backend', items)
+			console.log('Items skickade till backend', items);
 
 			// POST till backend
 			const response = await fetch(
@@ -34,6 +35,7 @@ const handleSubmit = async () => {
 
 			const data = await response.json();
 
+			emptyCart();
 			// Navigera till ConfirmedOrderPage med orderdata
 			navigate('/order', { state: data.order });
 		} catch (error) {
@@ -42,14 +44,16 @@ const handleSubmit = async () => {
 	};
 
 	const generateCartProducts = () => {
-	if (cart.length === 0) return null;
-	return <ProductsList prodlist={cart} />;
-};
+		if (cart.length === 0) return null;
+		return <ProductsList prodlist={cart} />;
+	};
 
-	return <Page titleText="Varukorg">
+	return (
+		<Page titleText="Varukorg">
 			{generateCartProducts()}
 			<Button aria="Skicka order" onClick={handleSubmit} style="green">
 				Skicka order
 			</Button>
-		</Page>;
+		</Page>
+	);
 };
