@@ -1,18 +1,12 @@
+import './index.scss';
+import { useEffect, useState } from 'react';
+import type { Meal } from '@mojjen/productdata';
+import { useCartStore } from '../../../core/stores/usecartstore/data';
+
 /**
  * Author: Lam
- * Menupage that display the menu of Mojjens meals.
+ * Menupage that display the menu of Mojjens meals with connection to cart of useCartStore.
  */
-
-/**
- * Update: Klara
- * Added props for vertical/horisontal layout
- */
-
-import './index.scss';
-import { useState } from 'react';
-import type { Meal } from '@mojjen/productdata';
-import clsx from 'clsx';
-import { Button } from '@mojjen/button';
 
 type Props = {
 	item: Meal;
@@ -29,8 +23,16 @@ export const ProductCard = ({
 	showIncramentBtn,
 	isFlexColumn,
 }: Props) => {
-	const { name, img, summary, price, status } = item;
-	const [quantity, setQuantity] = useState<number>(0);
+	const { cart, incrament, decrament } = useCartStore();
+	const { name, img, summary, price, status, id } = item;
+	const [quantity, setQuantity] = useState<number | undefined>(0);
+
+	useEffect(() => {
+		const itemExistInCart = cart.find((i) => i.id === item.id);
+		// Add to the qty count of the product
+		if (itemExistInCart) setQuantity(itemExistInCart.qty);
+		if (!itemExistInCart) setQuantity(0);
+	}, [cart]);
 
 	const productCardClassNames = clsx('flex product-card', {
 		flex__column: isFlexColumn,
@@ -69,7 +71,15 @@ export const ProductCard = ({
 					<section className="info-box__bottom flex">
 						<button className="btn-qty-base--decrament">-</button>
 						<span className="btn-text">{quantity}</span>
-						<button className="btn-qty-base--incrament">+</button>
+						<button
+							className="btn-qty-base--incrament"
+							onClick={() => {
+								incrament(item);
+								console.log(cart);
+							}}
+						>
+							+
+						</button>
 					</section>
 				)}
 			</section>

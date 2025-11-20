@@ -10,6 +10,8 @@ import { testMeals } from '../../../../src/testdata';
  */
 
 export const CartPage = () => {
+	const { cart, incrament, decrament } = useCartStore();
+
 	const generateCartProducts = () => {
 		{
 			return testMeals.length > 0 && <ProductsList prodlist={testMeals} />;
