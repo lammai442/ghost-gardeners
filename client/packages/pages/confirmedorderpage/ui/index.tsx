@@ -8,6 +8,7 @@ import { useEffect, useState, type ReactNode } from 'react';
 import { testObj } from '../../../../src/testdata';
 import { CircleIcon } from '@mojjen/circleicon';
 import { FaCheck } from 'react-icons/fa';
+import { Page } from '@mojjen/page';
 
 /**
  * Author: Klara Sköld
@@ -37,7 +38,7 @@ export const ConfirmedOrderPage = () => {
 		window.scrollTo(0, 0);
 	};
 	return (
-		<section className="page page__wrapper grid order">
+		<Page titleText="Orderbekräftelse" extraClasses="grid order">
 			{/* Content: "Tack för din order" */}
 			<ContentBox
 				extraClass="order__content-box order__thanks flex text__center flex__column"
@@ -128,6 +129,6 @@ export const ConfirmedOrderPage = () => {
 					/>
 				)}
 			</div>
-		</section>
+		</Page>
 	);
 };

@@ -1,5 +1,12 @@
+import { Page } from '@mojjen/page';
 import './index.scss';
 
+/**
+ * Update: Klara
+ * Page component added
+ *
+ */
+
 export const AuthPage = () => {
-  return <div>AuthPage</div>;
+	return <Page titleText="Logga in"></Page>;
 };

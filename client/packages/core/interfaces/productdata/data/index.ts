@@ -14,6 +14,3 @@ export interface Meal {
 	status: string;
 	items?: string[];
 }
-
-// Klara is testing...
-export interface Meal2 {}
