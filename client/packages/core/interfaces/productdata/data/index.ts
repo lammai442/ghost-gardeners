@@ -7,7 +7,7 @@ export interface Meal {
 	id?: string;
 	name: string;
 	summary: string;
-	description?: string;
+	details?: string;
 	price: number;
 	img: string;
 	classBgColor?: string;
@@ -15,3 +15,6 @@ export interface Meal {
 	items?: string[];
 	qty?: number;
 }
+
+// Klara is testing...
+export interface Meal2 {}
