@@ -11,12 +11,17 @@ type Props = {
 	item: Meal;
 	classBgColor: string;
 	showQty?: boolean;
+	showIncramentBtn?: boolean;
 };
 
-export const ProductCard = ({ item, classBgColor, showQty }: Props) => {
-	const { name, img, summary, price } = item;
+export const ProductCard = ({
+	item,
+	classBgColor,
+	showQty,
+	showIncramentBtn,
+}: Props) => {
+	const { name, img, summary, price, status } = item;
 	const [quantity, setQuantity] = useState<number>(0);
-	const status: string = 'inactive';
 
 	return (
 		<section className={`product-card `}>
@@ -27,7 +32,9 @@ export const ProductCard = ({ item, classBgColor, showQty }: Props) => {
 			)}
 			<section className={`product-card__img-box ${classBgColor}`}>
 				<img className="product-card__img" src={img} alt="Image of meal" />
-				<button className="product-card__add-btn">+</button>
+				{showIncramentBtn && (
+					<button className="product-card__add-btn">+</button>
+				)}
 			</section>
 			<section className="product-card__info-box">
 				<h2 className="heading-5">{name}</h2>

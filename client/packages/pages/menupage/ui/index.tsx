@@ -70,6 +70,7 @@ export const MenuPage = () => {
 										item={item}
 										classBgColor={classBgColor}
 										showQty={false}
+										showIncramentBtn={true}
 									/>
 								);
 							})}

@@ -11,6 +11,6 @@ export interface Meal {
 	price: number;
 	img: string;
 	classBgColor?: string;
-	status?: string;
+	status: string;
 	items?: string[];
 }
