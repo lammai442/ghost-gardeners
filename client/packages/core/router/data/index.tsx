@@ -3,6 +3,7 @@ import { HomePage } from '@mojjen/homepage';
 import { AuthPage } from '@mojjen/authpage';
 import { UnderConstructionPage } from '@mojjen/under-construction-page';
 import { ErrorPage } from '@mojjen/error-page';
+import { ConfirmedOrderPage } from '@mojjen/confirmedorderpage';
 
 export const router = createBrowserRouter([
 	{
@@ -23,7 +24,7 @@ export const router = createBrowserRouter([
 	},
 	{
 		path: '/order',
-		element: <UnderConstructionPage />,
+		element: <ConfirmedOrderPage />,
 	},
 	{
 		path: '/about',
