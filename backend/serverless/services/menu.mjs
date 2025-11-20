@@ -67,7 +67,7 @@ export const postProductItem = async (product) => {
 				name: product.name,
 				id: prodId,
 				category: product.category,
-				price: product.price,
+				price: Number(product.price),
 				summary: product.summary,
 				description: product.description,
 				img: product.img,
