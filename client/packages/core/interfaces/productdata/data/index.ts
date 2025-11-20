@@ -15,6 +15,3 @@ export interface Meal {
 	items?: string[];
 	qty?: number | undefined;
 }
-
-// Klara is testing...
-export interface Meal2 {}

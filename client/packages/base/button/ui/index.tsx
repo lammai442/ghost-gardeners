@@ -13,20 +13,22 @@ type Props = {
 	onClick: () => void;
 	style?: string;
 	aria: string;
+	extraClasses?: string;
 };
 
-export const Button = ({ children, aria, style, onClick }: Props) => {
-	const classNames = clsx(
-		'btn',
-		'border-radius',
-		'base-bold',
-
-		{
-			'btn-green': !style,
-			'btn-black': style === 'black',
-			'btn-brown': style === 'brown',
-		}
-	);
+export const Button = ({
+	extraClasses,
+	children,
+	aria,
+	style,
+	onClick,
+}: Props) => {
+	const classNames = clsx('btn', 'base-bold', extraClasses, {
+		'btn-green border-radius': !style,
+		'btn-black border-radius': style === 'black',
+		'btn-brown border-radius': style === 'brown',
+		'btn-simple': style === 'simple',
+	});
 
 	return (
 		<button className={classNames} aria-label={aria} onClick={onClick}>

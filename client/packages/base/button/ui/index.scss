@@ -17,11 +17,12 @@
 }
 
 .btn {
-	color: white;
+	color: $color-light-beige;
 	text-decoration: none;
 	padding: 1rem 0.5rem;
 	border: none;
 	cursor: pointer;
+	position: relative;
 }
 
 .btn-green {
@@ -33,4 +34,11 @@
 
 .btn-brown {
 	@include button-bg($color-brown);
+}
+
+.btn-simple {
+	// background-color: transparent;
+	background-color: pink;
+	padding: 0;
+	color: $color-black;
 }
