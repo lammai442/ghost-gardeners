@@ -1,0 +1,48 @@
+@import '../../../../src/variables.scss';
+
+.order {
+	gap: 4rem;
+
+	&__content-boxes {
+		grid-template-columns: 1.5fr 1fr;
+
+		column-gap: 4rem;
+		row-gap: 2rem;
+	}
+
+	&__content-box {
+		gap: 2rem;
+		padding: 2rem;
+	}
+
+	&__thanks {
+		align-items: center;
+	}
+
+	&__order-id {
+		grid-row: 1 / span 1;
+	}
+
+	&__summary {
+		grid-row: 1 / span 2;
+	}
+
+	&__articles {
+		grid-row: 2 / span 3;
+	}
+
+	&__comment {
+		grid-row: 5 / span 1;
+	}
+
+	&__line {
+		border-bottom: 0.01px solid $color-grey;
+	}
+}
+
+@media screen and (max-width: 992px) {
+	.order__content-boxes {
+		display: flex;
+		flex-direction: column;
+	}
+}
