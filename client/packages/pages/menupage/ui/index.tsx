@@ -1,6 +1,7 @@
 /**
  * Author: Lam
  * Menupage that display the menu of Mojjens meals by fetching from database
+ *
  */
 
 import './index.scss';
@@ -11,6 +12,7 @@ import { apiGetMeals } from '@mojjen/apiproducts';
 import { CiFilter } from 'react-icons/ci';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import { ConstructError } from '@mojjen/construct-error';
+import { LoadingMsg } from '@mojjen/loading-msg';
 
 type GetMealsResponse = {
 	data: Meal[];
@@ -22,11 +24,15 @@ const bgColors: string[] = ['bg-mustard', 'bg-ketchup', 'bg-cucumber'];
 
 export const MenuPage = () => {
 	const [mealsData, setMealsData] = useState<Meal[]>([]);
+	const [loading, setLoading] = useState<boolean>(false);
 	const [fetchError, setFetchError] = useState<boolean>(false);
 
 	useEffect(() => {
+		setLoading(true);
+
 		const fetchMeals = async () => {
 			const response: GetMealsResponse = await apiGetMeals();
+			setLoading(false);
 			if (response.success) setMealsData(response.data);
 			else setFetchError(true);
 		};
@@ -48,25 +54,22 @@ export const MenuPage = () => {
 					{fetchError && (
 						<ConstructError
 							color="bg-ketchup"
-							title="Kunde inte ladda meny"
+							title="Kunde inte ladda menyn"
 							text={`Just nu verkar vi ha tekniska problem med vår server, prova gärna igen om en liten stund.`}
 						/>
 					)}
+					{loading && <LoadingMsg title="Laddar menyn" />}
 					{mealsData.length > 0 && (
 						<section className="product-list">
 							{mealsData.map((item, index) => {
-								// Solution from ChatGTP to give a bgColor to every meal
+								// Solution from ChatGTP to give a bgColor to every meal with a pattern
 								const classBgColor = bgColors[index % bgColors.length];
 								return (
 									<ProductCard
-										key={index}
-										name={item.name}
-										summary={item.summary}
+										key={item.id}
+										item={item}
 										classBgColor={classBgColor}
-										price={item.price}
-										img={item.img}
-										status={item.status}
-										id={item.id}
+										showQty={false}
 									/>
 								);
 							})}

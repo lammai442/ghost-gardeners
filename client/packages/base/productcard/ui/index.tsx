@@ -4,17 +4,20 @@
  */
 
 import './index.scss';
+import { useState } from 'react';
 import type { Meal } from '@mojjen/productdata';
 
-export const ProductCard = ({
-	id,
-	name,
-	summary,
-	price,
-	classBgColor,
-	img,
-	status,
-}: Meal) => {
+type Props = {
+	item: Meal;
+	classBgColor: string;
+	showQty?: boolean;
+};
+
+export const ProductCard = ({ item, classBgColor, showQty }: Props) => {
+	const { name, img, summary, price } = item;
+	const [quantity, setQuantity] = useState<number>(0);
+	const status: string = 'inactive';
+
 	return (
 		<section className={`product-card `}>
 			{status === 'inactive' && (
@@ -30,6 +33,13 @@ export const ProductCard = ({
 				<h2 className="heading-5">{name}</h2>
 				<p className="base-small">{summary}</p>
 				<span className="product-card__price btn-text">{price} kr</span>
+				{showQty && (
+					<section className="quantity">
+						<button className="btn-qty-base--decrament">-</button>
+						<span className="btn-text">{quantity}</span>
+						<button className="btn-qty-base--incrament">+</button>
+					</section>
+				)}
 			</section>
 		</section>
 	);

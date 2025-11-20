@@ -8,6 +8,7 @@ $color-dark-beige: #cbae87;
 $color-brown: #66482b;
 $color-grey: #7e8071;
 $color-black: #2e2e2e;
+$color-white: #ffffff;
 $color-light-beige: #f3f0e7;
 $color-super-light-beige: #fafaf8;
 
@@ -170,4 +171,27 @@ $h5-bold-weight: 700;
 .btn-base {
 	padding: 0.5rem 1rem;
 	border-radius: 4px 12px 0 12px;
+}
+
+.btn-qty-base {
+	padding: 0.3rem 0.7rem;
+	height: 1.8rem;
+	font-size: 1rem;
+	display: flex;
+	align-items: center;
+	box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.btn-qty-base--decrament {
+	@extend .btn-qty-base;
+	background-color: $color-white;
+	color: $color-black;
+	border-radius: 5px 0 0 12px;
+}
+
+.btn-qty-base--incrament {
+	@extend .btn-qty-base;
+	background-color: $color-black;
+	color: $color-white;
+	border-radius: 5px 0 12px 0;
 }
