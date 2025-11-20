@@ -13,6 +13,7 @@ export interface Meal {
 	classBgColor?: string;
 	status: string;
 	items?: string[];
+	qty?: number | undefined;
 }
 
 // Klara is testing...
