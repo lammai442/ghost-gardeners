@@ -13,6 +13,7 @@ import { CiFilter } from 'react-icons/ci';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import { ConstructError } from '@mojjen/construct-error';
 import { LoadingMsg } from '@mojjen/loading-msg';
+import { useCartStore } from '../../../core/stores/usecartstore/data';
 
 type GetMealsResponse = {
 	data: Meal[];
@@ -69,7 +70,7 @@ export const MenuPage = () => {
 										key={item.id}
 										item={item}
 										classBgColor={classBgColor}
-										showQty={false}
+										showQty={true}
 										showIncramentBtn={true}
 									/>
 								);
