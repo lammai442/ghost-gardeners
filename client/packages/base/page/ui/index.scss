@@ -1,0 +1,15 @@
+@import '../../../../src/variables.scss';
+
+.page {
+	height: 100%;
+
+	background-color: $color-light-beige;
+
+	&__wrapper {
+		padding: 3rem 10rem;
+	}
+
+	&__title {
+		margin-bottom: 2rem;
+	}
+}
