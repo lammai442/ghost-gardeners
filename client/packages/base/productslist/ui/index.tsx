@@ -3,6 +3,7 @@ import './index.scss';
 import clsx from 'clsx';
 import type { Meal } from '@mojjen/productdata';
 import { ProductCard } from '@mojjen/productcard';
+import { ContentBox } from '@mojjen/contentbox';
 /**
  * Author: Klara Sköld
  * Products list
@@ -11,11 +12,12 @@ import { ProductCard } from '@mojjen/productcard';
 
 type Props = {
 	prodlist: Meal[];
+	isCartItem?: boolean;
 };
 
 const bgColors: string[] = ['bg-mustard', 'bg-ketchup', 'bg-cucumber'];
 
-export const ProductsList = ({ prodlist }: Props) => {
+export const ProductsList = ({ prodlist, isCartItem }: Props) => {
 	return (
 		<ul className="grid product-list">
 			{prodlist.map((item, index) => {
@@ -29,6 +31,7 @@ export const ProductsList = ({ prodlist }: Props) => {
 						showQty={true}
 						showIncramentBtn={false}
 						isFlexColumn={true}
+						isCartItem={isCartItem}
 					/>
 				);
 			})}

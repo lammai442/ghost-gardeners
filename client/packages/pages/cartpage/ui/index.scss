@@ -1,4 +1,24 @@
 @import '../../../../src/variables.scss';
 
 .cart {
+	gap: 4rem;
+
+	&__ctas {
+		gap: 0.5rem;
+	}
+	&__summary {
+		padding: 2rem 1.5rem;
+		gap: 2rem;
+		height: fit-content;
+	}
+
+	&__summary--gap {
+		gap: 9rem;
+	}
+}
+
+@media screen and (max-width: 992px) {
+	.cart {
+		flex-direction: column;
+	}
 }

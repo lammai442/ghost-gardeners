@@ -8,7 +8,7 @@ import clsx from 'clsx';
  */
 
 type Props = {
-	extraClass: string;
+	extraClass?: string;
 	titleTxt?: string;
 	text?: string;
 	titleLevel?: string;
@@ -38,6 +38,10 @@ export const ContentBox = ({
 			return <h2 className="heading-2 ">{titleText}</h2>;
 		else if (titleLevel === 'h3')
 			return <h3 className="heading-3 ">{titleText}</h3>;
+		else if (titleLevel === 'h4')
+			return <h4 className="heading-4 ">{titleText}</h4>;
+		else if (titleLevel === 'h5')
+			return <h5 className="heading-5 ">{titleText}</h5>;
 	};
 	const generateText = (text: string | undefined) => {
 		return <p className="base ">{text}</p>;
@@ -46,7 +50,7 @@ export const ContentBox = ({
 	return (
 		<div className={classNames}>
 			{generateTitle(titleLevel, titleTxt)}
-			{generateText(text)}
+			{text && generateText(text)}
 
 			{children}
 		</div>

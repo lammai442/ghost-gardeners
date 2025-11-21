@@ -4,9 +4,9 @@
 	position: relative;
 	gap: 1rem;
 	flex: 1;
+	max-width: 250px;
 	&__img-box {
 		aspect-ratio: 1;
-
 		border-radius: 4px;
 		justify-content: center;
 		align-items: center;
@@ -50,6 +50,17 @@
 		gap: 0.5rem;
 	}
 }
+
+// .inactive {
+// 	z-index: 99;
+// 	position: absolute;
+// 	width: 100%;
+// 	height: 100%;
+// 	background-color: rgba(192, 192, 192, 0.7);
+// 	pointer-events: all;
+// 	display: grid;
+// 	place-items: center;
+// }
 
 // ! Original
 // @use '../../../../src/variables.scss' as *;
@@ -98,13 +109,13 @@
 // 	}
 // }
 
-.inactive {
-	z-index: 99;
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	background-color: rgba(192, 192, 192, 0.7);
-	pointer-events: all;
-	display: grid;
-	place-content: center;
-}
+// .inactive {
+// 	z-index: 99;
+// 	position: absolute;
+// 	width: 100%;
+// 	height: 100%;
+// 	background-color: rgba(192, 192, 192, 0.7);
+// 	pointer-events: all;
+// 	display: grid;
+// 	place-content: center;
+// }
