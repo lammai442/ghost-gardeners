@@ -1,4 +1,5 @@
 import './index.scss';
+import { NavLink } from 'react-router-dom';
 /**
  * Author: StefanMogren
  *
@@ -16,22 +17,13 @@ export const HamburgerMenu = ({ showNavMenu }: Test) => {
 		>
 			<ul className="nav-menu__nav-list">
 				<li>
-					<a className="heading-3" href="/menu">
-						Vår meny
-					</a>
-				</li>
-				{/* 				<li>
-					<a href="/order">Din order</a>
-				</li> */}
-				<li>
-					<a className="heading-3" href="/cart">
-						Din kundvagn
-					</a>
+					<NavLink to={'/'}>Start</NavLink>
 				</li>
 				<li>
-					<a className="heading-3" href="/about">
-						Om Mojjen
-					</a>
+					<NavLink to={'/menu'}>Meny</NavLink>
+				</li>
+				<li>
+					<NavLink to={'/menu'}>Om oss</NavLink>
 				</li>
 			</ul>
 		</section>
