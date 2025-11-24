@@ -6,8 +6,10 @@
 import axios from 'axios';
 
 export const apiGetMeals = async () => {
+	const apiUrl: string = import.meta.env.VITE_API_URL;
+
 	const response = await axios
-		.get('https://re7yle0qc7.execute-api.eu-north-1.amazonaws.com/api/menu ')
+		.get(`${apiUrl}menu`)
 		.then((response) => {
 			return {
 				success: true,

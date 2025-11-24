@@ -52,6 +52,11 @@ export const postMenuItem = async () => {
  * Author: KlaraSk
  * Updated the function to accept a full product object. Added utility helpers for id and date generation and now use marshall to convert the payload to DynamoDB-compatible format.
  */
+/**
+ * Update: Lam, KlaraSK, Nikki
+ * Made description to be optional for the body
+ *
+ */
 
 export const postProductItem = async (product) => {
 	const prodId =
@@ -69,13 +74,13 @@ export const postProductItem = async (product) => {
 				category: product.category,
 				price: Number(product.price),
 				summary: product.summary,
-				description: product.description,
+				...(product.description && { description: product.description }), // Solution from ChatGPT to avoid description: undefined
 				img: product.img,
 				//! For meals, the plan is to add a helper function that collects allergenes from the productId:s in items.
 				allergenes: product.allergenes ? product.allergenes : null,
-				stock: 0,
+				stock: 25,
 				createdAt: generateDate(),
-				...(product.items && { items: product.items }), // Solution from ChatGTP to avoid items: undefined
+				...(product.items && { items: product.items }),
 				...(product.category === 'MEAL' &&
 					product.includeDrink && { includeDrink: product.includeDrink }),
 			},
