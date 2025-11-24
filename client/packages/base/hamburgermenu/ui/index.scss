@@ -1,0 +1,30 @@
+.nav-menu {
+	width: 100%;
+	position: absolute;
+	max-height: 0;
+	// padding: 0rem 1rem;
+	overflow-y: hidden;
+	transition: max-height 0.5s ease;
+	// transition: padding 1s;
+}
+
+.nav-menu-expand {
+	width: 100%;
+	position: absolute;
+	max-height: 120px;
+	transition: max-height 0.5s ease;
+	// transition: padding 1s;
+	overflow-y: hidden;
+}
+
+.nav-menu__nav-list {
+	padding: 1rem 1rem;
+}
+
+li {
+	list-style-type: none;
+
+	a {
+		text-decoration: none;
+	}
+}

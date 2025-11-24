@@ -1,5 +1,8 @@
 import './index.scss';
 import { useCartStore } from '../../../core/stores/usecartstore/data';
+import { HamburgerMenu } from '@mojjen/hamburger-menu';
+import { useState } from 'react';
+
 /**
  * Author: StefanMogren
  * Created base header component
@@ -13,7 +16,7 @@ import { useCartStore } from '../../../core/stores/usecartstore/data';
 
 export const HeaderComp = () => {
 	const { cartCount } = useCartStore();
-
+	const [showNavMenu, setShowNavMenu] = useState(false);
 	return (
 		<header className="header">
 			<section className="header__container flex flex__space-between bg-ketchup">
@@ -30,8 +33,11 @@ export const HeaderComp = () => {
 				{/**
 				 * * ----- Hamburgarmenyn -----
 				 */}
-				<img src="/assets/hamburger-meny.svg" alt="Menyknapp" />
+				<button className="" onClick={(): void => setShowNavMenu(!showNavMenu)}>
+					<img src="/assets/hamburger-meny.svg" alt="Menyknapp" />
+				</button>
 			</section>
+			<HamburgerMenu showNavMenu={showNavMenu} />
 
 			<section className="header__user-content flex flex__space-between">
 				{/**
