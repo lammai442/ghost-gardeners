@@ -1,26 +1,38 @@
 .header {
 	max-width: 100%;
+	padding: 3rem 1rem 1.5rem;
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
 }
 
 .header__container {
-	padding: 3rem 1rem;
+	position: relative;
+}
+
+.header__logo-nav {
+	width: 120px;
 }
 
 .header__logo-img {
 	vertical-align: middle;
+	width: 100%;
 }
 
 .header__user-content {
-	padding: 0.5rem 1rem;
 }
 
 .header__user-profile {
 	gap: 1rem;
+	padding: 0.67rem 1rem;
+	border-radius: 4px;
+}
+
+.header__cart-amount {
+	text-wrap: nowrap;
 }
 
 .header__cart {
 	gap: 1rem;
-	box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
-	border: 1px solid #e0e0e0;
 	text-decoration: none;
 }

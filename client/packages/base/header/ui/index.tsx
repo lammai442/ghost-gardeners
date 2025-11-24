@@ -1,8 +1,11 @@
 import './index.scss';
 import { useCartStore } from '../../../core/stores/usecartstore/data';
 import { HamburgerMenu } from '@mojjen/hamburger-menu';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+// import OutsideClickHandler from 'react-outside-click-handler';
+import { useOnClickOutside } from 'usehooks-ts';
+import { useRef } from 'react';
 
 /**
  * Author: StefanMogren
@@ -13,26 +16,48 @@ import { Link } from 'react-router-dom';
  *
  * Modified: Lam
  * Added cartCount from useCartStore
+ *
+ * Modified: Stefan Mogren
+ * Reworked positioning of content inside the header.
+ *
  */
 
 export const HeaderComp = () => {
 	const { cartCount } = useCartStore();
 	const [showNavMenu, setShowNavMenu] = useState(false);
+	const location = useLocation();
+
+	const ref = useRef<HTMLDivElement>(null!);
+
+	const handleClickOutside = (): void => {
+		setShowNavMenu(false);
+		console.log('I am clicked outside!');
+	};
+
+	useOnClickOutside(ref, handleClickOutside);
+
+	useEffect(() => {
+		setShowNavMenu(false);
+	}, [location.pathname]);
+
 	return (
-		<header className="header">
-			<section className="header__container flex flex__space-between bg-ketchup">
+		<header className="header bg-ketchup">
+			<section className="header__container flex flex__space-between">
 				{/**
 				 * * ----- Sidloggan -----
 				 */}
 				{/* <a href="/"></a> */}
-				<Link to="/menu" className="btn-base bg-light-beige"></Link>
-				{/* <Link to="/" className="btn-base bg-light-beige">
+				<Link to="/" className="header__logo-nav">
 					<img
 						src="/assets/mojjen-logo.svg"
 						className="header__logo-img"
 						alt="Mojjen text logga"
 					/>
-				</Link> */}
+				</Link>
+				<div ref={ref}>
+					<HamburgerMenu showNavMenu={showNavMenu} />
+				</div>
+
 				{/**
 				 * * ----- Hamburgarmenyn -----
 				 */}
@@ -40,28 +65,27 @@ export const HeaderComp = () => {
 					<img src="/assets/hamburger-meny.svg" alt="Menyknapp" />
 				</button>
 			</section>
-			<HamburgerMenu showNavMenu={showNavMenu} />
 
 			<section className="header__user-content flex flex__space-between">
 				{/**
 				 * * ----- Profil -----
 				 */}
-				<section className="header__user-profile flex flex__align-items">
+				<section className="header__user-profile flex flex__align-items  bg-dark-ketchup">
 					<img
 						className="header__profile-img"
 						src="/assets/profile-icon.svg"
 						alt="Profilikon"
 					/>
-					<h5 className="heading-5">Logga in</h5>
+					<h5 className="heading-5 text-light-beige">Hej Lennart!</h5>
 				</section>
 				{/**
 				 * * ----- Varukorg -----
 				 */}
 
-				<a href="/cart" className="header__cart flex btn-base ">
+				<Link to="/cart" className="header__cart flex btn-base bg-light-beige">
 					<img src="/assets/cart-icon.svg" alt="Varukorgsikon" />
-					<h5 className="heading-5 text-black">Varukorg {cartCount}</h5>
-				</a>
+					<h5 className="heading-5 text-black header__cart-amount">{`Varukorg ${cartCount}`}</h5>
+				</Link>
 			</section>
 		</header>
 	);

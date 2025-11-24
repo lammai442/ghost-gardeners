@@ -5,25 +5,58 @@ import { NavLink } from 'react-router-dom';
  *
  *
  */
-type Test = {
+type Props = {
 	showNavMenu: boolean;
 };
 
-export const HamburgerMenu = ({ showNavMenu }: Test) => {
+export const HamburgerMenu = ({ showNavMenu }: Props) => {
 	return (
 		<section
 			className={`${showNavMenu ? 'nav-menu-expand' : 'nav-menu'}
-			bg-ketchup`}
+			bg-light-beige`}
 		>
 			<ul className="nav-menu__nav-list">
 				<li>
-					<NavLink to={'/'}>Start</NavLink>
+					<NavLink
+						to={'/'}
+						className={({ isActive }) =>
+							`heading-3 text-black ${
+								isActive
+									? 'nav-menu__nav-active'
+									: 'nav-menu__nav-inactive heading-3'
+							}`
+						}
+					>
+						Start
+					</NavLink>
 				</li>
 				<li>
-					<NavLink to={'/menu'}>Meny</NavLink>
+					<NavLink
+						to={'/menu'}
+						className={({ isActive }) =>
+							`heading-3 text-black ${
+								isActive
+									? 'nav-menu__nav-active'
+									: 'nav-menu__nav-inactive heading-3'
+							}`
+						}
+					>
+						Meny
+					</NavLink>
 				</li>
 				<li>
-					<NavLink to={'/menu'}>Om oss</NavLink>
+					<NavLink
+						to={'/about'}
+						className={({ isActive }) =>
+							`heading-3 text-black ${
+								isActive
+									? 'nav-menu__nav-active'
+									: 'nav-menu__nav-inactive heading-3'
+							}`
+						}
+					>
+						Om oss
+					</NavLink>
 				</li>
 			</ul>
 		</section>

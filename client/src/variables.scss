@@ -5,6 +5,7 @@
 // ======================================
 $color-mustard: #b38e1d;
 $color-ketchup: #9b3b2e;
+$color-dark-ketchup: #8a3a26;
 $color-cucumber: #556b54;
 $color-dark-beige: #cbae87;
 $color-brown: #66482b;
@@ -163,6 +164,9 @@ $h5-bold-weight: 700;
 }
 .bg-ketchup {
 	background-color: $color-ketchup;
+}
+.bg-dark-ketchup {
+	background-color: $color-dark-ketchup;
 }
 .bg-cucumber {
 	background-color: $color-cucumber;
