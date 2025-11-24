@@ -3,8 +3,8 @@
  * Function to create order, save it to the database and return info to the frontend
  */
 
-import { marshall } from '@aws-sdk/util-dynamodb';
-import { PutItemCommand } from '@aws-sdk/client-dynamodb';
+import { marshall, unmarshall } from '@aws-sdk/util-dynamodb';
+import { PutItemCommand, GetItemCommand, UpdateItemCommand } from '@aws-sdk/client-dynamodb';
 import { client } from './client.mjs';
 import {
 	getProductsByIds,
@@ -104,4 +104,48 @@ export const createOrder = async ({
 		createdAt: now,
 		modifiedAt: now,
 	};
+};
+
+export const cancelOrder = async (orderId) => {
+  const key = {
+    PK: { S: "ORDER" },
+    SK: { S: `ORDER#${orderId}` },
+  };
+
+  const getRes = await client.send(
+    new GetItemCommand({
+      TableName: "mojjen-table",
+      Key: key,
+    })
+  );
+
+  if (!getRes.Item) {
+    throw new Error(`Order med ID ${orderId} hittades inte.`);
+  }
+
+  const now = new Date().toISOString();
+
+  await client.send(
+    new UpdateItemCommand({
+      TableName: "mojjen-table",
+      Key: key,
+      UpdateExpression: `
+        SET #status = :cancelled,
+            modifiedAt = :now
+      `,
+      ExpressionAttributeNames: {
+        "#status": "status",
+      },
+      ExpressionAttributeValues: marshall({
+        ":cancelled": "cancelled",
+        ":now": now,
+      }),
+    })
+  );
+
+  return {
+    ...unmarshall(getRes.Item),
+    status: "cancelled",
+    modifiedAt: now,
+  };
 };

@@ -13,7 +13,8 @@ import { OrderStatusBox } from '@mojjen/orderstatusbox';
 /**
  * Author: Klara Sköld
  * This page is rendered after a successful order.It contains white boxes with different type of content.
- *
+ * Modified by: ninerino
+ * Fixed orderId-splicing to map with cancelOrder and changeOrder functions
  */
 
 export const ConfirmedOrderPage = () => {
@@ -50,7 +51,7 @@ export const ConfirmedOrderPage = () => {
 		<Page titleText="Orderbekräftelse" extraClasses="grid order">
 			{/* Content: "Tack för din order" */}
 			<OrderStatusBox
-				orderId={order.orderId.slice(6)}
+				orderId={order.orderId}
 				status={status}
 				setStatus={setStatus}
 			></OrderStatusBox>

@@ -4,11 +4,13 @@ import { ContentBox } from '@mojjen/contentbox';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { Button } from '@mojjen/button';
 import { useNavigate } from 'react-router-dom';
+import { cancelOrder } from '../../../core/api/apiproducts/data';
 
 /**
  * Author: Klara Sköld
  * A white box on the order confirmation page that updates as the order status changes.
- *
+ * Modified by: ninerino
+ * Added functionality to handleCancel
  */
 
 type Props = {
@@ -31,10 +33,19 @@ export const OrderStatusBox = ({ orderId, status, setStatus }: Props) => {
 	};
 
 	// Created two separated functions. Merge into one?
-	const handleCancel = () => {
-		// Add edit function
-		navigate('/');
-	};
+	const handleCancel = async () => {
+	try {
+		if (orderId) {
+		await cancelOrder(orderId);
+	}
+
+	setStatus("cancelled");
+
+	navigate("/");
+	} catch (err) {
+		console.error(err);
+	}
+};
 
 	const handleEdit = () => {
 		// Add edit function
