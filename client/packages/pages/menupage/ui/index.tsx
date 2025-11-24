@@ -2,13 +2,14 @@ import './index.scss';
 import type { Meal } from '@mojjen/productdata';
 import { useState, useEffect } from 'react';
 import { apiGetMeals } from '@mojjen/apiproducts';
-import { CiFilter } from 'react-icons/ci';
-import { MdKeyboardArrowDown } from 'react-icons/md';
 import { ConstructError } from '@mojjen/construct-error';
 import { LoadingMsg } from '@mojjen/loading-msg';
 import { Page } from '@mojjen/page';
+
 import { Button } from '@mojjen/button';
 import { ProductsList } from '@mojjen/productslist';
+import { useNavigate } from 'react-router-dom';
+import { Filter } from '@mojjen/filter';
 
 /**
  * Author: Lam
@@ -32,6 +33,7 @@ export const MenuPage = () => {
 	const [mealsData, setMealsData] = useState<Meal[]>([]);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [fetchError, setFetchError] = useState<boolean>(false);
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		setLoading(true);
@@ -45,21 +47,11 @@ export const MenuPage = () => {
 		fetchMeals();
 	}, []);
 
-	const handleClick = () => {
-		console.log('handleClick(), filter button');
-	};
+	const handleNavigate = () => navigate('/cart');
 
 	return (
-		<Page titleText="Mojmeny" extraClasses="menu">
-			<Button
-				aria="Filtrera menyn"
-				onClick={handleClick}
-				extraClasses="menu__button"
-			>
-				<CiFilter className="filter__icon" />
-				<span>Filter</span>
-				<MdKeyboardArrowDown className="filter__icon" />
-			</Button>
+		<Page titleText="Mojmeny" extraClasses="flex flex__column menu">
+			<Filter />
 
 			{fetchError && (
 				<ConstructError
@@ -71,6 +63,13 @@ export const MenuPage = () => {
 			{loading && <LoadingMsg title="Laddar menyn" />}
 
 			{mealsData.length > 0 && <ProductsList prodlist={mealsData} />}
+			<Button
+				aria="Gå till varukorgen"
+				extraClasses="menu__button"
+				onClick={handleNavigate}
+			>
+				Gå till varukorgen
+			</Button>
 		</Page>
 	);
 };

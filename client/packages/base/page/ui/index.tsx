@@ -16,13 +16,13 @@ type Props = {
 };
 
 export const Page = ({ titleText, children, srOnly, extraClasses }: Props) => {
-	const classNames = clsx('heading-1', 'page__title', extraClasses, {
+	const classNames = clsx('heading-1', 'page__title', {
 		'sr-only': srOnly,
 	});
 	return (
-		<section className="page page__wrapper cart">
+		<section className={`page page__wrapper flex flex__column`}>
 			<h1 className={classNames}>{titleText}</h1>
-			{children}
+			<section className={` ${extraClasses}`}>{children}</section>
 		</section>
 	);
 };

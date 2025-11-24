@@ -1,8 +1,10 @@
 @use '../../../../src/variables.scss' as *;
 
 .menu {
+	gap: 2rem;
+
 	&__button {
-		margin-bottom: 3rem;
+		margin-top: 2rem;
 	}
 }
 

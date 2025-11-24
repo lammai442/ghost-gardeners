@@ -14,6 +14,8 @@ type Props = {
 	style?: string;
 	aria: string;
 	extraClasses?: string;
+	width?: string;
+	isDisabled?: boolean;
 };
 
 export const Button = ({
@@ -21,17 +23,24 @@ export const Button = ({
 	children,
 	aria,
 	style,
+	isDisabled,
 	onClick,
 }: Props) => {
-	const classNames = clsx('btn', 'base-bold', extraClasses, {
+	const classNames = clsx('btn', 'base-bold', 'border-radius', extraClasses, {
 		'btn-green border-radius': !style,
 		'btn-black border-radius': style === 'black',
 		'btn-brown border-radius': style === 'brown',
 		'btn-simple': style === 'simple',
+		'btn-outlined': style === 'outlined',
 	});
 
 	return (
-		<button className={classNames} aria-label={aria} onClick={onClick}>
+		<button
+			className={classNames}
+			disabled={isDisabled}
+			aria-label={aria}
+			onClick={onClick}
+		>
 			{children}
 		</button>
 	);
