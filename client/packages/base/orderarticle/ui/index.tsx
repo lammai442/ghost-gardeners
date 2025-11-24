@@ -30,9 +30,7 @@ export const OrderArticle = ({ item }: Props) => {
 					<span className="heading-5">{item.subtotal} kr</span>
 				</div>
 
-				<p className="base grid__col-1 grid__row-2">
-					{item.summary}
-				</p>
+				<p className="base grid__col-1 grid__row-2">{item.summary}</p>
 			</div>
 			<hr className="order__line" />
 		</>
