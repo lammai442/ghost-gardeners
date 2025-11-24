@@ -54,9 +54,10 @@ export const HeaderComp = () => {
 				{/**
 				 * * ----- Varukorg -----
 				 */}
+
 				<a href="/cart" className="header__cart flex btn-base ">
 					<img src="/assets/cart-icon.svg" alt="Varukorgsikon" />
-					<h5 className="heading-5">Varukorg {cartCount}</h5>
+					<h5 className="heading-5 text-black">Varukorg {cartCount}</h5>
 				</a>
 			</section>
 		</header>

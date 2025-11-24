@@ -16,6 +16,7 @@ type Props = {
 	showQty?: boolean;
 	showIncramentBtn?: boolean;
 	isFlexColumn?: boolean;
+	isCartItem?: boolean;
 };
 
 export const ProductCard = ({
@@ -38,27 +39,30 @@ export const ProductCard = ({
 
 	const productCardClassNames = clsx('flex product-card', {
 		flex__column: isFlexColumn,
+		inactive: status === 'inactive',
+	});
+	const imgClassNames = clsx('product-card__img', {
+		inactive: status === 'inactive',
 	});
 
-	const increase = () => {
-		console.log(increase);
+	const handleModal = () => {
+		console.log('Opens modal');
 	};
-
 	return (
 		<li className={productCardClassNames}>
 			{/* <li className="product-card flex flex__column"> */}
 			<section className={`product-card__img-box flex ${classBgColor}`}>
-				<img className="product-card__img" src={img} alt="Image of meal" />
-				{showIncramentBtn && (
-					<Button
-						aria={`Lägg till en ${item.name} i varukorgen`}
-						onClick={increase}
-						extraClasses="product-card__add-btn"
-						style="black"
-					>
-						<span className="heading-5">+</span>
-					</Button>
-				)}
+				<img className={imgClassNames} src={img} alt="Image of meal" />
+				{/* {showIncramentBtn && ( */}
+				<Button
+					aria={`Lägg till en ${item.name} i varukorgen`}
+					onClick={handleModal}
+					extraClasses="product-card__add-btn"
+					style="black"
+					isDisabled={true}
+				>
+					<span className="heading-5">+</span>
+				</Button>
 			</section>
 			<section className="product-card__info-box info-box flex flex__column text__left">
 				<div className="info-box__top flex flex__column">
@@ -71,7 +75,12 @@ export const ProductCard = ({
 
 				{showQty && (
 					<section className="info-box__bottom flex">
-						<button className="btn-qty-base--decrament">-</button>
+						<button
+							className="btn-qty-base--decrament"
+							onClick={() => decrament(item.id)}
+						>
+							-
+						</button>
 						<span className="btn-text">{quantity}</span>
 						<button
 							className="btn-qty-base--incrament"

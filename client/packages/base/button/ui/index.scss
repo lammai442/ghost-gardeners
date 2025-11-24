@@ -42,3 +42,18 @@
 	padding: 0;
 	color: $color-black;
 }
+
+.btn-outlined {
+	@include button-bg(transparent);
+
+	color: $color-black;
+	border: 2px solid $color-black;
+
+	&:hover {
+		transition: all 0.3s ease;
+		border: 2px dotted $color-black;
+	}
+	&:active {
+		border: 2px dotted $color-black;
+	}
+}
