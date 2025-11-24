@@ -15,6 +15,7 @@ import { calcSum } from '../../../../src/utils/utils';
 
 export const CartPage = () => {
 	const { cart, incrament, decrament, emptyCart } = useCartStore();
+	const apiUrl: string = import.meta.env.VITE_API_URL;
 
 	const navigate = useNavigate();
 	console.log('cart: ', cart);
@@ -25,14 +26,11 @@ export const CartPage = () => {
 			console.log('Items skickade till backend', items);
 
 			// POST till backend
-			const response = await fetch(
-				'https://or4n888gwe.execute-api.eu-north-1.amazonaws.com/api/order',
-				{
-					method: 'POST',
-					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify({ items, userComment: '', staffComment: '' }),
-				}
-			);
+			const response = await fetch(`${apiUrl}order`, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ items, userComment: '', staffComment: '' }),
+			});
 
 			const data = await response.json();
 
