@@ -14,7 +14,22 @@ export interface Meal {
 	status: string;
 	items?: string[];
 	qty?: number | undefined;
+	includeDrink?: string | null;
 }
 
-// Klara is testing...
-export interface Meal2 {}
+export interface OrderItem extends Meal {
+	quantity: number;
+	extras: string[];
+	without: string[];
+	includeDrink: string | null;
+	subtotal: number;
+	includeDrinkName?: string | null;
+}
+
+export interface Order {
+	orderId: string;
+	status: string;
+	total: number;
+	userComment?: string;
+	items: OrderItem[];
+}

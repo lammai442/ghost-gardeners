@@ -13,3 +13,14 @@
 		margin-bottom: 2rem;
 	}
 }
+
+@media screen and (max-width: 992px) {
+	.page__wrapper {
+		padding: 4.5rem 3rem;
+	}
+}
+@media screen and (max-width: 556px) {
+	.page__wrapper {
+		padding: 4.5rem 1.75rem;
+	}
+}

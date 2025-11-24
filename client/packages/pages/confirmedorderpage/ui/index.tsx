@@ -3,11 +3,11 @@ import { ContentBox } from '@mojjen/contentbox';
 import { OrderArticle } from '@mojjen/orderarticle';
 import { Button } from '@mojjen/button';
 import clsx from 'clsx';
-import { useNavigate, type NavigateFunction } from 'react-router-dom';
+import { useNavigate, useLocation, type NavigateFunction } from 'react-router-dom';
 import { useEffect, useState, type ReactNode } from 'react';
-import { testObj } from '../../../../src/testdata';
 import { CircleIcon } from '@mojjen/circleicon';
 import { FaCheck } from 'react-icons/fa';
+import { Page } from '@mojjen/page';
 
 /**
  * Author: Klara Sköld
@@ -17,7 +17,11 @@ import { FaCheck } from 'react-icons/fa';
 
 export const ConfirmedOrderPage = () => {
 	const navigate: NavigateFunction = useNavigate();
-	const [status, setStatus] = useState(testObj.order.status);
+	const location = useLocation();
+	const order = location.state
+	const [status, setStatus] = useState(order.status);
+
+	if (!order) return <Page titleText="Orderbekräftelse">Ingen order hittades.</Page>;
 
 	// ! Acivate this when the function accepts a proper order object instead of a testobject.
 	// ! The design may be updated in a future sprint
@@ -29,7 +33,7 @@ export const ConfirmedOrderPage = () => {
 	});
 
 	const generateOrderArticles = (): ReactNode => {
-		return testObj.order.items.map((item) => <OrderArticle item={item} />);
+		return order.items.map((item) => <OrderArticle item={item} />);
 	};
 
 	const handleClick = () => {
@@ -37,7 +41,7 @@ export const ConfirmedOrderPage = () => {
 		window.scrollTo(0, 0);
 	};
 	return (
-		<section className="page page__wrapper grid order">
+		<Page titleText="Orderbekräftelse" extraClasses="grid order">
 			{/* Content: "Tack för din order" */}
 			<ContentBox
 				extraClass="order__content-box order__thanks flex text__center flex__column"
@@ -59,7 +63,7 @@ export const ConfirmedOrderPage = () => {
 				>
 					<div className="flex flex__space-between">
 						<span className="base">Delsumma</span>
-						<span className="base">{testObj.order.total * 0.88} kr</span>
+						<span className="base">{order.total * 0.88} kr</span>
 					</div>
 					<div className="flex flex__space-between">
 						<span className="base">Moms</span>
@@ -68,7 +72,7 @@ export const ConfirmedOrderPage = () => {
 					<hr className="order__line" />
 					<div className="flex flex__space-between">
 						<h4 className="heading-4">Totalt</h4>
-						<h4 className="heading-4">{testObj.order.total} kr</h4>
+						<h4 className="heading-4">{order.total} kr</h4>
 					</div>
 					<Button aria="Tillbaka till startsidan" onClick={handleClick}>
 						Köp mer
@@ -89,11 +93,11 @@ export const ConfirmedOrderPage = () => {
 					<aside className="flex flex__space-between">
 						<div className="flex flex__column text__left">
 							<p className="base-small">Order-id</p>
-							<p className="heading-3">#{testObj.order.orderId.slice(6)}</p>
+							<p className="heading-3">#{order.orderId.slice(6)}</p>
 						</div>
 						<p className={statusClassNames}>
-							{testObj.order.status.charAt(0).toUpperCase() +
-								testObj.order.status.slice(1)}
+							{order.status.charAt(0).toUpperCase() +
+								order.status.slice(1)}
 						</p>
 					</aside>
 					<hr className="order__line" />
@@ -119,15 +123,15 @@ export const ConfirmedOrderPage = () => {
 				</ContentBox>
 
 				{/* Content: "Din kommentar" */}
-				{testObj.order.userComment && (
+				{order.userComment && (
 					<ContentBox
 						extraClass="order__content-box order__comment"
 						titleTxt="Din kommentar"
 						titleLevel="h3"
-						text={testObj.order.userComment}
+						text={order.userComment}
 					/>
 				)}
 			</div>
-		</section>
+		</Page>
 	);
 };
