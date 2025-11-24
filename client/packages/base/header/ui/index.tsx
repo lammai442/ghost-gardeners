@@ -2,6 +2,7 @@ import './index.scss';
 import { useCartStore } from '../../../core/stores/usecartstore/data';
 import { HamburgerMenu } from '@mojjen/hamburger-menu';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 /**
  * Author: StefanMogren
@@ -23,13 +24,15 @@ export const HeaderComp = () => {
 				{/**
 				 * * ----- Sidloggan -----
 				 */}
-				<a href="/" className="btn-base bg-light-beige">
+				{/* <a href="/"></a> */}
+				<Link to="/menu" className="btn-base bg-light-beige"></Link>
+				{/* <Link to="/" className="btn-base bg-light-beige">
 					<img
-						src="/assets/mojjen.svg"
+						src="/assets/mojjen-logo.svg"
 						className="header__logo-img"
 						alt="Mojjen text logga"
 					/>
-				</a>
+				</Link> */}
 				{/**
 				 * * ----- Hamburgarmenyn -----
 				 */}
