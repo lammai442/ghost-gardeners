@@ -14,6 +14,7 @@ type Props = {
 	titleLevel?: string;
 	style?: string;
 	children?: ReactNode;
+	icon?: ReactNode;
 };
 
 export const ContentBox = ({
@@ -23,6 +24,7 @@ export const ContentBox = ({
 	style,
 	children,
 	text,
+	icon,
 }: Props) => {
 	const classNames = clsx(
 		`flex flex__column bg-super-light-beige border-radius content-box ${extraClass}`,
@@ -49,6 +51,7 @@ export const ContentBox = ({
 
 	return (
 		<div className={classNames}>
+			{icon}
 			{generateTitle(titleLevel, titleTxt)}
 			{text && generateText(text)}
 
