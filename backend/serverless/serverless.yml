@@ -33,6 +33,12 @@ functions:
       - httpApi:
           path: /api/menu
           method: POST
+  DeleteOrder:
+    handler: functions/menu/DeleteOrder/index.handler
+    events:
+      - httpApi:
+          path: /api/order/{id}
+          method: DELETE
 
 plugins:
   - serverless-offline

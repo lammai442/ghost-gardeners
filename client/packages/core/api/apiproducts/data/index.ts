@@ -1,6 +1,8 @@
 /**
  * Author: Lam
  * Api fetch of products using axios
+ * Modified by: ninerino
+ * Added fetch for delete
  */
 
 import axios from 'axios';
@@ -27,3 +29,15 @@ export const apiGetMeals = async () => {
 
 	return response;
 };
+
+export async function cancelOrder(orderId: string) {
+  const res = await fetch(`${import.meta.env.VITE_API_URL}/order/${orderId}`, {
+    method: "DELETE",
+  });
+
+  if (!res.ok) {
+    throw new Error("Kunde inte avbryta order.");
+  }
+
+  return res.json();
+}
