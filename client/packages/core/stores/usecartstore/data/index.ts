@@ -2,7 +2,7 @@
  * Author: Lam
  * Cartstore using Zustand to access the cart globally in the project
  * Modified: Lam
- * Added save to localstorage
+ * Added save to localstorage, deleteCartItem
  */
 
 import { create } from 'zustand';
@@ -14,6 +14,7 @@ type CartStore = {
 	incrament: (product: Meal) => void;
 	decrament: (id: string | undefined) => void;
 	emptyCart: () => void;
+	deleteCartItem: (id: string | undefined) => void;
 };
 
 // Solution from ChatGPT to update the count when refreshing the page
@@ -38,7 +39,6 @@ export const useCartStore = create<CartStore>((set) => ({
 				newCart = [...state.cart, { ...product, qty: 1 }];
 			}
 
-			// Spara i localStorage
 			localStorage.setItem('cart', JSON.stringify(newCart));
 
 			return {
@@ -87,6 +87,20 @@ export const useCartStore = create<CartStore>((set) => ({
 			return {
 				cart: emptyArray,
 				cartCount: 0,
+			};
+		}),
+	deleteCartItem: (id) =>
+		set((state) => {
+			const updatedCart: Meal[] = state.cart.filter((i) => i.id !== id);
+
+			const cartCountNbr: number = updatedCart.reduce(
+				(acc, item) => acc + (item.qty ?? 0),
+				0
+			);
+
+			return {
+				cart: updatedCart,
+				cartCount: cartCountNbr,
 			};
 		}),
 }));
