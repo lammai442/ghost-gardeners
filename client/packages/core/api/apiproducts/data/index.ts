@@ -11,7 +11,7 @@ export const apiGetMeals = async () => {
 	const apiUrl: string = import.meta.env.VITE_API_URL;
 
 	const response = await axios
-		.get(`${apiUrl}menu`)
+		.get(`${apiUrl}/menu`)
 		.then((response) => {
 			return {
 				success: true,

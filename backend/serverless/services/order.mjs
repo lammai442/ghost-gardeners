@@ -149,3 +149,105 @@ export const cancelOrder = async (orderId) => {
     modifiedAt: now,
   };
 };
+
+// changeOrder ansvarar för att:
+// 1. Hämta en befintlig order
+// 2. Säkerställa att den fortfarande går att ändra
+// 3. Uppdatera items, kommentarer, total, modifiedAt
+// 4. Sätta status till "cancelled" när kunden påbörjar en ändring
+
+export const changeOrder = async ({ orderId, items, userComment = "", staffComment = "", status = "cancelled" }) => {
+  const key = { PK: { S: "ORDER" }, SK: { S: `ORDER#${orderId}` } };
+
+  const res = await client.send(new GetItemCommand({ TableName: "mojjen-table", Key: key }));
+  if (!res.Item) throw new Error(`Order ${orderId} hittades inte.`);
+
+  const existing = unmarshall(res.Item);
+  if (["completed"].includes(existing.status)) throw new Error("Denna order kan inte längre ändras.");
+
+  // Berika och trimma items
+  const allIds = [...new Set(items.flatMap(i => [i.id, ...(i.extras||[]), ...(i.without||[]), i.includeDrink || null]).filter(Boolean))];
+  const productMap = await getProductsByIds(allIds);
+  const enriched = enrichItems(items, productMap);
+  const trimmedItems = enriched.map(i => ({
+    ...i,
+    extras: trimFields(i.extras, ["img","stock","summary","description","includeDrink"])
+  }));
+  const total = calculateTotal(enriched);
+  const now = new Date().toISOString();
+
+  // Uppdatera i DB med korrekt reserved word hantering
+  const updateExprParts = [
+    "SET #attr.#items = :items",
+    "#attr.#userComment = :userComment",
+    "#attr.#staffComment = :staffComment",
+    "#attr.#total = :total",
+    "#statusRoot = :status",
+    "modifiedAt = :now"
+  ];
+
+  const exprAttrNames = {
+    "#attr": "attribute",
+    "#items": "items",
+    "#userComment": "userComment",
+    "#staffComment": "staffComment",
+    "#total": "total",
+    "#statusRoot": "status"
+  };
+
+  await client.send(new UpdateItemCommand({
+    TableName: "mojjen-table",
+    Key: key,
+    UpdateExpression: updateExprParts.join(", "),
+    ExpressionAttributeNames: exprAttrNames,
+    ExpressionAttributeValues: marshall({
+      ":items": trimmedItems,
+      ":userComment": userComment,
+      ":staffComment": staffComment,
+      ":total": total,
+      ":status": status,
+      ":now": now
+    })
+  }));
+
+  return {
+    ...existing,
+    items: trimmedItems,
+    userComment,
+    staffComment,
+    total,
+    status,
+    modifiedAt: now
+  };
+};
+
+
+export const getOrder = async (orderId) => {
+  const key = {
+    PK: { S: "ORDER" },
+    SK: { S: `ORDER#${orderId}` },
+  };
+
+  const res = await client.send(
+    new GetItemCommand({
+      TableName: "mojjen-table",
+      Key: key,
+    })
+  );
+
+  if (!res.Item) {
+    // Returnera ett "tomt" objekt istället för null
+    return {
+      id: orderId,
+      status: "unknown",
+      attribute: {
+        items: [],
+      },
+      PK: "ORDER",
+      SK: `ORDER#${orderId}`,
+      category: "ORDER",
+    };
+  }
+
+  return unmarshall(res.Item);
+};

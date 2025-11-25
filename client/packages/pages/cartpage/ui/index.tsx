@@ -26,7 +26,7 @@ export const CartPage = () => {
 			console.log('Items skickade till backend', items);
 
 			// POST till backend
-			const response = await fetch(`${apiUrl}order`, {
+			const response = await fetch(`${apiUrl}/order`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({ items, userComment: '', staffComment: '' }),
