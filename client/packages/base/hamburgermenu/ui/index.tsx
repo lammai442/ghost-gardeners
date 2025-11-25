@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 /**
  * Author: StefanMogren
  *
- *
+ * Created hamburger menu, added NavLinks for page navigation
  */
 type Props = {
 	showNavMenu: boolean;
@@ -12,15 +12,14 @@ type Props = {
 export const HamburgerMenu = ({ showNavMenu }: Props) => {
 	return (
 		<section
-			className={`${showNavMenu ? 'nav-menu-expand' : 'nav-menu'}
-			bg-light-beige`}
+			className={showNavMenu ? 'nav-menu-expand bg-ketchup' : 'nav-menu'}
 		>
 			<ul className="nav-menu__nav-list">
 				<li>
 					<NavLink
 						to={'/'}
 						className={({ isActive }) =>
-							`heading-3 text-black ${
+							`heading-3 text-light-beige ${
 								isActive
 									? 'nav-menu__nav-active'
 									: 'nav-menu__nav-inactive heading-3'
@@ -34,7 +33,7 @@ export const HamburgerMenu = ({ showNavMenu }: Props) => {
 					<NavLink
 						to={'/menu'}
 						className={({ isActive }) =>
-							`heading-3 text-black ${
+							`heading-3 text-light-beige ${
 								isActive
 									? 'nav-menu__nav-active'
 									: 'nav-menu__nav-inactive heading-3'
@@ -48,7 +47,7 @@ export const HamburgerMenu = ({ showNavMenu }: Props) => {
 					<NavLink
 						to={'/about'}
 						className={({ isActive }) =>
-							`heading-3 text-black ${
+							`heading-3 text-light-beige ${
 								isActive
 									? 'nav-menu__nav-active'
 									: 'nav-menu__nav-inactive heading-3'

@@ -6,6 +6,7 @@ import { Link, useLocation } from 'react-router-dom';
 // import OutsideClickHandler from 'react-outside-click-handler';
 import { useOnClickOutside } from 'usehooks-ts';
 import { useRef } from 'react';
+import { HamburgerIcon } from '@mojjen/hamburger-icon';
 
 /**
  * Author: StefanMogren
@@ -31,7 +32,6 @@ export const HeaderComp = () => {
 
 	const handleClickOutside = (): void => {
 		setShowNavMenu(false);
-		console.log('I am clicked outside!');
 	};
 
 	useOnClickOutside(ref, handleClickOutside);
@@ -42,50 +42,72 @@ export const HeaderComp = () => {
 
 	return (
 		<header className="header bg-ketchup">
-			<section className="header__container flex flex__space-between">
-				{/**
-				 * * ----- Sidloggan -----
-				 */}
-				{/* <a href="/"></a> */}
-				<Link to="/" className="header__logo-nav">
-					<img
-						src="/assets/mojjen-logo.svg"
-						className="header__logo-img"
-						alt="Mojjen text logga"
-					/>
-				</Link>
-				<div ref={ref}>
-					<HamburgerMenu showNavMenu={showNavMenu} />
-				</div>
+			{/* <section className="header__container flex flex__space-between"> */}
+			{/**
+			 * * ----- Sidloggan -----
+			 */}
+			{/* <a href="/"></a> */}
+			<Link to="/" className="header__logo-nav">
+				<img
+					src="/assets/mojjen-logo.svg"
+					className="header__logo-img"
+					alt="Mojjen text logga"
+				/>
+			</Link>
 
-				{/**
-				 * * ----- Hamburgarmenyn -----
-				 */}
-				<button className="" onClick={(): void => setShowNavMenu(!showNavMenu)}>
-					<img src="/assets/hamburger-meny.svg" alt="Menyknapp" />
+			{/**
+			 * * ----- Hamburgarmenyn -----
+			 */}
+			<div className="header__nav-container" ref={ref}>
+				<HamburgerMenu showNavMenu={showNavMenu} />
+				<button
+					className="header__nav-btn bg-none border-none"
+					onClick={(): void => setShowNavMenu(!showNavMenu)}
+				>
+					<HamburgerIcon showNavMenu={showNavMenu} />
+					{/* <img src="/assets/hamburger-meny.svg" alt="Menyknapp" /> */}
 				</button>
-			</section>
+			</div>
+			{/* </section> */}
 
-			<section className="header__user-content flex flex__space-between">
+			<section className="header__user-content flex flex__space-between flex__gap-1">
 				{/**
 				 * * ----- Profil -----
 				 */}
-				<section className="header__user-profile flex flex__align-items  bg-dark-ketchup">
+				<div className="flex flex__gap-1 flex__align-items">
+					{/* Placeholder för profilsidan */}
+					<section className="header__user-profile flex flex__align-items  bg-dark-ketchup">
+						<img
+							className="header__profile-img"
+							src="/assets/profile-icon.svg"
+							alt="Profilikon"
+						/>
+						<h5 className="heading-5 text-light-beige">Hej Lennart!</h5>
+					</section>
+					{/* Placeholder för utloggningsfunktionen */}
 					<img
-						className="header__profile-img"
-						src="/assets/profile-icon.svg"
-						alt="Profilikon"
+						className="header__logout-img"
+						src="/assets/log-out-icon.svg"
+						alt="Utloggningsknapp"
 					/>
-					<h5 className="heading-5 text-light-beige">Hej Lennart!</h5>
-				</section>
+				</div>
 				{/**
 				 * * ----- Varukorg -----
 				 */}
 
-				<Link to="/cart" className="header__cart flex btn-base bg-light-beige">
-					<img src="/assets/cart-icon.svg" alt="Varukorgsikon" />
-					<h5 className="heading-5 text-black header__cart-amount">{`Varukorg ${cartCount}`}</h5>
-				</Link>
+				<div>
+					<Link
+						to="/cart"
+						className="header__cart flex btn-base bg-light-beige"
+					>
+						<img
+							src="/assets/cart-icon.svg"
+							className="header__cart-img"
+							alt="Varukorgsikon"
+						/>
+						<h5 className="heading-5 text-black header__cart-amount">{`Varukorg ${cartCount}`}</h5>
+					</Link>
+				</div>
 			</section>
 		</header>
 	);

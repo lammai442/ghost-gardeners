@@ -1,12 +1,11 @@
 .nav-menu {
-	width: 100%;
 	max-height: 0;
 	position: absolute;
 	top: 100%;
 	left: 0;
 	// padding: 0rem 1rem;
 	overflow-y: hidden;
-	transition: max-height 0.5s ease;
+	// transition: max-height 0.5s ease;
 	// transition: padding 1s;
 }
 
@@ -39,3 +38,20 @@
 li {
 	list-style-type: none;
 }
+
+@media screen and (min-width: 993px) {
+	.nav-menu {
+		position: relative;
+		max-height: 100px;
+		transition: none;
+		top: auto;
+	}
+
+	.nav-menu__nav-list {
+		flex-direction: row;
+		gap: 2rem;
+	}
+}
+/* @media screen and (max-width: 900px) {
+}
+ */

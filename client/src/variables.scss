@@ -192,12 +192,19 @@ $h5-bold-weight: 700;
 .bg__light-red {
 	background-color: color.change($color-ketchup, $alpha: 10%);
 }
+.bg-none {
+	background-color: transparent;
+}
 
 // ======================================
 // Border radius
 // ======================================
 .border-radius {
 	border-radius: $border-radius;
+}
+
+.border-none {
+	border: none;
 }
 
 // ======================================
