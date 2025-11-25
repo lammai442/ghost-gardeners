@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 import type { Meal } from '@mojjen/productdata';
 import { useCartStore } from '../../../core/stores/usecartstore/data';
+import { DrinkFilter } from '../../drinkfilter';
 
 /**
  * Author: Lam
@@ -72,6 +73,9 @@ export const ProductCard = ({
 						{price} kr
 					</span>
 				</div>
+
+				{/* DRINKFILTER */}
+				<DrinkFilter />
 
 				{showQty && (
 					<section className="info-box__bottom flex">
