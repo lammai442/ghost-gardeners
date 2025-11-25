@@ -2,40 +2,47 @@ import './index.scss';
 import { ContentBox } from '@mojjen/contentbox';
 import { OrderArticle } from '@mojjen/orderarticle';
 import { Button } from '@mojjen/button';
-import clsx from 'clsx';
-import { useNavigate, useLocation, type NavigateFunction } from 'react-router-dom';
+import {
+	useNavigate,
+	useLocation,
+	type NavigateFunction,
+} from 'react-router-dom';
 import { useEffect, useState, type ReactNode } from 'react';
-import { CircleIcon } from '@mojjen/circleicon';
-import { FaCheck } from 'react-icons/fa';
 import { Page } from '@mojjen/page';
-
+import { OrderStatusBox } from '@mojjen/orderstatusbox';
 /**
  * Author: Klara Sköld
  * This page is rendered after a successful order.It contains white boxes with different type of content.
- *
+ * Modified by: ninerino
+ * Fixed orderId-splicing to map with cancelOrder and changeOrder functions
  */
 
 export const ConfirmedOrderPage = () => {
 	const navigate: NavigateFunction = useNavigate();
 	const location = useLocation();
-	const order = location.state
+	const order = location.state;
 	const [status, setStatus] = useState(order.status);
 
-	if (!order) return <Page titleText="Orderbekräftelse">Ingen order hittades.</Page>;
+	if (!order)
+		return <Page titleText="Orderbekräftelse">Ingen order hittades.</Page>;
 
 	// ! Acivate this when the function accepts a proper order object instead of a testobject.
 	// ! The design may be updated in a future sprint
 	// useEffect(()=>{setStatus(order.status)},[status])
 
-	const statusClassNames = clsx('heading-4', {
-		'text-cucumber': status === 'pending',
-		'text-black': status === 'delivered',
-	});
-
 	const generateOrderArticles = (): ReactNode => {
-		return order.items.map((item) => <OrderArticle item={item} />);
+		return order.items.map(
+			(item: {
+				extras: string[];
+				name: string;
+				quantity: number;
+				subtotal: number;
+				without: string[];
+				summary: string;
+			}) => <OrderArticle item={item} />
+		);
 	};
-
+	console.log('order', order);
 	const handleClick = () => {
 		navigate('/');
 		window.scrollTo(0, 0);
@@ -43,16 +50,11 @@ export const ConfirmedOrderPage = () => {
 	return (
 		<Page titleText="Orderbekräftelse" extraClasses="grid order">
 			{/* Content: "Tack för din order" */}
-			<ContentBox
-				extraClass="order__content-box order__thanks flex text__center flex__column"
-				titleLevel="h1"
-				titleTxt="Tack för din order!"
-				text="Din beställning har tagits emot och håller på att mojjas ihop."
-			>
-				<CircleIcon>
-					<FaCheck style={{ color: '#f3f0e7', fontSize: '1.5rem' }} />
-				</CircleIcon>
-			</ContentBox>
+			<OrderStatusBox
+				orderId={order.orderId}
+				status={status}
+				setStatus={setStatus}
+			></OrderStatusBox>
 
 			<div className="grid order__content-boxes">
 				{/* Content: "Sammanfattning" */}
@@ -90,17 +92,6 @@ export const ConfirmedOrderPage = () => {
 
 				{/* Content: "Order-id" */}
 				<ContentBox extraClass="order__content-box order__order-id">
-					<aside className="flex flex__space-between">
-						<div className="flex flex__column text__left">
-							<p className="base-small">Order-id</p>
-							<p className="heading-3">#{order.orderId.slice(6)}</p>
-						</div>
-						<p className={statusClassNames}>
-							{order.status.charAt(0).toUpperCase() +
-								order.status.slice(1)}
-						</p>
-					</aside>
-					<hr className="order__line" />
 					<aside className="flex flex__space-between flex__align-items text__left">
 						<div className="flex flex__column">
 							<h5 className="heading-5">Beräknad tid</h5>

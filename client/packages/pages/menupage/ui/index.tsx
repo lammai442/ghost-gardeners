@@ -5,7 +5,6 @@ import { apiGetMeals } from '@mojjen/apiproducts';
 import { ConstructError } from '@mojjen/construct-error';
 import { LoadingMsg } from '@mojjen/loading-msg';
 import { Page } from '@mojjen/page';
-
 import { Button } from '@mojjen/button';
 import { ProductsList } from '@mojjen/productslist';
 import { useNavigate } from 'react-router-dom';
@@ -48,7 +47,7 @@ export const MenuPage = () => {
 	}, []);
 
 	const handleNavigate = () => navigate('/cart');
-
+	console.log(mealsData);
 	return (
 		<Page titleText="Mojmeny" extraClasses="flex flex__column menu">
 			<Filter />

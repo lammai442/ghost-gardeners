@@ -28,6 +28,7 @@ export const Button = ({
 }: Props) => {
 	const classNames = clsx('btn', 'base-bold', 'border-radius', extraClasses, {
 		'btn-green border-radius': !style,
+		'btn-red border-radius': style === 'red',
 		'btn-black border-radius': style === 'black',
 		'btn-brown border-radius': style === 'brown',
 		'btn-simple': style === 'simple',

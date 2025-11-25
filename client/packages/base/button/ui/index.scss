@@ -36,6 +36,10 @@
 	@include button-bg($color-brown);
 }
 
+.btn-red {
+	@include button-bg($color-ketchup);
+}
+
 .btn-simple {
 	// background-color: transparent;
 	background-color: pink;
