@@ -150,12 +150,6 @@ export const cancelOrder = async (orderId) => {
   };
 };
 
-// changeOrder ansvarar för att:
-// 1. Hämta en befintlig order
-// 2. Säkerställa att den fortfarande går att ändra
-// 3. Uppdatera items, kommentarer, total, modifiedAt
-// 4. Sätta status till "cancelled" när kunden påbörjar en ändring
-
 export const changeOrder = async ({ orderId, items, userComment = "", staffComment = "", status = "cancelled" }) => {
   const key = { PK: { S: "ORDER" }, SK: { S: `ORDER#${orderId}` } };
 
@@ -165,7 +159,6 @@ export const changeOrder = async ({ orderId, items, userComment = "", staffComme
   const existing = unmarshall(res.Item);
   if (["completed"].includes(existing.status)) throw new Error("Denna order kan inte längre ändras.");
 
-  // Berika och trimma items
   const allIds = [...new Set(items.flatMap(i => [i.id, ...(i.extras||[]), ...(i.without||[]), i.includeDrink || null]).filter(Boolean))];
   const productMap = await getProductsByIds(allIds);
   const enriched = enrichItems(items, productMap);
@@ -176,7 +169,6 @@ export const changeOrder = async ({ orderId, items, userComment = "", staffComme
   const total = calculateTotal(enriched);
   const now = new Date().toISOString();
 
-  // Uppdatera i DB med korrekt reserved word hantering
   const updateExprParts = [
     "SET #attr.#items = :items",
     "#attr.#userComment = :userComment",

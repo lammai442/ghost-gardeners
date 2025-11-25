@@ -3,6 +3,8 @@
  * Cartstore using Zustand to access the cart globally in the project
  * Modified: Lam
  * Added save to localstorage, deleteCartItem
+ * Modified: ninerino
+ * Changed functions to work with changeOrder
  */
 
 import { create } from 'zustand';
