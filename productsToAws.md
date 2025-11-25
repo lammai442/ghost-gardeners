@@ -56,7 +56,7 @@
 			"summary": "Saftig ostkôrv serverad i luftigt kôrvbrôd.",
 			"description": "En saftig ostkôrv som smälter i munnen inuti ett luftigt kôrvbrôd. Serveras med rostad lök för extra crunch. Perfekt lunch för den som vill ha nåt mättande och gôtt.",
 			"img": "src/assets/icons/meal.png",
-			"items": ["prod-916aa", "prod-ed8d"]
+			"items": ["prod-916aa", "prod-ed8d6"]
 		},
 		{
 			"name": "Varmkôrv mä räksallad",
