@@ -21,7 +21,28 @@
 	&__justify-end {
 		justify-content: flex-end;
 	}
+
+	&__gap-0-5 {
+		gap: 0.5rem;
+	}
+	&__gap-1 {
+		gap: 1rem;
+	}
+	&__gap-1-5 {
+		gap: 1.5rem;
+	}
+	&__gap-2 {
+		gap: 2rem;
+	}
 }
+
+/* .justify-self-center {
+	justify-self: center;
+}
+
+.align-self-center {
+	align-self: center;
+} */
 
 .grid {
 	display: grid;
