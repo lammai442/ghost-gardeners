@@ -47,6 +47,10 @@
 .grid {
 	display: grid;
 
+	&__center {
+		place-items: center;
+	}
+
 	&__row-1 {
 		grid-row: 1;
 	}
@@ -66,6 +70,10 @@
 	&__col-3 {
 		grid-column: 3;
 	}
+}
+
+.d-none {
+	display: none;
 }
 
 body {

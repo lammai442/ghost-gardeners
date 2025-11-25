@@ -9,6 +9,7 @@ import { Button } from '@mojjen/button';
 import { ProductsList } from '@mojjen/productslist';
 import { useNavigate } from 'react-router-dom';
 import { Filter } from '@mojjen/filter';
+import { Modal } from '../../../base/modal/ui';
 
 /**
  * Author: Lam
@@ -33,6 +34,7 @@ export const MenuPage = () => {
 	const [loading, setLoading] = useState<boolean>(false);
 	const [fetchError, setFetchError] = useState<boolean>(false);
 	const navigate = useNavigate();
+	const [modalOpen, setModalOpen] = useState(false);
 
 	useEffect(() => {
 		setLoading(true);
@@ -48,28 +50,55 @@ export const MenuPage = () => {
 
 	const handleNavigate = () => navigate('/cart');
 	console.log(mealsData);
+
+	const handleOpenModal = () => {
+		setModalOpen(true);
+	};
+
+	// If the modal is open the background is unscrollable.
+	useEffect(() => {
+		if (modalOpen === false) {
+			document.body.style.overflow = 'unset';
+		}
+	}, [modalOpen]);
+
 	return (
-		<Page titleText="Mojmeny" extraClasses="flex flex__column menu">
-			<Filter />
-
-			{fetchError && (
-				<ConstructError
-					color="bg-ketchup"
-					title="Kunde inte ladda menyn"
-					text={`Just nu verkar vi ha tekniska problem med vår server, prova gärna igen om en liten stund.`}
-				/>
-			)}
-			{loading && <LoadingMsg title="Laddar menyn" />}
-
-			{mealsData.length > 0 && <ProductsList prodlist={mealsData} />}
-			<Button
-				aria="Gå till varukorgen"
-				extraClasses="menu__button"
-				onClick={handleNavigate}
+		<>
+			<Modal
+				open={modalOpen}
+				titleContent={<h3 className="heading-3 text-light-beige">Logga in</h3>}
+				secondaryFn={() => setModalOpen(false)}
+				cancelFn={() => setModalOpen(false)}
+				setModalOpen={setModalOpen}
 			>
-				Gå till varukorgen
-			</Button>
-		</Page>
+				<p>Placeholder modal content</p>
+			</Modal>
+			<Page titleText="Mojmeny" extraClasses="flex flex__column menu">
+				<Filter />
+				<div className="App">
+					<button onClick={handleOpenModal}>Open</button>
+					{/* <button onClick={() => setModalOpen(true)}>Open</button> */}
+				</div>
+
+				{fetchError && (
+					<ConstructError
+						color="bg-ketchup"
+						title="Kunde inte ladda menyn"
+						text={`Just nu verkar vi ha tekniska problem med vår server, prova gärna igen om en liten stund.`}
+					/>
+				)}
+				{loading && <LoadingMsg title="Laddar menyn" />}
+
+				{mealsData.length > 0 && <ProductsList prodlist={mealsData} />}
+				<Button
+					aria="Gå till varukorgen"
+					extraClasses="menu__button"
+					onClick={handleNavigate}
+				>
+					Gå till varukorgen
+				</Button>
+			</Page>
+		</>
 	);
 };
 
