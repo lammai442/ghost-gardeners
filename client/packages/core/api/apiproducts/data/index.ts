@@ -11,7 +11,7 @@ export const apiGetMeals = async () => {
 	const apiUrl: string = import.meta.env.VITE_API_URL;
 
 	const response = await axios
-		.get(`${apiUrl}menu`)
+		.get(`${apiUrl}/menu`)
 		.then((response) => {
 			return {
 				success: true,
@@ -31,13 +31,13 @@ export const apiGetMeals = async () => {
 };
 
 export async function cancelOrder(orderId: string) {
-  const res = await fetch(`${import.meta.env.VITE_API_URL}/order/${orderId}`, {
-    method: "DELETE",
-  });
+	const res = await fetch(`${import.meta.env.VITE_API_URL}/order/${orderId}`, {
+		method: 'DELETE',
+	});
 
-  if (!res.ok) {
-    throw new Error("Kunde inte avbryta order.");
-  }
+	if (!res.ok) {
+		throw new Error('Kunde inte avbryta order.');
+	}
 
-  return res.json();
+	return res.json();
 }
