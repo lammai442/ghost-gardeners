@@ -26,7 +26,7 @@ export const CartPage = () => {
 			console.log('Items skickade till backend', items);
 
 			// POST till backend
-			const response = await fetch(`${apiUrl}order`, {
+			const response = await fetch(`${apiUrl}/order`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({ items, userComment: '', staffComment: '' }),
@@ -43,7 +43,7 @@ export const CartPage = () => {
 	};
 
 	const handleBackToMenu = () => navigate('/menu');
-	const handleEmpty = () => console.log('handleEmpty()');
+	const handleEmpty = () => emptyCart();
 
 	const generateCartProducts = () => {
 		if (cart.length === 0) return null;
@@ -64,19 +64,37 @@ export const CartPage = () => {
 					</h5>
 				</div>
 				<div className="flex flex__column cart__ctas">
-					<Button aria="Skicka order" onClick={handleSubmit}>
-						Köp
-					</Button>
-					<Button
-						aria="Gå tillbaka till menyn"
-						onClick={handleBackToMenu}
-						style="brown"
-					>
-						Lägg till mer
-					</Button>
-					<Button aria="Töm varukorgen" onClick={handleEmpty} style="outlined">
-						Töm varukorgen
-					</Button>
+					{cart.length > 0 ? (
+						<>
+							<Button aria="Skicka order" onClick={handleSubmit}>
+								Köp
+							</Button>
+							<Button
+								aria="Gå tillbaka till menyn"
+								onClick={handleBackToMenu}
+								style="brown"
+							>
+								Lägg till mer
+							</Button>
+							<Button
+								aria="Töm varukorgen"
+								onClick={handleEmpty}
+								style="outlined"
+							>
+								Töm varukorgen
+							</Button>
+						</>
+					) : (
+						<>
+							<h2 className="heading-5 cart__empty-text">
+								Varukorgen är tom just nu. Ta en sväng förbi menyn och unna dig
+								en riktigt gôttig kôrv.
+							</h2>
+							<Button aria="Skicka order" onClick={handleBackToMenu}>
+								Till menyn
+							</Button>
+						</>
+					)}
 				</div>
 			</ContentBox>
 		</Page>

@@ -33,12 +33,24 @@ functions:
       - httpApi:
           path: /api/menu
           method: POST
+  GetOrder:
+    handler: functions/menu/GetOrder/index.handler
+    events:
+      - httpApi:
+          path: /api/order/{id}
+          method: GET
   DeleteOrder:
     handler: functions/menu/DeleteOrder/index.handler
     events:
       - httpApi:
           path: /api/order/{id}
           method: DELETE
+  ChangeOrder:
+    handler: functions/menu/ChangeOrder/index.handler
+    events:
+      - httpApi:
+          path: /api/order/{id}
+          method: PUT
 
 plugins:
   - serverless-offline

@@ -1,10 +1,12 @@
-import { type ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 import './index.scss';
 import { ContentBox } from '@mojjen/contentbox';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { Button } from '@mojjen/button';
 import { useNavigate } from 'react-router-dom';
 import { cancelOrder } from '../../../core/api/apiproducts/data';
+import { useCartStore, getItemsForOrder } from '../../../core/stores/usecartstore/data';
+import type { OrderItem } from '@mojjen/productdata';
 
 /**
  * Author: Klara Sköld
@@ -21,6 +23,8 @@ type Props = {
 
 export const OrderStatusBox = ({ orderId, status, setStatus }: Props) => {
 	const navigate = useNavigate();
+	const [loading, setLoading] = useState(false);
+ 	const { setCartItems } = useCartStore();
 	const generateString = (
 		status: string,
 		pendingString: string,
@@ -47,10 +51,43 @@ export const OrderStatusBox = ({ orderId, status, setStatus }: Props) => {
 	}
 };
 
-	const handleEdit = () => {
-		// Add edit function
-		navigate(-1);
-	};
+const handleEdit = async () => {
+  if (!orderId) return;
+  setLoading(true);
+  try {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/order/${orderId}`);
+    if (!res.ok) throw new Error("Kunde inte hämta ordern");
+    const data = await res.json();
+
+    // Sätt status till cancelled i backend
+    await fetch(`${import.meta.env.VITE_API_URL}/order/${orderId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        items: data.order.attribute.items,
+        status: "cancelled"
+      })
+    });
+
+    // Lägg tillbaka samma orderId i cart
+    const itemsForCart = data.order.attribute.items.map((item: any) => ({
+      ...item,
+      qty: item.quantity ?? 1,
+      subtotal: item.price * (item.quantity ?? 1),
+      status: "cancelled"
+    }));
+
+    useCartStore.getState().setCartItems(itemsForCart);
+
+    navigate(-1); // tillbaka till cart
+  } catch(err) {
+    console.error("Fel vid ändra order:", err);
+  } finally {
+    setLoading(false);
+  }
+};
+
+
 
 	const renderButtons = (): ReactNode => {
 		return (
