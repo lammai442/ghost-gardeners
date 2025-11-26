@@ -1,9 +1,13 @@
 /**
  * Author: Lam
  * Interface for Meal products
+ *
+ * Modified: StefanMogren
+ * Added category to Meal
  */
 
 export interface Meal {
+	category: string;
 	id?: string;
 	name: string;
 	summary: string;

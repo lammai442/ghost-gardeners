@@ -8,6 +8,9 @@ import { ContentBox } from '@mojjen/contentbox';
  * Author: Klara Sköld
  * Products list
  *
+ * Modified: StefanMogren
+ * Added filter to the API response from GetMenu
+ *
  */
 
 type Props = {
@@ -18,9 +21,11 @@ type Props = {
 const bgColors: string[] = ['bg-mustard', 'bg-ketchup', 'bg-cucumber'];
 
 export const ProductsList = ({ prodlist, isCartItem }: Props) => {
+	const mealList = prodlist.filter((product) => product.category === 'MEAL');
+
 	return (
 		<ul className="grid product-list">
-			{prodlist.map((item, index) => {
+			{mealList.map((item, index) => {
 				// Solution from ChatGTP to give a bgColor to every meal with a pattern
 				const classBgColor = bgColors[index % bgColors.length];
 				return (

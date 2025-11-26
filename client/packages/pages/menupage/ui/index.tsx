@@ -10,6 +10,7 @@ import { ProductsList } from '@mojjen/productslist';
 import { useNavigate } from 'react-router-dom';
 import { Filter } from '@mojjen/filter';
 import { Modal } from '../../../base/modal/ui';
+import { log } from 'console';
 
 /**
  * Author: Lam
@@ -49,7 +50,7 @@ export const MenuPage = () => {
 	}, []);
 
 	const handleNavigate = () => navigate('/cart');
-	console.log(mealsData);
+	// console.log(mealsData);
 
 	const handleOpenModal = () => {
 		setModalOpen(true);
