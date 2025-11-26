@@ -87,7 +87,9 @@ export const MenuPage = () => {
 				)}
 				{loading && <LoadingMsg title="Laddar menyn" />}
 
-				{mealsData.length > 0 && <ProductsList prodlist={mealsData} />}
+				{mealsData.length > 0 && (
+					<ProductsList isCartItem={false} prodlist={mealsData} />
+				)}
 				<Button
 					aria="Gå till varukorgen"
 					extraClasses="menu__button"
