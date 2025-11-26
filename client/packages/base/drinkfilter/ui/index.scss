@@ -1,0 +1,48 @@
+@import '../../../../src/variables.scss';
+
+.drink-filter {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.drink-filter__btn {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: transparent;
+	width: 100%;
+	text-align: start;
+	border: 1.5px solid $color-ketchup;
+	padding: 0.5rem;
+}
+
+.drink-filter__list {
+	z-index: 999;
+	margin-top: 0.3rem;
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	gap: 0.3rem;
+	background-color: $color-white;
+	width: 100%;
+	border-radius: $border-radius;
+	padding: 0.5rem;
+	border: 1px solid $color-cucumber;
+	overflow: hidden;
+}
+
+.drink-filter__item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0.5rem;
+	cursor: pointer;
+
+	&:hover {
+		background-color: $color-cucumber;
+		color: $color-white;
+		border-radius: $border-radius;
+	}
+}

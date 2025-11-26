@@ -8,7 +8,7 @@ import { MdKeyboardArrowDown } from 'react-icons/md';
 import { CiFilter } from 'react-icons/ci';
 
 /**
- * Author: Klara Sköld
+ * Author: Lam Mai
  * Filtering options section for menu page. Content from Lam.
  *
  */

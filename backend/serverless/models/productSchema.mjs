@@ -8,8 +8,9 @@ import Joi from 'joi';
 /**
  * Update: Lam, KlaraSk, Nikki
  * Added when state for description to only apply on category:Meal and change name to 33 characters and summary to 70
- *
- */
+ * Update: Lam
+ * Changed includeDrink to optional for meals
+ * */
 
 const regExItemId = /^prod-[0-9a-fA-F]{5}$/;
 
@@ -41,11 +42,9 @@ export const productSchema = Joi.object({
 	}),
 	includeDrink: Joi.when('category', {
 		is: 'MEAL',
-		then: Joi.string()
-			.min(4)
-			.max(10)
-			.pattern(regExItemId)
-			.default('prod-06683'),
+		then: Joi.string().lowercase().pattern(regExItemId).messages({
+			'string.pattern.base': 'Items must be of type prod-83vFs',
+		}),
 	}),
 	allergenes: Joi.array()
 		.items(

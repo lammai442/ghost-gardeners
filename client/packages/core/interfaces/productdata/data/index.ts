@@ -18,7 +18,16 @@ export interface Meal {
 	status: string;
 	items?: string[];
 	qty?: number | undefined;
-	includeDrink?: string | null;
+	includeDrink: string;
+}
+
+export interface Drink {
+	id: string;
+	name: string;
+	summary: string;
+	price: number;
+	img: string;
+	category: string;
 }
 
 export interface OrderItem extends Meal {
