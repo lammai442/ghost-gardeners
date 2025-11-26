@@ -4,9 +4,13 @@ import clsx from 'clsx';
 import type { Meal } from '@mojjen/productdata';
 import { ProductCard } from '@mojjen/productcard';
 import { ContentBox } from '@mojjen/contentbox';
+import { CartProductCard } from '@mojjen/cartproductcard';
 /**
  * Author: Klara Sköld
  * Products list
+ *
+ * Update: Klara
+ * Ternary operator: CartPage = CartProductCard, menuPage= ProductCard
  *
  */
 
@@ -18,12 +22,21 @@ type Props = {
 const bgColors: string[] = ['bg-mustard', 'bg-ketchup', 'bg-cucumber'];
 
 export const ProductsList = ({ prodlist, isCartItem }: Props) => {
+	console.log('isCartItem: ', isCartItem);
+
+	const classNames = clsx('product-list', {
+		'flex flex__column product-list__cart': isCartItem,
+		grid: !isCartItem,
+	});
+
 	return (
-		<ul className="grid product-list">
+		<ul className={classNames}>
+			{/* <ul className="grid product-list"> */}
 			{prodlist.map((item, index) => {
+				console.log('item från productslist', item);
 				// Solution from ChatGTP to give a bgColor to every meal with a pattern
 				const classBgColor = bgColors[index % bgColors.length];
-				return (
+				return isCartItem === false ? (
 					<ProductCard
 						key={item.id}
 						item={item}
@@ -33,6 +46,16 @@ export const ProductsList = ({ prodlist, isCartItem }: Props) => {
 						isFlexColumn={true}
 						isCartItem={isCartItem}
 						showDrinkOpt={true}
+					/>
+				) : (
+					<CartProductCard
+						key={item.id}
+						item={item}
+						classBgColor={classBgColor}
+						showQty={true}
+						showIncramentBtn={false}
+						isFlexColumn={true}
+						isCartItem={isCartItem}
 					/>
 				);
 			})}
