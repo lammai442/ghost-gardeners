@@ -146,6 +146,18 @@ export const useCartStore = create<CartStore>((set) => ({
 			};
 		});
 	},
+	updateCartItem: (item: OrderItem) => {
+		set((state) => {
+			const updatedCart = state.cart.map((i) => (i.id === item.id ? item : i));
+
+			localStorage.setItem('cart', JSON.stringify(updatedCart));
+
+			return {
+				cart: updatedCart,
+				cartCount: updatedCart.reduce((acc, i) => acc + (i.qty ?? 0), 0),
+			};
+		});
+	},
 }));
 
 /**

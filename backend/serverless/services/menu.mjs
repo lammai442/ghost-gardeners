@@ -56,6 +56,8 @@ export const postMenuItem = async () => {
  * Update: Lam, KlaraSK, Nikki
  * Made description to be optional for the body
  *
+ * Update: Lam
+ * Changed so includeDrink comes from either body or a default prodId
  */
 
 export const postProductItem = async (product) => {
@@ -81,8 +83,9 @@ export const postProductItem = async (product) => {
 				stock: 25,
 				createdAt: generateDate(),
 				...(product.items && { items: product.items }),
-				...(product.category === 'MEAL' &&
-					product.includeDrink && { includeDrink: product.includeDrink }),
+				includeDrink: product.includeDrink
+					? product.includeDrink
+					: 'prod-06683',
 			},
 
 			category: product.category,
