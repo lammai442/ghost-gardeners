@@ -4,7 +4,6 @@ import { MdKeyboardArrowDown } from 'react-icons/md';
 import { useState } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
 import { useRef, useEffect } from 'react';
-import { drinksData } from '../../../drinkData';
 import { useCartStore } from '@mojjen/usecartstore/data';
 
 /**
@@ -26,27 +25,22 @@ export const DrinkFilter = ({ extraClasses, item }: Props) => {
 	const [selected, setSelected] = useState<string | null | undefined>(
 		item.includeDrink
 	);
-	const { updateCartItem } = useCartStore();
 
 	const handleSelectBtn = (): void => {
 		setOpenList((prev) => !prev);
 	};
 
-	useEffect(() => {
-		const findDrink = drinksData.find((d) => d.id === item.includeDrink);
-		const findDrinkName = findDrink ? findDrink.name : '';
-		setSelected(findDrinkName);
-		SetDrinks(drinksData);
-	}, []);
+	// useEffect(() => {
+	// 	const findDrink = drinksData.find((d) => d.id === item.includeDrink);
+	// 	const findDrinkName = findDrink ? findDrink.name : '';
+	// 	setSelected(findDrinkName);
+	// 	SetDrinks([drinksData]);
+	// }, []);
 
 	const handleSelectItem = (name: string, id: string): void => {
 		setSelected(name);
 		setOpenList((prev) => !prev);
 
-		// const updatedItem: OrderItem = {
-		// 	...item,
-		// 	includeDrink: id,
-		// };
 		// updateCartItem(updatedItem);
 	};
 
