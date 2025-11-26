@@ -11,15 +11,17 @@ import clsx from 'clsx';
 type Props = {
 	children: ReactNode;
 	style?: string;
+	extraClasses?: string;
 };
 
-export const CircleIcon = ({ children, style }: Props) => {
+export const CircleIcon = ({ children, style, extraClasses }: Props) => {
 	const classNames = clsx(
-		'circle-icon grid',
+		`circle-icon grid ${extraClasses}`,
 
 		{
 			'bg-cucumber': !style,
 			'bg-black': style === 'black',
+			'bg-ketchup': style === 'red',
 		}
 	);
 

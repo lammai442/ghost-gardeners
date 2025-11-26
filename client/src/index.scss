@@ -12,6 +12,9 @@
 	&__column {
 		flex-direction: column;
 	}
+	&__row {
+		flex-direction: row;
+	}
 	&__space-between {
 		justify-content: space-between;
 	}
