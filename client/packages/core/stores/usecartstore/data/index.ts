@@ -18,6 +18,7 @@ type CartStore = {
 	emptyCart: () => void;
 	deleteCartItem: (id: string | undefined) => void;
 	setCartItems: (items: OrderItem[]) => void;
+	updateCartItem: (items: OrderItem[]) => void;
 };
 
 // Solution from ChatGPT to update the count when refreshing the page
@@ -142,6 +143,17 @@ export const useCartStore = create<CartStore>((set) => ({
 			return {
 				cart: mappedItems,
 				cartCount: totalCount,
+			};
+		});
+	},
+	updateCartItem: (item: OrderItem) => {
+		set((state) => {
+			const updatedCart = state.cart.map((i) => (i.id === item.id ? item : i));
+			localStorage.setItem('cart', JSON.stringify(updatedCart));
+
+			return {
+				cart: updatedCart,
+				cartCount: updatedCart.reduce((acc, i) => acc + (i.qty ?? 0), 0),
 			};
 		});
 	},

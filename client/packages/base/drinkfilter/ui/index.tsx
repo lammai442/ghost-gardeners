@@ -1,11 +1,13 @@
 import './index.scss';
 import clsx from 'clsx';
-import { Meal } from '@mojjen/productdata';
+import { Meal, Drink, OrderItem } from '@mojjen/productdata';
 import { Button } from '@mojjen/button';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import { useState } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
+import { drinksData } from '../../../drinkData';
+import { useCartStore } from '@mojjen/usecartstore/data';
 
 /**
  * Author: Lam Mai
@@ -14,49 +16,46 @@ import { useRef } from 'react';
  */
 
 type Props = {
-	extraClasses: string;
+	extraClasses?: string;
 	item: Meal;
-	onDrinkChange: (item: Meal, id: string) => void;
+	// onDrinkChange: (item: Meal, id: string) => void;
 };
 
-// { item, onDrinkChange }: Props
-
-export const DrinkFilter = ({ extraClasses }: Props) => {
+export const DrinkFilter = ({ extraClasses, item }: Props) => {
 	const ref = useRef<HTMLDivElement | null>(null);
 	const [openList, setOpenList] = useState<boolean>(false);
-	const [selected, setSelected] = useState<string>(
-		'Coca-Cola Original Taste 33 cl'
+	const [drinks, SetDrinks] = useState<Drink[]>([]);
+	const [selected, setSelected] = useState<string | null | undefined>(
+		item.includeDrink
 	);
+	const { updateCartItem } = useCartStore();
+
 	const handleSelectBtn = (): void => {
 		setOpenList((prev) => !prev);
 	};
 
+	useEffect(() => {
+		const findDrink = drinksData.find((d) => d.id === item.includeDrink);
+		const findDrinkName = findDrink ? findDrink.name : '';
+		setSelected(findDrinkName);
+		SetDrinks(drinksData);
+	}, []);
+
 	const handleSelectItem = (name: string, id: string): void => {
 		setSelected(name);
 		setOpenList((prev) => !prev);
-		// Skickas tillbaka till productCard för att ändra på vald dryck.
-		// handleSelectedDrink(item.id)
+
+		const updatedItem: OrderItem = {
+			...item,
+			includeDrink: id,
+		};
+
+		updateCartItem(updatedItem);
 	};
 
 	useOnClickOutside(ref as React.RefObject<HTMLElement>, () => {
 		setOpenList(false);
 	});
-
-	// MockupData men ändras så att det fetchas från backend efter category
-	const drinks = [
-		{
-			name: 'Fanta 33 cl',
-			id: 'prod-59aed',
-		},
-		{
-			name: 'Coca Cola 33 cl',
-			id: 'prod-1214d',
-		},
-		{
-			name: 'Loka 25 cl',
-			id: 'prod-5135v',
-		},
-	];
 
 	return (
 		<div className={`drink-filter ${extraClasses}`}>
@@ -78,6 +77,7 @@ export const DrinkFilter = ({ extraClasses }: Props) => {
 						{drinks.map((d) => {
 							return (
 								<li
+									key={d.id}
 									className="drink-filter__item"
 									onClick={() => handleSelectItem(d.name, d.id)}
 								>
@@ -88,12 +88,6 @@ export const DrinkFilter = ({ extraClasses }: Props) => {
 					</ul>
 				)}
 			</div>
-
-			{/* <select onChange={handleSelect} value={''} name="" id="">
-				{drinks.map((i) => {
-					return <option value={i.id}>{i.name}</option>;
-				})}
-			</select> */}
 		</div>
 	);
 };

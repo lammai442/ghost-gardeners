@@ -32,6 +32,7 @@ export const ProductsList = ({ prodlist, isCartItem }: Props) => {
 						showIncramentBtn={false}
 						isFlexColumn={true}
 						isCartItem={isCartItem}
+						showDrinkOpt={true}
 					/>
 				);
 			})}

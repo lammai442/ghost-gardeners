@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import type { Meal } from '@mojjen/productdata';
 import { useCartStore } from '../../../core/stores/usecartstore/data';
 import { Modal } from '../../modal/ui';
+import { DrinkFilter } from '../../drinkfilter/ui';
 
 /**
  * Author: Lam
@@ -21,6 +22,7 @@ type Props = {
 	showIncramentBtn?: boolean;
 	isFlexColumn?: boolean;
 	isCartItem?: boolean;
+	showDrinkOpt: boolean;
 };
 
 export const ProductCard = ({
@@ -29,6 +31,7 @@ export const ProductCard = ({
 	showQty,
 	showIncramentBtn,
 	isFlexColumn,
+	showDrinkOpt,
 }: Props) => {
 	const { cart, incrament, decrament } = useCartStore();
 	const { name, img, summary, price, status, id } = item;
@@ -99,7 +102,7 @@ export const ProductCard = ({
 					</div>
 
 					{/* DRINKFILTER */}
-					<DrinkFilter />
+					{showDrinkOpt && <DrinkFilter item={item} />}
 
 					{showQty && (
 						<section className="info-box__bottom flex">
