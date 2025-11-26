@@ -37,13 +37,25 @@ export const useCartStore = create<CartStore>((set) => ({
 			if (existingInCart) {
 				newCart = state.cart.map((item) =>
 					item.id === product.id
-					? { ...item, qty: (item.qty ?? 0) + 1, subtotal: item.price * ((item.qty ?? 0) + 1) }
-					: item
+						? {
+								...item,
+								qty: (item.qty ?? 0) + 1,
+								subtotal: item.price * ((item.qty ?? 0) + 1),
+						  }
+						: item
 				);
-				} else {
-				newCart = [...state.cart, { ...product, qty: 1, extras: [], without: [], subtotal: product.price }];
-				}
-
+			} else {
+				newCart = [
+					...state.cart,
+					{
+						...product,
+						qty: 1,
+						extras: [],
+						without: [],
+						subtotal: product.price,
+					},
+				];
+			}
 
 			// Spara i localStorage
 			localStorage.setItem('cart', JSON.stringify(newCart));
@@ -55,11 +67,12 @@ export const useCartStore = create<CartStore>((set) => ({
 		}),
 	decrament: (id) =>
 		set((state) => {
-			let storedCart: OrderItem[] = JSON.parse(localStorage.getItem('cart') || '[]');
+			let storedCart: OrderItem[] = JSON.parse(
+				localStorage.getItem('cart') || '[]'
+			);
 
 			const existingInCart = storedCart.find((item) => item.id === id);
 
-			// If the product doesnt exist
 			if (!existingInCart) return state;
 
 			let updatedCart: OrderItem[] = [];
@@ -110,29 +123,28 @@ export const useCartStore = create<CartStore>((set) => ({
 				cartCount: cartCountNbr,
 			};
 		}),
-	  setCartItems: (items: OrderItem[]) => {
-  set(() => {
-    // Mappa order-items till store-format
-    const mappedItems = items.map((item) => ({
-      ...item,
-      qty: item.quantity ?? 1,       // qty i store
-      subtotal: item.price * (item.quantity ?? 1),
-      extras: item.extras || [],
-      without: item.without || [],
-      status: 'cancelled',           // sätt status till cancelled när kunden ändrar
-    }));
+	setCartItems: (items: OrderItem[]) => {
+		set(() => {
+			// Mappa order-items till store-format
+			const mappedItems = items.map((item) => ({
+				...item,
+				qty: item.quantity ?? 1, // qty i store
+				subtotal: item.price * (item.quantity ?? 1),
+				extras: item.extras || [],
+				without: item.without || [],
+				status: 'cancelled', // sätt status till cancelled när kunden ändrar
+			}));
 
-    localStorage.setItem('cart', JSON.stringify(mappedItems));
+			localStorage.setItem('cart', JSON.stringify(mappedItems));
 
-    const totalCount = mappedItems.reduce((acc, i) => acc + (i.qty ?? 1), 0);
+			const totalCount = mappedItems.reduce((acc, i) => acc + (i.qty ?? 1), 0);
 
-    return {
-      cart: mappedItems,
-      cartCount: totalCount,
-    };
-  });
-}
-
+			return {
+				cart: mappedItems,
+				cartCount: totalCount,
+			};
+		});
+	},
 }));
 
 /**
@@ -147,11 +159,11 @@ export function getItemsForOrder(): OrderItem[] {
 		summary: item.summary,
 		price: item.price,
 		quantity: item.qty ?? 1,
-		extras: item.extras || [],       // alltid array
-		without: item.without || [],     // alltid array
+		extras: item.extras || [], // alltid array
+		without: item.without || [], // alltid array
 		includeDrink: item.includeDrink ?? null,
 		subtotal: item.price * (item.qty ?? 1),
 		img: item.img,
-		status: item.status
+		status: item.status,
 	}));
 }

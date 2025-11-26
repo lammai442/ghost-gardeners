@@ -14,13 +14,14 @@ import { useRef } from 'react';
  */
 
 type Props = {
+	extraClasses: string;
 	item: Meal;
 	onDrinkChange: (item: Meal, id: string) => void;
 };
 
 // { item, onDrinkChange }: Props
 
-export const DrinkFilter = () => {
+export const DrinkFilter = ({ extraClasses }: Props) => {
 	const ref = useRef<HTMLDivElement | null>(null);
 	const [openList, setOpenList] = useState<boolean>(false);
 	const [selected, setSelected] = useState<string>(
@@ -28,17 +29,17 @@ export const DrinkFilter = () => {
 	);
 	const handleSelectBtn = (): void => {
 		setOpenList((prev) => !prev);
-
-		// onDrinkChange(item.id, e.target.value);
 	};
 
 	const handleSelectItem = (name: string, id: string): void => {
 		setSelected(name);
 		setOpenList((prev) => !prev);
+		// Skickas tillbaka till productCard för att ändra på vald dryck.
+		// handleSelectedDrink(item.id)
 	};
 
 	useOnClickOutside(ref as React.RefObject<HTMLElement>, () => {
-		setOpenList(false); // Stänger dropdownen
+		setOpenList(false);
 	});
 
 	// MockupData men ändras så att det fetchas från backend efter category
@@ -58,7 +59,7 @@ export const DrinkFilter = () => {
 	];
 
 	return (
-		<div className="drink-filter">
+		<div className={`drink-filter ${extraClasses}`}>
 			<section>
 				<h3 className="text-ketchup heading-5">Välj dryck</h3>
 				<p className="base-small">Din inkluderande dryck: </p>

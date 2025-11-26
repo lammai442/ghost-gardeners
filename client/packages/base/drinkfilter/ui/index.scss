@@ -2,6 +2,9 @@
 
 .drink-filter {
 	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
 }
 
 .drink-filter__btn {
