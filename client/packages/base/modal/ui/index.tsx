@@ -14,9 +14,7 @@ import { ContentBox } from '@mojjen/contentbox';
 
 type Props = {
 	open: boolean;
-	cancelFn?: () => void;
-	primaryFn?: () => void;
-	secondaryFn?: () => void;
+
 	setModalOpen: (arg0: boolean) => void;
 	titleContent?: React.ReactNode;
 	className?: string;
@@ -25,19 +23,19 @@ type Props = {
 
 export const Modal = ({
 	open,
-	cancelFn,
-
 	titleContent,
 	children,
 	setModalOpen,
 }: Props) => {
+	const closeModal = () => {
+		setModalOpen(false);
+	};
+
 	// Listens for all keyboard events. If the Escape key is pressed, the modal closes.
 	useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {
 			if (e.key === 'Escape' && open) {
-				if (cancelFn) {
-					cancelFn();
-				}
+				closeModal();
 			}
 		};
 		// Disables Background Scrolling whilst the SideDrawer/Modal is open
@@ -46,25 +44,28 @@ export const Modal = ({
 		}
 		document.addEventListener('keydown', handleKeyDown);
 		return () => document.removeEventListener('keydown', handleKeyDown);
-	}, [open, cancelFn]);
+	}, [open, closeModal]);
 
 	if (!open) return null;
 
-	// Unsets Background Scrolling to use when SideDrawer/Modal is closed
-	// https://medium.com/@nikhil_gupta/how-to-disable-background-scroll-when-a-modal-side-drawer-is-open-in-react-js-999653a8eebb
-	const closeModal = () => {
-		// cancelFn;
-		setModalOpen(false);
-	};
-
 	return (
-		<div className="modalBackground grid grid__center">
-			<ContentBox setModalOpen={setModalOpen} extraClass="modal2 ">
+		<div className="grid grid__center background">
+			<ContentBox setModalOpen={setModalOpen} extraClass="modal">
 				{titleContent && (
-					<header className="modal__header flex bg-ketchup flex__space-between flex__align-items">
+					<header
+						className="modal__header flex bg-ketchup flex__space-between flex__gap-3 
+			
+		
+					flex__align-items"
+					>
 						{titleContent}
-						<Button style="simple" onClick={closeModal} aria="Stäng rutan">
-							<IoClose style={{ strokeWidth: '1.25rem' }} />
+						<Button
+							style="simple"
+							onClick={closeModal}
+							aria="Stäng rutan"
+							extraClasses="flex flex__justify-center"
+						>
+							<IoClose className="modal__icon" />
 						</Button>
 					</header>
 				)}

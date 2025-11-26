@@ -66,8 +66,6 @@ export const ProductCard = ({
 			<Modal
 				open={modalOpen}
 				titleContent={<h3 className="heading-3 text-light-beige">{name}</h3>}
-				secondaryFn={() => setModalOpen(false)}
-				cancelFn={() => setModalOpen(false)}
 				setModalOpen={setModalOpen}
 			>
 				<p>Placeholder modal content</p>

@@ -18,6 +18,9 @@
 	&__align-items {
 		align-items: center;
 	}
+	&__justify-center {
+		justify-content: center;
+	}
 	&__justify-end {
 		justify-content: flex-end;
 	}
@@ -33,6 +36,9 @@
 	}
 	&__gap-2 {
 		gap: 2rem;
+	}
+	&__gap-3 {
+		gap: 3rem;
 	}
 }
 

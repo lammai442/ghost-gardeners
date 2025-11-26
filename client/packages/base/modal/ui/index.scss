@@ -1,4 +1,4 @@
-.modalBackground {
+.background {
 	position: fixed;
 	z-index: 999;
 	width: 100%;
@@ -13,11 +13,18 @@
 
 .modal {
 	&__header {
-		padding: 1rem 1.5rem;
+		padding: 1rem 1.25rem;
 		border-radius: 0.25rem 0.9rem 0rem 0rem;
 	}
-}
-
-.modal__content {
-	padding: 2rem 1.5rem 3.5rem 1.5rem;
+	&__icon {
+		font-size: 2rem;
+		stroke-width: 1rem;
+		&:hover {
+			scale: 110%;
+			transition: all 0.2s ease-in-out;
+		}
+	}
+	&__content {
+		padding: 2rem 1.5rem;
+	}
 }

@@ -67,8 +67,6 @@ export const MenuPage = () => {
 			<Modal
 				open={modalOpen}
 				titleContent={<h3 className="heading-3 text-light-beige">Logga in</h3>}
-				secondaryFn={() => setModalOpen(false)}
-				cancelFn={() => setModalOpen(false)}
 				setModalOpen={setModalOpen}
 			>
 				<p>Placeholder modal content</p>
