@@ -1,7 +1,5 @@
 import './index.scss';
-import clsx from 'clsx';
 import { Meal, Drink, OrderItem } from '@mojjen/productdata';
-import { Button } from '@mojjen/button';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import { useState } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
@@ -45,12 +43,11 @@ export const DrinkFilter = ({ extraClasses, item }: Props) => {
 		setSelected(name);
 		setOpenList((prev) => !prev);
 
-		const updatedItem: OrderItem = {
-			...item,
-			includeDrink: id,
-		};
-
-		updateCartItem(updatedItem);
+		// const updatedItem: OrderItem = {
+		// 	...item,
+		// 	includeDrink: id,
+		// };
+		// updateCartItem(updatedItem);
 	};
 
 	useOnClickOutside(ref as React.RefObject<HTMLElement>, () => {
