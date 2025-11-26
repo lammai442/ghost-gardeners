@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { cancelOrder } from '../../../core/api/apiproducts/data';
 import { useCartStore, getItemsForOrder } from '../../../core/stores/usecartstore/data';
 import type { OrderItem } from '@mojjen/productdata';
+import { Modal } from '@mojjen/modal'
 
 /**
  * Author: Klara Sköld
@@ -36,20 +37,31 @@ export const OrderStatusBox = ({ orderId, status, setStatus }: Props) => {
 		else return pendingString;
 	};
 
-	// Created two separated functions. Merge into one?
-	const handleCancel = async () => {
-	try {
-		if (orderId) {
-		await cancelOrder(orderId);
-	}
+	const [showCancelModal, setShowCancelModal] = useState(false);
 
-	setStatus("cancelled");
+	const handleCancel = () => {
+		console.log("handleCancel clicked");
+		setShowCancelModal(true);
+	};
 
-	navigate("/");
-	} catch (err) {
-		console.error(err);
-	}
-};
+	const confirmCancel = async () => {
+		try {
+			if (orderId) {
+				await cancelOrder(orderId);
+			}
+
+			setStatus("cancelled");
+			navigate("/");
+		} catch (err) {
+			console.error(err);
+		}
+	};
+
+	const closeCancelModal = () => {
+		setShowCancelModal(false);
+	};
+
+
 
 const handleEdit = async () => {
   if (!orderId) return;
@@ -92,10 +104,13 @@ const handleEdit = async () => {
 	const renderButtons = (): ReactNode => {
 		return (
 			<div className="flex btns">
-				<Button aria="Avbryt order och" onClick={handleCancel} style="red">
+				<Button
+				aria="Avbryt order"
+				onClick={handleCancel}
+				style="red">
 					Avbryt
 				</Button>
-				<Button aria="Avbryt order och" onClick={handleEdit} style="outlined">
+				<Button aria="Ändra order" onClick={handleEdit} style="outlined">
 					Ändra order
 				</Button>
 			</div>
@@ -103,6 +118,7 @@ const handleEdit = async () => {
 	};
 
 	return (
+		<>
 		<ContentBox
 			extraClass="order__content-box order__thanks flex text__center flex__column"
 			titleLevel="h1"
@@ -140,5 +156,33 @@ const handleEdit = async () => {
 			</h4>
 			{status === 'pending' && renderButtons()}
 		</ContentBox>
+
+		<Modal
+				open={showCancelModal}
+				setModalOpen={setShowCancelModal}
+				titleContent={<h2 className="heading-2 text-light-beige">Avbryt order</h2>}
+			>
+				<div className="flex flex__column flex__gap-1">
+				<p className="base cancel-text">Är du säker på att du vill avbryta din order?</p>
+
+				<div className="flex flex__gap-2 flex__justify-end">
+					<Button
+					style="outlined"
+					onClick={closeCancelModal}
+					aria={ 'Gå tillbaka' }>
+						Gå tillbaka utan att ändra
+					</Button>
+
+					<Button
+					style="red"
+					onClick={confirmCancel}
+					aria={ 'Avbryt order' }>
+						Ja, avbryt ordern
+					</Button>
+				</div>
+				</div>
+			</Modal>
+		</>
 	);
+
 };
