@@ -9,6 +9,7 @@
 
 import { create } from 'zustand';
 import type { Meal, Order, OrderItem } from '@mojjen/productdata';
+import { generateId } from '../../../utils/helpfunctions';
 
 type CartStore = {
 	cartCount: number;
@@ -32,71 +33,25 @@ export const useCartStore = create<CartStore>((set) => ({
 	cart: savedCart,
 	incrament: (product: OrderItem) =>
 		set((state) => {
-			const existingInCart = state.cart.find((item) => item.id === product.id);
-			let newCart: OrderItem[];
-			if (existingInCart) {
-				newCart = state.cart.map((item) =>
-					item.id === product.id
-						? {
-								...item,
-								qty: (item.qty ?? 0) + 1,
-								subtotal: item.price * ((item.qty ?? 0) + 1),
-						  }
-						: item
-				);
-			} else {
-				newCart = [
-					...state.cart,
-					{
-						...product,
-						qty: 1,
-						extras: [],
-						without: [],
-						subtotal: product.price,
-					},
-				];
-			}
+			const productWithItemId = { ...product, itemId: generateId() };
 
-			// Spara i localStorage
-			localStorage.setItem('cart', JSON.stringify(newCart));
+			const updatedCart = [...state.cart, productWithItemId];
+			localStorage.setItem('cart', JSON.stringify(updatedCart));
 
 			return {
-				cart: newCart,
-				cartCount: existingInCart ? state.cartCount + 1 : state.cartCount + 1,
+				cart: updatedCart,
+				cartCount: updatedCart.length,
 			};
 		}),
-	decrament: (id) =>
+	decrament: (itemId) =>
 		set((state) => {
-			let storedCart: OrderItem[] = JSON.parse(
-				localStorage.getItem('cart') || '[]'
-			);
-
-			const existingInCart = storedCart.find((item) => item.id === id);
-
-			// If the product doesnt exist
-			if (!existingInCart) return state;
-
-			let updatedCart: OrderItem[] = [];
-
-			// Remove product if qty becomes 0
-			if (existingInCart.qty === 1) {
-				updatedCart = storedCart.filter((item) => item.id !== id);
-			} else {
-				updatedCart = storedCart.map((item) =>
-					item.id === id
-						? {
-								...item,
-								qty: (item.qty ?? 0) - 1,
-						  }
-						: item
-				);
-			}
+			const updatedCart = state.cart.filter((item) => item.itemId !== itemId);
 
 			localStorage.setItem('cart', JSON.stringify(updatedCart));
 
 			return {
 				cart: updatedCart,
-				cartCount: state.cartCount - 1,
+				cartCount: updatedCart.length,
 			};
 		}),
 	emptyCart: () =>
@@ -110,18 +65,17 @@ export const useCartStore = create<CartStore>((set) => ({
 				cartCount: 0,
 			};
 		}),
-	deleteCartItem: (id) =>
+	deleteCartItem: (itemId) =>
 		set((state) => {
-			const updatedCart: OrderItem[] = state.cart.filter((i) => i.id !== id);
-
-			const cartCountNbr: number = updatedCart.reduce(
-				(acc, item) => acc + (item.qty ?? 0),
-				0
+			const updatedCart: OrderItem[] = state.cart.filter(
+				(i) => i.itemId !== itemId
 			);
+
+			localStorage.setItem('cart', JSON.stringify(updatedCart));
 
 			return {
 				cart: updatedCart,
-				cartCount: cartCountNbr,
+				cartCount: updatedCart.length,
 			};
 		}),
 	setCartItems: (items: OrderItem[]) => {
@@ -167,6 +121,7 @@ export function getItemsForOrder(): OrderItem[] {
 	const { cart } = useCartStore.getState();
 
 	return cart.map((item) => ({
+		itemId: item.itemId,
 		id: item.id,
 		name: item.name,
 		summary: item.summary,
