@@ -7,7 +7,6 @@ import { useCartStore } from '../../../core/stores/usecartstore/data';
 import { ContentBox } from '@mojjen/contentbox';
 import { CircleIcon } from '@mojjen/circleicon';
 import { IoClose } from 'react-icons/io5';
-import { log } from 'console';
 
 /**
  * Author: Klara
@@ -37,7 +36,6 @@ export const CartProductCard = ({
 	useEffect(() => {
 		const itemExistInCart = cart.find((i) => i.id === item.id);
 		// Add to the qty count of the product
-		if (itemExistInCart) setQuantity(itemExistInCart.qty);
 		if (!itemExistInCart) setQuantity(0);
 	}, [cart]);
 

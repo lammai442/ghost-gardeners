@@ -37,7 +37,7 @@ export const HomePage = () => {
 					aria="Till menyn"
 					onClick={handleClick}
 					extraClasses="home-page__btn"
-					style="brown"
+					style="outlined"
 				>
 					Bygg din egen moj
 				</Button>

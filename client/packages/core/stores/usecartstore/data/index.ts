@@ -82,10 +82,7 @@ export const useCartStore = create<CartStore>((set) => ({
 			// Mappa order-items till store-format
 			const mappedItems = items.map((item) => ({
 				...item,
-				qty: item.quantity ?? 1, // qty i store
-				subtotal: item.price * (item.quantity ?? 1),
-				extras: item.extras || [],
-				without: item.without || [],
+				subtotal: item.price,
 				status: 'cancelled', // sätt status till cancelled när kunden ändrar
 			}));
 
@@ -125,11 +122,8 @@ export function getItemsForOrder(): OrderItem[] {
 		name: item.name,
 		summary: item.summary,
 		price: item.price,
-		quantity: item.qty ?? 1,
-		extras: item.extras || [], // alltid array
-		without: item.without || [], // alltid array
 		includeDrink: item.includeDrink ?? null,
-		subtotal: item.price * (item.qty ?? 1),
+		subtotal: item.price,
 		img: item.img,
 		status: item.status,
 	}));
