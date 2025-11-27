@@ -11,6 +11,9 @@ import { IoClose } from 'react-icons/io5';
 /**
  * Author: Klara
  * Product card displayed in cart view.
+ *
+ * Bugfix: StefanMogren
+ * Fixed classname of product-card__img and product-card__img-box
  */
 
 type Props = {
@@ -39,7 +42,7 @@ export const CartProductCard = ({
 		if (!itemExistInCart) setQuantity(0);
 	}, [cart]);
 
-	const imgClassNames = clsx('product-card__img2', {
+	const imgClassNames = clsx('product-card__img', {
 		inactive: status === 'inactive',
 	});
 
@@ -48,7 +51,7 @@ export const CartProductCard = ({
 			<ContentBox extraClass="flex__row cart-item">
 				<li className="flex flex__gap-1  cart-item__list-item ">
 					<div
-						className={`product-card__img-box2 flex flex__column ${classBgColor}`}
+						className={`product-card__img-box flex flex__column ${classBgColor}`}
 					>
 						<img className={imgClassNames} src={img} alt="Image of meal" />
 					</div>
