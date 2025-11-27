@@ -5,6 +5,8 @@
  * Added save to localstorage, deleteCartItem
  * Modified: ninerino
  * Changed functions to work with changeOrder
+ * Modified: Lam
+ * Added itemId to all items thats added to cart and logic for cartCount
  */
 
 import { create } from 'zustand';
