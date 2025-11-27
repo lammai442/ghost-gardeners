@@ -30,9 +30,8 @@ export const CartProductCard = ({
 
 	isFlexColumn,
 }: Props) => {
-	const { cart, decrament } = useCartStore();
-	const { name, img, summary, price, status, includeDrink, id } = item;
-	console.log('item från CartProductCard: ', item);
+	const { cart, decrament, deleteCartItem } = useCartStore();
+	const { name, img, summary, price, status, includeDrink, id, itemId } = item;
 	const [quantity, setQuantity] = useState<number | undefined>(0);
 
 	useEffect(() => {
@@ -74,7 +73,7 @@ export const CartProductCard = ({
 					<Button
 						aria={`Ta bort ${name} från varukorgen`}
 						extraClasses="cart-item__delete-btn"
-						onClick={() => decrament(id)}
+						onClick={() => deleteCartItem(itemId)}
 						style="simple"
 					>
 						<CircleIcon style="red">

@@ -39,10 +39,12 @@ export const ProductCard = ({
 	const [modalOpen, setModalOpen] = useState(false);
 
 	useEffect(() => {
-		const itemExistInCart = cart.find((i) => i.id === item.id);
-		// Add to the qty count of the product
-		if (itemExistInCart) setQuantity(itemExistInCart.qty);
-		if (!itemExistInCart) setQuantity(0);
+		const count = cart.filter((i) => i.id === item.id).length;
+		setQuantity(count);
+		// const itemExistInCart = cart.find((i) => i.id === item.id);
+		// // Add to the qty count of the product
+		// if (itemExistInCart) setQuantity(itemExistInCart.qty);
+		// if (!itemExistInCart) setQuantity(count);
 	}, [cart]);
 
 	const productCardClassNames = clsx('flex product-card', {
@@ -54,8 +56,8 @@ export const ProductCard = ({
 	});
 
 	const handleModal = () => {
-		console.log('Opens modal');
-		setModalOpen(true);
+		incrament(item);
+		// setModalOpen(true);
 	};
 	// If the modal is open the background is unscrollable.
 	useEffect(() => {
@@ -77,7 +79,7 @@ export const ProductCard = ({
 			<li className={productCardClassNames}>
 				{/* <li className="product-card flex flex__column"> */}
 				<section
-					onClick={handleModal}
+					// onClick={handleModal}
 					className={`product-card__img-box flex ${classBgColor}`}
 				>
 					<img className={imgClassNames} src={img} alt="Image of meal" />
@@ -87,7 +89,7 @@ export const ProductCard = ({
 						onClick={handleModal}
 						extraClasses="product-card__add-btn"
 						style="black"
-						isDisabled={true}
+						isDisabled={false}
 					>
 						<span className="heading-5">+</span>
 					</Button>
@@ -101,14 +103,11 @@ export const ProductCard = ({
 						</span>
 					</div>
 
-					{/* DRINKFILTER */}
-					{showDrinkOpt && <DrinkFilter item={item} />}
-
-					{showQty && (
+					{/* {showQty && (
 						<section className="info-box__bottom flex">
 							<button
 								className="btn-qty-base--decrament"
-								onClick={() => decrament(item.id)}
+								onClick={() => decrament(item.itemId)}
 							>
 								-
 							</button>
@@ -117,13 +116,12 @@ export const ProductCard = ({
 								className="btn-qty-base--incrament"
 								onClick={() => {
 									incrament(item);
-									console.log(cart);
 								}}
 							>
 								+
 							</button>
 						</section>
-					)}
+					)} */}
 				</section>
 			</li>
 		</>
