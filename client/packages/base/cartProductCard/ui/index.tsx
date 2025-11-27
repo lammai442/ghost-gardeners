@@ -1,8 +1,7 @@
 import './index.scss';
 import { Button } from '../../button/ui';
 import clsx from 'clsx';
-import { useEffect, useState } from 'react';
-import type { Meal, OrderItem } from '@mojjen/productdata';
+import type { OrderItem } from '@mojjen/productdata';
 import { useCartStore } from '../../../core/stores/usecartstore/data';
 import { ContentBox } from '@mojjen/contentbox';
 import { CircleIcon } from '@mojjen/circleicon';
@@ -26,13 +25,8 @@ type Props = {
 	isCartItem?: boolean;
 };
 
-export const CartProductCard = ({
-	item,
-	classBgColor,
-
-	isFlexColumn,
-}: Props) => {
-	const { cart, decrament, deleteCartItem } = useCartStore();
+export const CartProductCard = ({ item, classBgColor }: Props) => {
+	const { deleteCartItem } = useCartStore();
 	const {
 		name,
 		img,
@@ -41,16 +35,15 @@ export const CartProductCard = ({
 		status,
 		includeDrink,
 		includeDrinkName,
-		id,
 		itemId,
 	} = item;
-	const [quantity, setQuantity] = useState<number | undefined>(0);
+	// const [quantity, setQuantity] = useState<number | undefined>(0);
 
-	useEffect(() => {
-		const itemExistInCart = cart.find((i) => i.id === item.id);
-		// Add to the qty count of the product
-		if (!itemExistInCart) setQuantity(0);
-	}, [cart]);
+	// useEffect(() => {
+	// 	const itemExistInCart = cart.find((i) => i.id === item.id);
+	// 	// Add to the qty count of the product
+	// 	if (!itemExistInCart) setQuantity(0);
+	// }, [cart]);
 
 	const imgClassNames = clsx('product-card__img', {
 		inactive: status === 'inactive',

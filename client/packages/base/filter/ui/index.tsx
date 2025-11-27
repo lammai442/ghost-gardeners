@@ -1,8 +1,4 @@
-import type { ReactNode } from 'react';
 import './index.scss';
-import clsx from 'clsx';
-import { ConstructError } from '@mojjen/construct-error';
-import { LoadingMsg } from '@mojjen/loading-msg';
 import { Button } from '@mojjen/button';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import { CiFilter } from 'react-icons/ci';

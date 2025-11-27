@@ -7,7 +7,7 @@ import {
 	useLocation,
 	type NavigateFunction,
 } from 'react-router-dom';
-import { useEffect, useState, type ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 import { Page } from '@mojjen/page';
 import { OrderStatusBox } from '@mojjen/orderstatusbox';
 /**

@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import type { Meal } from '@mojjen/productdata';
 import { useCartStore } from '../../../core/stores/usecartstore/data';
 import { Modal } from '../../modal/ui';
-import { DrinkFilter } from '../../drinkfilter/ui';
 
 /**
  * Author: Lam
@@ -25,27 +24,20 @@ type Props = {
 	showDrinkOpt: boolean;
 };
 
-export const ProductCard = ({
-	item,
-	classBgColor,
-	showQty,
-	showIncramentBtn,
-	isFlexColumn,
-	showDrinkOpt,
-}: Props) => {
-	const { cart, incrament, decrament } = useCartStore();
-	const { name, img, summary, price, status, id } = item;
-	const [quantity, setQuantity] = useState<number | undefined>(0);
+export const ProductCard = ({ item, classBgColor, isFlexColumn }: Props) => {
+	const { incrament } = useCartStore();
+	const { name, img, summary, price, status } = item;
+	// const [quantity, setQuantity] = useState<number | undefined>(0);
 	const [modalOpen, setModalOpen] = useState(false);
 
-	useEffect(() => {
-		const count = cart.filter((i) => i.id === item.id).length;
-		setQuantity(count);
-		// const itemExistInCart = cart.find((i) => i.id === item.id);
-		// // Add to the qty count of the product
-		// if (itemExistInCart) setQuantity(itemExistInCart.qty);
-		// if (!itemExistInCart) setQuantity(count);
-	}, [cart]);
+	// useEffect(() => {
+	// 	const count = cart.filter((i) => i.id === item.id).length;
+	// 	setQuantity(count);
+	// 	// const itemExistInCart = cart.find((i) => i.id === item.id);
+	// 	// // Add to the qty count of the product
+	// 	// if (itemExistInCart) setQuantity(itemExistInCart.qty);
+	// 	// if (!itemExistInCart) setQuantity(count);
+	// }, [cart]);
 
 	const productCardClassNames = clsx('flex product-card', {
 		flex__column: isFlexColumn,

@@ -8,7 +8,7 @@
 
 export interface Meal {
 	category: string;
-	id?: string;
+	id: string;
 	name: string;
 	summary: string;
 	details?: string;
@@ -18,6 +18,9 @@ export interface Meal {
 	status: string;
 	items?: string[];
 	includeDrink: string | null;
+	itemId?: string;
+	includeDrinkName?: string | null;
+	subtotal?: number;
 }
 
 export interface Drink {
