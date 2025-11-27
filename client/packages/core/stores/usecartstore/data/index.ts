@@ -34,7 +34,7 @@ export const useCartStore = create<CartStore>((set) => ({
 		set((state) => {
 			const productWithItemId = { ...product, itemId: generateId() };
 
-			const updatedCart = [...state.cart, productWithItemId];
+			const updatedCart = [...state.cart, productWithItemId ];
 			localStorage.setItem('cart', JSON.stringify(updatedCart));
 
 			return {

@@ -13,6 +13,8 @@ import { IoClose } from 'react-icons/io5';
  * Product card displayed in cart view.
  */
 
+
+
 type Props = {
 	item: OrderItem;
 	// item: Meal;
@@ -30,7 +32,7 @@ export const CartProductCard = ({
 	isFlexColumn,
 }: Props) => {
 	const { cart, decrament, deleteCartItem } = useCartStore();
-	const { name, img, summary, price, status, includeDrink, id, itemId } = item;
+	const { name, img, summary, price, status, includeDrink, includeDrinkName, id, itemId } = item;
 	const [quantity, setQuantity] = useState<number | undefined>(0);
 
 	useEffect(() => {
@@ -58,7 +60,7 @@ export const CartProductCard = ({
 							<p className="base-small">{summary}</p>
 							{includeDrink && (
 								<p className="heading-5">
-									<span className="">Dryck: </span>
+									<span className="base-bold">Dryck: {includeDrinkName}</span>
 								</p>
 							)}
 							<hr className="cart-item__line" />
