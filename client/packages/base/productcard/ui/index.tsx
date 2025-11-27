@@ -56,7 +56,8 @@ export const ProductCard = ({
 	});
 
 	const handleModal = () => {
-		setModalOpen(true);
+		incrament(item);
+		// setModalOpen(true);
 	};
 	// If the modal is open the background is unscrollable.
 	useEffect(() => {
@@ -78,7 +79,7 @@ export const ProductCard = ({
 			<li className={productCardClassNames}>
 				{/* <li className="product-card flex flex__column"> */}
 				<section
-					onClick={handleModal}
+					// onClick={handleModal}
 					className={`product-card__img-box flex ${classBgColor}`}
 				>
 					<img className={imgClassNames} src={img} alt="Image of meal" />
@@ -88,7 +89,7 @@ export const ProductCard = ({
 						onClick={handleModal}
 						extraClasses="product-card__add-btn"
 						style="black"
-						isDisabled={true}
+						isDisabled={false}
 					>
 						<span className="heading-5">+</span>
 					</Button>

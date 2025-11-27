@@ -23,10 +23,7 @@ type CartStore = {
 
 // Solution from ChatGPT to update the count when refreshing the page
 const savedCart = JSON.parse(localStorage.getItem('cart') || '[]');
-const initialCartCount: number = savedCart.reduce(
-	(acc: number, item: OrderItem) => acc + (item.qty ?? 0),
-	0
-);
+const initialCartCount: number = savedCart.length;
 
 export const useCartStore = create<CartStore>((set) => ({
 	cartCount: initialCartCount,
@@ -108,7 +105,7 @@ export const useCartStore = create<CartStore>((set) => ({
 
 			return {
 				cart: updatedCart,
-				cartCount: updatedCart.reduce((acc, i) => acc + (i.qty ?? 0), 0),
+				cartCount: updatedCart.length,
 			};
 		});
 	},
