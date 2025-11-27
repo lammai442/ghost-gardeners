@@ -22,6 +22,9 @@ import { log } from 'console';
  * Update: Klara
  * Page and button components added
  *
+ * Bugfix: StefanMogren
+ * Made so only meals show up, hid <Filter>
+ *
  */
 
 type GetMealsResponse = {
@@ -62,6 +65,8 @@ export const MenuPage = () => {
 		}
 	}, [modalOpen]);
 
+	const mealList = mealsData.filter((product) => product.category === 'MEAL');
+
 	return (
 		<>
 			<Modal
@@ -72,7 +77,7 @@ export const MenuPage = () => {
 				<p>Placeholder modal content</p>
 			</Modal>
 			<Page titleText="Mojmeny" extraClasses="flex flex__column menu">
-				<Filter />
+				{/* <Filter /> */}
 				{/* <div className="App">
 					<button onClick={handleOpenModal}>Open</button> */}
 				{/* <button onClick={() => setModalOpen(true)}>Open</button> */}
@@ -87,8 +92,8 @@ export const MenuPage = () => {
 				)}
 				{loading && <LoadingMsg title="Laddar menyn" />}
 
-				{mealsData.length > 0 && (
-					<ProductsList isCartItem={false} prodlist={mealsData} />
+				{mealList.length > 0 && (
+					<ProductsList isCartItem={false} prodlist={mealList} />
 				)}
 				<Button
 					aria="Gå till varukorgen"
