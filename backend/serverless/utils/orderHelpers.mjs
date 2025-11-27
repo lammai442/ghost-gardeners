@@ -60,29 +60,21 @@ export async function getProductsByIds(ids) {
  * Add name and price of product to item
  */
 export function enrichItems(items, productMap) {
-	return items.map((i) => {
-		const base = productMap[i.id];
-		if (!base) throw new Error(`Produkt ${i.id} finns inte i databasen.`);
+  return items.map((i) => {
+    const base = productMap[i.id];
+    if (!base) throw new Error(`Produkt ${i.id} finns inte i databasen.`);
 
-		const extras = (i.extras || []).map((id) => productMap[id]).filter(Boolean);
-		const without = (i.without || [])
-			.map((id) => productMap[id])
-			.filter(Boolean);
-		const subtotal =
-			(base.price + extras.reduce((s, e) => s + e.price, 0)) * i.quantity;
-
-		return {
-			...i,
-			name: base.name,
-			extras,
-			without,
-			subtotal,
-			summary: base.summary,
-			includesDrinkName: i.includeDrink
-				? productMap[i.includeDrink]?.name || null
-				: null,
-		};
-	});
+    return {
+      ...i,
+	  itemId: i.itemId,
+      name: base.name,
+      subtotal: base.price,
+      summary: base.summary,
+      includesDrinkName: i.includeDrink
+        ? productMap[i.includeDrink]?.name || null
+        : null,
+    };
+  });
 }
 
 /**
