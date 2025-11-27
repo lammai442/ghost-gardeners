@@ -6,6 +6,9 @@
 /**
  * Author: ninerino
  * Function to fetch menu items from the API, including stock-based status
+ *
+ * Modified: StefanMogren
+ * Changed so function fetches all products instead of just meals
  */
 
 import { client } from '../../../services/client.mjs';
@@ -21,10 +24,10 @@ export const handler = async () => {
 		const menuResponse = await client.send(
 			new QueryCommand({
 				TableName: 'mojjen-table',
-				IndexName: 'GSI1',
-				KeyConditionExpression: 'category = :category',
+				// IndexName: 'GSI1',
+				KeyConditionExpression: 'PK = :pk',
 				ExpressionAttributeValues: {
-					':category': { S: 'MEAL' },
+					':pk': { S: 'PRODUCT' },
 				},
 			})
 		);
