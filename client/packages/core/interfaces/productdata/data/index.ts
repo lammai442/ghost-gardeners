@@ -31,6 +31,7 @@ export interface Drink {
 }
 
 export interface OrderItem extends Meal {
+	itemId: string;
 	quantity: number;
 	extras: string[];
 	without: string[];

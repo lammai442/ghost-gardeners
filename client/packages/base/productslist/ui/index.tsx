@@ -17,7 +17,7 @@ import { CartProductCard } from '@mojjen/cartproductcard';
  */
 
 type Props = {
-	prodlist: Meal[];
+	prodlist: OrderItem[];
 	isCartItem?: boolean;
 };
 
@@ -53,7 +53,7 @@ export const ProductsList = ({ prodlist, isCartItem }: Props) => {
 					/>
 				) : (
 					<CartProductCard
-						key={item.id}
+						key={item.itemId}
 						item={item}
 						classBgColor={classBgColor}
 						showQty={true}

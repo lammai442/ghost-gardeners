@@ -10,6 +10,8 @@ import { calcSum } from '../../../../src/utils/utils';
 /**
  * Author: Klara Sköld
  * This is the cart page.
+ * Updated: Lam
+ * Change calculation of sum of articles and total amount
  *
  */
 
@@ -18,7 +20,6 @@ export const CartPage = () => {
 	const apiUrl: string = import.meta.env.VITE_API_URL;
 
 	const navigate = useNavigate();
-	console.log('cart: ', cart);
 	const handleSubmit = async () => {
 		try {
 			// Transformera cart → order-format
@@ -55,12 +56,9 @@ export const CartPage = () => {
 			{generateCartProducts()}
 			<ContentBox titleLevel="h3" titleTxt="Totalt" extraClass="cart__summary">
 				<div className="flex flex__space-between cart__summary--gap">
+					<h5 className="heading-4">{cart.length} artiklar</h5>
 					<h5 className="heading-4">
-						{/* Qty is optional, that's why we need the ternary operator */}
-						{calcSum(cart, (item) => (item.qty ? item.qty : 0))} artiklar
-					</h5>
-					<h5 className="heading-4">
-						{calcSum(cart, (item) => item.price * (item.qty ? item.qty : 0))} kr
+						{calcSum(cart, (item) => item.price)} kr
 					</h5>
 				</div>
 				<div className="flex flex__column cart__ctas">

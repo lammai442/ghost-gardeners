@@ -50,7 +50,6 @@ export const MenuPage = () => {
 	}, []);
 
 	const handleNavigate = () => navigate('/cart');
-	// console.log(mealsData);
 
 	const handleOpenModal = () => {
 		setModalOpen(true);

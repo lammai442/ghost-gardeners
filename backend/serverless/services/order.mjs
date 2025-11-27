@@ -29,8 +29,6 @@ export const createOrder = async ({
 			items
 				.flatMap((i) => [
 					i.id,
-					...(i.extras || []),
-					...(i.without || []),
 					i.includeDrink || null,
 				])
 				.filter(Boolean)
@@ -54,13 +52,6 @@ export const createOrder = async ({
 	// Trim extras to only keep id, name, price
 	const trimmedItems = fullItems.map((item) => ({
 		...item,
-		extras: trimFields(item.extras, [
-			'img',
-			'stock',
-			'summary',
-			'description',
-			'includeDrink',
-		]),
 	}));
 
 	const total = calculateTotal(fullItems);
@@ -159,12 +150,22 @@ export const changeOrder = async ({ orderId, items, userComment = "", staffComme
   const existing = unmarshall(res.Item);
   if (["completed"].includes(existing.status)) throw new Error("Denna order kan inte längre ändras.");
 
-  const allIds = [...new Set(items.flatMap(i => [i.id, ...(i.extras||[]), ...(i.without||[]), i.includeDrink || null]).filter(Boolean))];
+const allIds = [...new Set(items.flatMap(i => [
+  i.id,
+  i.includeDrink || null
+]).filter(Boolean))];
   const productMap = await getProductsByIds(allIds);
   const enriched = enrichItems(items, productMap);
   const trimmedItems = enriched.map(i => ({
-    ...i,
-    extras: trimFields(i.extras, ["img","stock","summary","description","includeDrink"])
+    id: i.id,
+    itemId: i.itemId,
+    name: i.name,
+    subtotal: i.subtotal,
+    includeDrink: i.includeDrink || null,
+    includesDrinkName: i.includesDrinkName || null,
+    summary: i.summary || null,
+    // stock: i.stock || null, <- onödig?
+    // img: i.img || null <- onödig?
   }));
   const total = calculateTotal(enriched);
   const now = new Date().toISOString();
