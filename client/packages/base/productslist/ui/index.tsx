@@ -37,7 +37,7 @@ export const ProductsList = ({ prodlist, isCartItem }: Props) => {
 		<ul className={classNames}>
 			{/* <ul className="grid product-list"> */}
 			{mealList.map((item, index) => {
-				console.log('item från productslist', item);
+				// console.log('item från productslist', item);
 				// Solution from ChatGTP to give a bgColor to every meal with a pattern
 				const classBgColor = bgColors[index % bgColors.length];
 				return isCartItem === false ? (
