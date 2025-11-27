@@ -62,6 +62,8 @@ export const MenuPage = () => {
 		}
 	}, [modalOpen]);
 
+	const mealList = mealsData.filter((product) => product.category === 'MEAL');
+
 	return (
 		<>
 			<Modal
@@ -87,8 +89,8 @@ export const MenuPage = () => {
 				)}
 				{loading && <LoadingMsg title="Laddar menyn" />}
 
-				{mealsData.length > 0 && (
-					<ProductsList isCartItem={false} prodlist={mealsData} />
+				{mealList.length > 0 && (
+					<ProductsList isCartItem={false} prodlist={mealList} />
 				)}
 				<Button
 					aria="Gå till varukorgen"
