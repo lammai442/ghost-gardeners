@@ -31,6 +31,8 @@ export const Modal = ({
 		setModalOpen(false);
 	};
 
+	if (!open) return null;
+
 	// Listens for all keyboard events. If the Escape key is pressed, the modal closes.
 	useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {
@@ -45,8 +47,6 @@ export const Modal = ({
 		document.addEventListener('keydown', handleKeyDown);
 		return () => document.removeEventListener('keydown', handleKeyDown);
 	}, [open, closeModal]);
-
-	if (!open) return null;
 
 	return (
 		<div className="grid grid__center background">

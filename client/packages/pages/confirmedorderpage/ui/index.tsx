@@ -42,7 +42,6 @@ export const ConfirmedOrderPage = () => {
 			}) => <OrderArticle item={item} />
 		);
 	};
-	console.log('order', order);
 	const handleClick = () => {
 		navigate('/');
 		window.scrollTo(0, 0);
