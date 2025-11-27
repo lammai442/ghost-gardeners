@@ -34,13 +34,16 @@ export const handler = async () => {
 
 		//
 		const allProductIds = [
-			...new Set(
-				(menuResponse.Items || []).flatMap((item) => {
-					const a = item.attribute?.M || {};
-					return a.items?.L?.map((i) => i.S) || [];
-				})
-			),
-		];
+  ...new Set(
+    (menuResponse.Items || []).flatMap((item) => {
+      const a = item.attribute?.M || {};
+      return [
+        ...(a.items?.L?.map((i) => i.S) || []),
+        ...(a.includeDrink?.S ? [a.includeDrink.S] : []), // <-- lägg till dryckens ID
+      ];
+    })
+  ),
+];
 
 		//
 		const productMap = await getProductsByIds(allProductIds);
@@ -57,6 +60,7 @@ export const handler = async () => {
 				details: a.details?.S || '',
 				img: a.img?.S || '',
 				includeDrink: a.includeDrink?.S || null,
+				includeDrinkName: a.includeDrink?.S ? productMap[a.includeDrink.S]?.name || null : null,
 				createdAt: a.createdAt?.S || '',
 				items: a.items?.L?.map((i) => i.S) || [],
 			};

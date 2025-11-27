@@ -162,7 +162,7 @@ const allIds = [...new Set(items.flatMap(i => [
     name: i.name,
     subtotal: i.subtotal,
     includeDrink: i.includeDrink || null,
-    includesDrinkName: i.includesDrinkName || null,
+    includeDrinkName: i.includeDrinkName || null,
     summary: i.summary || null,
     // stock: i.stock || null, <- onödig?
     // img: i.img || null <- onödig?

@@ -70,7 +70,7 @@ export function enrichItems(items, productMap) {
       name: base.name,
       subtotal: base.price,
       summary: base.summary,
-      includesDrinkName: i.includeDrink
+      includeDrinkName: i.includeDrink
         ? productMap[i.includeDrink]?.name || null
         : null,
     };
