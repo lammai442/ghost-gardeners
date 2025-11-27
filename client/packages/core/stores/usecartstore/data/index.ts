@@ -10,17 +10,17 @@
  */
 
 import { create } from 'zustand';
-import type { Meal, Order, OrderItem } from '@mojjen/productdata';
+import type { Meal } from '@mojjen/productdata';
 import { generateId } from '../../../utils/helpfunctions';
 
 type CartStore = {
 	cartCount: number;
-	cart: OrderItem[];
-	incrament: (product: OrderItem) => void;
+	cart: Meal[];
+	incrament: (product: Meal) => void;
 	decrament: (id: string | undefined) => void;
 	emptyCart: () => void;
 	deleteCartItem: (id: string | undefined) => void;
-	setCartItems: (items: OrderItem[]) => void;
+	setCartItems: (items: Meal[]) => void;
 };
 
 // Solution from ChatGPT to update the count when refreshing the page
@@ -30,11 +30,11 @@ const initialCartCount: number = savedCart.length;
 export const useCartStore = create<CartStore>((set) => ({
 	cartCount: initialCartCount,
 	cart: savedCart,
-	incrament: (product: OrderItem) =>
+	incrament: (product: Meal) =>
 		set((state) => {
 			const productWithItemId = { ...product, itemId: generateId() };
 
-			const updatedCart = [...state.cart, productWithItemId ];
+			const updatedCart = [...state.cart, productWithItemId];
 			localStorage.setItem('cart', JSON.stringify(updatedCart));
 
 			return {
@@ -54,8 +54,8 @@ export const useCartStore = create<CartStore>((set) => ({
 			};
 		}),
 	emptyCart: () =>
-		set((state) => {
-			const emptyArray: OrderItem[] = [];
+		set(() => {
+			const emptyArray: Meal[] = [];
 
 			localStorage.setItem('cart', JSON.stringify(emptyArray));
 
@@ -66,9 +66,7 @@ export const useCartStore = create<CartStore>((set) => ({
 		}),
 	deleteCartItem: (itemId) =>
 		set((state) => {
-			const updatedCart: OrderItem[] = state.cart.filter(
-				(i) => i.itemId !== itemId
-			);
+			const updatedCart: Meal[] = state.cart.filter((i) => i.itemId !== itemId);
 
 			localStorage.setItem('cart', JSON.stringify(updatedCart));
 
@@ -77,7 +75,7 @@ export const useCartStore = create<CartStore>((set) => ({
 				cartCount: updatedCart.length,
 			};
 		}),
-	setCartItems: (items: OrderItem[]) => {
+	setCartItems: (items: Meal[]) => {
 		set(() => {
 			// Mappa order-items till store-format
 			const mappedItems = items.map((item) => ({
@@ -88,17 +86,17 @@ export const useCartStore = create<CartStore>((set) => ({
 
 			localStorage.setItem('cart', JSON.stringify(mappedItems));
 
-			const totalCount = mappedItems.reduce((acc, i) => acc + (i.qty ?? 1), 0);
-
 			return {
 				cart: mappedItems,
-				cartCount: totalCount,
+				cartCount: mappedItems.length,
 			};
 		});
 	},
-	updateCartItem: (item: OrderItem) => {
+	updateCartItem: (item: Meal) => {
 		set((state) => {
-			const updatedCart = state.cart.map((i) => (i.id === item.id ? item : i));
+			const updatedCart = state.cart.map((i) =>
+				i.itemId === item.itemId ? item : i
+			);
 
 			localStorage.setItem('cart', JSON.stringify(updatedCart));
 
@@ -113,10 +111,11 @@ export const useCartStore = create<CartStore>((set) => ({
 /**
  * Transformerar cart från Zustand till det format som createOrder förväntar sig
  */
-export function getItemsForOrder(): OrderItem[] {
+export function getItemsForOrder(): Meal[] {
 	const { cart } = useCartStore.getState();
 
 	return cart.map((item) => ({
+		category: item.category,
 		itemId: item.itemId,
 		id: item.id,
 		name: item.name,
@@ -140,36 +139,36 @@ export function getItemsForOrder(): OrderItem[] {
 //  */
 
 // import { create } from 'zustand';
-// import type { Meal, OrderItem } from '@mojjen/productdata';
+// import type { Meal, Meal } from '@mojjen/productdata';
 
 // type CartStore = {
 // 	cartCount: number;
-// 	cart: OrderItem[];
-// 	incrament: (product: OrderItem) => void;
+// 	cart: Meal[];
+// 	incrament: (product: Meal) => void;
 // 	decrament: (id: string | undefined) => void;
 // 	emptyCart: () => void;
 // 	deleteCartItem: (id: string | undefined) => void;
-// 	setCartItems: (items: OrderItem[]) => void;
+// 	setCartItems: (items: Meal[]) => void;
 // };
 
 // // Solution from ChatGPT to update the count when refreshing the page
-// const savedCart: OrderItem[] = JSON.parse(localStorage.getItem('cart') || '[]');
+// const savedCart: Meal[] = JSON.parse(localStorage.getItem('cart') || '[]');
 // const initialCartCount: number = savedCart.reduce(
-// 	(acc: number, item: OrderItem) => acc + (item.qty ?? 0),
+// 	(acc: number, item: Meal) => acc + (item.qty ?? 0),
 // 	0
 // );
 
 // export const useCartStore = create<CartStore>((set) => ({
 // 	cartCount: initialCartCount,
 // 	cart: savedCart,
-// 	incrament: (product: OrderItem) =>
+// 	incrament: (product: Meal) =>
 // 		set((state) => {
 // 			// const existingInCart = state.cart.find((item) => item.id === product.id);
-// 			// let newCart: OrderItem[];
+// 			// let newCart: Meal[];
 
 // 			// const updatedCart = { ...state.cart, product };
 
-// 			// const updatedCart: OrderItem[] = [
+// 			// const updatedCart: Meal[] = [
 // 			// 	...state.cart,
 // 			// 	{
 // 			// 		...product,
@@ -208,7 +207,7 @@ export function getItemsForOrder(): OrderItem[] {
 
 // 	decrament: (id) =>
 // 		set((state) => {
-// 			let storedCart: OrderItem[] = JSON.parse(
+// 			let storedCart: Meal[] = JSON.parse(
 // 				localStorage.getItem('cart') || '[]'
 // 			);
 
@@ -217,7 +216,7 @@ export function getItemsForOrder(): OrderItem[] {
 // 			// If the product doesnt exist
 // 			if (!existingInCart) return state;
 
-// 			let updatedCart: OrderItem[] = [];
+// 			let updatedCart: Meal[] = [];
 
 // 			// Remove product if qty becomes 0
 // 			if (existingInCart.qty === 1) {
@@ -243,7 +242,7 @@ export function getItemsForOrder(): OrderItem[] {
 
 // 	emptyCart: () =>
 // 		set((state) => {
-// 			const emptyArray: OrderItem[] = [];
+// 			const emptyArray: Meal[] = [];
 
 // 			localStorage.setItem('cart', JSON.stringify(emptyArray));
 
@@ -255,7 +254,7 @@ export function getItemsForOrder(): OrderItem[] {
 
 // 	deleteCartItem: (id) =>
 // 		set((state) => {
-// 			const updatedCart: OrderItem[] = state.cart.filter((i) => i.id !== id);
+// 			const updatedCart: Meal[] = state.cart.filter((i) => i.id !== id);
 
 // 			const cartCountNbr: number = updatedCart.reduce(
 // 				(acc, item) => acc + (item.qty ?? 0),
@@ -268,7 +267,7 @@ export function getItemsForOrder(): OrderItem[] {
 // 			};
 // 		}),
 
-// 	setCartItems: (items: OrderItem[]) => {
+// 	setCartItems: (items: Meal[]) => {
 // 		set(() => {
 // 			// Mappa order-items till store-format
 // 			const mappedItems = items.map((item) => ({
@@ -295,7 +294,7 @@ export function getItemsForOrder(): OrderItem[] {
 // /**
 //  * Transformerar cart från Zustand till det format som createOrder förväntar sig
 //  */
-// export function getItemsForOrder(): OrderItem[] {
+// export function getItemsForOrder(): Meal[] {
 // 	const { cart } = useCartStore.getState();
 
 // 	return cart.map((item) => ({

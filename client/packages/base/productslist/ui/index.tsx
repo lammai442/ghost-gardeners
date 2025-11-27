@@ -1,9 +1,7 @@
-import type { ReactNode } from 'react';
 import './index.scss';
 import clsx from 'clsx';
 import type { Meal, OrderItem } from '@mojjen/productdata';
 import { ProductCard } from '@mojjen/productcard';
-import { ContentBox } from '@mojjen/contentbox';
 import { CartProductCard } from '@mojjen/cartproductcard';
 /**
  * Author: Klara Sköld
@@ -16,14 +14,14 @@ import { CartProductCard } from '@mojjen/cartproductcard';
  *
  */
 
-type Props = {
-	prodlist: OrderItem[];
-	isCartItem?: boolean;
-};
+type Props =
+	| { prodlist: OrderItem[]; isCartItem?: boolean }
+	| { prodlist: Meal[]; isCartItem?: boolean };
 
 const bgColors: string[] = ['bg-mustard', 'bg-ketchup', 'bg-cucumber'];
 
 export const ProductsList = ({ prodlist, isCartItem }: Props) => {
+	// const productList2: OrderItem[] = prodlist;
 	const classNames = clsx('product-list', {
 		'flex flex__column product-list__cart': isCartItem,
 		grid: !isCartItem,
@@ -50,8 +48,8 @@ export const ProductsList = ({ prodlist, isCartItem }: Props) => {
 					/>
 				) : (
 					<CartProductCard
-						key={item.itemId}
-						item={item}
+						key={index}
+						item={item as OrderItem}
 						classBgColor={classBgColor}
 						showQty={true}
 						showIncramentBtn={false}

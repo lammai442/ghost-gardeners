@@ -5,11 +5,7 @@ import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { Button } from '@mojjen/button';
 import { useNavigate } from 'react-router-dom';
 import { cancelOrder } from '../../../core/api/apiproducts/data';
-import {
-	useCartStore,
-	getItemsForOrder,
-} from '../../../core/stores/usecartstore/data';
-import type { OrderItem } from '@mojjen/productdata';
+import { useCartStore } from '../../../core/stores/usecartstore/data';
 import { Modal } from '@mojjen/modal';
 
 /**
@@ -27,8 +23,7 @@ type Props = {
 
 export const OrderStatusBox = ({ orderId, status, setStatus }: Props) => {
 	const navigate = useNavigate();
-	const [loading, setLoading] = useState(false);
-	const { setCartItems } = useCartStore();
+	// const [loading, setLoading] = useState(false);
 	const generateString = (
 		status: string,
 		pendingString: string,
@@ -66,7 +61,7 @@ export const OrderStatusBox = ({ orderId, status, setStatus }: Props) => {
 
 	const handleEdit = async () => {
 		if (!orderId) return;
-		setLoading(true);
+		// setLoading(true);
 		try {
 			const res = await fetch(
 				`${import.meta.env.VITE_API_URL}/order/${orderId}`
@@ -97,7 +92,7 @@ export const OrderStatusBox = ({ orderId, status, setStatus }: Props) => {
 		} catch (err) {
 			console.error('Fel vid ändra order:', err);
 		} finally {
-			setLoading(false);
+			// setLoading(false);
 		}
 	};
 

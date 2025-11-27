@@ -16,7 +16,7 @@ import { calcSum } from '../../../../src/utils/utils';
  */
 
 export const CartPage = () => {
-	const { cart, incrament, decrament, emptyCart } = useCartStore();
+	const { cart, emptyCart } = useCartStore();
 	const apiUrl: string = import.meta.env.VITE_API_URL;
 
 	const navigate = useNavigate();
