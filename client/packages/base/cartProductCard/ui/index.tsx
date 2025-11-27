@@ -13,10 +13,8 @@ import { IoClose } from 'react-icons/io5';
  * Product card displayed in cart view.
  *
  * Bugfix: StefanMogren
- * Fixed classname of product-card__img and product-card__img-box
+ * Fixed classname of product-card__img and product-card__img-box, changed font size of included drink
  */
-
-
 
 type Props = {
 	item: OrderItem;
@@ -35,7 +33,17 @@ export const CartProductCard = ({
 	isFlexColumn,
 }: Props) => {
 	const { cart, decrament, deleteCartItem } = useCartStore();
-	const { name, img, summary, price, status, includeDrink, includeDrinkName, id, itemId } = item;
+	const {
+		name,
+		img,
+		summary,
+		price,
+		status,
+		includeDrink,
+		includeDrinkName,
+		id,
+		itemId,
+	} = item;
 	const [quantity, setQuantity] = useState<number | undefined>(0);
 
 	useEffect(() => {
@@ -63,7 +71,7 @@ export const CartProductCard = ({
 							<p className="base-small">{summary}</p>
 							{includeDrink && (
 								<p className="heading-5">
-									<span className="base-bold">Dryck: {includeDrinkName}</span>
+									<span className="base-small">Dryck: {includeDrinkName}</span>
 								</p>
 							)}
 							<hr className="cart-item__line" />
