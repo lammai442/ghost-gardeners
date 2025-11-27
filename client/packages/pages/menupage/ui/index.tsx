@@ -22,6 +22,9 @@ import { log } from 'console';
  * Update: Klara
  * Page and button components added
  *
+ * Bugfix: StefanMogren
+ * Made so only meals show up, hid <Filter>
+ *
  */
 
 type GetMealsResponse = {
@@ -74,7 +77,7 @@ export const MenuPage = () => {
 				<p>Placeholder modal content</p>
 			</Modal>
 			<Page titleText="Mojmeny" extraClasses="flex flex__column menu">
-				<Filter />
+				{/* <Filter /> */}
 				{/* <div className="App">
 					<button onClick={handleOpenModal}>Open</button> */}
 				{/* <button onClick={() => setModalOpen(true)}>Open</button> */}
