@@ -24,6 +24,7 @@ export const Filter = () => {
 				aria="Filtrera menyn"
 				onClick={handleClick}
 				extraClasses="menu__button"
+				style="outlined"
 			>
 				<CiFilter className="filter__icon" />
 				<span>Filter</span>

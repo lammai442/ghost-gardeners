@@ -48,7 +48,7 @@ export const CartPage = () => {
 
 	const generateCartProducts = () => {
 		if (cart.length === 0) return null;
-		return <ProductsList isCartItem={true} prodlist={cart} isCartItem={true} />;
+		return <ProductsList isCartItem={true} prodlist={cart} />;
 	};
 
 	return (

@@ -10,11 +10,8 @@ import './index.scss';
 
 type Props = {
 	item: {
-		extras: string[];
 		name: string;
-		quantity: number;
 		subtotal: number;
-		without: string[];
 		summary: string;
 	};
 };
@@ -26,7 +23,6 @@ export const OrderArticle = ({ item }: Props) => {
 			<div className="grid order-article">
 				<h5 className="grid__col-1 grid__row-1 heading-5">{item.name}</h5>
 				<div className="flex flex__justify-end grid__col-2 grid__row-1 order-article__quantity-price-div">
-					<span className="base">x{item.quantity}</span>
 					<span className="heading-5">{item.subtotal} kr</span>
 				</div>
 

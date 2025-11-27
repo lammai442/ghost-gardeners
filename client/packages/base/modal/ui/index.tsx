@@ -31,20 +31,47 @@ export const Modal = ({
 		setModalOpen(false);
 	};
 
-	// Listens for all keyboard events. If the Escape key is pressed, the modal closes.
 	useEffect(() => {
+		// Rad 1. Funktion som lyssnar på tangenter
 		const handleKeyDown = (e: KeyboardEvent) => {
+			// Rad 2. Om man trycker Escape och modalen är öppen
 			if (e.key === 'Escape' && open) {
-				closeModal();
+				closeModal(); // Rad 3. Stäng modalen
 			}
 		};
-		// Disables Background Scrolling whilst the SideDrawer/Modal is open
-		if (typeof window != 'undefined' && window.document) {
+
+		// Rad 4. Om modalen är öppen. Lås scroll
+		if (open) {
 			document.body.style.overflow = 'hidden';
 		}
+
+		// Rad 5. Lägg till keydown-eventlyssnaren
 		document.addEventListener('keydown', handleKeyDown);
-		return () => document.removeEventListener('keydown', handleKeyDown);
-	}, [open, closeModal]);
+
+		// Rad 6. Cleanup körs när open ändras eller komponenten tas bort
+		return () => {
+			// Rad 7. Ta bort keydown-eventlyssnaren
+			document.removeEventListener('keydown', handleKeyDown);
+
+			// Rad 8. Återställ scroll när modalen stängs
+			document.body.style.overflow = 'auto';
+		};
+	}, [open]);
+
+	// Listens for all keyboard events. If the Escape key is pressed, the modal closes.
+	// useEffect(() => {
+	// 	const handleKeyDown = (e: KeyboardEvent) => {
+	// 		if (e.key === 'Escape' && open) {
+	// 			closeModal();
+	// 		}
+	// 	};
+	// 	// Disables Background Scrolling whilst the SideDrawer/Modal is open
+	// 	if (typeof window != 'undefined' && window.document) {
+	// 		document.body.style.overflow = 'hidden';
+	// 	}
+	// 	document.addEventListener('keydown', handleKeyDown);
+	// 	return () => document.removeEventListener('keydown', handleKeyDown);
+	// }, [open, closeModal]);
 
 	if (!open) return null;
 

@@ -32,17 +32,11 @@ export const ConfirmedOrderPage = () => {
 
 	const generateOrderArticles = (): ReactNode => {
 		return order.items.map(
-			(item: {
-				extras: string[];
-				name: string;
-				quantity: number;
-				subtotal: number;
-				without: string[];
-				summary: string;
-			}) => <OrderArticle item={item} />
+			(item: { name: string; subtotal: number; summary: string }) => (
+				<OrderArticle key={item.name} item={item} />
+			)
 		);
 	};
-	console.log('order', order);
 	const handleClick = () => {
 		navigate('/');
 		window.scrollTo(0, 0);

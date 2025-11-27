@@ -17,8 +17,7 @@ export interface Meal {
 	classBgColor?: string;
 	status: string;
 	items?: string[];
-	qty?: number | undefined;
-	includeDrink: string;
+	includeDrink: string | null;
 }
 
 export interface Drink {
@@ -32,9 +31,6 @@ export interface Drink {
 
 export interface OrderItem extends Meal {
 	itemId: string;
-	quantity: number;
-	extras: string[];
-	without: string[];
 	includeDrink: string | null;
 	subtotal: number;
 	includeDrinkName?: string | null;

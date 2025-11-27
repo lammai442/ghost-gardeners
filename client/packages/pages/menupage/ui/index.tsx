@@ -73,10 +73,10 @@ export const MenuPage = () => {
 			</Modal>
 			<Page titleText="Mojmeny" extraClasses="flex flex__column menu">
 				<Filter />
-				<div className="App">
-					<button onClick={handleOpenModal}>Open</button>
-					{/* <button onClick={() => setModalOpen(true)}>Open</button> */}
-				</div>
+				{/* <div className="App">
+					<button onClick={handleOpenModal}>Open</button> */}
+				{/* <button onClick={() => setModalOpen(true)}>Open</button> */}
+				{/* </div> */}
 
 				{fetchError && (
 					<ConstructError
