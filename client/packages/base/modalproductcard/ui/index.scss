@@ -1,0 +1,46 @@
+@use '../../../../src/variables.scss' as *;
+
+.modal__meal-wrapper {
+	max-width: 500px;
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+
+	.modal__price-box {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.modal__to-cart-btn {
+		width: 100%;
+	}
+}
+
+.modal__top-section {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 1rem;
+}
+
+.modal__top-left {
+	aspect-ratio: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.modal__top-right {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+
+	.modal__desc-box {
+		display: flex;
+		flex-direction: column;
+		// gap: 0.5rem;
+	}
+}
+
+.product-card__img {
+	width: 80%;
+}

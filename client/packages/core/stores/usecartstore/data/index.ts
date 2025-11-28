@@ -21,6 +21,7 @@ type CartStore = {
 	emptyCart: () => void;
 	deleteCartItem: (id: string | undefined) => void;
 	setCartItems: (items: Meal[]) => void;
+	updateCartItem: (item: Meal) => void;
 };
 
 // Solution from ChatGPT to update the count when refreshing the page

@@ -15,6 +15,7 @@
 
 		.product-card__img {
 			width: 60%;
+			cursor: pointer;
 		}
 
 		.product-card__add-btn {
@@ -31,6 +32,10 @@
 	gap: 1rem;
 	flex: 1;
 	justify-content: space-between;
+
+	h2 {
+		cursor: pointer;
+	}
 
 	&__top {
 		gap: 0.1rem;
