@@ -1,4 +1,5 @@
 import './index.scss';
+import { Order } from '@mojjen/order';
 
 export const OrderPage = () => {
 	return (
@@ -10,142 +11,28 @@ export const OrderPage = () => {
 					<section>
 						<h2 className="heading-3">Väntande (10 st)</h2>
 						<ul className="order-page__orders-container">
-							<li className="order-page__order">
-								<span className="heading-5"># 5kd03</span>
-								<span className="flex flex__gap-0-5 base">
-									<img src="/assets/clock-icon.svg" alt="" />
-									<time dateTime="12:24">12.24</time>
-								</span>
-							</li>
-							<li className="order-page__order">
-								<span className="heading-5"># 5kd03</span>
-								<span className="flex flex__gap-0-5 base">
-									<img src="/assets/clock-icon.svg" alt="" />
-									<time dateTime="12:24">12.24</time>
-								</span>
-							</li>
-							<li className="order-page__order">
-								<span className="heading-5"># 5kd03</span>
-								<span className="flex flex__gap-0-5 base">
-									<img src="/assets/clock-icon.svg" alt="" />
-									<time dateTime="12:24">12.24</time>
-								</span>
-							</li>
-							<li className="order-page__order">
-								<span className="heading-5"># 5kd03</span>
-								<span className="flex flex__gap-0-5 base">
-									<img src="/assets/clock-icon.svg" alt="" />
-									<time dateTime="12:24">12.24</time>
-								</span>
-							</li>
-							<li className="order-page__order">
-								<span className="heading-5"># 5kd03</span>
-								<span className="flex flex__gap-0-5 base">
-									<img src="/assets/clock-icon.svg" alt="" />
-									<time dateTime="12:24">12.24</time>
-								</span>
-							</li>
-							<li className="order-page__order">
-								<span className="heading-5"># 5kd03</span>
-								<span className="flex flex__gap-0-5 base">
-									<img src="/assets/clock-icon.svg" alt="" />
-									<time dateTime="12:24">12.24</time>
-								</span>
-							</li>
+							<Order orderId="di7bv" time="14.33" orderStatus="pending" />
+							<Order orderId="di7bv" time="14.33" orderStatus="pending" />
+							<Order orderId="di7bv" time="14.33" orderStatus="pending" />
+							<Order orderId="di7bv" time="14.33" orderStatus="pending" />
+							<Order orderId="di7bv" time="14.33" orderStatus="pending" />
 						</ul>
 					</section>
 					<section>
 						<h2 className="heading-3">Tillagas</h2>
 						<ul className="order-page__orders-container">
-							<li className="order-page__order">
-								<span className="heading-5"># 5kd03</span>
-								<span className="flex flex__gap-0-5 base">
-									<img src="/assets/clock-icon.svg" alt="" />
-									<time dateTime="12:24">12.24</time>
-								</span>
-							</li>
-							<li className="order-page__order">
-								<span className="heading-5"># 5kd03</span>
-								<span className="flex flex__gap-0-5 base">
-									<img src="/assets/clock-icon.svg" alt="" />
-									<time dateTime="12:24">12.24</time>
-								</span>
-							</li>
-							<li className="order-page__order">
-								<span className="heading-5"># 5kd03</span>
-								<span className="flex flex__gap-0-5 base">
-									<img src="/assets/clock-icon.svg" alt="" />
-									<time dateTime="12:24">12.24</time>
-								</span>
-							</li>
-							<li className="order-page__order">
-								<span className="heading-5"># 5kd03</span>
-								<span className="flex flex__gap-0-5 base">
-									<img src="/assets/clock-icon.svg" alt="" />
-									<time dateTime="12:24">12.24</time>
-								</span>
-							</li>
-							<li className="order-page__order">
-								<span className="heading-5"># 5kd03</span>
-								<span className="flex flex__gap-0-5 base">
-									<img src="/assets/clock-icon.svg" alt="" />
-									<time dateTime="12:24">12.24</time>
-								</span>
-							</li>
-							<li className="order-page__order">
-								<span className="heading-5"># 5kd03</span>
-								<span className="flex flex__gap-0-5 base">
-									<img src="/assets/clock-icon.svg" alt="" />
-									<time dateTime="12:24">12.24</time>
-								</span>
-							</li>
+							<Order orderId="di7bv" time="14.33" orderStatus="confirmed" />
+							<Order orderId="di7bv" time="14.33" orderStatus="confirmed" />
+							<Order orderId="di7bv" time="14.33" orderStatus="confirmed" />
 						</ul>
 					</section>
 					<section>
 						<h2 className="heading-3">Redo att hämtas</h2>
 						<ul className="order-page__orders-container">
-							<li className="order-page__order">
-								<span className="heading-5"># 5kd03</span>
-								<span className="flex flex__gap-0-5 base">
-									<img src="/assets/clock-icon.svg" alt="" />
-									<time dateTime="12:24">12.24</time>
-								</span>
-							</li>
-							<li className="order-page__order">
-								<span className="heading-5"># 5kd03</span>
-								<span className="flex flex__gap-0-5 base">
-									<img src="/assets/clock-icon.svg" alt="" />
-									<time dateTime="12:24">12.24</time>
-								</span>
-							</li>
-							<li className="order-page__order">
-								<span className="heading-5"># 5kd03</span>
-								<span className="flex flex__gap-0-5 base">
-									<img src="/assets/clock-icon.svg" alt="" />
-									<time dateTime="12:24">12.24</time>
-								</span>
-							</li>
-							<li className="order-page__order">
-								<span className="heading-5"># 5kd03</span>
-								<span className="flex flex__gap-0-5 base">
-									<img src="/assets/clock-icon.svg" alt="" />
-									<time dateTime="12:24">12.24</time>
-								</span>
-							</li>
-							<li className="order-page__order">
-								<span className="heading-5"># 5kd03</span>
-								<span className="flex flex__gap-0-5 base">
-									<img src="/assets/clock-icon.svg" alt="" />
-									<time dateTime="12:24">12.24</time>
-								</span>
-							</li>
-							<li className="order-page__order">
-								<span className="heading-5"># 5kd03</span>
-								<span className="flex flex__gap-0-5 base">
-									<img src="/assets/clock-icon.svg" alt="" />
-									<time dateTime="12:24">12.24</time>
-								</span>
-							</li>
+							<Order orderId="di7bv" time="14.33" orderStatus="done" />
+							<Order orderId="di7bv" time="14.33" orderStatus="done" />
+							<Order orderId="di7bv" time="14.33" orderStatus="done" />
+							<Order orderId="di7bv" time="14.33" orderStatus="done" />
 						</ul>
 					</section>
 				</section>
