@@ -1,7 +1,7 @@
 @use '../../../../src/variables.scss' as *;
 
 .modal__meal-wrapper {
-	max-width: 500px;
+	max-width: 600px;
 	display: flex;
 	flex-direction: column;
 	gap: 1.5rem;
@@ -43,4 +43,18 @@
 
 .product-card__img {
 	width: 80%;
+}
+
+@media (max-width: 620px) {
+	.modal__meal-wrapper {
+		max-width: 400px;
+	}
+	.modal__top-section {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.modal__top-right {
+		gap: 1rem;
+	}
 }
