@@ -51,6 +51,18 @@ functions:
       - httpApi:
           path: /api/order/{id}
           method: PUT
+  GetAllOrders:
+    handler: functions/orders/GetAllOrders/index.handler
+    events:
+      - httpApi:
+          path: /api/orders
+          method: GET
+  GetAllOrdersByStatus:
+    handler: functions/orders/GetAllOrdersByStatus/index.handler
+    events:
+      - httpApi:
+          path: /api/orders/status/{status}
+          method: GET
 
 plugins:
   - serverless-offline

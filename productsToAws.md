@@ -26,6 +26,13 @@
 // Bostongurka: prod-91b1f
 ```
 
+## Allergener som finns i databasen
+
+```
+allergenes: ["ägg", "skaldjur", "gluten", "mjölkprotein", "laktos" ]
+
+```
+
 ## Lägg in varje object var för sig via insomnia och PostMenuItem function
 
 ```

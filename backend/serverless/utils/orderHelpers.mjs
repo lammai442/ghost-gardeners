@@ -1,6 +1,9 @@
 /**
  * Author: ninerino
  * Helper functions to fetch product information, add it to items array and calculate sum
+ *
+ * Update: Lam
+ * Added allergenes in acc to getProductsByIds
  */
 
 import { client } from '../services/client.mjs';
@@ -35,7 +38,11 @@ export async function getProductsByIds(ids) {
 		acc[id] = {
 			id,
 			name: a.name?.S || '',
-			price: a.price?.N ? Number(a.price.N) : (a.price?.S ? Number(a.price.S) : 0),
+			price: a.price?.N
+				? Number(a.price.N)
+				: a.price?.S
+				? Number(a.price.S)
+				: 0,
 			img: a.img?.S || '',
 			stock: a.stock?.N ? Number(a.stock.N) : 0,
 			summary: a.summary?.S || '',
@@ -43,6 +50,7 @@ export async function getProductsByIds(ids) {
 			category: a.category?.S || '',
 			includeDrink: a.includeDrink?.S || null,
 			items: a.items?.L?.map((x) => x.S) || [],
+			allergenes: a.allergenes?.L?.map((x) => x.S) || null,
 		};
 
 		return acc;
@@ -60,21 +68,21 @@ export async function getProductsByIds(ids) {
  * Add name and price of product to item
  */
 export function enrichItems(items, productMap) {
-  return items.map((i) => {
-    const base = productMap[i.id];
-    if (!base) throw new Error(`Produkt ${i.id} finns inte i databasen.`);
+	return items.map((i) => {
+		const base = productMap[i.id];
+		if (!base) throw new Error(`Produkt ${i.id} finns inte i databasen.`);
 
-    return {
-      ...i,
-	  itemId: i.itemId,
-      name: base.name,
-      subtotal: base.price,
-      summary: base.summary,
-      includeDrinkName: i.includeDrink
-        ? productMap[i.includeDrink]?.name || null
-        : null,
-    };
-  });
+		return {
+			...i,
+			itemId: i.itemId,
+			name: base.name,
+			subtotal: base.price,
+			summary: base.summary,
+			includeDrinkName: i.includeDrink
+				? productMap[i.includeDrink]?.name || null
+				: null,
+		};
+	});
 }
 
 /**

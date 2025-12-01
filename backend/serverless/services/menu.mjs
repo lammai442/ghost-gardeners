@@ -1,5 +1,9 @@
 import { marshall } from '@aws-sdk/util-dynamodb';
-import { generateDate, generateId } from '../utils/index.mjs';
+import {
+	generateAllergenes,
+	generateDate,
+	generateId,
+} from '../utils/index.mjs';
 import { client } from './client.mjs';
 import { PutItemCommand } from '@aws-sdk/client-dynamodb';
 
@@ -64,6 +68,13 @@ export const postProductItem = async (product) => {
 	const prodId =
 		product.category === 'MEAL' ? generateId('meal') : generateId('prod');
 
+	// Get all allergenes for Meal
+	let allergenes = null;
+	if (product.items && product.items.length > 0) {
+		// Send the item array with prodId
+		allergenes = await generateAllergenes(product.items);
+	}
+
 	const command = new PutItemCommand({
 		TableName: 'mojjen-table',
 
@@ -78,8 +89,7 @@ export const postProductItem = async (product) => {
 				summary: product.summary,
 				...(product.description && { description: product.description }), // Solution from ChatGPT to avoid description: undefined
 				img: product.img,
-				//! For meals, the plan is to add a helper function that collects allergenes from the productId:s in items.
-				allergenes: product.allergenes ? product.allergenes : null,
+				allergenes,
 				stock: 25,
 				createdAt: generateDate(),
 				...(product.items && { items: product.items }),

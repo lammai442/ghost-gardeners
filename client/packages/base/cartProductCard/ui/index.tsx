@@ -1,11 +1,14 @@
 import './index.scss';
 import { Button } from '../../button/ui';
 import clsx from 'clsx';
-import type { OrderItem } from '@mojjen/productdata';
+import type { Meal } from '@mojjen/productdata';
 import { useCartStore } from '../../../core/stores/usecartstore/data';
 import { ContentBox } from '@mojjen/contentbox';
 import { CircleIcon } from '@mojjen/circleicon';
 import { IoClose } from 'react-icons/io5';
+import { useState } from 'react';
+import { Modal } from '../../modal/ui';
+import { ModalProductCard } from '../../modalproductcard/ui';
 
 /**
  * Author: Klara
@@ -16,8 +19,8 @@ import { IoClose } from 'react-icons/io5';
  */
 
 type Props = {
-	item: OrderItem;
-	// item: Meal;
+	item: Meal;
+	allProdList: Meal[];
 	classBgColor: string;
 	showQty?: boolean;
 	showIncramentBtn?: boolean;
@@ -25,7 +28,8 @@ type Props = {
 	isCartItem?: boolean;
 };
 
-export const CartProductCard = ({ item, classBgColor }: Props) => {
+export const CartProductCard = ({ item, classBgColor, allProdList }: Props) => {
+	const [modalOpen, setModalOpen] = useState(false);
 	const { deleteCartItem } = useCartStore();
 	const {
 		name,
@@ -37,28 +41,44 @@ export const CartProductCard = ({ item, classBgColor }: Props) => {
 		includeDrinkName,
 		itemId,
 	} = item;
-	// const [quantity, setQuantity] = useState<number | undefined>(0);
-
-	// useEffect(() => {
-	// 	const itemExistInCart = cart.find((i) => i.id === item.id);
-	// 	// Add to the qty count of the product
-	// 	if (!itemExistInCart) setQuantity(0);
-	// }, [cart]);
 
 	const imgClassNames = clsx('product-card__img', {
 		inactive: status === 'inactive',
 	});
-
 	return (
 		<>
+			{modalOpen && (
+				<Modal
+					open={modalOpen}
+					titleContent={<h3 className="heading-3 text-light-beige">{name}</h3>}
+					setModalOpen={setModalOpen}
+				>
+					<ModalProductCard
+						item={item}
+						allProdList={allProdList}
+						classBgColor={classBgColor}
+						setModalOpen={setModalOpen}
+					/>
+				</Modal>
+			)}
 			<ContentBox extraClass="flex__row cart-item">
 				<li className="flex flex__gap-1  cart-item__list-item ">
 					<div
 						className={`product-card__img-box flex flex__column ${classBgColor}`}
 					>
-						<img className={imgClassNames} src={img} alt="Image of meal" />
+						<img
+							className={imgClassNames}
+							src={img}
+							alt="Image of meal"
+							onClick={() => {
+								setModalOpen(true);
+							}}
+						/>
 					</div>
-					<section className=" info-box flex flex__column text__left  ">
+					<section
+						className=" info-box flex flex__column text__left"
+						onClick={() => setModalOpen(true)}
+					>
 						<div className=" flex flex__column flex____gap-0-5">
 							<h2 className="heading-4">{name}</h2>
 							<p className="base-small">{summary}</p>
