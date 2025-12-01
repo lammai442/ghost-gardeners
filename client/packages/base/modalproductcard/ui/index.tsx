@@ -30,6 +30,8 @@ export const ModalProductCard = ({
 		setModalOpen(false);
 	};
 
+	console.log(item);
+
 	return (
 		<section className="modal__meal-wrapper">
 			<section className="modal__top-section">
@@ -49,10 +51,34 @@ export const ModalProductCard = ({
 						</div>
 						<hr />
 					</section>
-					<section>
+					<section className="modal__allergene--wrapper">
 						<h3 className="heading-4 text-ketchup">Allergener</h3>
-						<span>Denna produkt innehåller:</span>
-						<span>{}</span>
+						{item.allergenes && item.allergenes?.length > 0 ? (
+							<>
+								<span className="base-small">Denna produkt innehåller:</span>
+								<div className="modal__allergene">
+									{item.allergenes.map((allergene) => {
+										return (
+											<div key={allergene} className="modal__allergene--item">
+												<div className="modal__allergene--letter">
+													<div className="base-small">
+														{allergene.charAt(0).toUpperCase()}
+													</div>
+												</div>
+												<span className="btn-text">
+													{allergene.charAt(0).toUpperCase() +
+														allergene.slice(1)}
+												</span>
+											</div>
+										);
+									})}
+								</div>
+							</>
+						) : (
+							<span className="base-small">
+								Denna måltid innehåller inga allergener.
+							</span>
+						)}
 					</section>
 				</section>
 			</section>

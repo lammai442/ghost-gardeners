@@ -11,7 +11,7 @@
  * Changed so function fetches all products instead of just meals
  *
  * Updated: Lam
- * Changed details to description for menuItem
+ * Changed details to description for menuItem and added Allergenes
  */
 
 import { client } from '../../../services/client.mjs';
@@ -68,6 +68,7 @@ export const handler = async () => {
 					: null,
 				createdAt: a.createdAt?.S || '',
 				items: a.items?.L?.map((i) => i.S) || [],
+				allergenes: a.allergenes?.L?.map((x) => x.S) || [],
 			};
 
 			//
