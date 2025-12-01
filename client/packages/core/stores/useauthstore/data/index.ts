@@ -1,6 +1,6 @@
 /**
  * Author: Lam
- * A global and accessable state for auth.
+ * A global and accessable state for user
  */
 
 import { create } from 'zustand';
@@ -10,11 +10,10 @@ type userStore = {
 	user: User | null;
 };
 
-// Hämtar user-raden från localStorage
+// Initializing user for global state and localStorage
 const saved = localStorage.getItem('user');
-
-// Om saved finns, parsa. Annars null.
 const initialUser = saved ? JSON.parse(saved) : null;
+localStorage.setItem('user', JSON.stringify(initialUser));
 
 const example: User = {
 	firstname: 'Bo',

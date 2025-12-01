@@ -2,13 +2,12 @@ import './index.scss';
 import { useCartStore } from '../../../core/stores/usecartstore/data';
 import { HamburgerMenu } from '@mojjen/hamburger-menu';
 import { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 // import OutsideClickHandler from 'react-outside-click-handler';
 import { useOnClickOutside } from 'usehooks-ts';
 import { useRef } from 'react';
 import { HamburgerIcon } from '@mojjen/hamburger-icon';
-import { useAuthStore } from '../../../core/stores/useauthstore/data';
-import type { User } from '@mojjen/productdata';
+import { AuthBtn } from '../../authbtn/ui';
 
 /**
  * Author: StefanMogren
@@ -31,8 +30,6 @@ import type { User } from '@mojjen/productdata';
 export const HeaderComp = () => {
 	const { cartCount } = useCartStore();
 	const [showNavMenu, setShowNavMenu] = useState(false);
-	const { user } = useAuthStore();
-	const navigate = useNavigate();
 
 	const location = useLocation();
 
@@ -47,16 +44,6 @@ export const HeaderComp = () => {
 	useEffect(() => {
 		setShowNavMenu(false);
 	}, [location.pathname]);
-
-	const handleLogin = (user: User | null) => {
-		if (user) {
-			console.log('här');
-
-			navigate('/cart');
-		} else {
-			console.log('ej inloggad');
-		}
-	};
 
 	return (
 		<header className="header bg-ketchup">
@@ -92,28 +79,30 @@ export const HeaderComp = () => {
 				{/**
 				 * * ----- Profil -----
 				 */}
+				<AuthBtn />
+				{/* 
 				<div className="flex flex__gap-1 flex__align-items">
-					{/* Placeholder för profilsidan */}
 					<button
 						className="header__user-profile flex flex__align-items  bg-dark-ketchup"
 						onClick={() => handleLogin(user)}
-					>
+						>
 						<img
 							className="header__profile-img"
 							src="/assets/profile-icon.svg"
 							alt="Profilikon"
-						/>
+							/>
 						<h5 className="heading-5 text-light-beige">
 							{user ? user.firstname : 'Logga in'}
 						</h5>
 					</button>
-					{/* Placeholder för utloggningsfunktionen */}
 					<img
 						className="header__logout-img"
 						src="/assets/log-out-icon.svg"
 						alt="Utloggningsknapp"
-					/>
+						/>
 				</div>
+				*/}
+
 				{/**
 				 * * ----- Varukorg -----
 				 */}
