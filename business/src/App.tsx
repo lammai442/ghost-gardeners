@@ -1,15 +1,20 @@
 import './App.scss';
-import { router } from '@mojjen/router';
-import { RouterProvider } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
+
+/**
+ * Modified: StefanMogren
+ *
+ * Adjusted how BrowserRouter and RouterProvider is set up
+ */
 
 function App() {
-  return (
-    <>
-      <div className="app">
-        <RouterProvider router={router} />
-      </div>
-    </>
-  );
+	return (
+		<>
+			<div className="app">
+				<Outlet />
+			</div>
+		</>
+	);
 }
 
 export default App;
