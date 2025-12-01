@@ -1,0 +1,4 @@
+{
+	"name": "@mojjen/authform",
+	"main": "./index.ts"
+}

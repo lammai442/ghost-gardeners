@@ -2,11 +2,13 @@ import './index.scss';
 import { useCartStore } from '../../../core/stores/usecartstore/data';
 import { HamburgerMenu } from '@mojjen/hamburger-menu';
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 // import OutsideClickHandler from 'react-outside-click-handler';
 import { useOnClickOutside } from 'usehooks-ts';
 import { useRef } from 'react';
 import { HamburgerIcon } from '@mojjen/hamburger-icon';
+import { useAuthStore } from '../../../core/stores/useauthstore/data';
+import type { User } from '@mojjen/productdata';
 
 /**
  * Author: StefanMogren
@@ -21,11 +23,17 @@ import { HamburgerIcon } from '@mojjen/hamburger-icon';
  * Modified: Stefan Mogren
  * Reworked positioning of content inside the header.
  *
+ * Modified: Lam
+ * Added user from usaAuthStore and implemented ternary operator for log in or username
+ *
  */
 
 export const HeaderComp = () => {
 	const { cartCount } = useCartStore();
 	const [showNavMenu, setShowNavMenu] = useState(false);
+	const { user } = useAuthStore();
+	const navigate = useNavigate();
+
 	const location = useLocation();
 
 	const ref = useRef<HTMLDivElement>(null!);
@@ -39,6 +47,16 @@ export const HeaderComp = () => {
 	useEffect(() => {
 		setShowNavMenu(false);
 	}, [location.pathname]);
+
+	const handleLogin = (user: User | null) => {
+		if (user) {
+			console.log('här');
+
+			navigate('/cart');
+		} else {
+			console.log('ej inloggad');
+		}
+	};
 
 	return (
 		<header className="header bg-ketchup">
@@ -76,14 +94,19 @@ export const HeaderComp = () => {
 				 */}
 				<div className="flex flex__gap-1 flex__align-items">
 					{/* Placeholder för profilsidan */}
-					<section className="header__user-profile flex flex__align-items  bg-dark-ketchup">
+					<button
+						className="header__user-profile flex flex__align-items  bg-dark-ketchup"
+						onClick={() => handleLogin(user)}
+					>
 						<img
 							className="header__profile-img"
 							src="/assets/profile-icon.svg"
 							alt="Profilikon"
 						/>
-						<h5 className="heading-5 text-light-beige">Hej Lennart!</h5>
-					</section>
+						<h5 className="heading-5 text-light-beige">
+							{user ? user.firstname : 'Logga in'}
+						</h5>
+					</button>
 					{/* Placeholder för utloggningsfunktionen */}
 					<img
 						className="header__logout-img"

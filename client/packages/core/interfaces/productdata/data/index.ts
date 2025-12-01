@@ -7,6 +7,7 @@
  *
  * Updated: Lam
  * Added allergenes? and change details to description to Meal
+ * Added interface User
  */
 
 export interface Meal {
@@ -49,4 +50,15 @@ export interface Order {
 	total: number;
 	userComment?: string;
 	items: OrderItem[];
+}
+
+export interface User {
+	firstname: string;
+	lastname: string;
+	phone: string;
+	email: string;
+	password?: string;
+	orders?: string[];
+	token?: string;
+	role?: string;
 }
