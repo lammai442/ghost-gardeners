@@ -1,11 +1,21 @@
 .footer {
 	max-width: 100%;
-	// margin-top: 5rem; // Added padding to page class instead / Klara
-	padding: 6rem 1rem 8rem 1rem;
+	// padding: 6rem 1rem 8rem 1rem;
 	display: flex;
 	flex-direction: column;
 	gap: 2rem;
-	background-image: url('/assets/wave-footer.svg');
+	padding-bottom: 3rem;
+
+	&__wave {
+		background-image: url('/assets/big-wave-footer.svg');
+		background-size: cover;
+		width: 100%;
+		height: 100px;
+	}
+
+	&__top {
+		margin: 0rem 10rem 0rem 10rem;
+	}
 }
 
 .footer__container {
@@ -54,6 +64,7 @@
 .footer__horizontal-rule {
 	border: none;
 	height: 2px;
+	margin: 0rem 3rem;
 }
 
 .footer__bottom-container {
@@ -61,4 +72,24 @@
 	flex-direction: column;
 	align-items: center;
 	gap: 1rem;
+}
+
+@media screen and (max-width: 993px) {
+	.footer {
+		&__top {
+			margin: 0rem 3rem 0rem 3rem;
+		}
+
+		&__horizontal-rule {
+			margin: 0rem 1rem;
+		}
+	}
+}
+@media screen and (max-width: 768px) {
+	.footer {
+		&__top {
+			flex-direction: column;
+			gap: 2rem;
+		}
+	}
 }
