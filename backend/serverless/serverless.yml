@@ -14,6 +14,18 @@ provider:
 
 functions:
   # Auth
+  RegisterUser:
+    handler: functions/auth/RegisterUser/index.handler
+    events:
+      - httpApi:
+          path: /api/auth/register
+          method: POST
+  LoginUser:
+    handler: functions/auth/LoginUser/index.handler
+    events:
+      - httpApi:
+          path: /api/auth/login
+          method: POST
   # Products
   GetMenu:
     handler: functions/menu/GetMenu/index.handler
@@ -87,6 +99,8 @@ resources:
             AttributeType: S
           - AttributeName: status #GSI2SK
             AttributeType: S
+          - AttributeName: email #GSI2SK
+            AttributeType: S
         KeySchema:
           - AttributeName: PK
             KeyType: HASH
@@ -107,5 +121,11 @@ resources:
                 KeyType: HASH
               - AttributeName: status
                 KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
+          - IndexName: GSI3
+            KeySchema:
+              - AttributeName: email
+                KeyType: HASH
             Projection:
               ProjectionType: ALL
