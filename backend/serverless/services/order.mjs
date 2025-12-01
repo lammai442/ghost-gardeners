@@ -1,10 +1,5 @@
-/**
- * Author: ninerino
- * Function to create order, save it to the database and return info to the frontend
- */
-
 import { marshall, unmarshall } from '@aws-sdk/util-dynamodb';
-import { PutItemCommand, GetItemCommand, UpdateItemCommand } from '@aws-sdk/client-dynamodb';
+import { PutItemCommand, GetItemCommand, UpdateItemCommand, QueryCommand } from '@aws-sdk/client-dynamodb';
 import { client } from './client.mjs';
 import {
 	getProductsByIds,
@@ -244,3 +239,43 @@ export const getOrder = async (orderId) => {
 
   return unmarshall(res.Item);
 };
+
+// Get ALL orders
+export async function getAllOrders() {
+	const cmd = new QueryCommand({
+		TableName: "mojjen-table",
+		IndexName: "GSI2",
+		KeyConditionExpression: "statusCategory = :sc",
+		ExpressionAttributeValues: {
+			":sc": { S: "STATUS#ORDER" },
+		},
+	});
+
+	const res = await client.send(cmd);
+	return res.Items.map((i) => unmarshall(i));
+}
+
+// Get ALL orders by status
+export async function getAllOrdersByStatus(status) {
+  const res = await client.send(
+    new QueryCommand({
+      TableName: "mojjen-table",
+      IndexName: "GSI2",
+      KeyConditionExpression: "statusCategory = :pk AND begins_with(#s, :status)",
+      ExpressionAttributeNames: {
+        "#s": "status",
+      },
+      ExpressionAttributeValues: {
+        ":pk": { S: "STATUS#ORDER" },
+        ":status": { S: status },
+      },
+    })
+  );
+
+  return res.Items.map((item) => unmarshall(item));
+}
+
+/**
+ * Author: ninerino
+ * Functions to handle everything with orders.
+ */
