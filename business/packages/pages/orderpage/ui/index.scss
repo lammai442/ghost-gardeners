@@ -1,0 +1,22 @@
+.order-page__orders {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	justify-content: space-between;
+	gap: 3rem;
+}
+
+.order-page__orders-container {
+	display: grid;
+	gap: 2rem;
+	grid-template-columns: 1fr 1fr;
+}
+
+.order-page__order {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	border: 2px solid $color-ketchup;
+	border-radius: 4px;
+	padding: 1rem;
+	list-style-type: none;
+}
