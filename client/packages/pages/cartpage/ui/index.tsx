@@ -7,17 +7,36 @@ import { getItemsForOrder } from '../../../core/stores/usecartstore/data';
 import { useNavigate } from 'react-router-dom';
 import { ContentBox } from '@mojjen/contentbox';
 import { calcSum } from '../../../../src/utils/utils';
+import { useEffect, useState } from 'react';
+import { apiGetMeals } from '@mojjen/apiproducts';
+import type { Meal } from '@mojjen/productdata';
 /**
  * Author: Klara Sköld
  * This is the cart page.
  * Updated: Lam
  * Change calculation of sum of articles and total amount
+ * Added fetching of apiGetMeals to send allProdList to modal
  *
  */
 
+type GetMealsResponse = {
+	data: Meal[];
+	status: number;
+	success: boolean;
+};
+
 export const CartPage = () => {
 	const { cart, emptyCart } = useCartStore();
+	const [allProdList, setAllProdList] = useState<Meal[]>([]);
 	const apiUrl: string = import.meta.env.VITE_API_URL;
+
+	useEffect(() => {
+		const fetchMeals = async () => {
+			const response: GetMealsResponse = await apiGetMeals();
+			if (response.success) setAllProdList(response.data);
+		};
+		fetchMeals();
+	}, []);
 
 	const navigate = useNavigate();
 	const handleSubmit = async () => {
@@ -48,7 +67,13 @@ export const CartPage = () => {
 
 	const generateCartProducts = () => {
 		if (cart.length === 0) return null;
-		return <ProductsList isCartItem={true} prodlist={cart} />;
+		return (
+			<ProductsList
+				isCartItem={true}
+				prodList={cart}
+				allProdList={allProdList}
+			/>
+		);
 	};
 
 	return (

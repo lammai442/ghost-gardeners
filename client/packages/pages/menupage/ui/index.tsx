@@ -14,15 +14,14 @@ import { Modal } from '../../../base/modal/ui';
  * Author: Lam
  * Menupage that display the menu of Mojjens meals by fetching from database
  *
- */
-
-/**
  * Update: Klara
  * Page and button components added
  *
  * Bugfix: StefanMogren
  * Made so only meals show up, hid <Filter>
  *
+ * Update: Lam
+ * Change name of useState from mealData to allProdList because we fetch for all products in database
  */
 
 type GetMealsResponse = {
@@ -32,7 +31,7 @@ type GetMealsResponse = {
 };
 
 export const MenuPage = () => {
-	const [mealsData, setMealsData] = useState<Meal[]>([]);
+	const [allProdList, setAllProdList] = useState<Meal[]>([]);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [fetchError, setFetchError] = useState<boolean>(false);
 	const navigate = useNavigate();
@@ -44,17 +43,13 @@ export const MenuPage = () => {
 		const fetchMeals = async () => {
 			const response: GetMealsResponse = await apiGetMeals();
 			setLoading(false);
-			if (response.success) setMealsData(response.data);
+			if (response.success) setAllProdList(response.data);
 			else setFetchError(true);
 		};
 		fetchMeals();
 	}, []);
 
 	const handleNavigate = () => navigate('/cart');
-
-	// const handleOpenModal = () => {
-	// 	setModalOpen(true);
-	// };
 
 	// If the modal is open the background is unscrollable.
 	useEffect(() => {
@@ -63,7 +58,7 @@ export const MenuPage = () => {
 		}
 	}, [modalOpen]);
 
-	const mealList = mealsData.filter((product) => product.category === 'MEAL');
+	const prodList = allProdList.filter((product) => product.category === 'MEAL');
 
 	return (
 		<>
@@ -90,8 +85,12 @@ export const MenuPage = () => {
 				)}
 				{loading && <LoadingMsg title="Laddar menyn" />}
 
-				{mealList.length > 0 && (
-					<ProductsList isCartItem={false} prodlist={mealList} />
+				{prodList.length > 0 && (
+					<ProductsList
+						isCartItem={false}
+						prodList={prodList}
+						allProdList={allProdList}
+					/>
 				)}
 				<Button
 					aria="Gå till varukorgen"

@@ -9,6 +9,9 @@
  *
  * Modified: StefanMogren
  * Changed so function fetches all products instead of just meals
+ *
+ * Updated: Lam
+ * Changed details to description for menuItem and added Allergenes
  */
 
 import { client } from '../../../services/client.mjs';
@@ -34,16 +37,16 @@ export const handler = async () => {
 
 		//
 		const allProductIds = [
-  ...new Set(
-    (menuResponse.Items || []).flatMap((item) => {
-      const a = item.attribute?.M || {};
-      return [
-        ...(a.items?.L?.map((i) => i.S) || []),
-        ...(a.includeDrink?.S ? [a.includeDrink.S] : []), // <-- lägg till dryckens ID
-      ];
-    })
-  ),
-];
+			...new Set(
+				(menuResponse.Items || []).flatMap((item) => {
+					const a = item.attribute?.M || {};
+					return [
+						...(a.items?.L?.map((i) => i.S) || []),
+						...(a.includeDrink?.S ? [a.includeDrink.S] : []), // <-- lägg till dryckens ID
+					];
+				})
+			),
+		];
 
 		//
 		const productMap = await getProductsByIds(allProductIds);
@@ -57,12 +60,15 @@ export const handler = async () => {
 				category: a.category?.S || '',
 				price: a.price?.N ? Number(a.price.N) : null,
 				summary: a.summary?.S || '',
-				details: a.details?.S || '',
+				description: a.description?.S || '',
 				img: a.img?.S || '',
 				includeDrink: a.includeDrink?.S || null,
-				includeDrinkName: a.includeDrink?.S ? productMap[a.includeDrink.S]?.name || null : null,
+				includeDrinkName: a.includeDrink?.S
+					? productMap[a.includeDrink.S]?.name || null
+					: null,
 				createdAt: a.createdAt?.S || '',
 				items: a.items?.L?.map((i) => i.S) || [],
+				allergenes: a.allergenes?.L?.map((x) => x.S) || [],
 			};
 
 			//

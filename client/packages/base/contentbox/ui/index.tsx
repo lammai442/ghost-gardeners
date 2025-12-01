@@ -56,7 +56,6 @@ export const ContentBox = ({
 	};
 
 	const handleClickoutside = (): void => {
-		console.log('Click outside modal');
 		if (setModalOpen) setModalOpen(false);
 	};
 

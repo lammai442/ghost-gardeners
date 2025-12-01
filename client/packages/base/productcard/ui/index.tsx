@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import type { Meal } from '@mojjen/productdata';
 import { useCartStore } from '../../../core/stores/usecartstore/data';
 import { Modal } from '../../modal/ui';
-
+import { ModalProductCard } from '../../modalproductcard/ui';
 /**
  * Author: Lam
  * Menupage that display the menu of Mojjens meals with connection to cart of useCartStore.
@@ -15,6 +15,8 @@ import { Modal } from '../../modal/ui';
  */
 
 type Props = {
+	allProdList: Meal[];
+	prodList: Meal[];
 	item: Meal;
 	classBgColor: string;
 	showQty?: boolean;
@@ -24,20 +26,15 @@ type Props = {
 	showDrinkOpt: boolean;
 };
 
-export const ProductCard = ({ item, classBgColor, isFlexColumn }: Props) => {
+export const ProductCard = ({
+	item,
+	classBgColor,
+	isFlexColumn,
+	allProdList,
+}: Props) => {
 	const { incrament } = useCartStore();
 	const { name, img, summary, price, status } = item;
-	// const [quantity, setQuantity] = useState<number | undefined>(0);
 	const [modalOpen, setModalOpen] = useState(false);
-
-	// useEffect(() => {
-	// 	const count = cart.filter((i) => i.id === item.id).length;
-	// 	setQuantity(count);
-	// 	// const itemExistInCart = cart.find((i) => i.id === item.id);
-	// 	// // Add to the qty count of the product
-	// 	// if (itemExistInCart) setQuantity(itemExistInCart.qty);
-	// 	// if (!itemExistInCart) setQuantity(count);
-	// }, [cart]);
 
 	const productCardClassNames = clsx('flex product-card', {
 		flex__column: isFlexColumn,
@@ -48,8 +45,7 @@ export const ProductCard = ({ item, classBgColor, isFlexColumn }: Props) => {
 	});
 
 	const handleModal = () => {
-		incrament(item);
-		// setModalOpen(true);
+		setModalOpen(true);
 	};
 	// If the modal is open the background is unscrollable.
 	useEffect(() => {
@@ -65,7 +61,12 @@ export const ProductCard = ({ item, classBgColor, isFlexColumn }: Props) => {
 				titleContent={<h3 className="heading-3 text-light-beige">{name}</h3>}
 				setModalOpen={setModalOpen}
 			>
-				<p>Placeholder modal content</p>
+				<ModalProductCard
+					item={item}
+					allProdList={allProdList}
+					classBgColor={classBgColor}
+					setModalOpen={setModalOpen}
+				/>
 			</Modal>
 
 			<li className={productCardClassNames}>
@@ -74,11 +75,18 @@ export const ProductCard = ({ item, classBgColor, isFlexColumn }: Props) => {
 					// onClick={handleModal}
 					className={`product-card__img-box flex ${classBgColor}`}
 				>
-					<img className={imgClassNames} src={img} alt="Image of meal" />
+					<img
+						className={imgClassNames}
+						src={img}
+						alt="Image of meal"
+						onClick={handleModal}
+					/>
 					{/* {showIncramentBtn && ( */}
 					<Button
 						aria={`Lägg till en ${item.name} i varukorgen`}
-						onClick={handleModal}
+						onClick={() => {
+							incrament(item);
+						}}
 						extraClasses="product-card__add-btn"
 						style="black"
 						isDisabled={false}
@@ -88,7 +96,9 @@ export const ProductCard = ({ item, classBgColor, isFlexColumn }: Props) => {
 				</section>
 				<section className="product-card__info-box info-box flex flex__column text__left">
 					<div className="info-box__top flex flex__column">
-						<h2 className="heading-5">{name}</h2>
+						<h2 className="heading-5" onClick={handleModal}>
+							{name}
+						</h2>
 						<p className="base-small">{summary}</p>
 						<span className="info-box__top--align-self info-box__top--margin-top btn-text flex ">
 							{price} kr

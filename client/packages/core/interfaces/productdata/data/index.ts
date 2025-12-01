@@ -4,6 +4,9 @@
  *
  * Modified: StefanMogren
  * Added category to Meal
+ *
+ * Updated: Lam
+ * Added allergenes? and change details to description to Meal
  */
 
 export interface Meal {
@@ -11,7 +14,7 @@ export interface Meal {
 	id: string;
 	name: string;
 	summary: string;
-	details?: string;
+	description?: string;
 	price: number;
 	img: string;
 	classBgColor?: string;
@@ -21,6 +24,7 @@ export interface Meal {
 	itemId?: string;
 	includeDrinkName?: string | null;
 	subtotal?: number;
+	allergenes?: string[] | null;
 }
 
 export interface Drink {
