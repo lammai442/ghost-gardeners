@@ -4,6 +4,7 @@ import { useAuthStore } from '../../../core/stores/useauthstore/data';
 import type { User } from '@mojjen/productdata';
 import { Modal } from '../../modal/ui';
 import { useState } from 'react';
+import { AuthForm } from '../../authform/ui';
 
 /**
  * Author: Lam
@@ -30,7 +31,9 @@ export const AuthBtn = () => {
 				open={modalOpen}
 				titleContent={<h3 className="heading-3 text-light-beige">Logga in</h3>}
 				setModalOpen={setModalOpen}
-			></Modal>
+			>
+				<AuthForm setModalOpen={setModalOpen} />
+			</Modal>
 			<div className="flex flex__gap-1 flex__align-items">
 				{/* Placeholder för profilsidan */}
 				<button
