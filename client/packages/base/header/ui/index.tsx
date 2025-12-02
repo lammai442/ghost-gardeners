@@ -7,25 +7,12 @@ import { Link, useLocation } from 'react-router-dom';
 import { useOnClickOutside } from 'usehooks-ts';
 import { useRef } from 'react';
 import { HamburgerIcon } from '@mojjen/hamburger-icon';
-
-/**
- * Author: StefanMogren
- * Created base header component
- *
- * Modified: Stefan Mogren
- * Added profile placeholder and initial cart button functionality.
- *
- * Modified: Lam
- * Added cartCount from useCartStore
- *
- * Modified: Stefan Mogren
- * Reworked positioning of content inside the header.
- *
- */
+import { AuthBtn } from '../../authbtn/ui';
 
 export const HeaderComp = () => {
 	const { cartCount } = useCartStore();
 	const [showNavMenu, setShowNavMenu] = useState(false);
+
 	const location = useLocation();
 
 	const ref = useRef<HTMLDivElement>(null!);
@@ -74,23 +61,30 @@ export const HeaderComp = () => {
 				{/**
 				 * * ----- Profil -----
 				 */}
+				<AuthBtn />
+				{/* 
 				<div className="flex flex__gap-1 flex__align-items">
-					{/* Placeholder för profilsidan */}
-					<section className="header__user-profile flex flex__align-items  bg-dark-ketchup">
+					<button
+						className="header__user-profile flex flex__align-items  bg-dark-ketchup"
+						onClick={() => handleLogin(user)}
+						>
 						<img
 							className="header__profile-img"
 							src="/assets/profile-icon.svg"
 							alt="Profilikon"
-						/>
-						<h5 className="heading-5 text-light-beige">Hej Lennart!</h5>
-					</section>
-					{/* Placeholder för utloggningsfunktionen */}
+							/>
+						<h5 className="heading-5 text-light-beige">
+							{user ? user.firstname : 'Logga in'}
+						</h5>
+					</button>
 					<img
 						className="header__logout-img"
 						src="/assets/log-out-icon.svg"
 						alt="Utloggningsknapp"
-					/>
+						/>
 				</div>
+				*/}
+
 				{/**
 				 * * ----- Varukorg -----
 				 */}
@@ -112,3 +106,21 @@ export const HeaderComp = () => {
 		</header>
 	);
 };
+
+/**
+ * Author: StefanMogren
+ * Created base header component
+ *
+ * Modified: Stefan Mogren
+ * Added profile placeholder and initial cart button functionality.
+ *
+ * Modified: Lam
+ * Added cartCount from useCartStore
+ *
+ * Modified: Stefan Mogren
+ * Reworked positioning of content inside the header.
+ *
+ * Modified: Lam
+ * Added user from usaAuthStore and implemented ternary operator for log in or username
+ *
+ */

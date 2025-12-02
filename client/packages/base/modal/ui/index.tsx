@@ -1,16 +1,9 @@
 import type { ReactNode } from 'react';
 import './index.scss';
-
 import { useEffect } from 'react';
 import { IoClose } from 'react-icons/io5';
 import { Button } from '@mojjen/button';
 import { ContentBox } from '@mojjen/contentbox';
-
-/**
- * Author: Klara Sköld
- * Created a reusable modal.
- *  * Solution based on this code: https://www.freecodecamp.org/news/create-react-reusable-modal-component/
- */
 
 type Props = {
 	open: boolean;
@@ -102,3 +95,9 @@ export const Modal = ({
 		</div>
 	);
 };
+
+/**
+ * Author: Klara Sköld
+ * Created a reusable modal.
+ *  * Solution based on this code: https://www.freecodecamp.org/news/create-react-reusable-modal-component/
+ */

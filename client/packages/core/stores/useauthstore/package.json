@@ -1,0 +1,4 @@
+{
+	"name": "@mojjen/useauthstore",
+	"main": "./index.ts"
+}

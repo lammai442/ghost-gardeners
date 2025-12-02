@@ -1,0 +1,50 @@
+@use '../../../../src/variables.scss' as *;
+
+.auth-form {
+	width: 100%;
+	max-width: 550px;
+	min-width: 500px;
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+
+	.form-error {
+		color: $color-ketchup;
+	}
+
+	.auth-form__action-btn {
+		width: 100%;
+		margin-top: 0.5rem;
+	}
+
+	&__separator-content {
+		display: flex;
+		width: 100%;
+		justify-content: center;
+		align-items: center;
+		gap: 0.5rem;
+
+		hr {
+			width: 7rem;
+			border: 1px thin $color-cucumber;
+		}
+	}
+
+	&__toggle {
+		background-color: transparent;
+		border: none;
+		color: $color-ketchup;
+	}
+
+	&__error-message {
+		color: $color-ketchup;
+		margin-bottom: 1.5rem;
+	}
+}
+
+@media (max-width: 600px) {
+	.auth-form {
+		max-width: 350px;
+		min-width: 300px;
+	}
+}
