@@ -2,27 +2,36 @@ import type { ReactNode } from 'react';
 import './index.scss';
 import clsx from 'clsx';
 
-/**
- * Author: Klara Sköld
- * A page template
- *
- */
-
 type Props = {
 	children?: ReactNode;
+	topContent?: ReactNode;
 	titleText: string;
 	extraClasses?: string;
 	srOnly?: boolean;
 };
 
-export const Page = ({ titleText, children, srOnly, extraClasses }: Props) => {
+export const Page = ({
+	titleText,
+	children,
+	topContent,
+	srOnly,
+	extraClasses,
+}: Props) => {
 	const classNames = clsx('heading-1', 'page__title', {
 		'sr-only': srOnly,
 	});
 	return (
 		<section className={`page page__wrapper flex flex__column`}>
+			{topContent && <section>{topContent}</section>}
 			<h1 className={classNames}>{titleText}</h1>
 			<section className={` ${extraClasses}`}>{children}</section>
 		</section>
 	);
 };
+
+/**
+ * Author: Klara Sköld
+ * A page template
+ * Update: Klara
+ * topContent added
+ */

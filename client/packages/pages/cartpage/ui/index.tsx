@@ -86,7 +86,7 @@ export const CartPage = () => {
 			{generateCartProducts()}
 
 			{/* User comment */}
-			<div className="flex flex__column flex__gap-3">
+			<div className="flex flex__column flex__gap-3 cart__comment-summary-div">
 				{cart.length > 0 && (
 					<Comment
 						comment={comment}

@@ -10,20 +10,6 @@ import { ProductsList } from '@mojjen/productslist';
 import { useNavigate } from 'react-router-dom';
 import { Modal } from '../../../base/modal/ui';
 
-/**
- * Author: Lam
- * Menupage that display the menu of Mojjens meals by fetching from database
- *
- * Update: Klara
- * Page and button components added
- *
- * Bugfix: StefanMogren
- * Made so only meals show up, hid <Filter>
- *
- * Update: Lam
- * Change name of useState from mealData to allProdList because we fetch for all products in database
- */
-
 type GetMealsResponse = {
 	data: Meal[];
 	status: number;
@@ -60,6 +46,22 @@ export const MenuPage = () => {
 
 	const prodList = allProdList.filter((product) => product.category === 'MEAL');
 
+	const generateTopContent = () => {
+		return (
+			<section className="flex">
+				<h3 className="heading-3">Du har tidigare beställt</h3>;
+				{/* Placeholder to map ordered meals from logged in user. */}
+				{/* {userOrdersList.length > 0 && (
+					<ProductsList
+						isCartItem={false}
+						prodList={userOrdersList}
+						allProdList={userOrdersList} //
+					/>
+				)} */}
+			</section>
+		);
+	};
+
 	return (
 		<>
 			<Modal
@@ -69,13 +71,17 @@ export const MenuPage = () => {
 			>
 				<p>Placeholder modal content</p>
 			</Modal>
-			<Page titleText="Mojmeny" extraClasses="flex flex__column menu">
+			<Page
+				titleText="Mojmeny"
+				extraClasses="flex flex__column menu"
+				// ! Placeholder: if logged in user && topContent
+				topContent={generateTopContent()}
+			>
 				{/* <Filter /> */}
 				{/* <div className="App">
 					<button onClick={handleOpenModal}>Open</button> */}
 				{/* <button onClick={() => setModalOpen(true)}>Open</button> */}
 				{/* </div> */}
-
 				{fetchError && (
 					<ConstructError
 						color="bg-ketchup"
@@ -84,7 +90,6 @@ export const MenuPage = () => {
 					/>
 				)}
 				{loading && <LoadingMsg title="Laddar menyn" />}
-
 				{prodList.length > 0 && (
 					<ProductsList
 						isCartItem={false}
@@ -103,6 +108,23 @@ export const MenuPage = () => {
 		</>
 	);
 };
+
+/**
+ * Author: Lam
+ * Menupage that display the menu of Mojjens meals by fetching from database
+ *
+ * Update: Klara
+ * Page and button components added
+ *
+ * Bugfix: StefanMogren
+ * Made so only meals show up, hid <Filter>
+ *
+ * Update: Lam
+ * Change name of useState from mealData to allProdList because we fetch for all products in database
+ *
+ * Update: Klara
+ * topContent added to page component
+ */
 
 // ! Original
 // type GetMealsResponse = {
