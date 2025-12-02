@@ -1,21 +1,26 @@
-import './index.scss';
-import { useState } from 'react';
-import { useAuthStore } from '../../../core/stores/useauthstore/data';
+import './index.scss'; // Imports styling for the auth form
+import { useState } from 'react'; // Imports useState for local state management
+import { useAuthStore } from '../../../core/stores/useauthstore/data'; // Imports global auth store actions
+import { Button } from '@mojjen/button'; // Imports reusable button component
+import { ReusableInput } from '@mojjen/reusableinput'; // Imports reusable input component
+import { validateAuthForm } from '@mojjen/helpfunctions'; // Imports form validation helper
+import { getAllInputs } from '@mojjen/data'; // Imports input field definitions
 
 type Props = {
-	setModalOpen?: (open: boolean) => void;
+	setModalOpen?: (open: boolean) => void; // Optional function for closing the modal
 };
 
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const phoneRegex = /^[0-9\s+()-]{6,20}$/;
-const passRegex = /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])/;
-
 export const AuthForm = ({ setModalOpen }: Props) => {
+	// Extracts function to update logged-in user data in storage
 	const updateUserStorage = useAuthStore((s: any) => s.updateUserStorage);
 
+	// Controls whether the user is logging in or registering
 	const [mode, setMode] = useState<'login' | 'register'>('login');
+
+	// Prevents double submits
 	const [submitting, setSubmitting] = useState(false);
 
+	// Stores all form field values
 	const [form, setForm] = useState({
 		firstname: '',
 		lastname: '',
@@ -25,199 +30,92 @@ export const AuthForm = ({ setModalOpen }: Props) => {
 		confirmpassword: '',
 	});
 
+	// Stores all validation error messages
 	const [errors, setErrors] = useState<Record<string, string>>({});
 
+	// Validates entire form using external validation function
 	const validate = () => {
-		const e: Record<string, string> = {};
-
-		if (!form.email || !emailRegex.test(form.email)) {
-			e.email = 'Ange en giltig e-postadress';
-		}
-
-		if (!form.password || !passRegex.test(form.password)) {
-			e.password =
-				'Lösenord måste innehålla minst 1 gemen, 1 versal, 1 siffra och 1 specialtecken';
-		}
-
-		if (mode === 'register') {
-			if (!form.firstname) e.firstname = 'Förnamn krävs';
-			else if (form.firstname.length < 2 || form.firstname.length > 25)
-				e.firstname = 'Förnamn måste vara 2–25 tecken';
-
-			if (!form.lastname) e.lastname = 'Efternamn krävs';
-			else if (form.lastname.length < 2 || form.lastname.length > 25)
-				e.lastname = 'Efternamn måste vara 2–25 tecken';
-			if (!form.phone || !phoneRegex.test(form.phone))
-				e.phone = 'Ange ett giltigt telefonnummer';
-			if (!form.confirmpassword || form.confirmpassword !== form.password)
-				e.confirmpassword = 'Lösenorden matchar inte';
-		}
-
-		setErrors(e);
-		return Object.keys(e).length === 0;
+		const e = validateAuthForm(form, mode); // Runs validation depending on mode
+		setErrors(e); // Stores validation errors
+		return Object.keys(e).length === 0; // Returns true if no errors
 	};
 
+	// Updates form values when user types in an input field
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setForm({ ...form, [e.target.name]: e.target.value });
-		// remove any field-specific error when user types
+		setForm({ ...form, [e.target.name]: e.target.value }); // Updates specific field by name
+
+		// Removes error message for this field as soon as user starts correcting it
 		setErrors((prev) => {
-			const copy = { ...prev };
-			delete copy[e.target.name];
-			return copy;
+			const copy = { ...prev }; // Copies previous error object
+			delete copy[e.target.name]; // Deletes error for current field
+			return copy; // Returns updated error object
 		});
 	};
 
+	// Handles submit action when user clicks login/register
 	const handleSubmit = (e?: React.FormEvent) => {
-		e?.preventDefault();
-		if (submitting) return;
+		e?.preventDefault(); // Prevents page reload on submit
+		if (submitting) return; // Prevents multiple clicks
 
-		if (!validate()) return;
+		if (!validate()) return; // Runs validation and stops if errors exist
 
-		setSubmitting(true);
+		setSubmitting(true); // Locks submission to avoid spam clicks
 
-		// In this demo app there's no backend hooked up, so we 'simulate' successful login/register
+		// Builds user object to store after successful login/register
 		const user = {
-			firstname: form.firstname || 'Gäst',
+			firstname: form.firstname || 'Gäst', // Uses fallback name
 			lastname: form.lastname || '',
 			phone: form.phone || '',
 			email: form.email,
 		};
 
-		// Persist user to global store (and localStorage)
-		try {
-			updateUserStorage && updateUserStorage(user);
-		} catch (err) {
-			// swallow — keep simple flow for demo
-			console.error('Failed to update user', err);
-		}
+		updateUserStorage(user); // Saves user to storage
 
-		setSubmitting(false);
+		setSubmitting(false); // Unlocks submitting again
 
-		// Close modal if we have control
-		setModalOpen && setModalOpen(false);
+		setModalOpen && setModalOpen(false); // Closes modal if provided
 	};
 
-	const switchTo = (m: 'login' | 'register') => {
-		setMode(m);
-		setErrors({});
-	};
+	const inputs = getAllInputs(mode);
 
 	return (
 		<form className="auth-form" onSubmit={handleSubmit} noValidate>
-			<nav className="auth-form__nav flex flex__gap-1">
-				<button
-					type="button"
-					className={`btn-base ${
-						mode === 'login'
-							? 'bg-dark-ketchup text-light-beige'
-							: 'bg-light-beige text-black'
-					}`}
-					onClick={() => switchTo('login')}
+			{' '}
+			{/* Maps all input definitions and renders only those where show = true */}
+			{inputs.map((input) =>
+				input.show ? (
+					<ReusableInput
+						key={input.name}
+						label={input.label}
+						name={input.name}
+						type={input.type || 'text'}
+						value={form[input.name as keyof typeof form]}
+						onChange={handleChange}
+						error={errors[input.name]}
+					/>
+				) : null
+			)}
+			<section className="auth-form__actions">
+				<Button
+					onClick={handleSubmit}
+					aria="Button to submit auth form"
+					extraClasses="auth-form__action-btn"
 				>
-					Logga in
-				</button>
-				<button
-					type="button"
-					className={`btn-base ${
-						mode === 'register'
-							? 'bg-dark-ketchup text-light-beige'
-							: 'bg-light-beige text-black'
-					}`}
-					onClick={() => switchTo('register')}
-				>
-					Registrera
-				</button>
-			</nav>
-
-			<div className="auth-form__body">
-				{mode === 'register' && (
-					<>
-						<label className="base">Förnamn</label>
-						<input
-							name="firstname"
-							value={form.firstname}
-							onChange={handleChange}
-							className="input-base"
-							placeholder="Ditt förnamn"
-						/>
-						{errors.firstname && (
-							<p className="form-error">{errors.firstname}</p>
-						)}
-
-						<label className="base">Efternamn</label>
-						<input
-							name="lastname"
-							value={form.lastname}
-							onChange={handleChange}
-							className="input-base"
-							placeholder="Ditt efternamn"
-						/>
-						{errors.lastname && <p className="form-error">{errors.lastname}</p>}
-
-						<label className="base">Telefon</label>
-						<input
-							name="phone"
-							value={form.phone}
-							onChange={handleChange}
-							className="input-base"
-							placeholder="Telefonnummer"
-						/>
-						{errors.phone && <p className="form-error">{errors.phone}</p>}
-					</>
-				)}
-
-				<label className="base">E-post</label>
-				<input
-					name="email"
-					value={form.email}
-					onChange={handleChange}
-					className="input-base"
-					placeholder="din@mail.se"
-				/>
-				{errors.email && <p className="form-error">{errors.email}</p>}
-
-				<label className="base">Lösenord</label>
-				<input
-					name="password"
-					type="password"
-					value={form.password}
-					onChange={handleChange}
-					className="input-base"
-					placeholder="Minst 6 tecken"
-				/>
-				{errors.password && <p className="form-error">{errors.password}</p>}
-
-				{mode === 'register' && (
-					<>
-						<label className="base">Bekräfta lösenord</label>
-						<input
-							name="confirmpassword"
-							type="password"
-							value={form.confirmpassword}
-							onChange={handleChange}
-							className="input-base"
-							placeholder="Skriv lösenordet igen"
-						/>
-						{errors.confirmpassword && (
-							<p className="form-error">{errors.confirmpassword}</p>
-						)}
-					</>
-				)}
-
-				<div className="auth-form__actions flex flex__gap-1">
-					<button
-						className="btn-base bg-dark-ketchup text-light-beige"
-						type="submit"
-						disabled={submitting}
-					>
-						{submitting
-							? 'Vänta...'
-							: mode === 'login'
-							? 'Logga in'
-							: 'Registrera'}
-					</button>
-				</div>
+					{mode === 'login' ? 'Logga in' : 'Skapa konto'}{' '}
+				</Button>
+			</section>
+			<div className="auth-form__separator-content">
+				<hr />
+				<span className="text-black">eller</span>
+				<hr />
 			</div>
+			<button
+				type="button"
+				className="auth-form__toggle"
+				onClick={() => setMode(mode === 'login' ? 'register' : 'login')}
+			>
+				{mode === 'login' ? 'Skapa konto' : 'Har du redan ett konto? Logga in'}{' '}
+			</button>
 		</form>
 	);
 };

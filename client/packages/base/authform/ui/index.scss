@@ -1,62 +1,47 @@
-@use 'sass:color';
-@import '../../../../src/variables.scss';
+@use '../../../../src/variables.scss' as *;
 
-// Inspo from: https://codepen.io/rodica/pen/jWzGvd
-@mixin button-bg($bg) {
-	background: $bg;
+.auth-form {
+	width: 100%;
+	max-width: 550px;
+	min-width: 500px;
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
 
-	&:hover {
-		// background: darken($bg, 8%);
-		transition: all 0.3s ease;
-		background: color.adjust($bg, $lightness: -8%);
+	.form-error {
+		color: $color-ketchup;
+		font-size: 0.85rem;
 	}
-	&:active {
-		// background: darken($bg, 25%);
-		background: color.adjust($bg, $lightness: -25%);
+
+	&__actions {
+		.auth-form__action-btn {
+			width: 100%;
+		}
+	}
+
+	&__separator-content {
+		display: flex;
+		width: 100%;
+		justify-content: center;
+		align-items: center;
+		gap: 0.5rem;
+
+		hr {
+			width: 7rem;
+			border: 1px thin $color-cucumber;
+		}
+	}
+
+	&__toggle {
+		background-color: transparent;
+		border: none;
+		color: $color-ketchup;
 	}
 }
 
-.btn {
-	color: $color-light-beige;
-	text-decoration: none;
-	padding: 1rem 1rem;
-	border: none;
-	cursor: pointer;
-	position: relative;
-}
-
-.btn-green {
-	@include button-bg($color-cucumber);
-}
-.btn-black {
-	@include button-bg($color-black);
-}
-
-.btn-brown {
-	@include button-bg($color-brown);
-}
-
-.btn-red {
-	@include button-bg($color-ketchup);
-}
-
-.btn-simple {
-	background-color: transparent;
-	padding: 0;
-	// color: $color-black;
-}
-
-.btn-outlined {
-	@include button-bg(transparent);
-
-	color: $color-black;
-	border: 2px solid $color-black;
-
-	&:hover {
-		transition: all 0.3s ease;
-		border: 2px dotted $color-black;
-	}
-	&:active {
-		border: 2px dotted $color-black;
+@media (max-width: 600px) {
+	.auth-form {
+		max-width: 350px;
+		min-width: 300px;
 	}
 }
