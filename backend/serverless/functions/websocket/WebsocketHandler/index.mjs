@@ -5,17 +5,11 @@ import { sendResponses } from '../../../responses/index.mjs';
 import connectSocket from '../routes/connectSocket.mjs';
 import disconnectSocket from '../routes/disconnectSocket.mjs';
 import defaultSocket from '../routes/defaultSocket.mjs';
-import createOrderSocket from '../routes/createOrderSocket.mjs';
-import updateOrderSocket from '../routes/updateOrderSocket.mjs';
 
 const routeHandlers = {
 	$connect: connectSocket,
 	$disconnect: disconnectSocket,
 	$default: defaultSocket,
-	createOrderSocket: createOrderSocket,
-	updateOrderSocket: updateOrderSocket,
-	// cancelOrder: cancelOrderSocket,
-	// finishOrder: finishOrderSocket,
 };
 
 export const handler = middy(async (event) => {
