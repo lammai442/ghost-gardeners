@@ -4,7 +4,7 @@ import { useAuthStore } from '../../../core/stores/useauthstore/data';
 import type { User } from '@mojjen/productdata';
 import { Modal } from '../../modal/ui';
 import { useState } from 'react';
-import { AuthForm } from '../../authform/ui';
+import { AuthForm } from '@mojjen/authform';
 
 /**
  * Author: Lam

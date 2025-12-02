@@ -1,14 +1,13 @@
 import './index.scss';
 
-// Vi definierar vilka props som inputen ska ta emot
 type Props = {
-	label: string; // Texten ovanför input
-	name: string; // Fältets namn (kopplat till state i formuläret)
-	type?: string; // Om inget anges blir det text
-	value: string; // Det aktuella värdet från formuläret
-	placeholder?: string; // Hjälptext i input
-	error?: string; // Felmeddelande, visas under input
-	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; // Event för ändringar
+	label: string;
+	name: string;
+	type?: string;
+	value: string;
+	placeholder?: string;
+	error?: string;
+	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 export const ReusableInput = ({

@@ -5,6 +5,7 @@ import { Button } from '@mojjen/button'; // Imports reusable button component
 import { ReusableInput } from '@mojjen/reusableinput'; // Imports reusable input component
 import { validateAuthForm } from '@mojjen/helpfunctions'; // Imports form validation helper
 import { getAllInputs } from '@mojjen/data'; // Imports input field definitions
+import { apiRegisterUser } from '../../../core/api/apiproducts/data';
 
 type Props = {
 	setModalOpen?: (open: boolean) => void; // Optional function for closing the modal
@@ -53,27 +54,39 @@ export const AuthForm = ({ setModalOpen }: Props) => {
 	};
 
 	// Handles submit action when user clicks login/register
-	const handleSubmit = (e?: React.FormEvent) => {
-		e?.preventDefault(); // Prevents page reload on submit
-		if (submitting) return; // Prevents multiple clicks
+	const handleSubmit = async (e?: React.FormEvent) => {
+		e?.preventDefault();
+		// Prevents multiple clicks
+		if (submitting) return;
 
-		if (!validate()) return; // Runs validation and stops if errors exist
+		// Runs validation and stops if errors exist
+		if (!validate()) return;
 
-		setSubmitting(true); // Locks submission to avoid spam clicks
+		// Locks submission to avoid spam clicks
+		setSubmitting(true);
 
 		// Builds user object to store after successful login/register
 		const user = {
-			firstname: form.firstname || 'Gäst', // Uses fallback name
-			lastname: form.lastname || '',
-			phone: form.phone || '',
+			firstname: form.firstname,
+			lastname: form.lastname,
+			phone: form.phone,
 			email: form.email,
+			password: form.password,
 		};
+		console.log('här');
 
-		updateUserStorage(user); // Saves user to storage
+		const response = await apiRegisterUser(user);
+		console.log(response);
 
-		setSubmitting(false); // Unlocks submitting again
+		if (!response.success) {
+			return;
+		}
 
-		setModalOpen && setModalOpen(false); // Closes modal if provided
+		// updateUserStorage(user);
+
+		setSubmitting(false);
+
+		// setModalOpen && setModalOpen(false);
 	};
 
 	const inputs = getAllInputs(mode);
