@@ -6,44 +6,42 @@
 
 // What StreamProcessor sends:
 
-{
-  type: 'orderUpdate',
-  eventName: 'INSERT',     // or 'MODIFY', 'REMOVE'
-  order: { /* DynamoDB item */ },
-  timestamp: 1234567890
-}
+// {
+//   type: 'orderUpdate',
+//   eventName: 'INSERT',     // or 'MODIFY', 'REMOVE'
+//   order: { /* DynamoDB item */ },
+//   timestamp: 1234567890
+// }
 
 // What clients need to do:
 
 // Client-side JavaScript
 websocket.onmessage = (event) => {
-  const data = JSON.parse(event.data);
-  
-  if (data.type === 'orderUpdate') {
-    const { eventName, order } = data;
-    
-    if (eventName === 'INSERT') {
-      // Add new order to the display
-      addOrderToList(order);
-    } 
-    else if (eventName === 'MODIFY') {
-      // Update existing order in the display
-      updateOrderInList(order);
-    }
-    else if (eventName === 'REMOVE') {
-      // Remove order from the display
-      removeOrderFromList(order);
-    }
-  }
+	const data = JSON.parse(event.data);
+
+	if (data.type === 'orderUpdate') {
+		const { eventName, order } = data;
+
+		if (eventName === 'INSERT') {
+			// Add new order to the display
+			addOrderToList(order);
+		} else if (eventName === 'MODIFY') {
+			// Update existing order in the display
+			updateOrderInList(order);
+		} else if (eventName === 'REMOVE') {
+			// Remove order from the display
+			removeOrderFromList(order);
+		}
+	}
 };
 
 function updateOrderInList(updatedOrder) {
-  // Find the order in your current display and update it
-  const orderElement = document.getElementById(`order-${updatedOrder.orderId}`);
-  if (orderElement) {
-    // Update the DOM with new order data
-    orderElement.innerHTML = renderOrder(updatedOrder);
-  }
+	// Find the order in your current display and update it
+	const orderElement = document.getElementById(`order-${updatedOrder.orderId}`);
+	if (orderElement) {
+		// Update the DOM with new order data
+		orderElement.innerHTML = renderOrder(updatedOrder);
+	}
 }
 
 /* The StreamProcessor provides the data, but each client must implement the display logic.

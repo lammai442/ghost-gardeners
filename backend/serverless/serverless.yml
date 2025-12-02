@@ -7,6 +7,7 @@ provider:
   name: aws
   runtime: nodejs20.x
   region: eu-north-1
+  stage: ${opt:stage, 'dev'}
   httpApi:
     cors: true
   iam:
@@ -96,11 +97,11 @@ functions:
     handler: functions/websocket/StreamProcessor/index.handler
     events:
       - stream:
-        type: dynamodb
-        arn:
-          Fn:GetAtt: [MojjenTable, StreamArn]
-        batchSize: 10
-        startingPosition: LATEST
+          type: dynamodb
+          arn:
+            Fn::GetAtt: [MojjenTable, StreamArn]
+          batchSize: 10
+          startingPosition: LATEST
     # environment:
       # WEBSOCKET_ENDPOINT: ${self:custom.websocketEndpoint}
 
@@ -109,11 +110,11 @@ functions:
     handler: functions/websocket/WebsocketHandler/index.handler
     events:
       - websocket:
-        route: $connect
+          route: $connect
       - websocket:
-        route: $disconnect
+          route: $disconnect
       - websocket:
-        route: $default
+          route: $default
 
 plugins:
   - serverless-offline
@@ -178,6 +179,6 @@ resources:
         # (Amazon Q AI solution)
         # Tells DynamoDB to enable streams for the table
         StreamSpecification:
-          StreamEnabled: true
+          # StreamEnabled: true
           # Sets so you can see the values of both the new and old version of an item
           StreamViewType: NEW_AND_OLD_IMAGES
