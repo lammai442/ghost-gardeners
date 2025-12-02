@@ -19,6 +19,9 @@
 	border-radius: 4px;
 	padding: 1rem;
 	list-style-type: none;
+	height: 15rem;
+	width: 15rem;
+	justify-content: center;
 
 	&-pending {
 		border: 2px solid $color-ketchup;
@@ -35,4 +38,8 @@
 			stroke: $color-light-beige;
 		}
 	}
+}
+
+.heading-3 {
+	font-size: 4rem;
 }
