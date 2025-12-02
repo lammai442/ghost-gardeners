@@ -16,7 +16,7 @@ export const Order = ({ orderId, time, orderStatus }: Props) => {
 	return (
 		// Creates a box with the orderId and the time of creation.
 		<li className={`order-page__order order-page__order-${orderStatus}`}>
-			<span className="heading-5"># {orderId}</span>
+			<span className="heading-5">#{orderId}</span>
 			<span className="flex flex__align-items flex__gap-0-5 base">
 				{/* SVG for the clock icon. Used to get access to its color. */}
 				<svg
