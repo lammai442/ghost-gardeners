@@ -76,6 +76,45 @@ functions:
           path: /api/orders/status/{status}
           method: GET
 
+  # 
+	# ----- Websocket functions -----
+  # 
+  # (Amazon Q AI solution)
+  # A processor to handle the table updating.
+  # Keeps track of any updates to the table by default, but the function itself will be more specific what updates it should react to
+  StreamProcessor:
+    handler: functions/websocket/StreamProcessor/index.handler
+    events:
+      - stream:
+        type: dynamodb
+        arn:
+          Fn:GetAtt: [MojjenTable, StreamArn]
+        batchSize: 10
+        startingPosition: LATEST
+        filterPatterns:
+          - eventName: [INSERT, MODIFY, REMOVE]
+    environment:
+      WEBSOCKET_ENDPOINT: ${self:custom.websocketEndpoint}
+
+  # One handler function which takes care of every websocket requests
+  WebsocketHandler:
+    handler: functions/websocket/WebsocketHandler/index.handler
+    events:
+      - websocket:
+        route: $connect
+      - websocket:
+        route: $disconnect
+      - websocket:
+        route: $default
+      - websocket:
+        route: createOrderSocket
+      # - websocket:
+      #   route: cancelOrderSocket
+      - websocket:
+        route: updateOrderSocket
+      # - websocket:
+      #   route: finishOrderSocket
+
 plugins:
   - serverless-offline
 
@@ -129,3 +168,9 @@ resources:
                 KeyType: HASH
             Projection:
               ProjectionType: ALL
+        # (Amazon Q AI solution)
+        # Tells DynamoDB to enable streams for the table
+        StreamSpecification:
+          StreamEnabled: true
+          # Sets so you can see the values of both the new and old version of an item
+          StreamViewType: NEW_AND_OLD_IMAGES
