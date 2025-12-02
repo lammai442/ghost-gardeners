@@ -9,24 +9,6 @@ import { useRef } from 'react';
 import { HamburgerIcon } from '@mojjen/hamburger-icon';
 import { AuthBtn } from '../../authbtn/ui';
 
-/**
- * Author: StefanMogren
- * Created base header component
- *
- * Modified: Stefan Mogren
- * Added profile placeholder and initial cart button functionality.
- *
- * Modified: Lam
- * Added cartCount from useCartStore
- *
- * Modified: Stefan Mogren
- * Reworked positioning of content inside the header.
- *
- * Modified: Lam
- * Added user from usaAuthStore and implemented ternary operator for log in or username
- *
- */
-
 export const HeaderComp = () => {
 	const { cartCount } = useCartStore();
 	const [showNavMenu, setShowNavMenu] = useState(false);
@@ -124,3 +106,21 @@ export const HeaderComp = () => {
 		</header>
 	);
 };
+
+/**
+ * Author: StefanMogren
+ * Created base header component
+ *
+ * Modified: Stefan Mogren
+ * Added profile placeholder and initial cart button functionality.
+ *
+ * Modified: Lam
+ * Added cartCount from useCartStore
+ *
+ * Modified: Stefan Mogren
+ * Reworked positioning of content inside the header.
+ *
+ * Modified: Lam
+ * Added user from usaAuthStore and implemented ternary operator for log in or username
+ *
+ */

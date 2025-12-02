@@ -59,3 +59,9 @@
 		border: 2px dotted $color-black;
 	}
 }
+
+.header__logout-btn {
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+}

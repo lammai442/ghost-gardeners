@@ -6,14 +6,8 @@ import { Modal } from '../../modal/ui';
 import { useState } from 'react';
 import { AuthForm } from '@mojjen/authform';
 
-/**
- * Author: Lam
- * Auth button that can be used in header. If user is not logged in then modal with authForm opens
- *
- */
-
 export const AuthBtn = () => {
-	const { user } = useAuthStore();
+	const { user, logout } = useAuthStore();
 	const navigate = useNavigate();
 	const [modalOpen, setModalOpen] = useState<boolean>(false);
 
@@ -51,12 +45,20 @@ export const AuthBtn = () => {
 				</button>
 
 				{/* Placeholder för utloggningsfunktionen */}
-				<img
-					className="header__logout-img"
-					src="/assets/log-out-icon.svg"
-					alt="Utloggningsknapp"
-				/>
+				<button className="header__logout-btn" onClick={() => logout()}>
+					<img
+						className="header__logout-img"
+						src="/assets/log-out-icon.svg"
+						alt="Utloggningsknapp"
+					/>
+				</button>
 			</div>
 		</>
 	);
 };
+
+/**
+ * Author: Lam
+ * Auth button that can be used in header. If user is not logged in then modal with authForm opens
+ *
+ */

@@ -10,6 +10,9 @@ import { getUserByEmail } from '../../../services/users.mjs';
 /**
  * Author: Klara
  * Function to login a user.
+ *
+ * Updated: Lam
+ * Changes in return response with keys to success, messages and data
  */
 
 export const handler = middy(async (event) => {
@@ -29,12 +32,15 @@ export const handler = middy(async (event) => {
 	return sendResponses(200, {
 		success: true,
 		messages: 'Inloggningen lyckades',
-		firstname: user.attribute.firstname,
-		phone: user.attribute.phone,
-		lastname: user.attribute.lastname,
-		email: user.email,
-		role: user.attribute.role,
-		token: `Bearer ${token}`,
+		data: {
+			firstname: user.attribute.firstname,
+			phone: user.attribute.phone,
+			lastname: user.attribute.lastname,
+			email: user.email,
+			role: user.attribute.role,
+			token: `Bearer ${token}`,
+			userId: user.userId,
+		},
 	});
 })
 	.use(httpJsonBodyParser())

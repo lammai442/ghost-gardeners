@@ -53,12 +53,11 @@ export interface Order {
 }
 
 export interface User {
-	firstname: string;
-	lastname: string;
-	phone: string;
+	firstname?: string;
+	lastname?: string;
+	phone?: string;
 	email: string;
 	password?: string;
-	orders?: string[];
 	token?: string;
 	role?: string;
 }
