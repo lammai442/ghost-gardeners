@@ -52,6 +52,7 @@ export const createUser = async (user) => {
 				password: await hashPassword(user.password),
 				role: 'USER',
 				createdAt: generateDate(),
+				userId,
 			},
 			category: user.role ? user.role : 'USER',
 			status: 'active',

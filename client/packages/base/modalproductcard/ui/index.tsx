@@ -6,6 +6,12 @@ import { useState } from 'react';
 import type { Dispatch, SetStateAction } from 'react';
 import { useCartStore } from '@mojjen/usecartstore';
 
+/**
+ * Author: Lam
+ * A component for opening a modal with productCard from menupage och cartpage when clicking on the meal.
+ *
+ */
+
 type Props = {
 	item: Meal;
 	allProdList: Meal[];
@@ -23,14 +29,12 @@ export const ModalProductCard = ({
 	const { incrament, updateCartItem } = useCartStore();
 
 	const handlePutToCart = (): void => {
-		// If it is edit from cart then update the current item in cart
+		// If item came from cart then update the current item in cart
 		if (item.itemId) updateCartItem(currentItem);
 		// else add a new item to cart
 		else incrament(currentItem);
 		setModalOpen(false);
 	};
-
-	console.log(item);
 
 	return (
 		<section className="modal__meal-wrapper">

@@ -1,0 +1,67 @@
+@import '../../../../src/variables.scss';
+
+// Inspo from: https://codepen.io/rodica/pen/jWzGvd
+@mixin button-bg($bg) {
+	background: $bg;
+
+	&:hover {
+		// background: darken($bg, 8%);
+		transition: all 0.3s ease;
+		background: color.adjust($bg, $lightness: -8%);
+	}
+	&:active {
+		// background: darken($bg, 25%);
+		background: color.adjust($bg, $lightness: -25%);
+	}
+}
+
+.btn {
+	color: $color-light-beige;
+	text-decoration: none;
+	padding: 1rem 1rem;
+	border: none;
+	cursor: pointer;
+	position: relative;
+}
+
+.btn-green {
+	@include button-bg($color-cucumber);
+}
+.btn-black {
+	@include button-bg($color-black);
+}
+
+.btn-brown {
+	@include button-bg($color-brown);
+}
+
+.btn-red {
+	@include button-bg($color-ketchup);
+}
+
+.btn-simple {
+	background-color: transparent;
+	padding: 0;
+	// color: $color-black;
+}
+
+.btn-outlined {
+	@include button-bg(transparent);
+
+	color: $color-black;
+	border: 2px solid $color-black;
+
+	&:hover {
+		transition: all 0.3s ease;
+		border: 2px dotted $color-black;
+	}
+	&:active {
+		border: 2px dotted $color-black;
+	}
+}
+
+.header__logout-btn {
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+}
