@@ -1,5 +1,4 @@
 import './App.scss';
-import './variables.scss';
 import { HeaderComp } from '@mojjen/header';
 import { FooterComp } from '@mojjen/footer';
 import { Outlet } from 'react-router-dom';
