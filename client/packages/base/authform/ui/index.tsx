@@ -10,14 +10,17 @@ import {
 	apiRegisterUser,
 } from '../../../core/api/apiproducts/data';
 import { Modal } from '@mojjen/modal';
-import { User } from '@mojjen/productdata';
+import type { User } from '@mojjen/productdata';
+import { LoadingMsg } from '@mojjen/loading-msg';
 
 type Props = {
 	setModalOpen?: (open: boolean) => void;
+	setAuthTitle?: (title: string) => void;
 };
 
-export const AuthForm = ({ setModalOpen }: Props) => {
+export const AuthForm = ({ setModalOpen, setAuthTitle }: Props) => {
 	const [mode, setMode] = useState<'login' | 'register'>('login');
+	const [loading, setLoading] = useState(false);
 	const [msgModalOpen, setMsgModalOpen] = useState(false);
 	const { updateUserStorage } = useAuthStore();
 
@@ -34,13 +37,15 @@ export const AuthForm = ({ setModalOpen }: Props) => {
 		confirmpassword: '',
 	});
 
-	// Stores all validation error messages
+	// Stores all validation error messages in a key-value pair object
 	const [errors, setErrors] = useState<Record<string, string>>({});
 
 	// Validates entire form using external validation function
 	const validate = () => {
-		const e = validateAuthForm(form, mode); // Runs validation depending on mode
-		setErrors(e); // Stores validation errors
+		// Runs validation depending on mode
+		const e = validateAuthForm(form, mode);
+		// Stores validation errors
+		setErrors(e);
 		return Object.keys(e).length === 0; // Returns true if no errors
 	};
 
@@ -50,10 +55,10 @@ export const AuthForm = ({ setModalOpen }: Props) => {
 
 		// Removes error message for this field as soon as user starts correcting it
 		setErrors((prev) => {
-			const copy = { ...prev }; // Copies previous error object
-			delete copy[e.target.name]; // Deletes error for current field
+			const copy = { ...prev };
+			delete copy[e.target.name];
 			delete copy.apiError;
-			return copy; // Returns updated error object
+			return copy;
 		});
 	};
 
@@ -67,7 +72,7 @@ export const AuthForm = ({ setModalOpen }: Props) => {
 
 		// Locks submission to avoid spam clicks
 		setSubmitting(true);
-
+		setLoading(true);
 		// Builds user object to store after successful login/register
 		let user: User;
 
@@ -92,16 +97,16 @@ export const AuthForm = ({ setModalOpen }: Props) => {
 		} else {
 			response = await apiLoginUser(user);
 		}
+		setLoading(false);
 
 		if (!response.success) {
 			// Handles API errors here (e.g., show error messages)
 			setErrors({ apiError: response.data.message || 'Ett fel uppstod' });
-
 			setSubmitting(false);
 			return;
 		}
 
-		// If registering, show success message modal
+		// If in register mode, show success message modal
 		if (mode === 'register') {
 			setMsgModalOpen(true);
 			setSubmitting(false);
@@ -121,6 +126,18 @@ export const AuthForm = ({ setModalOpen }: Props) => {
 
 	return (
 		<>
+			{loading && (
+				<Modal
+					open={true}
+					setModalOpen={(loading) => setLoading(loading)}
+					titleContent={<h3 className="heading-3 text-light-beige">Laddar</h3>}
+				>
+					<LoadingMsg
+						title="Bearbetar"
+						text="Din förfrågan skickas. Vänta ett ögonblick."
+					/>
+				</Modal>
+			)}
 			{msgModalOpen && (
 				<Modal
 					open={msgModalOpen}
@@ -144,7 +161,6 @@ export const AuthForm = ({ setModalOpen }: Props) => {
 				</Modal>
 			)}
 			<form className="auth-form" onSubmit={handleSubmit} noValidate>
-				{' '}
 				{/* Maps all input definitions and renders only those where show = true */}
 				{inputs.map((input) =>
 					input.show ? (
@@ -175,13 +191,18 @@ export const AuthForm = ({ setModalOpen }: Props) => {
 				</section>
 				<div className="auth-form__separator-content">
 					<hr />
-					<span className="text-black">eller</span>
+					<span className="text-black base">eller</span>
 					<hr />
 				</div>
 				<button
 					type="button"
-					className="auth-form__toggle"
-					onClick={() => setMode(mode === 'login' ? 'register' : 'login')}
+					className="auth-form__toggle base"
+					onClick={() => {
+						const newMode = mode === 'login' ? 'register' : 'login';
+						setMode(newMode);
+						if (setAuthTitle)
+							setAuthTitle(newMode === 'login' ? 'Logga in' : 'Registrera');
+					}}
 				>
 					{mode === 'login'
 						? 'Skapa konto'
@@ -194,6 +215,7 @@ export const AuthForm = ({ setModalOpen }: Props) => {
 
 /**
  * Author: Lam
+ * AI-assisted code creation: Github Copilot and ChatGPT
  * Created a reusable authentication form for login and registration. Uses localStorage to store user data upon successful login/registration.
  *
  *

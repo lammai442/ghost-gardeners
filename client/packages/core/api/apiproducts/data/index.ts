@@ -1,4 +1,4 @@
-import { User } from '@mojjen/productdata';
+import type { User } from '@mojjen/productdata';
 import axios from 'axios';
 
 export const apiGetMeals = async () => {

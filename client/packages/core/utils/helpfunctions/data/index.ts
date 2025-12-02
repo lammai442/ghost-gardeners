@@ -4,11 +4,12 @@ export const generateId = (): string => {
 	return uuid().substring(0, 5);
 };
 
+// Validationform for a User
 export const validateAuthForm = (form: any, mode: 'login' | 'register') => {
 	const e: Record<string, string> = {};
 
 	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-	const phoneRegex = /^[0-9\s+()-]{6,20}$/;
+	const phoneRegex = /^0\d{7,12}$/;
 	const passRegex = /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])/;
 
 	// Validate email
@@ -33,7 +34,8 @@ export const validateAuthForm = (form: any, mode: 'login' | 'register') => {
 			e.lastname = 'Efternamn måste vara 2–25 tecken';
 
 		if (!form.phone || !phoneRegex.test(form.phone))
-			e.phone = 'Ange ett giltigt telefonnummer';
+			e.phone =
+				'Telefonnumret måste börja med 0 och vara mellan 8 och 13 siffror';
 
 		if (!form.confirmpassword || form.confirmpassword !== form.password)
 			e.confirmpassword = 'Lösenorden matchar inte';

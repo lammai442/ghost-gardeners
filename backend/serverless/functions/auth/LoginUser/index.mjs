@@ -7,14 +7,6 @@ import { generateToken } from '../../../utils/tokens.mjs';
 import { validateLogin } from '../../../middlewares/validateLogin.mjs';
 import { getUserByEmail } from '../../../services/users.mjs';
 
-/**
- * Author: Klara
- * Function to login a user.
- *
- * Updated: Lam
- * Changes in return response with keys to success, messages and data
- */
-
 export const handler = middy(async (event) => {
 	const user = await getUserByEmail(event.body.email);
 
@@ -25,10 +17,10 @@ export const handler = middy(async (event) => {
 		user.attribute.password
 	);
 
-	if (!validPassword) throw new Error('Ogiltigt lösenord');
+	if (!validPassword) throw new Error('Fel lösenord');
 
 	const token = generateToken(user);
-	console.log('user: ', user);
+
 	return sendResponses(200, {
 		success: true,
 		messages: 'Inloggningen lyckades',
@@ -46,3 +38,11 @@ export const handler = middy(async (event) => {
 	.use(httpJsonBodyParser())
 	.use(validateLogin())
 	.use(errorHandler());
+
+/**
+ * Author: Klara
+ * Function to login a user.
+ *
+ * Updated: Lam
+ * Changes in return response with keys to success, messages and data
+ */

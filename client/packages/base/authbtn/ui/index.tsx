@@ -10,6 +10,7 @@ export const AuthBtn = () => {
 	const { user, logout } = useAuthStore();
 	const navigate = useNavigate();
 	const [modalOpen, setModalOpen] = useState<boolean>(false);
+	const [authTitle, setAuthTitle] = useState<string>('Logga in');
 
 	const handleLogin = (user: User | null) => {
 		if (user) {
@@ -23,10 +24,12 @@ export const AuthBtn = () => {
 		<>
 			<Modal
 				open={modalOpen}
-				titleContent={<h3 className="heading-3 text-light-beige">Logga in</h3>}
+				titleContent={
+					<h3 className="heading-3 text-light-beige">{authTitle}</h3>
+				}
 				setModalOpen={setModalOpen}
 			>
-				<AuthForm setModalOpen={setModalOpen} />
+				<AuthForm setModalOpen={setModalOpen} setAuthTitle={setAuthTitle} />
 			</Modal>
 			<div className="flex flex__gap-1 flex__align-items">
 				{/* Placeholder för profilsidan */}

@@ -21,7 +21,7 @@ export const ReusableInput = ({
 }: Props) => {
 	return (
 		<div className="input-wrapper">
-			<label className="base-small">{label}</label>
+			<label className="base">{label}</label>
 
 			<input
 				name={name}
@@ -33,7 +33,15 @@ export const ReusableInput = ({
 			/>
 
 			{/* Om error finns visas det här under inputen */}
-			{error && <p className="form-error">{error}</p>}
+			{error && <p className="form-error base">{error}</p>}
 		</div>
 	);
 };
+
+/**
+ * Author: Lam
+ * AI generated code: Github Copilot and ChatGPT
+ * Description: A reusable input component with label, error display, and styling
+ *
+ *
+ */

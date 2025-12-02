@@ -10,13 +10,11 @@
 
 	.form-error {
 		color: $color-ketchup;
-		font-size: 0.85rem;
 	}
 
-	&__actions {
-		.auth-form__action-btn {
-			width: 100%;
-		}
+	.auth-form__action-btn {
+		width: 100%;
+		margin-top: 0.5rem;
 	}
 
 	&__separator-content {
