@@ -50,7 +50,7 @@ export const ConfirmedOrderPage = () => {
 				setStatus={setStatus}
 			></OrderStatusBox>
 
-			<div className="grid order__content-boxes">
+			<div className="order__content-boxes">
 				{/* Content: "Sammanfattning" */}
 				<ContentBox
 					extraClass="order__content-box order__summary"
@@ -74,6 +74,16 @@ export const ConfirmedOrderPage = () => {
 						Köp mer
 					</Button>
 				</ContentBox>
+
+				{/* Content: "Din kommentar" */}
+				{order.userComment && (
+					<ContentBox
+						extraClass="order__content-box order__comment"
+						titleTxt="Din kommentar"
+						titleLevel="h3"
+						text={order.userComment}
+					/>
+				)}
 
 				{/* Content: "Betalningsinformation" */}
 				<ContentBox
@@ -106,16 +116,6 @@ export const ConfirmedOrderPage = () => {
 				>
 					{generateOrderArticles()}
 				</ContentBox>
-
-				{/* Content: "Din kommentar" */}
-				{order.userComment && (
-					<ContentBox
-						extraClass="order__content-box order__comment"
-						titleTxt="Din kommentar"
-						titleLevel="h3"
-						text={order.userComment}
-					/>
-				)}
 			</div>
 		</Page>
 	);
