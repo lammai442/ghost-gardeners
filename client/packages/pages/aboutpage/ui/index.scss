@@ -1,0 +1,149 @@
+/* About page styles (SCSS, nested under .about-page for consistent BEM scoping) */
+.about-page {
+	&__container {
+		padding: 1rem 0 3rem 0;
+		width: 100%;
+		max-width: 78rem; /* keep content centered and readable */
+	}
+
+	&__story {
+		/* readable body column */
+		line-height: 1.6;
+		color: var(--color-black, #2e2e2e);
+
+		p {
+			margin-bottom: 1rem; /* space between paragraphs for readability */
+		}
+
+		p:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	&__contact {
+		margin-top: 1rem;
+
+		a {
+			color: $color-brown; /* higher contrast for accessibility */
+			text-decoration: underline;
+			text-decoration-thickness: 2px;
+			text-underline-offset: 3px;
+
+			&:focus-visible {
+				outline: 3px solid $color-mustard;
+				outline-offset: 2px;
+				border-radius: 2px;
+			}
+		}
+	}
+
+	&__ctas {
+		margin-top: 1rem;
+	}
+
+	/* Values section */
+	&__values {
+		margin: 1.25rem 0;
+
+		&-grid {
+			display: grid;
+			gap: 1rem;
+
+			@media (min-width: 720px) {
+				grid-template-columns: repeat(3, 1fr);
+			}
+
+			.content-box {
+				padding: 1rem;
+				border-left: 6px solid transparent;
+				transition: transform 0.18s ease, box-shadow 0.18s ease;
+
+				&:hover {
+					transform: translateY(-4px);
+					box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+				}
+
+				&:focus-visible {
+					outline: 3px solid $color-mustard;
+					outline-offset: 2px;
+				}
+			}
+
+			/* different accent colors per box to add warmth */
+			.content-box:nth-child(1) {
+				border-left-color: $color-mustard;
+			}
+			.content-box:nth-child(2) {
+				border-left-color: $color-cucumber;
+			}
+			.content-box:nth-child(3) {
+				border-left-color: $color-ketchup;
+			}
+		}
+
+		.heading-3 {
+			margin-bottom: 0.5rem;
+			color: $color-mustard;
+		}
+	}
+
+	&__hero {
+		display: block;
+		margin-bottom: 1.25rem;
+		padding: 0.25rem;
+		border-radius: 0.5rem;
+		overflow: hidden;
+		background: color.change($color-dark-beige, $alpha: 6%);
+
+		img {
+			width: 100%;
+			height: 180px; /* mobile-tall hero */
+			object-fit: cover; /* fill the box while preserving aspect */
+			display: block;
+			border-radius: 0.5rem;
+			box-shadow: 0 8px 26px rgba(0, 0, 0, 0.08);
+
+			&:focus-visible {
+				outline: 3px solid $color-mustard;
+				outline-offset: 2px;
+			}
+		}
+
+		@media (min-width: 720px) {
+			padding: 0.5rem;
+			margin-bottom: 1.5rem;
+
+			img {
+				height: 320px; /* larger hero on wide screens */
+				margin-right: 1.5rem;
+			}
+		}
+	}
+
+	/* Icons inside content boxes */
+	.content-box img,
+	&__values .content-box img {
+		width: 48px;
+		height: 48px;
+		object-fit: contain;
+		margin-bottom: 0.5rem;
+	}
+
+	/* Respect reduced motion preferences */
+	@media (prefers-reduced-motion: reduce) {
+		&__values-grid .content-box {
+			transition: none;
+		}
+
+		&__values-grid .content-box:hover {
+			transform: none;
+		}
+	}
+}
+
+/**
+ * Author: Klara
+ * AI Generated Content as part of this weeks assignments.
+ * About page css styles created using AI tool in vsCode.
+ 
+ */
