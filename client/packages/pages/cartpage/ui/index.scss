@@ -1,10 +1,9 @@
-/**
- * Updated: Klara
- * Changed the media query from 992 to 1200. 
- */
-
 .cart {
 	gap: 4rem;
+
+	&__comment-summary-div {
+		height: fit-content;
+	}
 
 	&__ctas {
 		gap: 0.5rem;
@@ -31,3 +30,10 @@
 		flex-direction: column;
 	}
 }
+
+/**
+ * Updated: Klara
+ * Changed the media query from 992 to 1200. 
+ * Updated: Klara
+ * Added height: fit-content on cart__comment-summary-div to prevent the div to fill up the entire column.
+ */

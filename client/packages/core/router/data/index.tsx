@@ -1,17 +1,12 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { HomePage } from '@mojjen/homepage';
 import { AuthPage } from '@mojjen/authpage';
-import { UnderConstructionPage } from '@mojjen/under-construction-page';
 import { MenuPage } from '@mojjen/menupage';
+import { AboutPage } from '../../../pages/aboutpage/ui';
 import { ErrorPage } from '@mojjen/error-page';
 import { ConfirmedOrderPage } from '@mojjen/confirmedorderpage';
 import { CartPage } from '@mojjen/cartpage';
 import App from '../../../../src/App';
-/**
- * Modified: StefanMogren
- *
- * Adjusted how BrowserRouter and RouterProvider is set up
- */
 
 export const router = createBrowserRouter([
 	{
@@ -40,7 +35,7 @@ export const router = createBrowserRouter([
 			},
 			{
 				path: '/about',
-				element: <UnderConstructionPage />,
+				element: <AboutPage />,
 			},
 			{
 				path: '*',
@@ -49,3 +44,12 @@ export const router = createBrowserRouter([
 		],
 	},
 ]);
+
+/**
+ * Modified: StefanMogren
+ *
+ * Adjusted how BrowserRouter and RouterProvider is set up
+ *
+ * Modified: Klara
+ * Switched from under construction page to about page on the about route.
+ */
