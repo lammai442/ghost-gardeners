@@ -56,3 +56,10 @@ export const handler = middy(async (event) => {
 		});
 	}
 }).use(errorHandler());
+
+/**
+ * Author: StefanMogren
+ * Created WebsocketHandler which first checks whether the connection request to the Websocket is valid or not. Then forwards the request.
+ * Created with the help of Amazon Q (the built-in AI on AWS)
+ *
+ */
