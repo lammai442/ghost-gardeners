@@ -31,7 +31,7 @@ export const handler = middy(async (event) => {
 			email: user.email,
 			role: user.attribute.role,
 			token: `Bearer ${token}`,
-			userId: user.userId,
+			userId: user.attribute.userId,
 		},
 	});
 })
@@ -44,5 +44,5 @@ export const handler = middy(async (event) => {
  * Function to login a user.
  *
  * Updated: Lam
- * Changes in return response with keys to success, messages and data
+ * Changes in return response with keys to success, messages, data and return of userId
  */

@@ -60,4 +60,5 @@ export interface User {
 	password?: string;
 	token?: string;
 	role?: string;
+	userId?: string;
 }

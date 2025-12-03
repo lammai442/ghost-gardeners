@@ -11,7 +11,8 @@ import { useEffect, useState, type ChangeEvent } from 'react';
 import { apiGetMeals } from '@mojjen/apiproducts';
 import type { Meal } from '@mojjen/productdata';
 import { Comment } from '@mojjen/comment';
-import { ModalLoading } from '../../../base/modalloading/ui';
+import { ModalLoading } from '@mojjen/modalloading';
+import { useAuthStore } from '@mojjen/useauthstore';
 
 type GetMealsResponse = {
 	data: Meal[];
@@ -21,6 +22,7 @@ type GetMealsResponse = {
 
 export const CartPage = () => {
 	const { cart, emptyCart } = useCartStore();
+	const { user } = useAuthStore();
 	const [allProdList, setAllProdList] = useState<Meal[]>([]);
 	const [comment, setComment] = useState('');
 	const [loading, setLoading] = useState<boolean>(false);
@@ -38,6 +40,7 @@ export const CartPage = () => {
 	const navigate = useNavigate();
 	const handleSubmit = async () => {
 		setLoading(true);
+
 		try {
 			// Transformera cart → order-format
 			const items = getItemsForOrder();
@@ -49,9 +52,11 @@ export const CartPage = () => {
 					items,
 					userComment: comment,
 					staffComment: '',
+					userId: user?.userId,
 				}),
 			});
 			const data = await response.json();
+			setLoading(false);
 			emptyCart();
 			// Navigera till ConfirmedOrderPage med orderdata
 			navigate('/order', { state: data.order });
@@ -63,7 +68,6 @@ export const CartPage = () => {
 	const handleBackToMenu = () => navigate('/menu');
 	const handleEmpty = () => emptyCart();
 	const handleChangeComment = (e: ChangeEvent<HTMLTextAreaElement>) => {
-		console.log(e.target.value);
 		setComment(e.target.value);
 		setCommentCount(e.target.value.length);
 	};
@@ -165,4 +169,8 @@ export const CartPage = () => {
  *
  * Updated: Klara
  * Added a textarea for user comment on order.
+ *
+ * Updated: Lam
+ * Added loadingModal when fetching createOrder and user from useUserStore
+ *
  */
