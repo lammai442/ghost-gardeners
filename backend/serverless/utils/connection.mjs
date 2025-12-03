@@ -3,7 +3,7 @@ import AWS from 'aws-sdk';
 // 	provider:
 // 		environment:
 // 			WEBSOCKET_ENDPOINT
-const apiGatewayManagementApi = new AWS.ApiGatewayMangementApi({
+const apiGatewayManagementApi = new AWS.ApiGatewayManagementApi({
 	endpoint: process.env.WEBSOCKET_ENDPOINT,
 });
 

@@ -63,7 +63,7 @@ export const handler = async (event) => {
 				type: 'orderUpdate',
 				eventName: record.eventName,
 				order: record.dynamodb.NewImage || record.dynamodb.OldImage,
-				timestamp: Date.now(),
+				timestamp: new Date().toISOString(),
 			};
 
 			console.log(`Broadcasting to ${connections.length} connections`);
