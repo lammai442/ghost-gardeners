@@ -20,13 +20,14 @@ export const handler = middy(async (event) => {
     });
   }
 
-  const { items, userComment, staffComment } = JSON.parse(event.body);
+  const { items = [], userComment = "", staffComment = "", status } = JSON.parse(event.body);
 
   const order = await changeOrder({
     orderId: id,
     items,
     userComment,
     staffComment,
+    status,
   });
 
   return sendResponses(200, {
