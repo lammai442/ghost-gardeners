@@ -9,6 +9,7 @@ import { Button } from '@mojjen/button';
 import { ProductsList } from '@mojjen/productslist';
 import { useNavigate } from 'react-router-dom';
 import { Modal } from '../../../base/modal/ui';
+import { useAuthStore } from '../../../core/stores/useauthstore/data';
 
 type GetMealsResponse = {
 	data: Meal[];
@@ -22,6 +23,7 @@ export const MenuPage = () => {
 	const [fetchError, setFetchError] = useState<boolean>(false);
 	const navigate = useNavigate();
 	const [modalOpen, setModalOpen] = useState(false);
+	const { user } = useAuthStore();
 
 	useEffect(() => {
 		setLoading(true);
@@ -50,7 +52,7 @@ export const MenuPage = () => {
 		return (
 			<section className="flex">
 				<h3 className="heading-3">Du har tidigare beställt</h3>;
-				{/* Placeholder to map ordered meals from logged in user. */}
+				{/* Placeholder to map ordered meals from logged in user. Something like this: */}
 				{/* {userOrdersList.length > 0 && (
 					<ProductsList
 						isCartItem={false}
@@ -75,7 +77,7 @@ export const MenuPage = () => {
 				titleText="Mojmeny"
 				extraClasses="flex flex__column menu"
 				// ! Placeholder: if logged in user && topContent
-				topContent={generateTopContent()}
+				topContent={user && generateTopContent()}
 			>
 				{/* <Filter /> */}
 				{/* <div className="App">
