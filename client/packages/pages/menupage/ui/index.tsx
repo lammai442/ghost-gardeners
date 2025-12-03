@@ -10,6 +10,7 @@ import { ProductsList } from '@mojjen/productslist';
 import { useNavigate } from 'react-router-dom';
 import { Modal } from '../../../base/modal/ui';
 import { useAuthStore } from '../../../core/stores/useauthstore/data';
+import { apiGetOrdersByUser } from '../../../core/api/apiusers/data';
 
 type GetMealsResponse = {
 	data: Meal[];
@@ -19,6 +20,7 @@ type GetMealsResponse = {
 
 export const MenuPage = () => {
 	const [allProdList, setAllProdList] = useState<Meal[]>([]);
+	const [userOrdersList, setUserOrdersList] = useState<Meal[]>([]);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [fetchError, setFetchError] = useState<boolean>(false);
 	const navigate = useNavigate();
@@ -35,6 +37,19 @@ export const MenuPage = () => {
 			else setFetchError(true);
 		};
 		fetchMeals();
+
+		if (user) {
+			const fetchPastOrdersByUser = async () => {
+				const response = await apiGetOrdersByUser(user.userId);
+				let list = [];
+				list.push(response.data);
+				console.log('list: ', list);
+
+				setUserOrdersList(response.data);
+			};
+
+			fetchPastOrdersByUser();
+		}
 	}, []);
 
 	const handleNavigate = () => navigate('/cart');
@@ -53,13 +68,13 @@ export const MenuPage = () => {
 			<section className="flex">
 				<h3 className="heading-3">Du har tidigare beställt</h3>;
 				{/* Placeholder to map ordered meals from logged in user. Something like this: */}
-				{/* {userOrdersList.length > 0 && (
+				{userOrdersList.length > 0 && (
 					<ProductsList
 						isCartItem={false}
 						prodList={userOrdersList}
 						allProdList={userOrdersList} //
 					/>
-				)} */}
+				)}
 			</section>
 		);
 	};
@@ -76,7 +91,6 @@ export const MenuPage = () => {
 			<Page
 				titleText="Mojmeny"
 				extraClasses="flex flex__column menu"
-				// ! Placeholder: if logged in user && topContent
 				topContent={user && generateTopContent()}
 			>
 				{/* <Filter /> */}
