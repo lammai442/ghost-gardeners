@@ -11,6 +11,8 @@ import { useEffect, useState, type ChangeEvent } from 'react';
 import { apiGetMeals } from '@mojjen/apiproducts';
 import type { Meal } from '@mojjen/productdata';
 import { Comment } from '@mojjen/comment';
+import { ModalLoading } from '@mojjen/modalloading';
+import { useAuthStore } from '@mojjen/useauthstore';
 
 type GetMealsResponse = {
 	data: Meal[];
@@ -20,8 +22,10 @@ type GetMealsResponse = {
 
 export const CartPage = () => {
 	const { cart, emptyCart } = useCartStore();
+	const { user } = useAuthStore();
 	const [allProdList, setAllProdList] = useState<Meal[]>([]);
 	const [comment, setComment] = useState('');
+	const [loading, setLoading] = useState<boolean>(false);
 	const [commentCount, setCommentCount] = useState(0);
 	const apiUrl: string = import.meta.env.VITE_API_URL;
 
@@ -35,11 +39,11 @@ export const CartPage = () => {
 
 	const navigate = useNavigate();
 	const handleSubmit = async () => {
+		setLoading(true);
+
 		try {
 			// Transformera cart → order-format
 			const items = getItemsForOrder();
-			console.log('Items skickade till backend', items);
-
 			// POST till backend
 			const response = await fetch(`${apiUrl}/order`, {
 				method: 'POST',
@@ -48,11 +52,11 @@ export const CartPage = () => {
 					items,
 					userComment: comment,
 					staffComment: '',
+					userId: user?.userId,
 				}),
 			});
-
 			const data = await response.json();
-
+			setLoading(false);
 			emptyCart();
 			// Navigera till ConfirmedOrderPage med orderdata
 			navigate('/order', { state: data.order });
@@ -64,7 +68,6 @@ export const CartPage = () => {
 	const handleBackToMenu = () => navigate('/menu');
 	const handleEmpty = () => emptyCart();
 	const handleChangeComment = (e: ChangeEvent<HTMLTextAreaElement>) => {
-		console.log(e.target.value);
 		setComment(e.target.value);
 		setCommentCount(e.target.value.length);
 	};
@@ -84,6 +87,14 @@ export const CartPage = () => {
 		<Page titleText="Varukorg" extraClasses="cart flex">
 			{/* Cart items */}
 			{generateCartProducts()}
+			{loading && (
+				<ModalLoading
+					headTitle="Laddar"
+					title="Bearbetar"
+					text="Din förfrågan skickas. Vänta ett ögonblick."
+					setModalOpen={setLoading}
+				/>
+			)}
 
 			{/* User comment */}
 			<div className="flex flex__column flex__gap-3 cart__comment-summary-div">
@@ -158,4 +169,8 @@ export const CartPage = () => {
  *
  * Updated: Klara
  * Added a textarea for user comment on order.
+ *
+ * Updated: Lam
+ * Added loadingModal when fetching createOrder and user from useUserStore
+ *
  */

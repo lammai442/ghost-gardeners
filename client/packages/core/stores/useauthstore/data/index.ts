@@ -17,13 +17,6 @@ const saved = localStorage.getItem('user');
 const initialUser = saved ? JSON.parse(saved) : null;
 localStorage.setItem('user', JSON.stringify(initialUser));
 
-// const example: User = {
-// 	firstname: 'Bo',
-// 	lastname: 'Svensson',
-// 	phone: '079 454 48 41',
-// 	email: 'lennart@svensson.se',
-// };
-
 export const useAuthStore = create<userStore>((set) => ({
 	user: initialUser,
 	updateUserStorage: (user: User) => {
