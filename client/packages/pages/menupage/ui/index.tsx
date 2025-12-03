@@ -51,7 +51,7 @@ export const MenuPage = () => {
 	const generateTopContent = () => {
 		return (
 			<section className="flex">
-				<h3 className="heading-3">Du har tidigare beställt</h3>;
+				<h3 className="heading-3">Du har tidigare beställt</h3>;<p>Titel</p>
 				{/* Placeholder to map ordered meals from logged in user. Something like this: */}
 				{/* {userOrdersList.length > 0 && (
 					<ProductsList

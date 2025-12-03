@@ -14,7 +14,7 @@ export const AuthBtn = () => {
 
 	const handleLogin = (user: User | null) => {
 		if (user) {
-			navigate('/cart');
+			navigate('/profile');
 		} else {
 			setModalOpen(true);
 		}
@@ -64,4 +64,6 @@ export const AuthBtn = () => {
  * Author: Lam
  * Auth button that can be used in header. If user is not logged in then modal with authForm opens
  *
+ * Update: Klara
+ * Navigate to profile page if the user is logged in and the user clicks the button.
  */

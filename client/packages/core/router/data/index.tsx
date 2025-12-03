@@ -7,6 +7,8 @@ import { ErrorPage } from '@mojjen/error-page';
 import { ConfirmedOrderPage } from '@mojjen/confirmedorderpage';
 import { CartPage } from '@mojjen/cartpage';
 import App from '../../../../src/App';
+import { ProfilePage } from '@mojjen/profilepage';
+import { ProtectedRoute } from '@mojjen/protectedroute';
 
 export const router = createBrowserRouter([
 	{
@@ -36,6 +38,14 @@ export const router = createBrowserRouter([
 			{
 				path: '/about',
 				element: <AboutPage />,
+			},
+			{
+				path: '/profile',
+				element: (
+					<ProtectedRoute>
+						<ProfilePage />
+					</ProtectedRoute>
+				),
 			},
 			{
 				path: '*',
