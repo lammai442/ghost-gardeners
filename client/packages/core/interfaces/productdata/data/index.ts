@@ -61,3 +61,27 @@ export interface User {
 	token?: string;
 	role?: string;
 }
+
+export interface WebSocketOrder {
+	eventName: string;
+	timestamp: string;
+	type: string;
+	order: {
+		PK: string;
+		SK: string;
+		attribute: {
+			createdAt: string;
+			items: string[];
+			modifiedAt: string;
+			staffComment: string;
+			total: number;
+			user: string;
+			userComment: string;
+		};
+		category: string;
+		id: string;
+		status: string;
+		statusCategory: string;
+		timestamp: string;
+	};
+}

@@ -7,9 +7,11 @@ import {
 	useLocation,
 	type NavigateFunction,
 } from 'react-router-dom';
-import { useState, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { Page } from '@mojjen/page';
 import { OrderStatusBox } from '@mojjen/orderstatusbox';
+import { connectWebSocket } from '@mojjen/websocket';
+import type { WebSocketOrder } from '@mojjen/productdata';
 /**
  * Author: Klara Sköld
  * This page is rendered after a successful order.It contains white boxes with different type of content.
@@ -22,6 +24,23 @@ export const ConfirmedOrderPage = () => {
 	const location = useLocation();
 	const order = location.state;
 	const [status, setStatus] = useState(order.status);
+	const [ws, setWs] = useState<WebSocket | null>(null);
+	const [wsOrder, setWsOrder] = useState([]);
+
+	useEffect(() => {
+		const websocket = connectWebSocket((update: WebSocketOrder) => {
+			console.log('Received update!');
+			console.log(update);
+
+			if (update.type === 'orderUpdate') {
+				console.log('ORDER received from WebSocket!');
+			}
+		});
+
+		setWs(websocket);
+
+		return () => websocket.close();
+	}, []);
 
 	if (!order)
 		return <Page titleText="Orderbekräftelse">Ingen order hittades.</Page>;

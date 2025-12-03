@@ -17,7 +17,7 @@ type Props = {
 };
 
 export const OrderArticle = ({ item }: Props) => {
-	console.log('item: ', item);
+	// console.log('item: ', item);
 	return (
 		<>
 			<div className="grid order-article">
