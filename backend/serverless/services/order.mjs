@@ -1,5 +1,10 @@
 import { marshall, unmarshall } from '@aws-sdk/util-dynamodb';
-import { PutItemCommand, GetItemCommand, UpdateItemCommand, QueryCommand } from '@aws-sdk/client-dynamodb';
+import {
+	PutItemCommand,
+	GetItemCommand,
+	UpdateItemCommand,
+	QueryCommand,
+} from '@aws-sdk/client-dynamodb';
 import { client } from './client.mjs';
 import {
 	getProductsByIds,
@@ -13,20 +18,16 @@ export const createOrder = async ({
 	items,
 	userComment = '',
 	staffComment = '',
+	userId,
 }) => {
 	const orderId = generateId('order');
 	const now = new Date().toISOString();
-	const user = 'guest'; // Temporary until user functionality exists
+	const user = userId ? userId : generateId('guest');
 
 	// Flatten all product IDs from items, extras, without, and includeDrink
 	const allIds = [
 		...new Set(
-			items
-				.flatMap((i) => [
-					i.id,
-					i.includeDrink || null,
-				])
-				.filter(Boolean)
+			items.flatMap((i) => [i.id, i.includeDrink || null]).filter(Boolean)
 		),
 	];
 
@@ -65,7 +66,7 @@ export const createOrder = async ({
 		},
 		category: 'ORDER',
 		status: 'pending',
-		id: orderId,
+		id: user,
 		statusCategory: 'STATUS#ORDER',
 	};
 	console.log('orderDBItem: ', orderDBItem);
@@ -93,161 +94,172 @@ export const createOrder = async ({
 };
 
 export const cancelOrder = async (orderId) => {
-  const key = {
-    PK: { S: "ORDER" },
-    SK: { S: `ORDER#${orderId}` },
-  };
+	const key = {
+		PK: { S: 'ORDER' },
+		SK: { S: `ORDER#${orderId}` },
+	};
 
-  const getRes = await client.send(
-    new GetItemCommand({
-      TableName: "mojjen-table",
-      Key: key,
-    })
-  );
+	const getRes = await client.send(
+		new GetItemCommand({
+			TableName: 'mojjen-table',
+			Key: key,
+		})
+	);
 
-  if (!getRes.Item) {
-    throw new Error(`Order med ID ${orderId} hittades inte.`);
-  }
+	if (!getRes.Item) {
+		throw new Error(`Order med ID ${orderId} hittades inte.`);
+	}
 
-  const now = new Date().toISOString();
+	const now = new Date().toISOString();
 
-  await client.send(
-    new UpdateItemCommand({
-      TableName: "mojjen-table",
-      Key: key,
-      UpdateExpression: `
+	await client.send(
+		new UpdateItemCommand({
+			TableName: 'mojjen-table',
+			Key: key,
+			UpdateExpression: `
         SET #status = :cancelled,
             modifiedAt = :now
       `,
-      ExpressionAttributeNames: {
-        "#status": "status",
-      },
-      ExpressionAttributeValues: marshall({
-        ":cancelled": "cancelled",
-        ":now": now,
-      }),
-    })
-  );
+			ExpressionAttributeNames: {
+				'#status': 'status',
+			},
+			ExpressionAttributeValues: marshall({
+				':cancelled': 'cancelled',
+				':now': now,
+			}),
+		})
+	);
 
-  return {
-    ...unmarshall(getRes.Item),
-    status: "cancelled",
-    modifiedAt: now,
-  };
+	return {
+		...unmarshall(getRes.Item),
+		status: 'cancelled',
+		modifiedAt: now,
+	};
 };
 
-export const changeOrder = async ({ orderId, items, userComment = "", staffComment = "", status = "cancelled" }) => {
-  const key = { PK: { S: "ORDER" }, SK: { S: `ORDER#${orderId}` } };
+export const changeOrder = async ({
+	orderId,
+	items,
+	userComment = '',
+	staffComment = '',
+	status = 'cancelled',
+}) => {
+	const key = { PK: { S: 'ORDER' }, SK: { S: `ORDER#${orderId}` } };
 
-  const res = await client.send(new GetItemCommand({ TableName: "mojjen-table", Key: key }));
-  if (!res.Item) throw new Error(`Order ${orderId} hittades inte.`);
+	const res = await client.send(
+		new GetItemCommand({ TableName: 'mojjen-table', Key: key })
+	);
+	if (!res.Item) throw new Error(`Order ${orderId} hittades inte.`);
 
-  const existing = unmarshall(res.Item);
-  if (["completed"].includes(existing.status)) throw new Error("Denna order kan inte längre ändras.");
+	const existing = unmarshall(res.Item);
+	if (['completed'].includes(existing.status))
+		throw new Error('Denna order kan inte längre ändras.');
 
-const allIds = [...new Set(items.flatMap(i => [
-  i.id,
-  i.includeDrink || null
-]).filter(Boolean))];
-  const productMap = await getProductsByIds(allIds);
-  const enriched = enrichItems(items, productMap);
-  const trimmedItems = enriched.map(i => ({
-    id: i.id,
-    itemId: i.itemId,
-    name: i.name,
-    subtotal: i.subtotal,
-    includeDrink: i.includeDrink || null,
-    includeDrinkName: i.includeDrinkName || null,
-    summary: i.summary || null,
-    // stock: i.stock || null, <- onödig?
-    // img: i.img || null <- onödig?
-  }));
-  const total = calculateTotal(enriched);
-  const now = new Date().toISOString();
+	const allIds = [
+		...new Set(
+			items.flatMap((i) => [i.id, i.includeDrink || null]).filter(Boolean)
+		),
+	];
+	const productMap = await getProductsByIds(allIds);
+	const enriched = enrichItems(items, productMap);
+	const trimmedItems = enriched.map((i) => ({
+		id: i.id,
+		itemId: i.itemId,
+		name: i.name,
+		subtotal: i.subtotal,
+		includeDrink: i.includeDrink || null,
+		includeDrinkName: i.includeDrinkName || null,
+		summary: i.summary || null,
+		// stock: i.stock || null, <- onödig?
+		// img: i.img || null <- onödig?
+	}));
+	const total = calculateTotal(enriched);
+	const now = new Date().toISOString();
 
-  const updateExprParts = [
-    "SET #attr.#items = :items",
-    "#attr.#userComment = :userComment",
-    "#attr.#staffComment = :staffComment",
-    "#attr.#total = :total",
-    "#statusRoot = :status",
-    "modifiedAt = :now"
-  ];
+	const updateExprParts = [
+		'SET #attr.#items = :items',
+		'#attr.#userComment = :userComment',
+		'#attr.#staffComment = :staffComment',
+		'#attr.#total = :total',
+		'#statusRoot = :status',
+		'modifiedAt = :now',
+	];
 
-  const exprAttrNames = {
-    "#attr": "attribute",
-    "#items": "items",
-    "#userComment": "userComment",
-    "#staffComment": "staffComment",
-    "#total": "total",
-    "#statusRoot": "status"
-  };
+	const exprAttrNames = {
+		'#attr': 'attribute',
+		'#items': 'items',
+		'#userComment': 'userComment',
+		'#staffComment': 'staffComment',
+		'#total': 'total',
+		'#statusRoot': 'status',
+	};
 
-  await client.send(new UpdateItemCommand({
-    TableName: "mojjen-table",
-    Key: key,
-    UpdateExpression: updateExprParts.join(", "),
-    ExpressionAttributeNames: exprAttrNames,
-    ExpressionAttributeValues: marshall({
-      ":items": trimmedItems,
-      ":userComment": userComment,
-      ":staffComment": staffComment,
-      ":total": total,
-      ":status": status,
-      ":now": now
-    })
-  }));
+	await client.send(
+		new UpdateItemCommand({
+			TableName: 'mojjen-table',
+			Key: key,
+			UpdateExpression: updateExprParts.join(', '),
+			ExpressionAttributeNames: exprAttrNames,
+			ExpressionAttributeValues: marshall({
+				':items': trimmedItems,
+				':userComment': userComment,
+				':staffComment': staffComment,
+				':total': total,
+				':status': status,
+				':now': now,
+			}),
+		})
+	);
 
-  return {
-    ...existing,
-    items: trimmedItems,
-    userComment,
-    staffComment,
-    total,
-    status,
-    modifiedAt: now
-  };
+	return {
+		...existing,
+		items: trimmedItems,
+		userComment,
+		staffComment,
+		total,
+		status,
+		modifiedAt: now,
+	};
 };
-
 
 export const getOrder = async (orderId) => {
-  const key = {
-    PK: { S: "ORDER" },
-    SK: { S: `ORDER#${orderId}` },
-  };
+	const key = {
+		PK: { S: 'ORDER' },
+		SK: { S: `ORDER#${orderId}` },
+	};
 
-  const res = await client.send(
-    new GetItemCommand({
-      TableName: "mojjen-table",
-      Key: key,
-    })
-  );
+	const res = await client.send(
+		new GetItemCommand({
+			TableName: 'mojjen-table',
+			Key: key,
+		})
+	);
 
-  if (!res.Item) {
-    // Returnera ett "tomt" objekt istället för null
-    return {
-      id: orderId,
-      status: "unknown",
-      attribute: {
-        items: [],
-      },
-      PK: "ORDER",
-      SK: `ORDER#${orderId}`,
-      category: "ORDER",
-    };
-  }
+	if (!res.Item) {
+		// Returnera ett "tomt" objekt istället för null
+		return {
+			id: orderId,
+			status: 'unknown',
+			attribute: {
+				items: [],
+			},
+			PK: 'ORDER',
+			SK: `ORDER#${orderId}`,
+			category: 'ORDER',
+		};
+	}
 
-  return unmarshall(res.Item);
+	return unmarshall(res.Item);
 };
 
 // Get ALL orders
 export async function getAllOrders() {
 	const cmd = new QueryCommand({
-		TableName: "mojjen-table",
-		IndexName: "GSI2",
-		KeyConditionExpression: "statusCategory = :sc",
+		TableName: 'mojjen-table',
+		IndexName: 'GSI2',
+		KeyConditionExpression: 'statusCategory = :sc',
 		ExpressionAttributeValues: {
-			":sc": { S: "STATUS#ORDER" },
+			':sc': { S: 'STATUS#ORDER' },
 		},
 	});
 
@@ -257,25 +269,29 @@ export async function getAllOrders() {
 
 // Get ALL orders by status
 export async function getAllOrdersByStatus(status) {
-  const res = await client.send(
-    new QueryCommand({
-      TableName: "mojjen-table",
-      IndexName: "GSI2",
-      KeyConditionExpression: "statusCategory = :pk AND begins_with(#s, :status)",
-      ExpressionAttributeNames: {
-        "#s": "status",
-      },
-      ExpressionAttributeValues: {
-        ":pk": { S: "STATUS#ORDER" },
-        ":status": { S: status },
-      },
-    })
-  );
+	const res = await client.send(
+		new QueryCommand({
+			TableName: 'mojjen-table',
+			IndexName: 'GSI2',
+			KeyConditionExpression:
+				'statusCategory = :pk AND begins_with(#s, :status)',
+			ExpressionAttributeNames: {
+				'#s': 'status',
+			},
+			ExpressionAttributeValues: {
+				':pk': { S: 'STATUS#ORDER' },
+				':status': { S: status },
+			},
+		})
+	);
 
-  return res.Items.map((item) => unmarshall(item));
+	return res.Items.map((item) => unmarshall(item));
 }
 
 /**
  * Author: ninerino
  * Functions to handle everything with orders.
+ *
+ * Updated: Lam
+ * Added in createOrder if userId comes from bodyreq then use it i GSI1SK Id otherwise create new guestId
  */

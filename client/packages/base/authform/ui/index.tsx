@@ -114,6 +114,7 @@ export const AuthForm = ({ setModalOpen, setAuthTitle }: Props) => {
 		}
 
 		user = response.data.data as User;
+
 		// On successful login/register, update global user state
 		updateUserStorage(user);
 

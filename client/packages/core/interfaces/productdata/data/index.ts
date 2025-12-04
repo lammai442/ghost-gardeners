@@ -60,6 +60,7 @@ export interface User {
 	password?: string;
 	token?: string;
 	role?: string;
+	userId?: string;
 }
 
 export interface WebSocketOrder {
