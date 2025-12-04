@@ -1,8 +1,7 @@
-.orders {
-	&__list {
-	}
-	&__list-items {
-		list-style-type: disc;
-		list-style-position: inside;
+.profile {
+	gap: 6rem;
+
+	&__orders-list {
+		flex-wrap: wrap;
 	}
 }

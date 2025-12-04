@@ -8,13 +8,6 @@ import { cancelOrder } from '../../../core/api/apiproducts/data';
 import { useCartStore } from '../../../core/stores/usecartstore/data';
 import { Modal } from '@mojjen/modal';
 
-/**
- * Author: Klara Sköld
- * A white box on the order confirmation page that updates as the order status changes.
- * Modified by: ninerino
- * Added functionality to handleCancel
- */
-
 type Props = {
 	orderId?: string;
 	status: string;
@@ -179,3 +172,10 @@ export const OrderStatusBox = ({ orderId, status, setStatus }: Props) => {
 		</>
 	);
 };
+
+/**
+ * Author: Klara Sköld
+ * A white box on the order confirmation page that updates as the order status changes.
+ * Modified by: ninerino
+ * Added functionality to handleCancel
+ */

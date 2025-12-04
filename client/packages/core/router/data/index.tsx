@@ -42,6 +42,7 @@ export const router = createBrowserRouter([
 			{
 				path: '/profile',
 				element: (
+					// If a user who's isn't logged in tries to access "/profile", they are redirected back to the homepage.
 					<ProtectedRoute>
 						<ProfilePage />
 					</ProtectedRoute>
@@ -62,4 +63,7 @@ export const router = createBrowserRouter([
  *
  * Modified: Klara
  * Switched from under construction page to about page on the about route.
+ *
+ * Modified: Klara
+ * ProtectedRoute added
  */

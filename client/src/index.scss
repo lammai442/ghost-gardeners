@@ -19,6 +19,9 @@
 	&__align-items {
 		align-items: center;
 	}
+	&__align-end {
+		align-items: end;
+	}
 	&__justify-center {
 		justify-content: center;
 	}
@@ -26,6 +29,9 @@
 		justify-content: flex-end;
 	}
 
+	&__gap-0-25 {
+		gap: 0.25rem;
+	}
 	&__gap-0-5 {
 		gap: 0.5rem;
 	}

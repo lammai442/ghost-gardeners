@@ -1,14 +1,15 @@
 import { useAuthStore } from '@mojjen/useauthstore';
-import { ReactNode } from 'react';
+import { type JSX } from 'react';
 import { Navigate } from 'react-router-dom';
 
 type Props = {
-	children: ReactNode;
+	children: JSX.Element;
 };
 
 export const ProtectedRoute = ({ children }: Props) => {
-	const user = useAuthStore((state) => state.user);
+	const { user } = useAuthStore();
 
-	if (!user) return;
+	if (!user) return <Navigate to={'/'} />;
+
 	return children;
 };

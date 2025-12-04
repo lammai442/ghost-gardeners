@@ -1,0 +1,18 @@
+.history-list-item {
+	padding: 2rem 1.75rem;
+
+	&__top-div {
+		gap: 5.6rem;
+	}
+
+	&__status {
+		padding: 0.5rem 0.75rem;
+		border-radius: 1.5rem;
+	}
+}
+
+.products-list {
+	&__list-item {
+		margin: 0.25rem 0rem;
+	}
+}

@@ -1,4 +1,4 @@
 {
 	"name": "@mojjen/protectedroute",
-	"main": "./index.tsx"
+	"main": "./index.ts"
 }
