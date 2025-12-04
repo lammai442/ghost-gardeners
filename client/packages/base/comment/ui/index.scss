@@ -1,10 +1,9 @@
 .comment {
 	gap: 0.5rem;
-
 	&__textarea {
 		flex: 1;
 		border: 2px solid $color-ketchup;
-
+		padding: 1rem;
 		background-color: transparent;
 
 		&:focus {

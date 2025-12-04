@@ -108,8 +108,17 @@ export const AuthForm = ({ setModalOpen, setAuthTitle }: Props) => {
 
 		// If in register mode, show success message modal
 		if (mode === 'register') {
+			if (setAuthTitle) setAuthTitle('Logga in');
 			setMsgModalOpen(true);
 			setSubmitting(false);
+			setForm({
+				firstname: '',
+				lastname: '',
+				phone: '',
+				email: '',
+				password: '',
+				confirmpassword: '',
+			});
 			return;
 		}
 

@@ -53,7 +53,6 @@ export const ProductCard = ({
 			document.body.style.overflow = 'unset';
 		}
 	}, [modalOpen, handleModal]);
-
 	return (
 		<>
 			<Modal
