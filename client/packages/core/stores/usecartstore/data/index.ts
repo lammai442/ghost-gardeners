@@ -127,6 +127,7 @@ export function getItemsForOrder(): Meal[] {
 		subtotal: item.price,
 		img: item.img,
 		status: item.status,
+		description: item.description,
 	}));
 }
 
