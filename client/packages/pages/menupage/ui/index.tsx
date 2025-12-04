@@ -53,7 +53,6 @@ export const MenuPage = () => {
 		if (user) {
 			const fetchOrdersByUser = async () => {
 				const response = await apiGetOrdersByUser(user.userId);
-				console.log(response.mealList);
 				setUserOrdersList(response.mealList);
 			};
 

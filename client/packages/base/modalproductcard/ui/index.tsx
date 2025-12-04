@@ -35,7 +35,6 @@ export const ModalProductCard = ({
 		else incrament(currentItem);
 		setModalOpen(false);
 	};
-	console.log('item: ', item);
 	return (
 		<section className="modal__meal-wrapper">
 			<section className="modal__top-section">
