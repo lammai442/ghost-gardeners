@@ -287,6 +287,26 @@ export async function getAllOrdersByStatus(status) {
 
 	return res.Items.map((item) => unmarshall(item));
 }
+// Get ALL orders by userId
+export async function getAllOrdersByUserId(userId) {
+	const command = new QueryCommand({
+		TableName: 'mojjen-table',
+		IndexName: 'GSI1',
+		KeyConditionExpression: 'category = :category AND id = :id',
+		ExpressionAttributeValues: {
+			':category': { S: 'ORDER' },
+			':id': { S: userId },
+		},
+	});
+
+	try {
+		const res = await client.send(command);
+
+		if (res) return res.Items.map((item) => unmarshall(item));
+	} catch (error) {
+		console.log('Error in getAllOrdersByUserId: ' + error.message);
+	}
+}
 
 /**
  * Author: ninerino
@@ -294,4 +314,5 @@ export async function getAllOrdersByStatus(status) {
  *
  * Updated: Lam
  * Added in createOrder if userId comes from bodyreq then use it i GSI1SK Id otherwise create new guestId
+ * Added function getAllordersByUserId
  */

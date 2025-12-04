@@ -21,7 +21,7 @@ export const Page = ({
 		'sr-only': srOnly,
 	});
 	return (
-		<section className={`page page__wrapper flex flex__column`}>
+		<section className={`page page__wrapper flex flex__column flex__gap-1-5`}>
 			{topContent && <section>{topContent}</section>}
 			<h1 className={classNames}>{titleText}</h1>
 			<section className={` ${extraClasses}`}>{children}</section>
@@ -34,4 +34,7 @@ export const Page = ({
  * A page template
  * Update: Klara
  * topContent added
+ *
+ * Update: Lam
+ * Added gap for page
  */

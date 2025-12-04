@@ -63,6 +63,12 @@ functions:
       - httpApi:
           path: /api/order/{id}
           method: GET
+  GetOrdersByUserId:
+    handler: functions/orders/GetOrdersByUserId/index.handler
+    events:
+      - httpApi:
+          path: /api/order/user/{id}
+          method: GET
   DeleteOrder:
     handler: functions/menu/DeleteOrder/index.handler
     events:

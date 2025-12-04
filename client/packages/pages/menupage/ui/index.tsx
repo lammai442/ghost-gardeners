@@ -10,6 +10,7 @@ import { ProductsList } from '@mojjen/productslist';
 import { useNavigate } from 'react-router-dom';
 import { Modal } from '../../../base/modal/ui';
 import { useAuthStore } from '../../../core/stores/useauthstore/data';
+import { apiGetOrdersByUser } from '../../../core/api/apiusers/data';
 
 type GetMealsResponse = {
 	data: Meal[];
@@ -19,6 +20,7 @@ type GetMealsResponse = {
 
 export const MenuPage = () => {
 	const [allProdList, setAllProdList] = useState<Meal[]>([]);
+	const [userOrdersList, setUserOrdersList] = useState<Meal[]>([]);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [fetchError, setFetchError] = useState<boolean>(false);
 	const navigate = useNavigate();
@@ -35,7 +37,28 @@ export const MenuPage = () => {
 			else setFetchError(true);
 		};
 		fetchMeals();
+
+		if (user) {
+			const fetchOrdersByUser = async () => {
+				const response = await apiGetOrdersByUser(user.userId);
+
+				setUserOrdersList(response.mealList);
+			};
+
+			fetchOrdersByUser();
+		}
 	}, []);
+
+	useEffect(() => {
+		if (user) {
+			const fetchOrdersByUser = async () => {
+				const response = await apiGetOrdersByUser(user.userId);
+				setUserOrdersList(response.mealList);
+			};
+
+			fetchOrdersByUser();
+		}
+	}, [user]);
 
 	const handleNavigate = () => navigate('/cart');
 
@@ -50,16 +73,15 @@ export const MenuPage = () => {
 
 	const generateTopContent = () => {
 		return (
-			<section className="flex">
-				<h3 className="heading-3">Du har tidigare beställt</h3>;
-				{/* Placeholder to map ordered meals from logged in user. Something like this: */}
-				{/* {userOrdersList.length > 0 && (
+			<section className="flex flex__column flex__gap-1">
+				<h3 className="heading-3">Du har tidigare beställt</h3>
+				{user && userOrdersList.length > 0 && (
 					<ProductsList
 						isCartItem={false}
 						prodList={userOrdersList}
-						allProdList={userOrdersList} //
+						allProdList={allProdList} //
 					/>
-				)} */}
+				)}
 			</section>
 		);
 	};
@@ -76,8 +98,7 @@ export const MenuPage = () => {
 			<Page
 				titleText="Mojmeny"
 				extraClasses="flex flex__column menu"
-				// ! Placeholder: if logged in user && topContent
-				topContent={user && generateTopContent()}
+				topContent={user && userOrdersList.length > 0 && generateTopContent()}
 			>
 				{/* <Filter /> */}
 				{/* <div className="App">
