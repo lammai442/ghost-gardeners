@@ -49,6 +49,7 @@ export async function getProductsByIds(ids) {
 			description: a.description?.S || '',
 			category: a.category?.S || '',
 			includeDrink: a.includeDrink?.S || null,
+			includeDrinkName: a.includeDrinkName?.S || null,
 			items: a.items?.L?.map((x) => x.S) || [],
 			allergenes: a.allergenes?.L?.map((x) => x.S) || null,
 		};

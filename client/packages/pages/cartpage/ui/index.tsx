@@ -83,6 +83,8 @@ export const CartPage = () => {
 		);
 	};
 
+	console.log(cart);
+
 	return (
 		<Page titleText="Varukorg" extraClasses="cart flex">
 			{/* Cart items */}

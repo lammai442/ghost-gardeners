@@ -21,11 +21,14 @@ export const handler = middy(async (event) => {
 		);
 
 		const productMap = await getProductsByIds(uniqueItemIds);
+		// Remove all keyname and the object to an array for mealList
+		const mealList = Object.values(productMap);
 
 		return sendResponses(200, {
 			success: true,
 			messages: 'Successfully fetching all orders by userId',
-			data: productMap,
+			orders: response,
+			mealList: mealList,
 		});
 	} else {
 		return sendResponses(400, {

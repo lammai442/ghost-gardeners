@@ -39,18 +39,27 @@ export const MenuPage = () => {
 		fetchMeals();
 
 		if (user) {
-			const fetchPastOrdersByUser = async () => {
+			const fetchOrdersByUser = async () => {
 				const response = await apiGetOrdersByUser(user.userId);
-				let list = [];
-				list.push(response.data);
-				console.log('list: ', list);
 
-				setUserOrdersList(response.data);
+				setUserOrdersList(response.mealList);
 			};
 
-			fetchPastOrdersByUser();
+			fetchOrdersByUser();
 		}
 	}, []);
+
+	useEffect(() => {
+		if (user) {
+			const fetchOrdersByUser = async () => {
+				const response = await apiGetOrdersByUser(user.userId);
+				console.log(response.mealList);
+				setUserOrdersList(response.mealList);
+			};
+
+			fetchOrdersByUser();
+		}
+	}, [user]);
 
 	const handleNavigate = () => navigate('/cart');
 
@@ -65,14 +74,13 @@ export const MenuPage = () => {
 
 	const generateTopContent = () => {
 		return (
-			<section className="flex">
-				<h3 className="heading-3">Du har tidigare beställt</h3>;
-				{/* Placeholder to map ordered meals from logged in user. Something like this: */}
-				{userOrdersList.length > 0 && (
+			<section className="flex flex__column flex__gap-1">
+				<h3 className="heading-3">Du har tidigare beställt</h3>
+				{user && userOrdersList.length > 0 && (
 					<ProductsList
 						isCartItem={false}
 						prodList={userOrdersList}
-						allProdList={userOrdersList} //
+						allProdList={allProdList} //
 					/>
 				)}
 			</section>
@@ -91,7 +99,7 @@ export const MenuPage = () => {
 			<Page
 				titleText="Mojmeny"
 				extraClasses="flex flex__column menu"
-				topContent={user && generateTopContent()}
+				topContent={user && userOrdersList.length > 0 && generateTopContent()}
 			>
 				{/* <Filter /> */}
 				{/* <div className="App">

@@ -123,6 +123,7 @@ export function getItemsForOrder(): Meal[] {
 		summary: item.summary,
 		price: item.price,
 		includeDrink: item.includeDrink ?? null,
+		includeDrinkName: item.includeDrinkName ?? null,
 		subtotal: item.price,
 		img: item.img,
 		status: item.status,
