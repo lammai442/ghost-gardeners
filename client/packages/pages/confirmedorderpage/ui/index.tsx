@@ -10,8 +10,13 @@ import {
 import { useEffect, useState, type ReactNode } from 'react';
 import { Page } from '@mojjen/page';
 import { OrderStatusBox } from '@mojjen/orderstatusbox';
+
+/* 
+* Imports for WebSocket
 import { connectWebSocket } from '@mojjen/websocket';
-import type { WebSocketOrder } from '@mojjen/productdata';
+import type { WebSocketOrder } from '@mojjen/productdata'; 
+*/
+
 /**
  * Author: Klara Sköld
  * This page is rendered after a successful order.It contains white boxes with different type of content.
@@ -24,8 +29,13 @@ export const ConfirmedOrderPage = () => {
 	const location = useLocation();
 	const order = location.state;
 	const [status, setStatus] = useState(order.status);
+	/* 	
+// Code for WebSocket
+// "Currently" connects the user to the WebSocket when the ConfirmedOrderPage is loaded.
+// Commented out until it'll actually be used.
+
 	const [ws, setWs] = useState<WebSocket | null>(null);
-	const [wsOrder, setWsOrder] = useState([]);
+	const [wsOrder, setWsOrder] = useState<WebSocketOrder | null>(null);
 
 	useEffect(() => {
 		const websocket = connectWebSocket((update: WebSocketOrder) => {
@@ -34,13 +44,14 @@ export const ConfirmedOrderPage = () => {
 
 			if (update.type === 'orderUpdate') {
 				console.log('ORDER received from WebSocket!');
+				setWsOrder(update);
 			}
 		});
 
 		setWs(websocket);
 
 		return () => websocket.close();
-	}, []);
+	}, []); */
 
 	if (!order)
 		return <Page titleText="Orderbekräftelse">Ingen order hittades.</Page>;
