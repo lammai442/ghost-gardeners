@@ -2,20 +2,15 @@ import type { ReactNode } from 'react';
 import './index.scss';
 import clsx from 'clsx';
 
-/**
- * Author: Klara Sköld
- * Created a reusable button that accepts children and can be used across different parts of the design.
- *
- */
-
 type Props = {
 	children: ReactNode;
-	onClick: () => void;
+	onClick?: () => void;
 	style?: string;
 	aria: string;
 	extraClasses?: string;
 	width?: string;
 	isDisabled?: boolean;
+	type?: 'button' | 'submit' | 'reset';
 };
 
 export const Button = ({
@@ -24,6 +19,7 @@ export const Button = ({
 	aria,
 	style,
 	isDisabled,
+	type,
 	onClick,
 }: Props) => {
 	const classNames = clsx('btn', 'base-bold', 'border-radius', extraClasses, {
@@ -41,8 +37,16 @@ export const Button = ({
 			disabled={isDisabled}
 			aria-label={aria}
 			onClick={onClick}
+			type={type}
 		>
 			{children}
 		</button>
 	);
 };
+
+/**
+ * Author: Klara Sköld
+ * Created a reusable button that accepts children and can be used across different parts of the design.
+ *
+ *
+ */

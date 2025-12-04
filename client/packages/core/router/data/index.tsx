@@ -7,6 +7,8 @@ import { ErrorPage } from '@mojjen/error-page';
 import { ConfirmedOrderPage } from '@mojjen/confirmedorderpage';
 import { CartPage } from '@mojjen/cartpage';
 import App from '../../../../src/App';
+import { ProfilePage } from '@mojjen/profilepage';
+import { ProtectedRoute } from '@mojjen/protectedroute';
 
 export const router = createBrowserRouter([
 	{
@@ -38,6 +40,15 @@ export const router = createBrowserRouter([
 				element: <AboutPage />,
 			},
 			{
+				path: '/profile',
+				element: (
+					// If a user who's isn't logged in tries to access "/profile", they are redirected back to the homepage.
+					<ProtectedRoute>
+						<ProfilePage />
+					</ProtectedRoute>
+				),
+			},
+			{
 				path: '*',
 				element: <ErrorPage />,
 			},
@@ -52,4 +63,7 @@ export const router = createBrowserRouter([
  *
  * Modified: Klara
  * Switched from under construction page to about page on the about route.
+ *
+ * Modified: Klara
+ * ProtectedRoute added
  */

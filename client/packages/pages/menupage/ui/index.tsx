@@ -41,7 +41,7 @@ export const MenuPage = () => {
 		if (user) {
 			const fetchOrdersByUser = async () => {
 				const response = await apiGetOrdersByUser(user.userId);
-
+				console.log(response);
 				setUserOrdersList(response.mealList);
 			};
 
@@ -73,8 +73,9 @@ export const MenuPage = () => {
 
 	const generateTopContent = () => {
 		return (
-			<section className="flex flex__column flex__gap-1">
+			<section className="flex flex__column flex__gap-1 menu__top-content">
 				<h3 className="heading-3">Du har tidigare beställt</h3>
+
 				{user && userOrdersList.length > 0 && (
 					<ProductsList
 						isCartItem={false}
@@ -98,7 +99,12 @@ export const MenuPage = () => {
 			<Page
 				titleText="Mojmeny"
 				extraClasses="flex flex__column menu"
-				topContent={user && userOrdersList.length > 0 && generateTopContent()}
+				topContent={
+					user &&
+					userOrdersList &&
+					userOrdersList.length > 0 &&
+					generateTopContent()
+				}
 			>
 				{/* <Filter /> */}
 				{/* <div className="App">
@@ -147,6 +153,9 @@ export const MenuPage = () => {
  *
  * Update: Klara
  * topContent added to page component
+ *
+ * Update: Klara
+ * Added extra spacing between recent orders and menu
  */
 
 // ! Original

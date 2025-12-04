@@ -1,12 +1,10 @@
 // import axios from 'axios';
 
 export const apiGetOrdersByUser = async (userId: string | undefined) => {
-	// const apiUrl: string = import.meta.env.VITE_API_URL;
+	const apiUrl: string = import.meta.env.VITE_API_URL;
 
 	try {
-		const response = await fetch(
-			`https://re7yle0qc7.execute-api.eu-north-1.amazonaws.com/api/order/user/${userId}`
-		);
+		const response = await fetch(`${apiUrl}/order/user/${userId}`);
 
 		const data = await response.json();
 

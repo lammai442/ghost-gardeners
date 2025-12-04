@@ -55,7 +55,7 @@ export const ConfirmedOrderPage = () => {
 
 	if (!order)
 		return <Page titleText="Orderbekräftelse">Ingen order hittades.</Page>;
-
+	console.log('order: ', order);
 	// ! Acivate this when the function accepts a proper order object instead of a testobject.
 	// ! The design may be updated in a future sprint
 	// useEffect(()=>{setStatus(order.status)},[status])

@@ -37,19 +37,19 @@ export interface Drink {
 	category: string;
 }
 
-export interface OrderItem extends Meal {
-	itemId: string;
-	includeDrink: string | null;
-	subtotal: number;
-	includeDrinkName?: string | null;
-}
-
 export interface Order {
+	SK: string;
 	orderId: string;
 	status: string;
 	total: number;
 	userComment?: string;
-	items: OrderItem[];
+	attribute: {
+		items: Meal[];
+		createdAt: string;
+		total: number;
+		modifiedAt?: string;
+	};
+	id: string;
 }
 
 export interface User {
