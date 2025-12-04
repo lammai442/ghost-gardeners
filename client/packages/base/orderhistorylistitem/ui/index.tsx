@@ -15,7 +15,6 @@ export const OrderHistoryListItem = ({ order }: Props) => {
 	const { incrament } = useCartStore();
 	const navigate = useNavigate();
 
-	console.log('order från OrderHistoryListItem: ', order);
 	const generateOrderItems = () => {
 		return order.attribute.items?.map((orderItem: Meal, index) => {
 			return (
