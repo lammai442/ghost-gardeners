@@ -7,10 +7,22 @@ provider:
   name: aws
   runtime: nodejs20.x
   region: eu-north-1
+  stage: ${opt:stage, 'dev'}
   httpApi:
     cors: true
   iam:
     role: ${file(./config.yml):aws.role}
+  environment:
+    WEBSOCKET_ENDPOINT:
+      Fn::Join:
+        - ""
+        - - "https://"
+          - Ref: WebsocketsApi
+          - ".execute-api."
+          - Ref: AWS::Region
+          - ".amazonaws.com/"
+          - ${self:provider.stage}
+
 
 functions:
   # Auth
@@ -81,12 +93,49 @@ functions:
       - httpApi:
           path: /api/orders/status/{status}
           method: GET
+  # 
+	# ----- Websocket functions -----
+  # 
+  # (Amazon Q (built-in AI on AWS) solution)
+  # Handler function which first checks whether the connection request to the Websocket is valid or not. Then sends the request to either $connect or $disconnect.
+  # $connect saves the "connectId" to the database
+  # $disconnect removes the "connectId" from the database
+  # $default catches any request which isn't $connect or $disconnect
+  WebsocketHandler:
+    handler: functions/websocket/WebsocketHandler/index.handler
+    events:
+      - websocket:
+          route: $connect
+      - websocket:
+          route: $disconnect
+      - websocket:
+          route: $default
+
+  # Keeps track of any updates to the table/databse related to ORDER (specified in the code).
+  # Also sends back the updated ORDER data to connected users. Frontend already filters who can se what order.
+  # Also removes unused/stale connections
+  StreamProcessor:
+    handler: functions/websocket/StreamProcessor/index.handler
+    events:
+      - stream:
+          type: dynamodb
+          arn:
+            Fn::GetAtt: [MojjenTable, StreamArn]
+          batchSize: 10
+          startingPosition: LATEST
 
 plugins:
   - serverless-offline
 
 resources:
   Resources:
+    # Sets up a WebsocketAPI on AWS
+    WebsocketsAPI:
+      Type: AWS::ApiGatewayV2::Api
+      Properties:
+        Name: mojjen-websocket-api
+        ProtocolType: WEBSOCKET
+        RouteSelectionExpression: "$request.body.action"
     MojjenTable:
       Type: AWS::DynamoDB::Table
       Properties:
@@ -135,3 +184,8 @@ resources:
                 KeyType: HASH
             Projection:
               ProjectionType: ALL
+        # (Amazon Q AI solution)
+        # Tells DynamoDB to enable streams for the table
+        StreamSpecification:
+          # Sets so you can get access to both the old and the new values when the table updates.
+          StreamViewType: NEW_AND_OLD_IMAGES

@@ -17,6 +17,7 @@
     "@middy/http-cors": "^6.4.5",
     "@middy/http-json-body-parser": "^6.4.5",
     "@middy/validator": "^6.4.5",
+    "aws-sdk": "^2.1692.0",
     "bcrypt": "^6.0.0",
     "joi": "^18.0.1",
     "jsonwebtoken": "^9.0.2",
