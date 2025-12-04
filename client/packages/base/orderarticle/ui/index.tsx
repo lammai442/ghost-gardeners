@@ -13,6 +13,7 @@ type Props = {
 		name: string;
 		subtotal: number;
 		summary: string;
+		includeDrinkName: string;
 	};
 };
 
@@ -26,6 +27,9 @@ export const OrderArticle = ({ item }: Props) => {
 				</div>
 
 				<p className="base grid__col-1 grid__row-2">{item.summary}</p>
+				<p className="base grid__col-1 grid__row-3">
+					Dryck: {item.includeDrinkName}
+				</p>
 			</div>
 			<hr className="order__line" />
 		</>

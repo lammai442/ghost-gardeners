@@ -1,5 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { HomePage } from '@mojjen/homepage';
+// import { HomePage } from '@mojjen/homepage';
 import { AuthPage } from '@mojjen/authpage';
 import { OrderPage } from '@mojjen/orderpage';
 import App from '../../../../src/App';
@@ -11,7 +11,7 @@ export const router = createBrowserRouter([
 		children: [
 			{
 				path: '/',
-				element: <HomePage />,
+				element: <OrderPage />,
 			},
 			{
 				path: '/auth',

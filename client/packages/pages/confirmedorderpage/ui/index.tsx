@@ -62,9 +62,12 @@ export const ConfirmedOrderPage = () => {
 
 	const generateOrderArticles = (): ReactNode => {
 		return order.items.map(
-			(item: { name: string; subtotal: number; summary: string }) => (
-				<OrderArticle key={item.name} item={item} />
-			)
+			(item: {
+				name: string;
+				subtotal: number;
+				summary: string;
+				includeDrinkName: string;
+			}) => <OrderArticle key={item.name} item={item} />
 		);
 	};
 	const handleClick = () => {
