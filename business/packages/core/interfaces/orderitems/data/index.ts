@@ -5,6 +5,7 @@ export type OrderItem = {
 	summary: string;
 	includeDrink: string | null;
 	includeDrinkName: string | null;
+	category?: string;
 };
 
 export type OrderItems = {
@@ -13,6 +14,7 @@ export type OrderItems = {
 	PK?: string;
 	SK?: string;
 	statusCategory?: string;
+	category?: string;
 
 	attribute: {
 		createdAt: string;

@@ -1,0 +1,25 @@
+.page__auth {
+	height: 100vh;
+	display: grid;
+	place-content: center;
+}
+
+.login__img {
+	justify-self: center;
+	margin-bottom: 3rem;
+}
+
+.login__wrapper {
+	display: flex;
+	flex-direction: column;
+	padding: 2rem;
+	background-color: $color-white;
+	max-width: 450px;
+	gap: 1.5rem;
+
+	.login__title {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+}

@@ -1,8 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom';
-// import { HomePage } from '@mojjen/homepage';
 import { AuthPage } from '@mojjen/authpage';
 import { OrderPage } from '@mojjen/orderpage';
 import App from '../../../../src/App';
+import { ProtectedRoute } from '../../../base/protectedroute/ui';
 
 export const router = createBrowserRouter([
 	{
@@ -11,16 +11,18 @@ export const router = createBrowserRouter([
 		children: [
 			{
 				path: '/',
-				element: <OrderPage />,
+				element: <ProtectedRoute element={<OrderPage />} />,
 			},
 			{
 				path: '/auth',
 				element: <AuthPage />,
 			},
-			{
-				path: '/orders',
-				element: <OrderPage />,
-			},
 		],
 	},
 ]);
+
+/**
+ * Author: Lam Mai
+ * Added protected route for index page
+ *
+ */

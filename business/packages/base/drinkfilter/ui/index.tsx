@@ -1,5 +1,4 @@
 import './index.scss';
-import type { Meal, Drink } from '@mojjen/productdata';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import { useState } from 'react';
 import type { Dispatch, SetStateAction } from 'react';
@@ -15,9 +14,8 @@ import type { OrderItem } from '@mojjen/orderitems';
 
 type Props = {
 	extraClasses?: string;
-	item:
-		//| Meal
-		| OrderItem;
+	item: //| Meal
+	OrderItem;
 	allProdList: OrderItem[]; // Ändrat från Meal
 	setCurrentItem: Dispatch<SetStateAction<OrderItem>>;
 };
@@ -30,7 +28,7 @@ export const DrinkFilter = ({
 }: Props) => {
 	const ref = useRef<HTMLDivElement | null>(null);
 	const [openList, setOpenList] = useState<boolean>(false);
-	const [drinks, SetDrinks] = useState<Drink[]>([]);
+	const [drinks, SetDrinks] = useState<OrderItem[]>([]);
 	const [selected, setSelected] = useState<string | null | undefined>(
 		item.includeDrink
 	);
