@@ -137,89 +137,104 @@ export const cancelOrder = async (orderId) => {
 	};
 };
 
-export const changeOrder = async ({
-	orderId,
-	items,
-	userComment = '',
-	staffComment = '',
-	status = 'cancelled',
-}) => {
+export const changeOrder = async ({ orderId, items, userComment, staffComment, status }) => {
 	const key = { PK: { S: 'ORDER' }, SK: { S: `ORDER#${orderId}` } };
 
-	const res = await client.send(
-		new GetItemCommand({ TableName: 'mojjen-table', Key: key })
-	);
+	// Hämta befintlig order
+	const res = await client.send(new GetItemCommand({ TableName: 'mojjen-table', Key: key }));
 	if (!res.Item) throw new Error(`Order ${orderId} hittades inte.`);
-
 	const existing = unmarshall(res.Item);
-	if (['completed'].includes(existing.status))
-		throw new Error('Denna order kan inte längre ändras.');
 
-	const allIds = [
-		...new Set(
-			items.flatMap((i) => [i.id, i.includeDrink || null]).filter(Boolean)
-		),
-	];
-	const productMap = await getProductsByIds(allIds);
-	const enriched = enrichItems(items, productMap);
-	const trimmedItems = enriched.map((i) => ({
-		id: i.id,
-		itemId: i.itemId,
-		name: i.name,
-		subtotal: i.subtotal,
-		includeDrink: i.includeDrink || null,
-		includeDrinkName: i.includeDrinkName || null,
-		summary: i.summary || null,
-		// stock: i.stock || null, <- onödig?
-		// img: i.img || null <- onödig?
-	}));
-	const total = calculateTotal(enriched);
+	if (['completed'].includes(existing.status)) {
+		throw new Error('Denna order kan inte längre ändras.');
+	}
+
+	const updateExprParts = [];
+	const exprAttrNames = {};
+	const exprAttrValues = {};
 	const now = new Date().toISOString();
 
-	const updateExprParts = [
-		'SET #attr.#items = :items',
-		'#attr.#userComment = :userComment',
-		'#attr.#staffComment = :staffComment',
-		'#attr.#total = :total',
-		'#statusRoot = :status',
-		'modifiedAt = :now',
-	];
+	// Villkorlig uppdatering av items
+	let mergedItems = existing.attribute.items;
 
-	const exprAttrNames = {
-		'#attr': 'attribute',
-		'#items': 'items',
-		'#userComment': 'userComment',
-		'#staffComment': 'staffComment',
-		'#total': 'total',
-		'#statusRoot': 'status',
-	};
+	// Uppdatera items om det finns nya
+		if (items && Array.isArray(items)) {
+		// Mergar varje item baserat på itemId
+		mergedItems = existing.attribute.items.map(orig => {
+			const update = items.find(i => i.itemId === orig.itemId);
+			return update ? { ...orig, ...update } : orig; // Uppdatera eller behåll original
+		});
 
+		// Bygg update-expression EFTER att mergedItems är klart
+		updateExprParts.push('#attr.#items = :items');
+		exprAttrNames['#attr'] = 'attribute';
+		exprAttrNames['#items'] = 'items';
+		exprAttrValues[':items'] = mergedItems;
+
+
+
+
+	// Uppdatera total om alla items har subtotal
+	const hasSubtotal = mergedItems.every(i => typeof i.subtotal === 'number');
+	if (hasSubtotal) {
+		const total = mergedItems.reduce((sum, i) => sum + i.subtotal, 0);
+		updateExprParts.push('#attr.#total = :total');
+		exprAttrNames['#total'] = 'total';
+		exprAttrValues[':total'] = total;
+	}
+	}
+
+	// Villkorlig uppdatering av staffComment
+	if (staffComment !== undefined) {
+		updateExprParts.push('#attr.#staffComment = :staffComment'); // Uppdateras på rätt sätt (enligt Insomnia)
+		exprAttrNames['#attr'] = 'attribute';
+		exprAttrNames['#staffComment'] = 'staffComment';
+		exprAttrValues[':staffComment'] = staffComment;
+	}
+
+	// Villkorlig uppdatering av userComment
+	if (userComment !== undefined) {
+		updateExprParts.push('#attr.#userComment = :userComment'); // Uppdateras på rätt sätt (enligt Insomnia)
+		exprAttrNames['#attr'] = 'attribute';
+		exprAttrNames['#userComment'] = 'userComment';
+		exprAttrValues[':userComment'] = userComment;
+	}
+
+	// Villkorlig uppdatering av status
+	if (status !== undefined) {
+		updateExprParts.push('#statusRoot = :status'); // Uppdateras på rätt sätt
+		exprAttrNames['#statusRoot'] = 'status';
+		exprAttrValues[':status'] = status;
+	}
+
+	// Always set modifiedAt
+	updateExprParts.push('modifiedAt = :now');
+	exprAttrValues[':now'] = now;
+
+	// Skicka uppdateringen
 	await client.send(
 		new UpdateItemCommand({
-			TableName: 'mojjen-table',
-			Key: key,
-			UpdateExpression: updateExprParts.join(', '),
-			ExpressionAttributeNames: exprAttrNames,
-			ExpressionAttributeValues: marshall({
-				':items': trimmedItems,
-				':userComment': userComment,
-				':staffComment': staffComment,
-				':total': total,
-				':status': status,
-				':now': now,
-			}),
+		TableName: 'mojjen-table',
+		Key: key,
+		UpdateExpression: 'SET ' + updateExprParts.join(', '),
+		ExpressionAttributeNames: exprAttrNames,
+		ExpressionAttributeValues: marshall(exprAttrValues),
 		})
 	);
 
 	return {
 		...existing,
-		items: trimmedItems,
-		userComment,
-		staffComment,
-		total,
-		status,
-		modifiedAt: now,
-	};
+		attribute: {
+			...existing.attribute,
+			items: mergedItems,
+			userComment: userComment ?? existing.attribute.userComment,
+			staffComment: staffComment ?? existing.attribute.staffComment,
+			total: exprAttrValues[':total'] ?? existing.attribute.total,
+			modifiedAt: now
+		},
+		status: status ?? existing.status,
+		modifiedAt: now
+		};
 };
 
 export const getOrder = async (orderId) => {

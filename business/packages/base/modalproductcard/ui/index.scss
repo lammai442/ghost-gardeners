@@ -1,0 +1,86 @@
+.modal__meal-wrapper {
+	max-width: 600px;
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+
+	.modal__price-box {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.modal__to-cart-btn {
+		width: 100%;
+	}
+}
+
+.modal__top-section {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 1rem;
+}
+
+.modal__top-left {
+	aspect-ratio: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.modal__top-right {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	gap: 0.6rem;
+
+	.modal__desc-box {
+		display: flex;
+		flex-direction: column;
+	}
+}
+
+.product-card__img {
+	width: 80%;
+}
+.modal__allergene--wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 0.3rem;
+}
+
+.modal__allergene {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+
+	.modal__allergene--item {
+		display: flex;
+		align-items: center;
+		gap: 0.2rem;
+
+		.modal__allergene--letter {
+			width: 0.5rem;
+			height: 0.5rem;
+			padding: 0.7rem;
+			border-radius: 50%;
+			background-color: $color-ketchup;
+			color: $color-light-beige;
+			display: grid;
+			place-content: center;
+		}
+	}
+}
+
+@media (max-width: 620px) {
+	.modal__meal-wrapper {
+		max-width: 400px;
+	}
+	.modal__top-section {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.modal__top-right {
+		gap: 1rem;
+	}
+}
