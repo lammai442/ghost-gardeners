@@ -4,17 +4,17 @@ import { useAuthStore } from '@mojjen/useauthstore'; // Imports global auth stor
 import { Button } from '@mojjen/button'; // Imports reusable button component
 import { ReusableInput } from '@mojjen/reusableinput'; // Imports reusable input component
 import { validateAuthForm } from '@mojjen/helpfunctions'; // Imports form validation helper
-import { getAllInputs } from '@mojjen/data'; // Imports input field definitions
+import { loginInputs } from '@mojjen/data'; // Imports input field definitions
 import { apiLoginUser } from '@mojjen/apiusers';
 import type { User } from '@mojjen/userdata';
 import { LoadingMsg } from '@mojjen/loadingmsg';
 import { Modal } from '@mojjen/modal';
-
-type Props = {};
+import { useNavigate } from 'react-router-dom';
 
 export const AuthForm = () => {
 	const [loading, setLoading] = useState(false);
 	const { updateUserStorage } = useAuthStore();
+	const navigate = useNavigate();
 
 	// Stores all form field values
 	const [form, setForm] = useState({
@@ -31,7 +31,8 @@ export const AuthForm = () => {
 		const e = validateAuthForm(form);
 		// Stores validation errors
 		setErrors(e);
-		return Object.keys(e).length === 0; // Returns true if no errors
+		// Returns true if no errors
+		return Object.keys(e).length === 0;
 	};
 
 	// Updates form values when user types in an input field
@@ -49,7 +50,6 @@ export const AuthForm = () => {
 
 	const handleSubmit = async (e?: React.FormEvent) => {
 		e?.preventDefault();
-		// Prevents multiple clicks
 		// Runs validation and stops if errors exist
 		if (!validate()) return;
 
@@ -73,12 +73,15 @@ export const AuthForm = () => {
 		}
 
 		user = response.data.data as User;
+		if (user.role !== 'ADMIN') {
+			setErrors({ apiError: 'Ditt konto har inte tillgång till denna sida' });
+			return;
+		}
 
-		// On successful login/register, update global user state
+		// On successful login, update global user state and navigate to homepage
 		updateUserStorage(user);
+		navigate('/');
 	};
-
-	const inputs = getAllInputs();
 
 	return (
 		<>
@@ -95,20 +98,17 @@ export const AuthForm = () => {
 				</Modal>
 			)}
 			<form className="auth-form" onSubmit={handleSubmit} noValidate>
-				{/* Maps all input definitions and renders only those where show = true */}
-				{inputs.map((input) =>
-					input.show ? (
-						<ReusableInput
-							key={input.name}
-							label={input.label}
-							name={input.name}
-							type={input.type || 'text'}
-							value={form[input.name as keyof typeof form]}
-							onChange={handleChange}
-							error={errors[input.name]}
-						/>
-					) : null
-				)}
+				{loginInputs.map((input) => (
+					<ReusableInput
+						key={input.name}
+						label={input.label}
+						name={input.name}
+						type={input.type || 'text'}
+						value={form[input.name as keyof typeof form]}
+						onChange={handleChange}
+						error={errors[input.name]}
+					/>
+				))}
 				<section className="auth-form__actions">
 					{errors.apiError && (
 						<span className="auth-form__error-message base">

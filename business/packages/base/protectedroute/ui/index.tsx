@@ -10,7 +10,9 @@ export const ProtectedRoute = ({ element }: Props) => {
 	const { user } = useAuthStore();
 
 	// Check if user is null or role is not admin then navigate to auth
-	if (!user || user.role !== 'admin') return <Navigate to="/auth" replace />;
+	if (!user || user.role !== 'ADMIN') {
+		return <Navigate to="/auth" replace />;
+	}
 
 	// Otherwise go to the route page
 	return element;

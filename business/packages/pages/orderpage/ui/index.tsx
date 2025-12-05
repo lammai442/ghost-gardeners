@@ -5,9 +5,8 @@ import { useEffect, useState } from 'react';
 import { Modal } from '../../../base/modal/ui';
 import { Button } from '@mojjen/button';
 import { CartProductCard } from '../../../base/cartProductCard';
-import { Meal } from '@mojjen/productdata';
 import { apiGetMeals } from '../../../core/api/apiproducts/data';
-import {Comment} from '@mojjen/comment'
+import { Comment } from '@mojjen/comment';
 
 export const OrderPage = () => {
 	const [pendingOrders, setPendingOrders] = useState<OrderItems[]>([]);
@@ -16,8 +15,6 @@ export const OrderPage = () => {
 	const [selectedOrder, setSelectedOrder] = useState<OrderItems | null>(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [allProdList, setAllProdList] = useState<OrderItem[]>([]);
-
-
 
 	useEffect(() => {
 		const fetchMeals = async () => {
@@ -56,7 +53,7 @@ export const OrderPage = () => {
 		// For frontend, we just want to show xxxx that's after order-
 		const match = clean.match(/-(.+)$/);
 		return match ? match[1].toUpperCase() : clean.toUpperCase();
-		};
+	};
 
 	/**
 	 * Fetches the orders based on pending/confirmed/done
@@ -93,14 +90,23 @@ export const OrderPage = () => {
 	/**
 	 * Function to confirm order. It takes the orderId and makes a PUT call to the API endpoint
 	 */
-	const confirmOrder = async (orderId: string, newStatus: string, updatedStaffComment?: string, updatedItems?: OrderItem[]) => {
+	const confirmOrder = async (
+		orderId: string,
+		newStatus: string,
+		updatedStaffComment?: string,
+		updatedItems?: OrderItem[]
+	) => {
 		const orderIdForApi = trimOrderId(selectedOrder?.SK, true);
 
 		try {
 			await fetch(`${import.meta.env.VITE_API_URL}/order/${orderIdForApi}`, {
 				method: 'PUT',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ status: newStatus, staffComment: updatedStaffComment, items: updatedItems }),
+				body: JSON.stringify({
+					status: newStatus,
+					staffComment: updatedStaffComment,
+					items: updatedItems,
+				}),
 			});
 
 			setPendingOrders((prev) => prev.filter((o) => o.id !== orderId));
@@ -112,7 +118,8 @@ export const OrderPage = () => {
 				status: newStatus,
 				attribute: {
 					...selectedOrder!.attribute,
-					staffComment: updatedStaffComment ?? selectedOrder!.attribute.staffComment,
+					staffComment:
+						updatedStaffComment ?? selectedOrder!.attribute.staffComment,
 					items: updatedItems ?? selectedOrder!.attribute.items,
 				},
 			};
@@ -203,73 +210,93 @@ export const OrderPage = () => {
 			<Modal
 				open={isModalOpen}
 				setModalOpen={setIsModalOpen}
-				titleContent=
-				{<h3 className="heading-4 text-light-beige">
-				Order {selectedOrder && trimOrderId(selectedOrder?.SK)}
-				</h3>}
+				titleContent={
+					<h3 className="heading-4 text-light-beige">
+						Order {selectedOrder && trimOrderId(selectedOrder?.SK)}
+					</h3>
+				}
 			>
-			{selectedOrder && (
-				<div className="order-modal-content">
-				{selectedOrder.attribute.items.map((item, index) => (
-					<CartProductCard
-					key={`${selectedOrder.id}-${item.id}-${index}`}
-					item={item}
-					allProdList={allProdList}
-					classBgColor="bg-super-light-beige"
-					selectedOrder={selectedOrder}
-					setSelectedOrder={setSelectedOrder}
-					/>
-				))}
+				{selectedOrder && (
+					<div className="order-modal-content">
+						{selectedOrder.attribute.items.map((item, index) => (
+							<CartProductCard
+								key={`${selectedOrder.id}-${item.id}-${index}`}
+								item={item}
+								allProdList={allProdList}
+								// classBgColor="bg-super-light-beige"
+								selectedOrder={selectedOrder}
+								setSelectedOrder={setSelectedOrder}
+							/>
+						))}
 
-			{/* Staff Comment */}
-			{selectedOrder.status === 'pending' ? (
-				<Comment
-				comment={selectedOrder.attribute.staffComment || ''}
-				commentCount={(selectedOrder.attribute.staffComment || '').length}
-				handleChangeComment={(e) => {
-					const newComment = e.target.value;
-					setSelectedOrder((prev) =>
-					prev
-						? { ...prev, attribute: { ...prev.attribute, staffComment: newComment } }
-						: prev
-					);
-				}}
-				/>
-			) : (
-				<div className="comment read-only">
-				<h5 className="heading-5 font-color-red text-ketchup">Staff Kommentar</h5>
-				<p className="base">{selectedOrder.attribute.staffComment || '-'}</p>
-				</div>
-			)}
+						{/* Staff Comment */}
+						{selectedOrder.status === 'pending' ? (
+							<Comment
+								comment={selectedOrder.attribute.staffComment || ''}
+								commentCount={
+									(selectedOrder.attribute.staffComment || '').length
+								}
+								handleChangeComment={(e) => {
+									const newComment = e.target.value;
+									setSelectedOrder((prev) =>
+										prev
+											? {
+													...prev,
+													attribute: {
+														...prev.attribute,
+														staffComment: newComment,
+													},
+											  }
+											: prev
+									);
+								}}
+							/>
+						) : (
+							<div className="comment read-only">
+								<h5 className="heading-5 font-color-red text-ketchup">
+									Staff Kommentar
+								</h5>
+								<p className="base">
+									{selectedOrder.attribute.staffComment || '-'}
+								</p>
+							</div>
+						)}
 
-			{/* Buttons */}
-			{selectedOrder.status === 'pending' && (
-				<Button
-				onClick={() => confirmOrder(selectedOrder.id, 'confirmed', selectedOrder.attribute.staffComment, selectedOrder.attribute.items)}
-				aria="Bekräfta order"
-				>
-				Bekräfta order
-				</Button>
-			)}
-			{/* Gör ingenting just nu */}
-			<Button
-				onClick={() => confirmOrder(selectedOrder.id, 'confirmed')}
-				aria="Avbryt"
-				style="outlined"
-				>
-				Avbryt
-				</Button>
+						{/* Buttons */}
+						{selectedOrder.status === 'pending' && (
+							<Button
+								onClick={() =>
+									confirmOrder(
+										selectedOrder.id,
+										'confirmed',
+										selectedOrder.attribute.staffComment,
+										selectedOrder.attribute.items
+									)
+								}
+								aria="Bekräfta order"
+							>
+								Bekräfta order
+							</Button>
+						)}
+						{/* Gör ingenting just nu */}
+						<Button
+							onClick={() => confirmOrder(selectedOrder.id, 'confirmed')}
+							aria="Avbryt"
+							style="outlined"
+						>
+							Avbryt
+						</Button>
 
-				{selectedOrder.status === 'confirmed' && (
-					<Button
-					onClick={() => confirmOrder(selectedOrder.id, 'done')}
-					aria="Markera som klar"
-					>
-					Flytta till Klar
-					</Button>
+						{selectedOrder.status === 'confirmed' && (
+							<Button
+								onClick={() => confirmOrder(selectedOrder.id, 'done')}
+								aria="Markera som klar"
+							>
+								Flytta till Klar
+							</Button>
+						)}
+					</div>
 				)}
-				</div>
-			)}
 			</Modal>
 		</main>
 	);

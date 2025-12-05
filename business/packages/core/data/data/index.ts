@@ -1,11 +1,9 @@
-export const getAllInputs = () => [
+export const loginInputs = [
 	{
-		show: true,
 		label: 'E-post',
 		name: 'email',
 	},
 	{
-		show: true,
 		label: 'Lösenord',
 		name: 'password',
 		type: 'password',
