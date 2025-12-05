@@ -156,6 +156,9 @@ export const MenuPage = () => {
  *
  * Update: Klara
  * Added extra spacing between recent orders and menu
+ *
+ * Update: Klara
+ * Edited the space between recept orders and menu.
  */
 
 // ! Original

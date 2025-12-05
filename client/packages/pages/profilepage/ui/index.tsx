@@ -37,9 +37,7 @@ export const ProfilePage = () => {
 			<ProfileForm />
 			<div className="flex flex__column flex__gap-2">
 				<h3 className="heading-3">Orderhistorik</h3>
-				<ul className="flex flex__gap-2 profile__orders-list">
-					{generateListItems()}
-				</ul>
+				<ul className="grid profile__orders-list">{generateListItems()}</ul>
 			</div>
 		</Page>
 	);
@@ -48,4 +46,7 @@ export const ProfilePage = () => {
 /**
  * Author: Klara
  * Profile page, shows profile info and order history.
+ *
+ * Update: Klara
+ * Switched from flex to grid on ul. Now all order history card has the same width.
  */

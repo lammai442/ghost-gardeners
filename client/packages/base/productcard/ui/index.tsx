@@ -12,6 +12,9 @@ import { ModalProductCard } from '../../modalproductcard/ui';
  *
  * Update: Klara
  * When the user clicks on a product card a modal opens.
+ *
+ * Update: Klara
+ * Updated maxwidth on card, same width on card and img.
  */
 
 type Props = {
