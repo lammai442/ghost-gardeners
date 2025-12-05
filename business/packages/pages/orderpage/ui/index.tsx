@@ -1,9 +1,13 @@
 import './index.scss';
 import { Order } from '@mojjen/order';
-import type { OrderItems } from '@mojjen/orderitems';
+import type { OrderItems, OrderItem } from '@mojjen/orderitems';
 import { useEffect, useState } from 'react';
 import { Modal } from '../../../base/modal/ui';
 import { Button } from '@mojjen/button';
+import { CartProductCard } from '../../../base/cartProductCard';
+import { Meal } from '@mojjen/productdata';
+import { apiGetMeals } from '../../../core/api/apiproducts/data';
+import {Comment} from '@mojjen/comment'
 
 export const OrderPage = () => {
 	const [pendingOrders, setPendingOrders] = useState<OrderItems[]>([]);
@@ -11,6 +15,17 @@ export const OrderPage = () => {
 	const [doneOrders, setDoneOrders] = useState<OrderItems[]>([]);
 	const [selectedOrder, setSelectedOrder] = useState<OrderItems | null>(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [allProdList, setAllProdList] = useState<OrderItem[]>([]);
+
+
+
+	useEffect(() => {
+		const fetchMeals = async () => {
+			const res = await apiGetMeals();
+			if (res.success) setAllProdList(res.data);
+		};
+		fetchMeals();
+	}, []);
 
 	/**
 	 * Function to change the time format to HH:mm
@@ -25,10 +40,23 @@ export const OrderPage = () => {
 	/**
 	 * Removes "order" from the orderId and makes it uppercase to help the staff see better on their screen
 	 */
-	const trimOrderId = (id: string) => {
-		const clean = id.replace(/^order-/, '');
-		return clean.toUpperCase();
-	};
+	// sk = SK from DynamoDB (ex: "ORDER#order-xxxxx")
+	const trimOrderId = (sk?: string, forApi = false) => {
+		if (!sk) return 'OKÄND';
+
+		// Remove ORDER#, we don't want to show this anywhere
+		const clean = sk.replace(/^ORDER#/, '');
+
+		if (forApi) {
+			// For the API, we want order-xxxx in lowercase
+			const match = clean.match(/^order-(.+)$/i);
+			return match ? `order-${match[1].toLowerCase()}` : clean.toLowerCase();
+		}
+
+		// For frontend, we just want to show xxxx that's after order-
+		const match = clean.match(/-(.+)$/);
+		return match ? match[1].toUpperCase() : clean.toUpperCase();
+		};
 
 	/**
 	 * Fetches the orders based on pending/confirmed/done
@@ -65,19 +93,29 @@ export const OrderPage = () => {
 	/**
 	 * Function to confirm order. It takes the orderId and makes a PUT call to the API endpoint
 	 */
-	const confirmOrder = async (orderId: string, newStatus: string) => {
+	const confirmOrder = async (orderId: string, newStatus: string, updatedStaffComment?: string, updatedItems?: OrderItem[]) => {
+		const orderIdForApi = trimOrderId(selectedOrder?.SK, true);
+
 		try {
-			await fetch(`${import.meta.env.VITE_API_URL}/order/${orderId}`, {
+			await fetch(`${import.meta.env.VITE_API_URL}/order/${orderIdForApi}`, {
 				method: 'PUT',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ status: newStatus }),
+				body: JSON.stringify({ status: newStatus, staffComment: updatedStaffComment, items: updatedItems }),
 			});
 
 			setPendingOrders((prev) => prev.filter((o) => o.id !== orderId));
 			setConfirmedOrders((prev) => prev.filter((o) => o.id !== orderId));
 			setDoneOrders((prev) => prev.filter((o) => o.id !== orderId));
 
-			const updatedOrder = { ...selectedOrder!, status: newStatus };
+			const updatedOrder = {
+				...selectedOrder!,
+				status: newStatus,
+				attribute: {
+					...selectedOrder!.attribute,
+					staffComment: updatedStaffComment ?? selectedOrder!.attribute.staffComment,
+					items: updatedItems ?? selectedOrder!.attribute.items,
+				},
+			};
 
 			if (newStatus === 'confirmed')
 				setConfirmedOrders((prev) => [...prev, updatedOrder]);
@@ -107,7 +145,7 @@ export const OrderPage = () => {
 									}}
 								>
 									<Order
-										orderId={trimOrderId(o.id)}
+										orderId={trimOrderId(o.SK)}
 										time={formatTime(o.attribute?.createdAt)}
 										orderStatus={o.status}
 									/>
@@ -129,7 +167,7 @@ export const OrderPage = () => {
 									}}
 								>
 									<Order
-										orderId={trimOrderId(o.id)}
+										orderId={trimOrderId(o.SK)}
 										time={formatTime(o.attribute?.createdAt)}
 										orderStatus={o.status}
 									/>
@@ -151,7 +189,7 @@ export const OrderPage = () => {
 									}}
 								>
 									<Order
-										orderId={trimOrderId(o.id)}
+										orderId={trimOrderId(o.SK)}
 										time={formatTime(o.attribute?.createdAt)}
 										orderStatus={o.status}
 									/>
@@ -161,36 +199,77 @@ export const OrderPage = () => {
 					</section>
 				</section>
 			</section>
+
 			<Modal
 				open={isModalOpen}
 				setModalOpen={setIsModalOpen}
-				titleContent={
-					<h3>Order {selectedOrder && trimOrderId(selectedOrder.id)}</h3>
-				}
+				titleContent=
+				{<h3 className="heading-4 text-light-beige">
+				Order {selectedOrder && trimOrderId(selectedOrder?.SK)}
+				</h3>}
 			>
-				{selectedOrder && (
-					<div>
-						<p>Status: {selectedOrder.status}</p>
+			{selectedOrder && (
+				<div className="order-modal-content">
+				{selectedOrder.attribute.items.map((item, index) => (
+					<CartProductCard
+					key={`${selectedOrder.id}-${item.id}-${index}`}
+					item={item}
+					allProdList={allProdList}
+					classBgColor="bg-super-light-beige"
+					selectedOrder={selectedOrder}
+					setSelectedOrder={setSelectedOrder}
+					/>
+				))}
 
-						{selectedOrder.status === 'pending' && (
-							<Button
-								onClick={() => confirmOrder(selectedOrder.id, 'confirmed')}
-								aria="Bekräfta order"
-							>
-								Bekräfta order
-							</Button>
-						)}
+			{/* Staff Comment */}
+			{selectedOrder.status === 'pending' ? (
+				<Comment
+				comment={selectedOrder.attribute.staffComment || ''}
+				commentCount={(selectedOrder.attribute.staffComment || '').length}
+				handleChangeComment={(e) => {
+					const newComment = e.target.value;
+					setSelectedOrder((prev) =>
+					prev
+						? { ...prev, attribute: { ...prev.attribute, staffComment: newComment } }
+						: prev
+					);
+				}}
+				/>
+			) : (
+				<div className="comment read-only">
+				<h5 className="heading-5 font-color-red text-ketchup">Staff Kommentar</h5>
+				<p className="base">{selectedOrder.attribute.staffComment || '-'}</p>
+				</div>
+			)}
 
-						{selectedOrder.status === 'confirmed' && (
-							<Button
-								onClick={() => confirmOrder(selectedOrder.id, 'done')}
-								aria="Markera som klar"
-							>
-								Flytta till Klar
-							</Button>
-						)}
-					</div>
+			{/* Buttons */}
+			{selectedOrder.status === 'pending' && (
+				<Button
+				onClick={() => confirmOrder(selectedOrder.id, 'confirmed', selectedOrder.attribute.staffComment, selectedOrder.attribute.items)}
+				aria="Bekräfta order"
+				>
+				Bekräfta order
+				</Button>
+			)}
+			{/* Gör ingenting just nu */}
+			<Button
+				onClick={() => confirmOrder(selectedOrder.id, 'confirmed')}
+				aria="Avbryt"
+				style="outlined"
+				>
+				Avbryt
+				</Button>
+
+				{selectedOrder.status === 'confirmed' && (
+					<Button
+					onClick={() => confirmOrder(selectedOrder.id, 'done')}
+					aria="Markera som klar"
+					>
+					Flytta till Klar
+					</Button>
 				)}
+				</div>
+			)}
 			</Modal>
 		</main>
 	);
