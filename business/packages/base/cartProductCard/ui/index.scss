@@ -1,0 +1,27 @@
+.cart-item {
+	padding: 1rem;
+
+	&__list-item {
+		flex: 1;
+	}
+
+	&__price {
+		padding: 0.5rem 0rem;
+	}
+	&__line {
+		margin-top: 1rem;
+	}
+
+	&__delete-btn {
+		align-self: flex-start;
+		transition: scale 0.5s ease-in-out;
+
+		&:hover {
+			transform: scale(1.1);
+		}
+	}
+}
+
+.cart-item__list-item {
+	cursor: pointer;
+}
