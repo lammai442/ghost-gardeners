@@ -2,6 +2,10 @@
 	gap: 6rem;
 
 	&__orders-list {
-		flex-wrap: wrap;
+		width: 100%;
+
+		grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+		column-gap: 2rem;
+		row-gap: 3.5rem;
 	}
 }

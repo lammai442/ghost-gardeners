@@ -17,7 +17,7 @@ export const Page = ({
 	srOnly,
 	extraClasses,
 }: Props) => {
-	const classNames = clsx('heading-1', 'page__title', {
+	const classNames = clsx('heading-1', {
 		'sr-only': srOnly,
 	});
 	return (
@@ -37,4 +37,7 @@ export const Page = ({
  *
  * Update: Lam
  * Added gap for page
+ *
+ * Update: Klara
+ * Removed margin-bottom on h1
  */

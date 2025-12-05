@@ -88,4 +88,6 @@ export const OrderHistoryListItem = ({ order }: Props) => {
  * Author: Klara Sköld
  * Created a list item for each object in the users order history
  *
+ * Update: Klara
+ * Added max-width on cards.
  */

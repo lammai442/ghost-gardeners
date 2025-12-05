@@ -14,6 +14,8 @@ import { CartProductCard } from '@mojjen/cartproductcard';
  * Update: Lam
  * Removed OrderItem and replaced with Meal[]
  *
+ * Update: Klara
+ * Switched from autofit to autofill on grid to avoid extra spacing between columns
  * */
 
 type Props =

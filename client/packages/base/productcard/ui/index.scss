@@ -2,17 +2,17 @@
 	position: relative;
 	gap: 1rem;
 	flex: 1;
-	max-width: 250px;
+	max-width: 150px;
 	&__img-box {
 		aspect-ratio: 1;
-		max-width: 150px;
+		// max-width: 150px;
 		border-radius: 4px;
 		justify-content: center;
 		align-items: center;
 		position: relative;
 
 		.product-card__img {
-			width: 60%;
+			// width: 60%;
 			cursor: pointer;
 		}
 
