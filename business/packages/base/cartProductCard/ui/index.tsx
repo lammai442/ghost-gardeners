@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { Meal } from '@mojjen/productdata';
+// import type { Meal } from '@mojjen/productdata';
 import { DrinkFilter } from '@mojjen/drinkfilter';
 import { CircleIcon } from '../../circleicon/ui';
 import { IoClose } from 'react-icons/io5';
@@ -7,20 +7,19 @@ import type { OrderItem, OrderItems } from '@mojjen/orderitems';
 
 type Props = {
 	item:
-		| Meal
-		| OrderItem;
-	allProdList: Meal[];
+	//	| Meal
+		OrderItem;
+	allProdList: OrderItem[]; // Ändrat från Meal
 	classBgColor: string;
-	selectedOrder?:
-		| Order
-		| OrderItems; // OrderItems kommer från OrderPage
-	setSelectedOrder?: React.Dispatch<React.SetStateAction<Order>>; //React.Dispatch<React.SetStateAction<OrderItems | null>> kommer från OrderPage
+	selectedOrder?: OrderItems; // OrderItems kommer från OrderPage
+	setSelectedOrder?: React.Dispatch<React.SetStateAction<OrderItems | null>>; //React.Dispatch<React.SetStateAction<OrderItems | null>> kommer från OrderPage
 };
 
-type Order = {
-    attribute: { items: Meal[] };
+/* type Order = {
+    attribute: { items: OrderItem[] }; // Ändrat från Meal
     status: string;
-}
+} */
+
 
 export const CartProductCard = ({
 	item,
@@ -54,15 +53,15 @@ export const CartProductCard = ({
           			<DrinkFilter
 						item={item}
 						allProdList={allProdList}
-						setCurrentItem={((updatedItem: Meal) => {
-						setSelectedOrder((prev: typeof selectedOrder) => {
-							if (!prev) return prev;
-							const updatedItems = prev.attribute.items.map((i: Meal) =>
+						setCurrentItem={((updatedItem: OrderItem) => { // Ändrat från Meal
+						setSelectedOrder?.((prev: OrderItems | null) => {
+							if (!prev) return null; // hantera null
+							const updatedItems = prev.attribute.items.map((i: OrderItem) =>
 								i.id === item.id ? updatedItem : i
 							);
 							return { ...prev, attribute: { ...prev.attribute, items: updatedItems } };
 							});
-						}) as React.Dispatch<React.SetStateAction<Meal | OrderItem>>}
+						}) as React.Dispatch<React.SetStateAction<OrderItem>>}
 					/>
         		)}
 				</article>

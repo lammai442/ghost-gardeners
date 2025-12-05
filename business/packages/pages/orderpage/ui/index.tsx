@@ -15,7 +15,7 @@ export const OrderPage = () => {
 	const [doneOrders, setDoneOrders] = useState<OrderItems[]>([]);
 	const [selectedOrder, setSelectedOrder] = useState<OrderItems | null>(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [allProdList, setAllProdList] = useState<Meal[]>([]);
+	const [allProdList, setAllProdList] = useState<OrderItem[]>([]);
 
 
 

@@ -16,10 +16,10 @@ import type { OrderItem } from '@mojjen/orderitems';
 type Props = {
 	extraClasses?: string;
 	item:
-		| Meal
+		//| Meal
 		| OrderItem;
-	allProdList: Meal[];
-	setCurrentItem: Dispatch<SetStateAction<Meal | OrderItem>>;
+	allProdList: OrderItem[]; // Ändrat från Meal
+	setCurrentItem: Dispatch<SetStateAction<OrderItem>>;
 };
 
 export const DrinkFilter = ({
@@ -41,7 +41,7 @@ export const DrinkFilter = ({
 
 	// Set the drinkList in the beginning and display the right name to the prodId
 	useEffect(() => {
-		let drinkList: Meal[] = [];
+		let drinkList: OrderItem[] = []; // Ändrat från Meal
 
 		allProdList.forEach((prodItem) => {
 			if (prodItem.category === 'DRINK') drinkList.push(prodItem);
