@@ -10,7 +10,9 @@ export const ProductPage = () => {
 				<ConstructError
 					color="bg-cucumber"
 					title="Under uppbyggnad"
-					text="Vi håller just nu på att utveckla funktionalitet för att hantera produkter. Arbetet omfattar möjligheten att ändra produktinformation och uppdatera saldon. Funktionen blir tillgänglig så snart den är färdigställd.”"
+					text={
+						'Vi håller just nu på att utveckla funktionalitet för att hantera produkter. \nArbetet omfattar möjligheten att ändra produktinformation och uppdatera saldon. \nFunktionen blir tillgänglig så snart den är färdigställd.'
+					}
 				/>
 			</main>
 			;
