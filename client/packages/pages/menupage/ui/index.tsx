@@ -70,6 +70,7 @@ export const MenuPage = () => {
 	}, [modalOpen]);
 
 	const prodList = allProdList.filter((product) => product.category === 'MEAL');
+	console.log('prodList: ', prodList);
 
 	const generateTopContent = () => {
 		return (
