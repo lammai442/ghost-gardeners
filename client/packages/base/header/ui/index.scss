@@ -59,15 +59,12 @@
 	height: 25px;
 	border-radius: 50%;
 	text-align: center;
+	color: $color-light-beige;
 }
 
 .cart__animate {
 	transform: scale(1.1);
 	transition: transform 0.3 ease;
-}
-
-.header__cart-circle {
-	color: $color-white;
 }
 
 .testa {

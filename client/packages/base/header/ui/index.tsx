@@ -145,5 +145,5 @@ export const HeaderComp = () => {
  *
  * Modified: Lam
  * Added user from usaAuthStore and implemented ternary operator for log in or username
- *
+ * Added animation to cartCount
  */

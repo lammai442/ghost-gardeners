@@ -6,6 +6,7 @@ import type { Meal } from '@mojjen/productdata';
 import { useCartStore } from '../../../core/stores/usecartstore/data';
 import { Modal } from '../../modal/ui';
 import { ModalProductCard } from '../../modalproductcard/ui';
+import { CheckAnimation } from '../../checkanimation/ui';
 /**
  * Author: Lam
  * Menupage that display the menu of Mojjens meals with connection to cart of useCartStore.
@@ -38,6 +39,7 @@ export const ProductCard = ({
 	const { incrament } = useCartStore();
 	const { name, img, summary, price, status } = item;
 	const [modalOpen, setModalOpen] = useState(false);
+	const [autoPlay, setAutoPlay] = useState(false);
 
 	const productCardClassNames = clsx('flex product-card', {
 		flex__column: isFlexColumn,
@@ -56,6 +58,7 @@ export const ProductCard = ({
 			document.body.style.overflow = 'unset';
 		}
 	}, [modalOpen, handleModal]);
+
 	return (
 		<>
 			<Modal
@@ -88,12 +91,18 @@ export const ProductCard = ({
 						aria={`Lägg till en ${item.name} i varukorgen`}
 						onClick={() => {
 							incrament(item);
+							setAutoPlay(true);
+							setTimeout(() => {
+								setAutoPlay(false);
+							}, 2000);
 						}}
 						extraClasses="product-card__add-btn"
 						style="black"
 						isDisabled={false}
 					>
-						<span className="heading-5">+</span>
+						<span className="heading-5">
+							{autoPlay ? <CheckAnimation autoPlay={autoPlay} /> : '+'}
+						</span>
 					</Button>
 				</section>
 				<section className="product-card__info-box info-box flex flex__column text__left">
