@@ -44,7 +44,7 @@ allergenes: ["ägg", "skaldjur", "gluten", "mjölkprotein", "laktos" ]
 			"price": 55,
 			"summary": "En kokt kôrv mä mos, inga kônstigheter.",
 			"description": "En klassisk kokt kôrv serverad med potatismos. Perfekt som en snabb lunch eller som kvällsmat. Enkel, god och alltid pålitlig.",
-			"img": "assets/icons/meal.png",
+			"img": "assets/icons/mojjen-meny-varmkorv-mos.png",
 			"items": ["prod-5cafe", "prod-6a656"]
 		},
 		{
@@ -53,7 +53,7 @@ allergenes: ["ägg", "skaldjur", "gluten", "mjölkprotein", "laktos" ]
 			"price": 75,
 			"summary": "Kryddig chorizokôrv med krispiga pômmes.",
 			"description": "Het chorizokôrv som sätter fart på smaklökarna. Serveras med krispiga pômmes och bostongurka. Lite extra energi för dig som jobbar hårt på bygget",
-			"img": "assets/icons/meal.png",
+			"img": "assets/icons/mojjen-meny-chorizo-pommes.png",
 			"items": ["prod-bdb7a", "prod-f7779", "prod-91b1f"]
 		},
 		{
@@ -62,7 +62,7 @@ allergenes: ["ägg", "skaldjur", "gluten", "mjölkprotein", "laktos" ]
 			"price": 70,
 			"summary": "Saftig ostkôrv serverad i luftigt kôrvbrôd.",
 			"description": "En saftig ostkôrv som smälter i munnen inuti ett luftigt kôrvbrôd. Serveras med rostad lök för extra crunch. Perfekt lunch för den som vill ha nåt mättande och gôtt.",
-			"img": "assets/icons/meal.png",
+			"img": "assets/icons/mojjen-meny-ostkorv.png",
 			"items": ["prod-916aa", "prod-ed8d6"]
 		},
 		{
@@ -71,7 +71,7 @@ allergenes: ["ägg", "skaldjur", "gluten", "mjölkprotein", "laktos" ]
 			"price": 65,
 			"summary": "Lättkryddad varmkôrv, toppad med räksallad.",
 			"description": "En klassisk varmkôrv toppad med krämig räksallad. Serveras med hemgjort potatismos vid sidan av. Perfekt för dig som vill ha både kôrv och lite extra lyx på lunchen",
-			"img": "assets/icons/meal.png",
+			"img": "assets/icons/mojjen-meny-varmkorv-raksallad.png",
 			"items": ["prod-5cafe", "prod-ff90f", "prod-6a656"]
 		},
 		{
@@ -80,7 +80,7 @@ allergenes: ["ägg", "skaldjur", "gluten", "mjölkprotein", "laktos" ]
 			"price": 60,
 			"summary": "Grillkôrv serverad i luftigt kôrvbrôd.",
 			"description": "Saftig grillkôrv serverad i luftigt kôrvbrôd med bostongurka. Perfekt för dig som vill ha nåt snabbt och gott.",
-			"img": "assets/icons/meal.png",
+			"img": "assets/icons/mojjen-meny-grillkorv.png",
 			"items": ["prod-e6f54", "prod-ed8d6", "prod-91b1f"]
 		},
 		{
@@ -89,7 +89,7 @@ allergenes: ["ägg", "skaldjur", "gluten", "mjölkprotein", "laktos" ]
 			"price": 70,
 			"summary": "Vegansk kôrv serverad med krispiga pômmes.",
 			"description": "Mild växtbaserad kôrv serverad med krispiga pômmes och bostongurka. Perfekt för dig som vill ha ett lättare alternativ",
-			"img": "assets/icons/meal.png",
+			"img": "assets/icons/mojjen-meny-vegansk-pommes.png",
 			"items": ["prod-7b757", "prod-f7779", "prod-91b1f"]
 		}
 	],

@@ -80,6 +80,7 @@ export const MenuPage = () => {
 				{user && userOrdersList.length > 0 && (
 					<ProductsList
 						isCartItem={false}
+						classBgColor={'bg-cucumber'}
 						prodList={userOrdersList}
 						allProdList={allProdList} //
 					/>
@@ -123,6 +124,7 @@ export const MenuPage = () => {
 				{prodList.length > 0 && (
 					<ProductsList
 						isCartItem={false}
+						classBgColor={'bg-mustard'}
 						prodList={prodList}
 						allProdList={allProdList}
 					/>
@@ -160,6 +162,9 @@ export const MenuPage = () => {
  *
  * Update: Klara
  * Edited the space between recept orders and menu.
+ *
+ * Update: Klara
+ * Edited classBgColor
  */
 
 // ! Original
