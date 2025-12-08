@@ -33,7 +33,7 @@ export const ContentBox = ({
 }: Props) => {
 	const modalRef = useRef<HTMLDivElement>(null);
 	const classNames = clsx(
-		`flex flex__column bg-super-light-beige border-radius content-box ${extraClass}`,
+		`flex flex__column bg-light-beige border-radius content-box ${extraClass}`,
 		{ 'bg__light-red': style === 'red' }
 	);
 

@@ -59,3 +59,18 @@
 		border: 2px dotted $color-black;
 	}
 }
+
+.btn-outlined-red {
+	@include button-bg(transparent);
+
+	color: $color-ketchup !important;
+	border: 2px solid $color-ketchup !important;
+
+	&:hover {
+		transition: all 0.3s ease !important;
+		border: 2px dotted $color-ketchup !important;
+	}
+	&:active {
+		border: 2px dotted $color-ketchup !important;
+	}
+}

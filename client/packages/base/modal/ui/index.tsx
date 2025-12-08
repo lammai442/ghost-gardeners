@@ -73,9 +73,9 @@ export const Modal = ({
 			<ContentBox setModalOpen={setModalOpen} extraClass="modal">
 				{titleContent && (
 					<header
-						className="modal__header flex bg-ketchup flex__space-between flex__gap-3 
-			
-		
+						className="modal__header flex bg-ketchup flex__space-between flex__gap-3
+
+
 					flex__align-items"
 					>
 						{titleContent}
@@ -90,7 +90,7 @@ export const Modal = ({
 					</header>
 				)}
 
-				<section className="modal__content">{children}</section>
+				<section className="modal__content ">{children}</section>
 			</ContentBox>
 		</div>
 	);
