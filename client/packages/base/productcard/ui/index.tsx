@@ -92,16 +92,19 @@ export const ProductCard = ({
 						onClick={() => {
 							incrament(item);
 							setAutoPlay(true);
-							setTimeout(() => {
-								setAutoPlay(false);
-							}, 2000);
+							// setTimeout(() => {
+							// 	setAutoPlay(false);
+							// }, 2000);
 						}}
 						extraClasses="product-card__add-btn"
 						style="black"
 						isDisabled={false}
 					>
-						<span className="heading-5">
+						{/* <span className="heading-5">
 							{autoPlay ? <CheckAnimation autoPlay={autoPlay} /> : '+'}
+						</span> */}
+						<span className="heading-5">
+							<CheckAnimation autoPlay={autoPlay} />
 						</span>
 					</Button>
 				</section>
