@@ -7,15 +7,13 @@ import {
 	useLocation,
 	type NavigateFunction,
 } from 'react-router-dom';
-import { /*useEffect,*/ useState, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { Page } from '@mojjen/page';
 import { OrderStatusBox } from '@mojjen/orderstatusbox';
 
-/* 
-* Imports for WebSocket
+// * Imports for WebSocket
 import { connectWebSocket } from '@mojjen/websocket';
-import type { WebSocketOrder } from '@mojjen/productdata'; 
-*/
+import type { WebSocketOrder } from '@mojjen/productdata';
 
 /**
  * Author: Klara Sköld
@@ -29,10 +27,10 @@ export const ConfirmedOrderPage = () => {
 	const location = useLocation();
 	const order = location.state;
 	const [status, setStatus] = useState(order.status);
-	/* 	
-// Code for WebSocket
-// "Currently" connects the user to the WebSocket when the ConfirmedOrderPage is loaded.
-// Commented out until it'll actually be used.
+
+	// Code for WebSocket
+	// "Currently" connects the user to the WebSocket when the ConfirmedOrderPage is loaded.
+	// Commented out until it'll actually be used.
 
 	const [ws, setWs] = useState<WebSocket | null>(null);
 	const [wsOrder, setWsOrder] = useState<WebSocketOrder | null>(null);
@@ -51,7 +49,7 @@ export const ConfirmedOrderPage = () => {
 		setWs(websocket);
 
 		return () => websocket.close();
-	}, []); */
+	}, []);
 
 	if (!order)
 		return <Page titleText="Orderbekräftelse">Ingen order hittades.</Page>;
