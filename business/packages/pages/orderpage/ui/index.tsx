@@ -8,6 +8,7 @@ import { CartProductCard } from '../../../base/cartProductCard';
 import { apiGetMeals } from '../../../core/api/apiproducts/data';
 import { Comment } from '@mojjen/comment';
 import { HeaderComp } from '@mojjen/header';
+import { IoLockClosedOutline } from "react-icons/io5";
 
 export const OrderPage = () => {
 	const [pendingOrders, setPendingOrders] = useState<OrderItems[]>([]);
@@ -212,6 +213,7 @@ export const OrderPage = () => {
 					</section>
 				</section>
 
+
 				<Modal
 					open={isModalOpen}
 					setModalOpen={setIsModalOpen}
@@ -222,7 +224,7 @@ export const OrderPage = () => {
 					}
 				>
 					{selectedOrder && (
-						<div className="order-modal-content">
+						<div className="order-modal-content flex flex__column flex__gap-2">
 							{selectedOrder.attribute.items.map((item, index) => (
 								<CartProductCard
 									key={`${selectedOrder.id}-${item.id}-${index}`}
@@ -268,7 +270,9 @@ export const OrderPage = () => {
 							)}
 
 							{/* Buttons */}
+							<div className="flex flex__column cart__ctas flex__gap-1 ">
 							{selectedOrder.status === 'pending' && (
+
 								<Button
 									onClick={() =>
 										confirmOrder(
@@ -280,17 +284,21 @@ export const OrderPage = () => {
 									}
 									aria="Bekräfta order"
 								>
-									Bekräfta order
+									<IoLockClosedOutline font-size="1.5rem"/>
+									Lås och börja tillaga
 								</Button>
+
 							)}
 							{/* Gör ingenting just nu */}
+
 							<Button
 								onClick={() => confirmOrder(selectedOrder.id, 'confirmed')}
 								aria="Avbryt"
-								style="outlined"
+								style="outlined-red"
 							>
 								Avbryt
 							</Button>
+
 
 							{selectedOrder.status === 'confirmed' && (
 								<Button
@@ -301,7 +309,9 @@ export const OrderPage = () => {
 								</Button>
 							)}
 						</div>
+						</div>
 					)}
+
 				</Modal>
 			</main>
 		</>

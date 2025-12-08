@@ -85,12 +85,12 @@ export const Modal = ({
 							aria="Stäng rutan"
 							extraClasses="flex flex__justify-center"
 						>
-							<IoClose className="modal__icon" />
+							<IoClose className="modal__icon" style={{color: "#f3f0e7"}} />
 						</Button>
 					</header>
 				)}
 
-				<section className="modal__content">{children}</section>
+				<section className="modal__content flex flex__column flex__gap-1-5">{children}</section>
 			</ContentBox>
 		</div>
 	);
