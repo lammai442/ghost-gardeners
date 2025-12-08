@@ -78,6 +78,7 @@ export const CartPage = () => {
 			<ProductsList
 				isCartItem={true}
 				prodList={cart}
+				classBgColor="bg-cucumber"
 				allProdList={allProdList}
 			/>
 		);
@@ -173,4 +174,6 @@ export const CartPage = () => {
  * Updated: Lam
  * Added loadingModal when fetching createOrder and user from useUserStore
  *
+ *  Update: Klara
+ * Edited classBgColor
  */

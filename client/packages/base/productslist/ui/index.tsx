@@ -3,37 +3,24 @@ import clsx from 'clsx';
 import type { Meal } from '@mojjen/productdata';
 import { ProductCard } from '@mojjen/productcard';
 import { CartProductCard } from '@mojjen/cartproductcard';
-/**
- * Author: Klara Sköld
- * Products list
- *
- * Modified: StefanMogren
- * Added filter to the API response from GetMenu
- * Update: Klara
- * Ternary operator: CartPage = CartProductCard, menuPage= ProductCard
- * Update: Lam
- * Removed OrderItem and replaced with Meal[]
- *
- * Update: Klara
- * Switched from autofit to autofill on grid to avoid extra spacing between columns
- * */
 
 type Props =
 	| {
 			isCartItem?: boolean;
 			allProdList?: Meal[];
 			prodList: Meal[];
+			classBgColor: string;
 	  }
 	| {
 			isCartItem?: boolean;
 			allProdList: Meal[];
 			prodList: Meal[];
+			classBgColor: string;
 	  };
-
-const bgColors: string[] = ['bg-mustard', 'bg-ketchup', 'bg-cucumber'];
 
 export const ProductsList = ({
 	isCartItem,
+	classBgColor,
 	prodList,
 	allProdList = [],
 }: Props) => {
@@ -45,12 +32,7 @@ export const ProductsList = ({
 
 	return (
 		<ul className={classNames}>
-			{/* <ul className="grid product-list"> */}
 			{prodList.map((item, index) => {
-				// console.log('item från productslist', item);
-				// Solution from ChatGTP to give a bgColor to every meal with a pattern
-				const classBgColor = bgColors[index % bgColors.length];
-
 				return isCartItem === false ? (
 					<ProductCard
 						key={item.id}
@@ -80,3 +62,21 @@ export const ProductsList = ({
 		</ul>
 	);
 };
+
+/**
+ * Author: Klara Sköld
+ * Products list
+ *
+ * Modified: StefanMogren
+ * Added filter to the API response from GetMenu
+ * Update: Klara
+ * Ternary operator: CartPage = CartProductCard, menuPage= ProductCard
+ * Update: Lam
+ * Removed OrderItem and replaced with Meal[]
+ *
+ * Update: Klara
+ * Switched from autofit to autofill on grid to avoid extra spacing between columns
+ *
+ * Update: Klara
+ * Edited classBgColor
+ * */
