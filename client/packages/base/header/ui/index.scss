@@ -53,6 +53,23 @@
 	height: 1.5rem;
 }
 
+.header__cart-circle {
+	background-color: $color-black;
+	width: 25px;
+	height: 25px;
+	border-radius: 50%;
+	text-align: center;
+}
+
+.cart__animate {
+	transform: scale(1.1);
+	transition: transform 0.3 ease;
+}
+
+.header__cart-circle {
+	color: $color-white;
+}
+
 .testa {
 	align-self: center;
 }

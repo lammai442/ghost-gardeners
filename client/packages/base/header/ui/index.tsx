@@ -12,6 +12,7 @@ import { AuthBtn } from '../../authbtn/ui';
 export const HeaderComp = () => {
 	const { cartCount } = useCartStore();
 	const [showNavMenu, setShowNavMenu] = useState(false);
+	const [cartAnimation, setCartAnimation] = useState(false);
 
 	const location = useLocation();
 
@@ -20,6 +21,17 @@ export const HeaderComp = () => {
 	const handleClickOutside = (): void => {
 		setShowNavMenu(false);
 	};
+
+	// Cartanimation
+	useEffect(() => {
+		setCartAnimation(true);
+
+		const timeout = setTimeout(() => {
+			setCartAnimation(false);
+		}, 300);
+
+		return () => clearTimeout(timeout);
+	}, [cartCount]);
 
 	useOnClickOutside(ref, handleClickOutside);
 
@@ -99,7 +111,18 @@ export const HeaderComp = () => {
 							className="header__cart-img"
 							alt="Varukorgsikon"
 						/>
-						<h5 className="heading-5 text-black header__cart-amount">{`Varukorg ${cartCount}`}</h5>
+						<section className="heading-5 text-black header__cart-amount">
+							<section className="flex flex__row flex__gap-0-5">
+								<span>Varukorg </span>
+								<div
+									className={`${cartCount > 0 ? 'header__cart-circle' : ''} ${
+										cartAnimation ? 'cart__animate' : ''
+									}`}
+								>
+									{cartCount}
+								</div>
+							</section>
+						</section>
 					</Link>
 				</div>
 			</section>
