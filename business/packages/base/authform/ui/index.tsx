@@ -65,7 +65,7 @@ export const AuthForm = () => {
 
 		const response = await apiLoginUser(user);
 		setLoading(false);
-
+		console.log('response: ', response);
 		if (!response.success) {
 			// Handles API errors here (e.g., show error messages)
 			setErrors({ apiError: response.data.message || 'Ett fel uppstod' });

@@ -96,6 +96,9 @@ export const postProductItem = async (product) => {
 				includeDrink: product.includeDrink
 					? product.includeDrink
 					: 'prod-06683',
+				includeDrinkName: product.includeDrinkName
+					? product.includeDrinkName
+					: 'Coca-Cola Original Taste 33 cl',
 			},
 
 			category: product.category,

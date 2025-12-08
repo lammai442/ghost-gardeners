@@ -1,5 +1,4 @@
 import './index.scss';
-import { Button } from '../../button/ui';
 import clsx from 'clsx';
 import type { Meal } from '@mojjen/productdata';
 import { useCartStore } from '../../../core/stores/usecartstore/data';
@@ -9,14 +8,6 @@ import { IoClose } from 'react-icons/io5';
 import { useState } from 'react';
 import { Modal } from '../../modal/ui';
 import { ModalProductCard } from '../../modalproductcard/ui';
-
-/**
- * Author: Klara
- * Product card displayed in cart view.
- *
- * Bugfix: StefanMogren
- * Fixed classname of product-card__img and product-card__img-box, changed font size of included drink
- */
 
 type Props = {
 	item: Meal;
@@ -42,9 +33,10 @@ export const CartProductCard = ({ item, classBgColor, allProdList }: Props) => {
 		itemId,
 	} = item;
 
-	const imgClassNames = clsx('product-card__img', {
+	const imgClassNames = clsx('cart-item__img', {
 		inactive: status === 'inactive',
 	});
+
 	return (
 		<>
 			{modalOpen && (
@@ -61,51 +53,61 @@ export const CartProductCard = ({ item, classBgColor, allProdList }: Props) => {
 					/>
 				</Modal>
 			)}
-			<ContentBox extraClass="flex__row cart-item">
-				<li className="flex flex__gap-1  cart-item__list-item ">
+			<ContentBox extraClass="cart-item">
+				<li className=" cart-item__list-item">
 					<div
-						className={`product-card__img-box flex flex__column ${classBgColor}`}
+						onClick={() => setModalOpen(true)}
+						className={`cart-item__img-box grid grid__center ${classBgColor}`}
 					>
-						<img
-							className={imgClassNames}
-							src={img}
-							alt="Image of meal"
-							onClick={() => {
-								setModalOpen(true);
-							}}
-						/>
+						<img className={imgClassNames} src={img} alt="Image of meal" />
 					</div>
+
 					<section
-						className=" info-box flex flex__column text__left"
+						className=" cart-item__info-box flex flex__column flex__gap-0-5 text__left"
 						onClick={() => setModalOpen(true)}
 					>
-						<div className=" flex flex__column flex____gap-0-5">
-							<h2 className="heading-4">{name}</h2>
-							<p className="base-small">{summary}</p>
-							{includeDrink && (
-								<p className="heading-5">
-									<span className="base-small">Dryck: {includeDrinkName}</span>
-								</p>
-							)}
-							<hr className="cart-item__line" />
-							<div className="flex flex__space-between cart-item__price">
-								<p className="btn-text flex">Pris</p>
-								<p className="btn-text">{price} kr</p>
-							</div>
+						<h2 className="heading-4">{name}</h2>
+						<p className="base-small">{summary}</p>
+						{includeDrink && (
+							<p className="heading-5">
+								<span className="base-small">Dryck: {includeDrinkName}</span>
+							</p>
+						)}
+						<hr className="cart-item__line" />
+						<div className="flex flex__space-between cart-item__price">
+							<p className="btn-text flex">Pris</p>
+							<p className="btn-text">{price} kr</p>
 						</div>
 					</section>
-					<Button
-						aria={`Ta bort ${name} från varukorgen`}
-						extraClasses="cart-item__delete-btn"
+
+					{/* {Had to replace the Button component since it would not allow position absolute.} */}
+					<button
 						onClick={() => deleteCartItem(itemId)}
-						style="simple"
+						className="cart-item__delete-btn"
+						aria-label={`Ta bort ${name} från varukorgen`}
 					>
-						<CircleIcon style="red">
-							<IoClose />
+						<CircleIcon style="red" extraClasses="cart-item__icon-box">
+							<IoClose
+								style={{
+									strokeWidth: '10%',
+									fontSize: '1.25rem',
+								}}
+							/>
 						</CircleIcon>
-					</Button>
+					</button>
 				</li>
 			</ContentBox>
 		</>
 	);
 };
+
+/**
+ * Author: Klara
+ * Product card displayed in cart view.
+ *
+ * Bugfix: StefanMogren
+ * Fixed classname of product-card__img and product-card__img-box, changed font size of included drink
+ *
+ * Update: Klara
+ * Fixed mobile view.
+ */

@@ -63,9 +63,10 @@ export const handler = async () => {
 				description: a.description?.S || '',
 				img: a.img?.S || '',
 				includeDrink: a.includeDrink?.S || null,
-				includeDrinkName: a.includeDrink?.S
-					? productMap[a.includeDrink.S]?.name || null
-					: null,
+				// includeDrinkName: a.includeDrinkName?.S
+				// 	? productMap[a.includeDrinkName.S]?.name || null
+				// 	: null,
+				includeDrinkName: a.includeDrinkName?.S || null,
 				createdAt: a.createdAt?.S || '',
 				items: a.items?.L?.map((i) => i.S) || [],
 				allergenes: a.allergenes?.L?.map((x) => x.S) || [],
