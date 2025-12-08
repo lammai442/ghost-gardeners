@@ -2,9 +2,22 @@
 	padding: 1rem;
 
 	&__list-item {
-		flex: 1;
+		display: flex;
+		position: relative;
+		gap: 1.5rem;
 	}
-
+	&__img-box {
+		max-width: 150px;
+		aspect-ratio: 1;
+		cursor: pointer;
+	}
+	&__info-box {
+		flex-grow: 2;
+		cursor: pointer;
+	}
+	&__img {
+		width: 100%;
+	}
 	&__price {
 		padding: 0.5rem 0rem;
 	}
@@ -15,13 +28,38 @@
 	&__delete-btn {
 		align-self: flex-start;
 		transition: scale 0.5s ease-in-out;
+		background-color: transparent;
+		border: none;
+		color: $color-light-beige;
 
 		&:hover {
 			transform: scale(1.1);
 		}
 	}
+
+	&__icon-box {
+		border: 1px solid $color-light-beige;
+	}
 }
 
-.cart-item__list-item {
-	cursor: pointer;
+@media screen and (max-width: 710px) {
+	.cart-item {
+		&__list-item {
+			flex-direction: column;
+		}
+
+		&__img-box {
+			aspect-ratio: 16/9;
+			max-width: 100%;
+		}
+		&__img {
+			max-width: 50%;
+		}
+
+		&__delete-btn {
+			position: absolute;
+			right: -3%;
+			top: -3%;
+		}
+	}
 }

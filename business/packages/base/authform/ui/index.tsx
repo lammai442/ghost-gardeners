@@ -1,10 +1,10 @@
-import './index.scss'; // Imports styling for the auth form
-import { useState } from 'react'; // Imports useState for local state management
-import { useAuthStore } from '@mojjen/useauthstore'; // Imports global auth store actions
-import { Button } from '@mojjen/button'; // Imports reusable button component
-import { ReusableInput } from '@mojjen/reusableinput'; // Imports reusable input component
-import { validateAuthForm } from '@mojjen/helpfunctions'; // Imports form validation helper
-import { loginInputs } from '@mojjen/data'; // Imports input field definitions
+import './index.scss';
+import { useState } from 'react';
+import { useAuthStore } from '@mojjen/useauthstore';
+import { Button } from '@mojjen/button';
+import { ReusableInput } from '@mojjen/reusableinput';
+import { validateAuthForm } from '@mojjen/helpfunctions';
+import { loginInputs } from '@mojjen/data';
 import { apiLoginUser } from '@mojjen/apiusers';
 import type { User } from '@mojjen/userdata';
 import { LoadingMsg } from '@mojjen/loadingmsg';
@@ -65,7 +65,7 @@ export const AuthForm = () => {
 
 		const response = await apiLoginUser(user);
 		setLoading(false);
-
+		console.log('response: ', response);
 		if (!response.success) {
 			// Handles API errors here (e.g., show error messages)
 			setErrors({ apiError: response.data.message || 'Ett fel uppstod' });

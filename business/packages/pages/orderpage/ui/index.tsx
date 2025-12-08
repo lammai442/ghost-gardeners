@@ -7,6 +7,7 @@ import { Button } from '@mojjen/button';
 import { CartProductCard } from '../../../base/cartProductCard';
 import { apiGetMeals } from '../../../core/api/apiproducts/data';
 import { Comment } from '@mojjen/comment';
+import { HeaderComp } from '@mojjen/header';
 
 export const OrderPage = () => {
 	const [pendingOrders, setPendingOrders] = useState<OrderItems[]>([]);
@@ -137,168 +138,173 @@ export const OrderPage = () => {
 	};
 
 	return (
-		<main className="order-page">
-			<section className="order-page__container flex flex__column flex__gap-3">
-				<section className="order-page__orders">
-					<section className="flex flex__column flex__gap-2">
-						<h2 className="heading-3">Väntande ({pendingOrders.length} st)</h2>
-						<ul className="order-page__orders-container">
-							{pendingOrders.map((o) => (
-								<div
-									key={o.id}
-									onClick={() => {
-										setSelectedOrder(o);
-										setIsModalOpen(true);
-									}}
-								>
-									<Order
-										orderId={trimOrderId(o.SK)}
-										time={formatTime(o.attribute?.createdAt)}
-										orderStatus={o.status}
-									/>
-								</div>
-							))}
-						</ul>
-					</section>
-					<section className="flex flex__column flex__gap-2">
-						<h2 className="heading-3">
-							Tillagas ({confirmedOrders.length} st)
-						</h2>
-						<ul className="order-page__orders-container">
-							{confirmedOrders.map((o) => (
-								<div
-									key={o.id}
-									onClick={() => {
-										setSelectedOrder(o);
-										setIsModalOpen(true);
-									}}
-								>
-									<Order
-										orderId={trimOrderId(o.SK)}
-										time={formatTime(o.attribute?.createdAt)}
-										orderStatus={o.status}
-									/>
-								</div>
-							))}
-						</ul>
-					</section>
-					<section className="flex flex__column flex__gap-2">
-						<h2 className="heading-3">
-							Redo att hämtas ({doneOrders.length} st)
-						</h2>
-						<ul className="order-page__orders-container">
-							{doneOrders.map((o) => (
-								<div
-									key={o.id}
-									onClick={() => {
-										setSelectedOrder(o);
-										setIsModalOpen(true);
-									}}
-								>
-									<Order
-										orderId={trimOrderId(o.SK)}
-										time={formatTime(o.attribute?.createdAt)}
-										orderStatus={o.status}
-									/>
-								</div>
-							))}
-						</ul>
+		<>
+			<HeaderComp></HeaderComp>
+			<main className="order-page">
+				<section className="order-page__container flex flex__column flex__gap-3">
+					<section className="order-page__orders">
+						<section className="flex flex__column flex__gap-2">
+							<h2 className="heading-3">
+								Väntande ({pendingOrders.length} st)
+							</h2>
+							<ul className="order-page__orders-container">
+								{pendingOrders.map((o) => (
+									<div
+										key={o.id}
+										onClick={() => {
+											setSelectedOrder(o);
+											setIsModalOpen(true);
+										}}
+									>
+										<Order
+											orderId={trimOrderId(o.SK)}
+											time={formatTime(o.attribute?.createdAt)}
+											orderStatus={o.status}
+										/>
+									</div>
+								))}
+							</ul>
+						</section>
+						<section className="flex flex__column flex__gap-2">
+							<h2 className="heading-3">
+								Tillagas ({confirmedOrders.length} st)
+							</h2>
+							<ul className="order-page__orders-container">
+								{confirmedOrders.map((o) => (
+									<div
+										key={o.id}
+										onClick={() => {
+											setSelectedOrder(o);
+											setIsModalOpen(true);
+										}}
+									>
+										<Order
+											orderId={trimOrderId(o.SK)}
+											time={formatTime(o.attribute?.createdAt)}
+											orderStatus={o.status}
+										/>
+									</div>
+								))}
+							</ul>
+						</section>
+						<section className="flex flex__column flex__gap-2">
+							<h2 className="heading-3">
+								Redo att hämtas ({doneOrders.length} st)
+							</h2>
+							<ul className="order-page__orders-container">
+								{doneOrders.map((o) => (
+									<div
+										key={o.id}
+										onClick={() => {
+											setSelectedOrder(o);
+											setIsModalOpen(true);
+										}}
+									>
+										<Order
+											orderId={trimOrderId(o.SK)}
+											time={formatTime(o.attribute?.createdAt)}
+											orderStatus={o.status}
+										/>
+									</div>
+								))}
+							</ul>
+						</section>
 					</section>
 				</section>
-			</section>
 
-			<Modal
-				open={isModalOpen}
-				setModalOpen={setIsModalOpen}
-				titleContent={
-					<h3 className="heading-4 text-light-beige">
-						Order {selectedOrder && trimOrderId(selectedOrder?.SK)}
-					</h3>
-				}
-			>
-				{selectedOrder && (
-					<div className="order-modal-content">
-						{selectedOrder.attribute.items.map((item, index) => (
-							<CartProductCard
-								key={`${selectedOrder.id}-${item.id}-${index}`}
-								item={item}
-								allProdList={allProdList}
-								// classBgColor="bg-super-light-beige"
-								selectedOrder={selectedOrder}
-								setSelectedOrder={setSelectedOrder}
-							/>
-						))}
+				<Modal
+					open={isModalOpen}
+					setModalOpen={setIsModalOpen}
+					titleContent={
+						<h3 className="heading-4 text-light-beige">
+							Order {selectedOrder && trimOrderId(selectedOrder?.SK)}
+						</h3>
+					}
+				>
+					{selectedOrder && (
+						<div className="order-modal-content">
+							{selectedOrder.attribute.items.map((item, index) => (
+								<CartProductCard
+									key={`${selectedOrder.id}-${item.id}-${index}`}
+									item={item}
+									allProdList={allProdList}
+									// classBgColor="bg-super-light-beige"
+									selectedOrder={selectedOrder}
+									setSelectedOrder={setSelectedOrder}
+								/>
+							))}
 
-						{/* Staff Comment */}
-						{selectedOrder.status === 'pending' ? (
-							<Comment
-								comment={selectedOrder.attribute.staffComment || ''}
-								commentCount={
-									(selectedOrder.attribute.staffComment || '').length
-								}
-								handleChangeComment={(e) => {
-									const newComment = e.target.value;
-									setSelectedOrder((prev) =>
-										prev
-											? {
-													...prev,
-													attribute: {
-														...prev.attribute,
-														staffComment: newComment,
-													},
-											  }
-											: prev
-									);
-								}}
-							/>
-						) : (
-							<div className="comment read-only">
-								<h5 className="heading-5 font-color-red text-ketchup">
-									Staff Kommentar
-								</h5>
-								<p className="base">
-									{selectedOrder.attribute.staffComment || '-'}
-								</p>
-							</div>
-						)}
+							{/* Staff Comment */}
+							{selectedOrder.status === 'pending' ? (
+								<Comment
+									comment={selectedOrder.attribute.staffComment || ''}
+									commentCount={
+										(selectedOrder.attribute.staffComment || '').length
+									}
+									handleChangeComment={(e) => {
+										const newComment = e.target.value;
+										setSelectedOrder((prev) =>
+											prev
+												? {
+														...prev,
+														attribute: {
+															...prev.attribute,
+															staffComment: newComment,
+														},
+												  }
+												: prev
+										);
+									}}
+								/>
+							) : (
+								<div className="comment read-only">
+									<h5 className="heading-5 font-color-red text-ketchup">
+										Staff Kommentar
+									</h5>
+									<p className="base">
+										{selectedOrder.attribute.staffComment || '-'}
+									</p>
+								</div>
+							)}
 
-						{/* Buttons */}
-						{selectedOrder.status === 'pending' && (
+							{/* Buttons */}
+							{selectedOrder.status === 'pending' && (
+								<Button
+									onClick={() =>
+										confirmOrder(
+											selectedOrder.id,
+											'confirmed',
+											selectedOrder.attribute.staffComment,
+											selectedOrder.attribute.items
+										)
+									}
+									aria="Bekräfta order"
+								>
+									Bekräfta order
+								</Button>
+							)}
+							{/* Gör ingenting just nu */}
 							<Button
-								onClick={() =>
-									confirmOrder(
-										selectedOrder.id,
-										'confirmed',
-										selectedOrder.attribute.staffComment,
-										selectedOrder.attribute.items
-									)
-								}
-								aria="Bekräfta order"
+								onClick={() => confirmOrder(selectedOrder.id, 'confirmed')}
+								aria="Avbryt"
+								style="outlined"
 							>
-								Bekräfta order
+								Avbryt
 							</Button>
-						)}
-						{/* Gör ingenting just nu */}
-						<Button
-							onClick={() => confirmOrder(selectedOrder.id, 'confirmed')}
-							aria="Avbryt"
-							style="outlined"
-						>
-							Avbryt
-						</Button>
 
-						{selectedOrder.status === 'confirmed' && (
-							<Button
-								onClick={() => confirmOrder(selectedOrder.id, 'done')}
-								aria="Markera som klar"
-							>
-								Flytta till Klar
-							</Button>
-						)}
-					</div>
-				)}
-			</Modal>
-		</main>
+							{selectedOrder.status === 'confirmed' && (
+								<Button
+									onClick={() => confirmOrder(selectedOrder.id, 'done')}
+									aria="Markera som klar"
+								>
+									Flytta till Klar
+								</Button>
+							)}
+						</div>
+					)}
+				</Modal>
+			</main>
+		</>
 	);
 };
 
