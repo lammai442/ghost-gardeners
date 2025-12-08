@@ -3,27 +3,23 @@ import './index.scss';
 import { Button } from '@mojjen/button';
 import { useNavigate } from 'react-router-dom';
 
-/**
- * Update: Klara
- * Page component added
- *
- */
-
 export const HomePage = () => {
 	const navigate = useNavigate();
 	const handleClick = () => {
 		navigate('/menu');
+	};
+
+	const navToConstructionPage = () => {
+		navigate('/buildmeal');
 	};
 	return (
 		<Page
 			titleText="Vad är du sugen på idag?"
 			extraClasses="flex flex__column home-page"
 		>
-			{/* <img src="../../../public/mojjan.png" alt="" /> */}
 			<p className="base">
-				Det här är Mojjens startsida. In a while crocodile kommer en massa info
-				dyka upp här. T ex meals, dina favoriter (om du är inloggad), bygg din
-				egen kôrv etc... Tills vidare tycker vi att du kan gå och köpa en kôrv.
+				Upptäck våra färdiga mojmenyer redan nu. In a while crocodile kommer du
+				att kunna bygga din alldeles egen moj. Vi jobbar på bakom kulisserna!
 			</p>
 			<section className="flex home-btns">
 				<Button
@@ -35,7 +31,7 @@ export const HomePage = () => {
 				</Button>
 				<Button
 					aria="Till menyn"
-					onClick={handleClick}
+					onClick={navToConstructionPage}
 					extraClasses="home-page__btn"
 					style="outlined"
 				>
@@ -45,3 +41,11 @@ export const HomePage = () => {
 		</Page>
 	);
 };
+
+/**
+ * Update: Klara
+ * Page component added
+ *
+ * Update: Klara
+ * Navigates user to a Under Construction Page on "Bygg din egen moj"-click
+ */

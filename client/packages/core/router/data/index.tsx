@@ -9,11 +9,13 @@ import { CartPage } from '@mojjen/cartpage';
 import App from '../../../../src/App';
 import { ProfilePage } from '@mojjen/profilepage';
 import { ProtectedRoute } from '@mojjen/protectedroute';
+import { UnderConstructionPage } from '@mojjen/under-construction-page';
 
 export const router = createBrowserRouter([
 	{
 		path: '/',
 		element: <App />,
+
 		children: [
 			{
 				path: '/',
@@ -38,6 +40,10 @@ export const router = createBrowserRouter([
 			{
 				path: '/about',
 				element: <AboutPage />,
+			},
+			{
+				path: '/buildmeal',
+				element: <UnderConstructionPage />,
 			},
 			{
 				path: '/profile',
@@ -66,4 +72,7 @@ export const router = createBrowserRouter([
  *
  * Modified: Klara
  * ProtectedRoute added
+ *
+ * Modified: Klara
+ * Added /buildmeny with a under construction page as element.
  */
