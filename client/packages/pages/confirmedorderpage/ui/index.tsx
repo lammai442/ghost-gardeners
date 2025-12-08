@@ -10,16 +10,16 @@ import {
 import { useEffect, useState, type ReactNode } from 'react';
 import { Page } from '@mojjen/page';
 import { OrderStatusBox } from '@mojjen/orderstatusbox';
-
-// * Imports for WebSocket
-import { connectWebSocket } from '@mojjen/websocket';
-import type { WebSocketOrder } from '@mojjen/productdata';
+import { useWebSocketStore } from '@mojjen/usewebsocketstore';
 
 /**
  * Author: Klara Sköld
  * This page is rendered after a successful order.It contains white boxes with different type of content.
  * Modified by: ninerino
  * Fixed orderId-splicing to map with cancelOrder and changeOrder functions
+ *
+ * Modified: Stefan Mogren
+ * Added example code on how to access the updated order from WebSocket
  */
 
 export const ConfirmedOrderPage = () => {
@@ -28,28 +28,11 @@ export const ConfirmedOrderPage = () => {
 	const order = location.state;
 	const [status, setStatus] = useState(order.status);
 
-	// Code for WebSocket
-	// "Currently" connects the user to the WebSocket when the ConfirmedOrderPage is loaded.
-	// Commented out until it'll actually be used.
-
-	const [ws, setWs] = useState<WebSocket | null>(null);
-	const [wsOrder, setWsOrder] = useState<WebSocketOrder | null>(null);
-
+	// Example code of how to access the updated variable from the WebSocket
+	const { orderFromWs } = useWebSocketStore();
 	useEffect(() => {
-		const websocket = connectWebSocket((update: WebSocketOrder) => {
-			console.log('Received update!');
-			console.log(update);
-
-			if (update.type === 'orderUpdate') {
-				console.log('ORDER received from WebSocket!');
-				setWsOrder(update);
-			}
-		});
-
-		setWs(websocket);
-
-		return () => websocket.close();
-	}, []);
+		console.log('Do something when WebSocket sends an updated order');
+	}, [orderFromWs]);
 
 	if (!order)
 		return <Page titleText="Orderbekräftelse">Ingen order hittades.</Page>;

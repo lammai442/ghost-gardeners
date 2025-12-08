@@ -4,15 +4,15 @@
  */
 
 import { create } from 'zustand';
-import type { WebSocketOrder } from '@mojjen/productdata';
+import type { Order } from '@mojjen/productdata';
 
 type WebSocketState = {
 	ws: WebSocket | null;
 	isConnected: boolean;
-	order: WebSocketOrder | null;
+	orderFromWs: Order | null;
 	setWebSocket: (websocket: WebSocket) => void;
 	setConnectionStatus: (status: boolean) => void;
-	updateOrder: (newOrder: WebSocketOrder) => void;
+	updateOrder: (newOrder: Order) => void;
 	closeConnection: () => void;
 	reset: () => void;
 };
@@ -20,20 +20,23 @@ type WebSocketState = {
 export const useWebSocketStore = create<WebSocketState>((set, get) => ({
 	ws: null,
 	isConnected: false,
-	order: null,
+	orderFromWs: null,
 
+	// Stores the WebSocket when it connects.
 	setWebSocket: (websocket) => {
 		set({ ws: websocket, isConnected: true });
 	},
 
-	updateOrder: (newOrder: WebSocketOrder): void => {
-		set({ order: newOrder });
+	// Updates the variable that's used in Frontend
+	updateOrder: (newOrder: Order): void => {
+		set({ orderFromWs: newOrder });
 	},
 
 	setConnectionStatus: (status) => {
 		set({ isConnected: status });
 	},
 
+	// For when you need to manually close the connection. Otherwise the backend does that automatically whenever connection is lost
 	closeConnection: () => {
 		const { ws } = get();
 		if (ws) {
@@ -46,7 +49,7 @@ export const useWebSocketStore = create<WebSocketState>((set, get) => ({
 		set({
 			ws: null,
 			isConnected: false,
-			order: null,
+			orderFromWs: null,
 		});
 	},
 }));
