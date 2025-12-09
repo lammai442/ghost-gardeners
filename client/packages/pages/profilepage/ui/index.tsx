@@ -31,7 +31,6 @@ export const ProfilePage = () => {
 			return <OrderHistoryListItem key={index} order={order} />;
 		});
 	};
-
 	return (
 		<Page titleText="Mitt konto" extraClasses="flex flex__column profile">
 			<ProfileForm />

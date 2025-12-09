@@ -6,6 +6,7 @@ export type OrderItem = {
 	includeDrink: string | null;
 	includeDrinkName: string | null;
 	category?: string;
+	itemId: string;
 };
 
 export type OrderItems = {

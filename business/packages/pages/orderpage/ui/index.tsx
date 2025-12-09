@@ -259,7 +259,7 @@ export const OrderPage = () => {
 										);
 									}}
 								/>
-							) : (
+							) : selectedOrder.attribute.items.length > 0 ? (
 								<div className="comment read-only">
 									<h5 className="heading-5 font-color-red text-ketchup">
 										Kommentar från personalen
@@ -268,6 +268,14 @@ export const OrderPage = () => {
 										{selectedOrder.attribute.staffComment || '-'}
 									</p>
 								</div>
+							) : null}
+
+							{selectedOrder.attribute.items.length === 0 && (
+								<>
+									<h5 className="heading-5">
+										Alla produkter är borttagna från ordern och därmed avbruten.
+									</h5>
+								</>
 							)}
 
 							{/* Buttons */}

@@ -83,7 +83,7 @@ export const OrderHistoryListItem = ({ order }: Props) => {
 			<div className="flex flex__column flex__gap-2">
 				<div className="flex flex__space-between history-list-item__top-div ">
 					<div className="flex flex__column flex__gap-0-5">
-						<h4 className="heading-4">Order #{order.id.slice(5)}</h4>
+						<h4 className="heading-4">Order #{order.SK.slice(12)}</h4>
 						<p className="base">{formatDate(order.attribute.createdAt)}</p>
 					</div>
 					<div className="flex flex__column flex__align-items flex__gap-0-25">
