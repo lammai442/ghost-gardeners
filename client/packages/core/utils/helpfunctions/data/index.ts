@@ -47,8 +47,17 @@ export const validateAuthForm = (form: any, mode: 'login' | 'register') => {
 };
 
 // Sort an array by alphabetic order
-export const sortMealListByLetter = (list: Meal[]): void => {
-	console.log(list);
+export const sortMealListByLetter = (list: Meal[]): Meal[] => {
+	const sortedList = list.sort((a, b) => {
+		const nameA = a.name.toLowerCase();
+		const nameB = b.name.toLowerCase();
+
+		if (nameA < nameB) return -1;
+		if (nameA > nameB) return 1;
+		return 0;
+	});
+
+	return sortedList;
 };
 
 /**
@@ -57,4 +66,5 @@ export const sortMealListByLetter = (list: Meal[]): void => {
  *
  * Update: Lam
  * Added validateAuthForm with code from ChatGPT for AI assignment
+ * Added sortMealListByLetter
  */

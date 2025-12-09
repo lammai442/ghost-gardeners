@@ -43,23 +43,12 @@ export const MenuPage = () => {
 			const fetchOrdersByUser = async () => {
 				const response = await apiGetOrdersByUser(user.userId);
 				const sortedMealList = sortMealListByLetter(response.mealList);
-				setUserOrdersList(response.mealList);
+				setUserOrdersList(sortedMealList);
 			};
 
 			fetchOrdersByUser();
 		}
 	}, []);
-
-	useEffect(() => {
-		if (user) {
-			const fetchOrdersByUser = async () => {
-				const response = await apiGetOrdersByUser(user.userId);
-				setUserOrdersList(response.mealList);
-			};
-
-			fetchOrdersByUser();
-		}
-	}, [user]);
 
 	const handleNavigate = () => navigate('/cart');
 
@@ -71,6 +60,7 @@ export const MenuPage = () => {
 	}, [modalOpen]);
 
 	const prodList = allProdList.filter((product) => product.category === 'MEAL');
+	const sortedProdList = sortMealListByLetter(prodList);
 
 	const generateTopContent = () => {
 		return (
@@ -121,11 +111,11 @@ export const MenuPage = () => {
 					/>
 				)}
 				{loading && <LoadingMsg title="Laddar menyn" />}
-				{prodList.length > 0 && (
+				{sortedProdList.length > 0 && (
 					<ProductsList
 						isCartItem={false}
 						classBgColor={'bg-mustard'}
-						prodList={prodList}
+						prodList={sortedProdList}
 						allProdList={allProdList}
 					/>
 				)}
@@ -165,7 +155,11 @@ export const MenuPage = () => {
  *
  * Update: Klara
  * Edited classBgColor
- */
+ *
+ * Update: Lam
+ * Change so top content array list always come in alphabetic order
+ *
+ * */
 
 // ! Original
 // type GetMealsResponse = {
