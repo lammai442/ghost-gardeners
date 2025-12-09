@@ -9,6 +9,7 @@ import { apiGetMeals } from '../../../core/api/apiproducts/data';
 import { Comment } from '@mojjen/comment';
 import { HeaderComp } from '@mojjen/header';
 import { IoLockClosedOutline } from 'react-icons/io5';
+import { useWebSocketStore } from '@mojjen/usewebsocketstore';
 
 export const OrderPage = () => {
 	const [pendingOrders, setPendingOrders] = useState<OrderItems[]>([]);
@@ -17,6 +18,7 @@ export const OrderPage = () => {
 	const [selectedOrder, setSelectedOrder] = useState<OrderItems | null>(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [allProdList, setAllProdList] = useState<OrderItem[]>([]);
+	const { orderFromWs } = useWebSocketStore();
 
 	useEffect(() => {
 		const fetchMeals = async () => {
@@ -87,7 +89,7 @@ export const OrderPage = () => {
 		};
 
 		fetchOrders();
-	}, []);
+	}, [orderFromWs]);
 
 	/**
 	 * Function to confirm order. It takes the orderId and makes a PUT call to the API endpoint
@@ -318,4 +320,8 @@ export const OrderPage = () => {
  * Modified by: ninerino
  * Added functions to fetch orders, show them on the page, trim the orderId, change it to uppercase and change time format to HH:mm
  * Added functions to confirm and complete orders
+ *
+ * Modified by: StefanMogren
+ * Updated useEffect to run every time WebSocket sends an order and not just once.
+ *
  */
