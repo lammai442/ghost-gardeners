@@ -45,7 +45,7 @@ export interface Order {
 	statusCategory: string;
 	category: string;
 	// total: number;
-	userComment?: string;
+	// userComment?: string;
 	attribute: {
 		items: Meal[];
 		createdAt: string;
