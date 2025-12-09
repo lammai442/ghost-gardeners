@@ -38,15 +38,21 @@ export interface Drink {
 }
 
 export interface Order {
+	PK: string;
 	SK: string;
-	orderId: string;
+	// orderId: string;
 	status: string;
-	total: number;
-	userComment?: string;
+	statusCategory: string;
+	category: string;
+	// total: number;
+	// userComment?: string;
 	attribute: {
 		items: Meal[];
 		createdAt: string;
 		total: number;
+		staffComment: string;
+		user: string;
+		userComment: string;
 		modifiedAt?: string;
 	};
 	id: string;
@@ -67,22 +73,5 @@ export interface WebSocketOrder {
 	eventName: string;
 	timestamp: string;
 	type: string;
-	order: {
-		PK: string;
-		SK: string;
-		attribute: {
-			createdAt: string;
-			items: string[];
-			modifiedAt: string;
-			staffComment: string;
-			total: number;
-			user: string;
-			userComment: string;
-		};
-		category: string;
-		id: string;
-		status: string;
-		statusCategory: string;
-		timestamp: string;
-	};
+	order: Order;
 }

@@ -1,4 +1,4 @@
-import { Page } from '@mojjen/page';
+// import { Page } from '@mojjen/page';
 import './index.scss';
 /**
  * Author: StefanMogren
