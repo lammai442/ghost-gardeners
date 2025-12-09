@@ -253,7 +253,7 @@ export const OrderPage = () => {
 															...prev.attribute,
 															staffComment: newComment,
 														},
-												  }
+												}
 												: prev
 										);
 									}}
@@ -261,7 +261,7 @@ export const OrderPage = () => {
 							) : (
 								<div className="comment read-only">
 									<h5 className="heading-5 font-color-red text-ketchup">
-										Staff Kommentar
+										Kommentar från personalen
 									</h5>
 									<p className="base">
 										{selectedOrder.attribute.staffComment || '-'}
@@ -284,20 +284,11 @@ export const OrderPage = () => {
 									}
 									aria="Bekräfta order"
 								>
-									<IoLockClosedOutline font-size="1.5rem"/>
+									<IoLockClosedOutline fontSize="1.5rem"/>
 									Lås och börja tillaga
 								</Button>
 
 							)}
-
-							<Button
-								onClick={() => setIsModalOpen(false)}
-								aria="Avbryt"
-								style="outlined-red"
-							>
-								Avbryt
-							</Button>
-
 
 							{selectedOrder.status === 'confirmed' && (
 								<Button
@@ -307,6 +298,15 @@ export const OrderPage = () => {
 									Flytta till Klar
 								</Button>
 							)}
+
+							<Button
+								onClick={() => setIsModalOpen(false)}
+								aria="Stäng modal"
+								style="outlined-red"
+							>
+								Stäng modal
+							</Button>
+
 						</div>
 						</div>
 					)}
