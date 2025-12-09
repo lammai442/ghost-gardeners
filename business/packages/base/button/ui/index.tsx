@@ -5,7 +5,8 @@ import clsx from 'clsx';
 /**
  * Author: Klara Sköld
  * Created a reusable button that accepts children and can be used across different parts of the design.
- *
+ * Edited by: ninerino
+ * Added btn-outlined-red
  */
 
 type Props = {
@@ -33,6 +34,7 @@ export const Button = ({
 		'btn-brown border-radius': style === 'brown',
 		'btn-simple': style === 'simple',
 		'btn-outlined': style === 'outlined',
+		'btn-outlined-red': style ==='outlined-red'
 	});
 
 	return (

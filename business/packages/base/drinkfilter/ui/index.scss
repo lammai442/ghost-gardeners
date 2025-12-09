@@ -10,7 +10,7 @@
 	justify-content: space-between;
 	align-items: center;
 	background-color: transparent;
-	width: 100%;
+	width: 18rem;
 	text-align: start;
 	border: 1.5px solid $color-ketchup;
 	padding: 0.5rem;
@@ -36,6 +36,7 @@
 	align-items: center;
 	padding: 0.5rem;
 	cursor: pointer;
+
 
 	&:hover {
 		background-color: $color-cucumber;

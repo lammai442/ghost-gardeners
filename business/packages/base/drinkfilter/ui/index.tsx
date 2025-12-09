@@ -9,7 +9,8 @@ import type { OrderItem } from '@mojjen/orderitems';
 /**
  * Author: Lam Mai
  * Filtering options section for menu page. Content from Lam.
- *
+ * Edited by: ninerino
+ * Changed props to fit what we need
  */
 
 type Props = {
@@ -72,7 +73,7 @@ export const DrinkFilter = ({
 				<button
 					aria-label="Button for choice of drinks"
 					onClick={handleSelectBtn}
-					className="btn-base drink-filter__btn text-black"
+					className="btn-base drink-filter__btn text-black "
 				>
 					<span className="base truncate">{selected}</span>
 					<MdKeyboardArrowDown />

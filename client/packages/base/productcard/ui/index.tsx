@@ -1,21 +1,12 @@
 import './index.scss';
 import { Button } from '../../button/ui';
 import clsx from 'clsx';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import type { Meal } from '@mojjen/productdata';
 import { useCartStore } from '../../../core/stores/usecartstore/data';
 import { Modal } from '../../modal/ui';
 import { ModalProductCard } from '../../modalproductcard/ui';
-/**
- * Author: Lam
- * Menupage that display the menu of Mojjens meals with connection to cart of useCartStore.
- *
- * Update: Klara
- * When the user clicks on a product card a modal opens.
- *
- * Update: Klara
- * Updated maxwidth on card, same width on card and img.
- */
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 type Props = {
 	allProdList: Meal[];
@@ -38,6 +29,7 @@ export const ProductCard = ({
 	const { incrament } = useCartStore();
 	const { name, img, summary, price, status } = item;
 	const [modalOpen, setModalOpen] = useState(false);
+	const dotLottieRef = useRef<any>(null);
 
 	const productCardClassNames = clsx('flex product-card', {
 		flex__column: isFlexColumn,
@@ -56,6 +48,7 @@ export const ProductCard = ({
 			document.body.style.overflow = 'unset';
 		}
 	}, [modalOpen, handleModal]);
+
 	return (
 		<>
 			<Modal
@@ -83,17 +76,28 @@ export const ProductCard = ({
 						alt="Image of meal"
 						onClick={handleModal}
 					/>
-					{/* {showIncramentBtn && ( */}
+					{/* {IncramentBtn ( */}
 					<Button
 						aria={`Lägg till en ${item.name} i varukorgen`}
 						onClick={() => {
 							incrament(item);
+							dotLottieRef.current?.stop();
+							dotLottieRef.current?.play();
 						}}
 						extraClasses="product-card__add-btn"
 						style="black"
 						isDisabled={false}
 					>
-						<span className="heading-5">+</span>
+						<span className="heading-5">
+							<DotLottieReact
+								src="https://lottie.host/240c6042-69b9-4665-b723-f3ad9e4156f3/U859aQ4IPy.lottie"
+								autoplay={false}
+								className="check-animation"
+								dotLottieRefCallback={(dotLottie) => {
+									dotLottieRef.current = dotLottie;
+								}}
+							/>
+						</span>
 					</Button>
 				</section>
 				<section className="product-card__info-box info-box flex flex__column text__left">
@@ -106,26 +110,6 @@ export const ProductCard = ({
 							{price} kr
 						</span>
 					</div>
-
-					{/* {showQty && (
-						<section className="info-box__bottom flex">
-							<button
-								className="btn-qty-base--decrament"
-								onClick={() => decrament(item.itemId)}
-							>
-								-
-							</button>
-							<span className="btn-text">{quantity}</span>
-							<button
-								className="btn-qty-base--incrament"
-								onClick={() => {
-									incrament(item);
-								}}
-							>
-								+
-							</button>
-						</section>
-					)} */}
 				</section>
 			</li>
 		</>
@@ -156,6 +140,21 @@ export const ProductCard = ({
 		// </section>
 	);
 };
+
+/**
+ * Author: Lam
+ * Menupage that display the menu of Mojjens meals with connection to cart of useCartStore.
+ *
+ * Update: Klara
+ * When the user clicks on a product card a modal opens.
+ *
+ * Update: Klara
+ * Updated maxwidth on card, same width on card and img.
+ *
+ * Update: Lam
+ * Added animation to incramentBtn
+ *
+ */
 
 // ! Original
 // export const ProductCard = ({

@@ -3,6 +3,7 @@ import { DrinkFilter } from '@mojjen/drinkfilter';
 import { CircleIcon } from '../../circleicon/ui';
 import { IoClose } from 'react-icons/io5';
 import type { OrderItem, OrderItems } from '@mojjen/orderitems';
+import './index.scss';
 
 type Props = {
 	item: //	| Meal
@@ -29,14 +30,21 @@ export const CartProductCard = ({
 
 	return (
 		<>
-			<li className="flex flex__gap-1 cart-item">
+			<li className="flex flex__gap-2 flex__column cart-item bg-super-light-beige border-radius">
 				<section
-					className="info-box flex flex__column text__left"
+					className="info-box flex flex__column text__left flex__gap-1 cart-item "
 					onClick={() => setModalOpen(true)}
 				>
-					<h2 className="heading-4">{item.name}</h2>
+					<h2 className="heading-4 flex flex__row flex__align-items flex__space-between">
+						{item.name}
+						{/* Gör ingenting just nu, behöver lägga till delete-funktion */}
+						<CircleIcon style="red">
+							<IoClose style={{color: "#f3f0e7"}}/>
+						</CircleIcon>
+					</h2>
 					{item.includeDrink && (
-						<section className="flex flex__row">
+						<section className="flex flex__row flex__gap-3">
+
 							<article className="flex flex__column">
 								<p className="base-bold text-ketchup">Vald dryck:</p>
 								<p className="base-small">Ändra vid lagerbrist</p>
@@ -75,10 +83,8 @@ export const CartProductCard = ({
 						</section>
 					)}
 				</section>
-				{/* Gör ingenting just nu, behöver lägga till delete-funktion */}
-				<CircleIcon style="red">
-					<IoClose />
-				</CircleIcon>
+
+
 			</li>
 		</>
 	);
