@@ -6,6 +6,7 @@ import {
 } from '../../../utils/connection.mjs';
 import AWS from 'aws-sdk';
 import { sendResponses } from '../../../responses/index.mjs';
+import { unmarshall } from '@aws-sdk/util-dynamodb';
 
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 
@@ -62,7 +63,9 @@ export const handler = async (event) => {
 			const message = {
 				type: 'orderUpdate',
 				eventName: record.eventName,
-				order: record.dynamodb.NewImage || record.dynamodb.OldImage,
+				order:
+					unmarshall(record.dynamodb.NewImage) ||
+					unmarshall(record.dynamodb.OldImage),
 				timestamp: new Date().toISOString(),
 			};
 

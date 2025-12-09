@@ -26,3 +26,10 @@ export type OrderItems = {
 		items: OrderItem[];
 	};
 };
+
+export interface WebSocketOrder {
+	eventName: string;
+	timestamp: string;
+	type: string;
+	order: OrderItems;
+}

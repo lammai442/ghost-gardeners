@@ -1,0 +1,4 @@
+{
+	"name": "@mojjen/usewebsocketstore",
+	"main": "./index.ts"
+}

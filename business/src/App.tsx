@@ -1,5 +1,6 @@
 import './App.scss';
 import { Outlet } from 'react-router-dom';
+import { useWebSocketHook } from '@mojjen/usewebsockethook';
 
 /**
  * Modified: StefanMogren
@@ -8,6 +9,7 @@ import { Outlet } from 'react-router-dom';
  */
 
 function App() {
+	useWebSocketHook();
 	return (
 		<>
 			<div className="app">
