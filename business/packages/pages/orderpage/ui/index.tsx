@@ -320,4 +320,8 @@ export const OrderPage = () => {
  * Modified by: ninerino
  * Added functions to fetch orders, show them on the page, trim the orderId, change it to uppercase and change time format to HH:mm
  * Added functions to confirm and complete orders
+ *
+ * Modified by: StefanMogren
+ * Updated useEffect to run every time WebSocket sends an order and not just once.
+ *
  */
