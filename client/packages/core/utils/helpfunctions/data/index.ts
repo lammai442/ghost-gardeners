@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import { Meal } from '@mojjen/productdata';
+import type { Meal } from '@mojjen/productdata';
 
 export const generateId = (): string => {
 	return uuid().substring(0, 5);

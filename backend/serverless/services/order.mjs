@@ -137,11 +137,19 @@ export const cancelOrder = async (orderId) => {
 	};
 };
 
-export const changeOrder = async ({ orderId, items, userComment, staffComment, status }) => {
+export const changeOrder = async ({
+	orderId,
+	items,
+	userComment,
+	staffComment,
+	status,
+}) => {
 	const key = { PK: { S: 'ORDER' }, SK: { S: `ORDER#${orderId}` } };
 
 	// Hämta befintlig order
-	const res = await client.send(new GetItemCommand({ TableName: 'mojjen-table', Key: key }));
+	const res = await client.send(
+		new GetItemCommand({ TableName: 'mojjen-table', Key: key })
+	);
 	if (!res.Item) throw new Error(`Order ${orderId} hittades inte.`);
 	const existing = unmarshall(res.Item);
 
@@ -158,10 +166,10 @@ export const changeOrder = async ({ orderId, items, userComment, staffComment, s
 	let mergedItems = existing.attribute.items;
 
 	// Uppdatera items om det finns nya
-		if (items && Array.isArray(items)) {
+	if (items && Array.isArray(items)) {
 		// Mergar varje item baserat på itemId
-		mergedItems = existing.attribute.items.map(orig => {
-			const update = items.find(i => i.itemId === orig.itemId);
+		mergedItems = existing.attribute.items.map((orig) => {
+			const update = items.find((i) => i.itemId === orig.itemId);
 			return update ? { ...orig, ...update } : orig; // Uppdatera eller behåll original
 		});
 
@@ -171,17 +179,16 @@ export const changeOrder = async ({ orderId, items, userComment, staffComment, s
 		exprAttrNames['#items'] = 'items';
 		exprAttrValues[':items'] = mergedItems;
 
-
-
-
-	// Uppdatera total om alla items har subtotal
-	const hasSubtotal = mergedItems.every(i => typeof i.subtotal === 'number');
-	if (hasSubtotal) {
-		const total = mergedItems.reduce((sum, i) => sum + i.subtotal, 0);
-		updateExprParts.push('#attr.#total = :total');
-		exprAttrNames['#total'] = 'total';
-		exprAttrValues[':total'] = total;
-	}
+		// Uppdatera total om alla items har subtotal
+		const hasSubtotal = mergedItems.every(
+			(i) => typeof i.subtotal === 'number'
+		);
+		if (hasSubtotal) {
+			const total = mergedItems.reduce((sum, i) => sum + i.subtotal, 0);
+			updateExprParts.push('#attr.#total = :total');
+			exprAttrNames['#total'] = 'total';
+			exprAttrValues[':total'] = total;
+		}
 	}
 
 	// Villkorlig uppdatering av staffComment
@@ -214,11 +221,11 @@ export const changeOrder = async ({ orderId, items, userComment, staffComment, s
 	// Skicka uppdateringen
 	await client.send(
 		new UpdateItemCommand({
-		TableName: 'mojjen-table',
-		Key: key,
-		UpdateExpression: 'SET ' + updateExprParts.join(', '),
-		ExpressionAttributeNames: exprAttrNames,
-		ExpressionAttributeValues: marshall(exprAttrValues),
+			TableName: 'mojjen-table',
+			Key: key,
+			UpdateExpression: 'SET ' + updateExprParts.join(', '),
+			ExpressionAttributeNames: exprAttrNames,
+			ExpressionAttributeValues: marshall(exprAttrValues),
 		})
 	);
 
@@ -230,11 +237,11 @@ export const changeOrder = async ({ orderId, items, userComment, staffComment, s
 			userComment: userComment ?? existing.attribute.userComment,
 			staffComment: staffComment ?? existing.attribute.staffComment,
 			total: exprAttrValues[':total'] ?? existing.attribute.total,
-			modifiedAt: now
+			modifiedAt: now,
 		},
 		status: status ?? existing.status,
-		modifiedAt: now
-		};
+		modifiedAt: now,
+	};
 };
 
 export const getOrder = async (orderId) => {
@@ -323,6 +330,19 @@ export async function getAllOrdersByUserId(userId) {
 	}
 }
 
+export const replaceOrder = async (order) => {
+	const params = {
+		TableName: 'mojjen-table',
+		Item: marshall(order),
+	};
+
+	try {
+		await client.send(new PutItemCommand(params));
+	} catch (error) {
+		console.log('Error in replaceOrder: ' + error.message);
+	}
+};
+
 /**
  * Author: ninerino
  * Functions to handle everything with orders.
@@ -330,4 +350,5 @@ export async function getAllOrdersByUserId(userId) {
  * Updated: Lam
  * Added in createOrder if userId comes from bodyreq then use it i GSI1SK Id otherwise create new guestId
  * Added function getAllordersByUserId
+ * Added deletedItems to changeOrder function
  */
