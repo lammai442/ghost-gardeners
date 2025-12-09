@@ -25,3 +25,11 @@
 .cart-item__list-item {
 	cursor: pointer;
 }
+
+.order__delete-item-btn {
+	background-color: transparent;
+	border: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
