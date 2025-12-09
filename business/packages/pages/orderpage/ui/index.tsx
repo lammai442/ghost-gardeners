@@ -289,10 +289,9 @@ export const OrderPage = () => {
 								</Button>
 
 							)}
-							{/* Gör ingenting just nu */}
 
 							<Button
-								onClick={() => confirmOrder(selectedOrder.id, 'confirmed')}
+								onClick={() => setIsModalOpen(false)}
 								aria="Avbryt"
 								style="outlined-red"
 							>
