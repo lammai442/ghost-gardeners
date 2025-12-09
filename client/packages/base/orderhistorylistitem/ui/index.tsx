@@ -20,26 +20,46 @@ export const OrderHistoryListItem = ({ order }: Props) => {
 			return (
 				<li
 					key={index}
-					className="flex flex__align-end flex__space-between base-small products-list__list-item"
+					className="flex flex__align-end flex__space-between base-small products-list__list-item flex__gap-1-5"
 				>
 					<span>
 						•{'  '}
 						{orderItem.name}{' '}
 						{orderItem.includeDrink && `+ ${orderItem.includeDrinkName}`}
 					</span>
-					<span className="">{orderItem.price} kr</span>
+					<span className="order__price">{orderItem.price} kr</span>
 				</li>
 			);
 		});
 	};
 
+	const statusMap = {
+		pending: {
+			text: 'Skickad',
+			bgColor: 'mustard',
+		},
+		confirmed: {
+			text: 'Tillagas',
+			bgColor: 'brown',
+		},
+		done: {
+			text: 'Levererad',
+			bgColor: 'cucumber',
+		},
+		cancelled: {
+			text: 'Avbruten',
+			bgColor: 'ketchup',
+		},
+	} as const;
+
+	const currentStatus = statusMap[statusText as keyof typeof statusMap];
+
 	const generateStatus = () => {
 		return (
-			<p className="btn-text bg-cucumber text-super-light-beige history-list-item__status">
-				{statusText === 'pending' && 'Skickad'}
-				{statusText === 'confimed' && 'Tillagas'}
-				{statusText === 'cancelled' && 'Avbruten'}
-				{statusText === 'done' && 'Levererad'}
+			<p
+				className={`btn-text bg-${currentStatus.bgColor} text-super-light-beige history-list-item__status`}
+			>
+				{currentStatus.text}
 			</p>
 		);
 	};
@@ -90,4 +110,8 @@ export const OrderHistoryListItem = ({ order }: Props) => {
  *
  * Update: Klara
  * Added max-width on cards.
+ *
+ * Update: Lam
+ * Added dynamic statustext and color for order depending on the status.
+ * Added css for gap and price so it aligns with each other in responsive view
  */
