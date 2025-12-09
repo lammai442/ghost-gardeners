@@ -1,4 +1,5 @@
 import { v4 as uuid } from 'uuid';
+import { Meal } from '@mojjen/productdata';
 
 export const generateId = (): string => {
 	return uuid().substring(0, 5);
@@ -45,10 +46,25 @@ export const validateAuthForm = (form: any, mode: 'login' | 'register') => {
 	return e;
 };
 
+// Sort an array by alphabetic order
+export const sortMealListByLetter = (list: Meal[]): Meal[] => {
+	const sortedList = list.sort((a, b) => {
+		const nameA = a.name.toLowerCase();
+		const nameB = b.name.toLowerCase();
+
+		if (nameA < nameB) return -1;
+		if (nameA > nameB) return 1;
+		return 0;
+	});
+
+	return sortedList;
+};
+
 /**
  * Author: Lam
  * GenerateId function
  *
  * Update: Lam
  * Added validateAuthForm with code from ChatGPT for AI assignment
+ * Added sortMealListByLetter
  */
