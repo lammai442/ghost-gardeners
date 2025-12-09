@@ -8,7 +8,8 @@ import { CartProductCard } from '../../../base/cartProductCard';
 import { apiGetMeals } from '../../../core/api/apiproducts/data';
 import { Comment } from '@mojjen/comment';
 import { HeaderComp } from '@mojjen/header';
-import { IoLockClosedOutline } from "react-icons/io5";
+import { IoLockClosedOutline } from 'react-icons/io5';
+import { useWebSocketStore } from '@mojjen/usewebsocketstore';
 
 export const OrderPage = () => {
 	const [pendingOrders, setPendingOrders] = useState<OrderItems[]>([]);
@@ -17,6 +18,7 @@ export const OrderPage = () => {
 	const [selectedOrder, setSelectedOrder] = useState<OrderItems | null>(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [allProdList, setAllProdList] = useState<OrderItem[]>([]);
+	const { orderFromWs } = useWebSocketStore();
 
 	useEffect(() => {
 		const fetchMeals = async () => {
@@ -87,7 +89,7 @@ export const OrderPage = () => {
 		};
 
 		fetchOrders();
-	}, []);
+	}, [orderFromWs]);
 
 	/**
 	 * Function to confirm order. It takes the orderId and makes a PUT call to the API endpoint
@@ -213,7 +215,6 @@ export const OrderPage = () => {
 					</section>
 				</section>
 
-
 				<Modal
 					open={isModalOpen}
 					setModalOpen={setIsModalOpen}
@@ -253,7 +254,7 @@ export const OrderPage = () => {
 															...prev.attribute,
 															staffComment: newComment,
 														},
-												}
+												  }
 												: prev
 										);
 									}}
@@ -271,46 +272,42 @@ export const OrderPage = () => {
 
 							{/* Buttons */}
 							<div className="flex flex__column cart__ctas flex__gap-1 ">
-							{selectedOrder.status === 'pending' && (
+								{selectedOrder.status === 'pending' && (
+									<Button
+										onClick={() =>
+											confirmOrder(
+												selectedOrder.id,
+												'confirmed',
+												selectedOrder.attribute.staffComment,
+												selectedOrder.attribute.items
+											)
+										}
+										aria="Bekräfta order"
+									>
+										<IoLockClosedOutline fontSize="1.5rem" />
+										Lås och börja tillaga
+									</Button>
+								)}
+
+								{selectedOrder.status === 'confirmed' && (
+									<Button
+										onClick={() => confirmOrder(selectedOrder.id, 'done')}
+										aria="Markera som klar"
+									>
+										Flytta till Klar
+									</Button>
+								)}
 
 								<Button
-									onClick={() =>
-										confirmOrder(
-											selectedOrder.id,
-											'confirmed',
-											selectedOrder.attribute.staffComment,
-											selectedOrder.attribute.items
-										)
-									}
-									aria="Bekräfta order"
+									onClick={() => setIsModalOpen(false)}
+									aria="Stäng modal"
+									style="outlined-red"
 								>
-									<IoLockClosedOutline fontSize="1.5rem"/>
-									Lås och börja tillaga
+									Stäng modal
 								</Button>
-
-							)}
-
-							{selectedOrder.status === 'confirmed' && (
-								<Button
-									onClick={() => confirmOrder(selectedOrder.id, 'done')}
-									aria="Markera som klar"
-								>
-									Flytta till Klar
-								</Button>
-							)}
-
-							<Button
-								onClick={() => setIsModalOpen(false)}
-								aria="Stäng modal"
-								style="outlined-red"
-							>
-								Stäng modal
-							</Button>
-
-						</div>
+							</div>
 						</div>
 					)}
-
 				</Modal>
 			</main>
 		</>
