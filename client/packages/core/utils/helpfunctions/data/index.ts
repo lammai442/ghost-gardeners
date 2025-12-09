@@ -1,4 +1,5 @@
 import { v4 as uuid } from 'uuid';
+import { Meal } from '@mojjen/productdata';
 
 export const generateId = (): string => {
 	return uuid().substring(0, 5);
@@ -43,6 +44,11 @@ export const validateAuthForm = (form: any, mode: 'login' | 'register') => {
 
 	// Return errors-object
 	return e;
+};
+
+// Sort an array by alphabetic order
+export const sortMealListByLetter = (list: Meal[]): void => {
+	console.log(list);
 };
 
 /**

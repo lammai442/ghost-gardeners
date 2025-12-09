@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { Modal } from '../../../base/modal/ui';
 import { useAuthStore } from '../../../core/stores/useauthstore/data';
 import { apiGetOrdersByUser } from '../../../core/api/apiusers/data';
+import { sortMealListByLetter } from '@mojjen/helpfunctions';
 
 type GetMealsResponse = {
 	data: Meal[];
@@ -41,7 +42,7 @@ export const MenuPage = () => {
 		if (user) {
 			const fetchOrdersByUser = async () => {
 				const response = await apiGetOrdersByUser(user.userId);
-				console.log(response);
+				const sortedMealList = sortMealListByLetter(response.mealList);
 				setUserOrdersList(response.mealList);
 			};
 
@@ -70,7 +71,6 @@ export const MenuPage = () => {
 	}, [modalOpen]);
 
 	const prodList = allProdList.filter((product) => product.category === 'MEAL');
-	console.log('prodList: ', prodList);
 
 	const generateTopContent = () => {
 		return (
