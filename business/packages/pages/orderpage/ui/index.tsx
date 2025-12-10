@@ -109,6 +109,7 @@ export const OrderPage = () => {
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
 					status: newStatus,
+					userComment: selectedOrder?.attribute?.userComment,
 					staffComment: updatedStaffComment,
 					items: updatedItems,
 				}),
@@ -154,7 +155,7 @@ export const OrderPage = () => {
 							</h2>
 							{/* PENDING ORDERS */}
 							<ul className={`order-page__orders-container`}>
-								{pendingOrders.map((o, index) => (
+								{pendingOrders.map((o) => (
 									<div
 										key={o.SK}
 										onClick={() => {
@@ -352,5 +353,8 @@ export const OrderPage = () => {
  *
  * Modified by: StefanMogren
  * Updated useEffect to run every time WebSocket sends an order and not just once.
+ *
+ * Modified by: Lam
+ * CSS on the site
  *
  */
