@@ -66,6 +66,15 @@ export const ConfirmedOrderPage = () => {
 			<OrderArticle key={item.name} item={item} />
 		));
 	};
+
+	const generateOrderDeletedArticles = (): ReactNode => {
+		if (activeOrder.attribute.deletedItems) {
+			return activeOrder.attribute.deletedItems.map((item) => (
+				<OrderArticle key={item.name} item={item} deletedItems={true} />
+			));
+		}
+	};
+
 	const handleClick = () => {
 		navigate('/');
 		window.scrollTo(0, 0);
@@ -88,7 +97,9 @@ export const ConfirmedOrderPage = () => {
 				>
 					<div className="flex flex__space-between">
 						<span className="base">Delsumma</span>
-						<span className="base">{order.total * 0.88} kr</span>
+						<span className="base">
+							{activeOrder.attribute.total * 0.88} kr
+						</span>
 					</div>
 					<div className="flex flex__space-between">
 						<span className="base">Moms</span>
@@ -97,7 +108,7 @@ export const ConfirmedOrderPage = () => {
 					<hr className="order__line" />
 					<div className="flex flex__space-between">
 						<h4 className="heading-4">Totalt</h4>
-						<h4 className="heading-4">{order.total} kr</h4>
+						<h4 className="heading-4">{activeOrder.attribute.total} kr</h4>
 					</div>
 					<Button aria="Tillbaka till startsidan" onClick={handleClick}>
 						Köp mer
@@ -105,45 +116,54 @@ export const ConfirmedOrderPage = () => {
 				</ContentBox>
 
 				{/* Content: "Din kommentar" */}
-				{order.userComment && (
+				{activeOrder.attribute.userComment && (
 					<ContentBox
 						extraClass="order__content-box order__comment"
 						titleTxt="Din kommentar"
 						titleLevel="h3"
-						text={order.userComment}
+						text={activeOrder.attribute.userComment}
 					/>
 				)}
 
 				{/* Content: "Betalningsinformation" */}
-				<ContentBox
-					style="red"
-					titleTxt="Betalningsinformation"
-					titleLevel="h3"
-					extraClass="order__content-box"
-					text="Betala med kort eller Swish i kassan när du hämtar din order."
-				/>
+				{activeOrder.status !== 'cancelled' && (
+					<>
+						<ContentBox
+							style="red"
+							titleTxt="Betalningsinformation"
+							titleLevel="h3"
+							extraClass="order__content-box"
+							text="Betala med kort eller Swish i kassan när du hämtar din order."
+						/>
 
-				{/* Content: "Order-id" */}
-				<ContentBox extraClass="order__content-box order__order-id">
-					<aside className="flex flex__space-between flex__align-items text__left">
-						<div className="flex flex__column">
-							<h5 className="heading-5">Beräknad tid</h5>
-							<p className="base">15 minuter</p>
-						</div>
-						<div className="flex flex__column ">
-							<h5 className="heading-5">Upphämtning</h5>
-							<p className="base">Vid kassan</p>
-						</div>
-					</aside>
-				</ContentBox>
+						{/* Content: "Order-id" */}
+						<ContentBox extraClass="order__content-box order__order-id">
+							<aside className="flex flex__space-between flex__align-items text__left">
+								<div className="flex flex__column">
+									<h5 className="heading-5">Beräknad tid</h5>
+									<p className="base">15 minuter</p>
+								</div>
+								<div className="flex flex__column ">
+									<h5 className="heading-5">Upphämtning</h5>
+									<p className="base">Vid kassan</p>
+								</div>
+							</aside>
+						</ContentBox>
+					</>
+				)}
 
 				{/* Content: "Din beställning" */}
 				<ContentBox
-					extraClass="order__content-box order__articles"
+					extraClass={`order__content-box order__articles ${
+						activeOrder.status === 'cancelled'
+							? 'order__cancelled-order-item'
+							: ''
+					}`}
 					titleTxt="Din beställning"
 					titleLevel="h2"
 				>
 					{generateOrderArticles()}
+					{generateOrderDeletedArticles()}
 				</ContentBox>
 			</div>
 		</Page>
