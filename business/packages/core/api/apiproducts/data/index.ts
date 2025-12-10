@@ -74,9 +74,36 @@ export async function apiLoginUser(user: User) {
 	}
 }
 
+export async function apiDeletItemFromOrder(
+	orderId: string | undefined,
+	itemId: string
+) {
+	const apiUrl: string = import.meta.env.VITE_API_URL;
+
+	try {
+		const response = await axios.put(`${apiUrl}/orders/deleteitem/${orderId}`, {
+			itemId: itemId,
+		});
+		return {
+			success: true,
+			updatedOrder: response.data.updatedOrder,
+			status: response.status,
+		};
+	} catch (error: any) {
+		return {
+			success: false,
+			message: error.message,
+			status: error.response?.status || 500,
+		};
+	}
+}
+
 /**
  * Author: Lam
  * Api fetch of products using axios
  * Modified by: ninerino
  * Added fetch for delete
+ *
+ * Updated: Lam
+ * Added apiDeletItemFromOrder for delete an item from an order
  */

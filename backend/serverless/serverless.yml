@@ -57,6 +57,7 @@ functions:
       - httpApi:
           path: /api/menu
           method: POST
+  # Orders
   GetOrder:
     handler: functions/menu/GetOrder/index.handler
     events:
@@ -93,6 +94,12 @@ functions:
       - httpApi:
           path: /api/orders/status/{status}
           method: GET
+  PUTDeleteItemByOrderId:
+    handler: functions/orders/PUTDeleteItemByOrderId/index.handler
+    events:
+      - httpApi:
+          path: /api/orders/deleteitem/{id}
+          method: PUT
   # 
 	# ----- Websocket functions -----
   # 

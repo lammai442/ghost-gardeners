@@ -54,6 +54,7 @@ export interface Order {
 		user: string;
 		userComment: string;
 		modifiedAt?: string;
+		deletedItems?: Meal[];
 	};
 	id: string;
 }

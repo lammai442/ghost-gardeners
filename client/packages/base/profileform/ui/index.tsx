@@ -12,7 +12,7 @@ type Props = {};
 export const ProfileForm = ({}: Props) => {
 	const { user } = useAuthStore();
 
-	if (user === null) return;
+	if (!user) return null;
 
 	const [firstname, setFirstname] = useState(user.firstname);
 	const [lastname, setLastname] = useState(user.lastname);

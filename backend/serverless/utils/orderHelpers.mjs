@@ -8,6 +8,7 @@
 
 import { client } from '../services/client.mjs';
 import { BatchGetItemCommand } from '@aws-sdk/client-dynamodb';
+import { getOrder } from '../services/order.mjs';
 
 /**
  * Fetch product by ID
@@ -125,3 +126,43 @@ export function getMealStatus(product, productMap) {
 	const isAnyOutOfStock = itemProducts.some((p) => p.stock === 0);
 	return isAnyOutOfStock ? 'inactive' : 'active';
 }
+
+export const deletedItemsFromOrder = async (id, itemId) => {
+	const order = await getOrder(id);
+
+	// Create deletedItemsArray if it doesnt exist
+	if (!order.attribute.deletedItems) {
+		order.attribute.deletedItems = [];
+	}
+	const remainingItems = [];
+
+	// Loopar igenom nuvarande items
+	for (const item of order.attribute.items) {
+		if (item.itemId === itemId) {
+			// Lägg till i deletedItems
+			order.attribute.deletedItems.push(item);
+		} else {
+			// Annars sparar vi den kvar i items
+			remainingItems.push(item);
+		}
+	}
+
+	order.attribute.items = remainingItems;
+	// If there are no items left in order then change status to cancel
+	if (order.attribute.items.length === 0) {
+		order.status = 'cancelled';
+		order.attribute.total = 0;
+	}
+	// Else count the new total price
+	else {
+		order.attribute.total = order.attribute.items.reduce(
+			(sum, item) => sum + item.price,
+			0
+		);
+	}
+
+	order.modifiedAt = new Date().toISOString();
+	order.attribute.modifiedAt = new Date().toISOString();
+
+	return order;
+};
