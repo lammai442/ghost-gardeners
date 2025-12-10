@@ -142,7 +142,7 @@ export const OrderPage = () => {
 			console.error('Kunde inte uppdatera order:', err);
 		}
 	};
-	console.log('selectedOrder: ', selectedOrder);
+
 	return (
 		<>
 			<HeaderComp></HeaderComp>

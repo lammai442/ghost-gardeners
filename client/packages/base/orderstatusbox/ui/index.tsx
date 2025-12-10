@@ -21,10 +21,12 @@ export const OrderStatusBox = ({ orderId, status, setStatus }: Props) => {
 		status: string,
 		pendingString: string,
 		confirmedString: string,
-		acceptedString: string
+		acceptedString: string,
+		cancelledString: string
 	): string => {
 		if (status === 'confirmed') return confirmedString;
 		else if (status === 'done') return acceptedString;
+		else if (status === 'cancelled') return cancelledString;
 		else return pendingString;
 	};
 
@@ -111,13 +113,15 @@ export const OrderStatusBox = ({ orderId, status, setStatus }: Props) => {
 					status,
 					'Din order är skickad',
 					'Köket tillagar din mat',
-					'Din beställning är klar.'
+					'Din beställning är klar.',
+					'Din order är avbruten.'
 				)}
 				text={generateString(
 					status,
 					'Din beställning har tagits emot, men har ännu inte bekräftats. Du kan fortfarande ändra din order.',
 					'Köket har bekräftat din order och din mat håller på att tillagas. Vi meddelar dig när du kan hämta din beställning.',
-					'Din beställning är klar. Välkommen fram till kassan för att hämta din mat. Smaklig måltid och välkommen tillbaka!'
+					'Din beställning är klar. Välkommen fram till kassan för att hämta din mat. Smaklig måltid och välkommen tillbaka!',
+					'Vi beklagar att din beställning har blivit avbruten från köket. Prova gärna att lägga en ny beställning eller kontakta oss för beställning.'
 				)}
 				icon={
 					<DotLottieReact
@@ -125,7 +129,8 @@ export const OrderStatusBox = ({ orderId, status, setStatus }: Props) => {
 							status,
 							'https://lottie.host/064a35cd-92d2-4ebc-98ea-6cd257546173/NAcVaHUHd3.lottie',
 							'https://lottie.host/7efecad1-efeb-40b2-a28f-a785d4b3642e/wyawnIxZGM.lottie',
-							'https://lottie.host/aebe50b3-c3fb-41d9-b5ad-50d1f752d479/rInLWuCz37.lottie'
+							'https://lottie.host/aebe50b3-c3fb-41d9-b5ad-50d1f752d479/rInLWuCz37.lottie',
+							'https://lottie.host/5a550e87-2f0a-4919-a620-d10e585af3dc/XEbRgAzKK3.lottie'
 						)}
 						loop
 						autoplay

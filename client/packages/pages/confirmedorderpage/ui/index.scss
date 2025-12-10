@@ -42,6 +42,10 @@
 	&__line {
 		border-bottom: 0.01px solid $color-grey;
 	}
+
+	&__cancelled-order-item {
+		grid-row: 1 / span 2;
+	}
 }
 
 @media screen and (max-width: 992px) {
