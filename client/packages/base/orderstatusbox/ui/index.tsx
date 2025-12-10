@@ -24,7 +24,7 @@ export const OrderStatusBox = ({ orderId, status, setStatus }: Props) => {
 		acceptedString: string
 	): string => {
 		if (status === 'confirmed') return confirmedString;
-		else if (status === 'accepted') return acceptedString;
+		else if (status === 'done') return acceptedString;
 		else return pendingString;
 	};
 
@@ -111,7 +111,7 @@ export const OrderStatusBox = ({ orderId, status, setStatus }: Props) => {
 					status,
 					'Din order är skickad',
 					'Köket tillagar din mat',
-					'Din beställning är klar. Välkommen fram till kassan för att hämta din mat. Smaklig måltid och välkommen tillbaka!'
+					'Din beställning är klar.'
 				)}
 				text={generateString(
 					status,

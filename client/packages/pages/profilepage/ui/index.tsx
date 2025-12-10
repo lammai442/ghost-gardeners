@@ -7,10 +7,12 @@ import { useAuthStore } from '@mojjen/useauthstore';
 
 import { useEffect, useState } from 'react';
 import type { Order } from '@mojjen/productdata';
+import { useWebSocketStore } from '@mojjen/usewebsocketstore';
 
 export const ProfilePage = () => {
 	const { user } = useAuthStore();
 	const [userOrdersList, setUserOrdersList] = useState<Order[]>([]);
+	const { orderFromWs } = useWebSocketStore();
 
 	if (user === null) return;
 
@@ -22,7 +24,7 @@ export const ProfilePage = () => {
 		};
 
 		fetchOrdersByUser();
-	}, []);
+	}, [orderFromWs]);
 
 	const generateListItems = () => {
 		if (!userOrdersList) return;
@@ -48,4 +50,8 @@ export const ProfilePage = () => {
  *
  * Update: Klara
  * Switched from flex to grid on ul. Now all order history card has the same width.
+ *
+ * Update: StefanMogren
+ * Added dynamic update when WebSocket sends an updated order
+ *
  */
