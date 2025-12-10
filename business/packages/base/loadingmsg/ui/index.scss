@@ -27,15 +27,14 @@
 	}
 }
 
-.info__container {
+.info-loading__container {
 	padding: 0 1rem;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	gap: 1rem;
-	background-color: green;
 }
 
-.info__text {
+.info-loading__text {
 	text-align: center;
 }

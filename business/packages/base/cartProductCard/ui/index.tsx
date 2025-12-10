@@ -37,7 +37,7 @@ export const CartProductCard = ({
 	return (
 		<>
 			<li className="flex flex__gap-2 flex__column cart-item bg-super-light-beige border-radius">
-				<section className="info-box flex flex__column text__left flex__gap-2 cart-item ">
+				<section className="info-box flex flex__column text__left flex__gap-1-5 cart-item ">
 					{loadingMsg ? (
 						<LoadingMsg title="Tar bort produkt" />
 					) : (
