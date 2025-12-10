@@ -1,22 +1,46 @@
 import Joi from 'joi';
-
-/**
- * Author: KlaraSk
- * User schema
- *
- */
-
-// The password must contain at least one of the following: 1 uppercase letter, 1 lowercase letter, 1 special character, 1 number (0-9). Regex from: https://ihateregex.io/expr/password/.
-const passwordRegEx =
-	/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/;
-
-const regExOrderId = /^order-[0-9a-fA-F]{5}$/;
+import { passwordRegEx, safeCharacters, regExOrderId } from './patterns.mjs';
 
 export const userSchema = Joi.object({
-	firstname: Joi.string().min(2).max(25).required(),
-	lastname: Joi.string().min(2).max(25).required(),
-	phone: Joi.string().min(7).max(25).required(),
-	email: Joi.string().email().required(),
+	firstname: Joi.string()
+		.min(2)
+		.max(25)
+		.required()
+		.label('Förnamn')
+		.pattern(safeCharacters)
+		.messages({
+			'string.pattern.base':
+				'{{#label}}: Endast A-Ö, a-ö, 0-9 och skiljetecken är tillåtna.',
+		}),
+	lastname: Joi.string()
+		.min(2)
+		.max(25)
+		.required()
+		.label('Efternamn')
+		.pattern(safeCharacters)
+		.messages({
+			'string.pattern.base':
+				'{{#label}}: Endast A-Ö, a-ö, 0-9 och skiljetecken är tillåtna.',
+		}),
+	phone: Joi.string()
+		.min(7)
+		.max(25)
+		.required()
+		.label('Telefon')
+		.pattern(safeCharacters)
+		.messages({
+			'string.pattern.base':
+				'{{#label}}: Endast A-Ö, a-ö, 0-9 och skiljetecken är tillåtna.',
+		}),
+	email: Joi.string()
+		.required()
+		.pattern(safeCharacters)
+		.label('Email')
+		.messages({
+			'string.pattern.base':
+				'{{#label}}: Endast A-Ö, a-ö, 0-9 och skiljetecken är tillåtna.',
+		})
+		.email(),
 	password: Joi.string()
 		.pattern(passwordRegEx)
 		.messages({
@@ -33,3 +57,11 @@ export const userSchema = Joi.object({
 		})
 	),
 });
+
+/**
+ * Author: KlaraSk
+ * User schema
+ *
+ * Update: Klara
+ * Imported regex from patterns. No emojis allowed.
+ */

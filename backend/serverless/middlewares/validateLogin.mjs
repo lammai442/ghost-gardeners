@@ -1,10 +1,5 @@
 import { loginSchema } from '../models/loginSchema.mjs';
 
-/**
- * Author: Klara
- * Middleware user login.
- */
-
 export const validateLogin = () => ({
 	before: (handler) => {
 		const { error, value } = loginSchema.validate(handler.event.body);
@@ -13,3 +8,8 @@ export const validateLogin = () => ({
 		return;
 	},
 });
+
+/**
+ * Author: Klara
+ * Middleware user login.
+ */
