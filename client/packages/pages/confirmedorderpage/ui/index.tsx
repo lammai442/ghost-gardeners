@@ -11,6 +11,8 @@ import { useEffect, useState, type ReactNode } from 'react';
 import { Page } from '@mojjen/page';
 import { OrderStatusBox } from '@mojjen/orderstatusbox';
 import { useWebSocketStore } from '@mojjen/usewebsocketstore';
+import { apiGetOrdersByUser } from '@mojjen/apiusers';
+import type { Order } from '@mojjen/productdata';
 
 /**
  * Author: Klara Sköld
@@ -20,36 +22,49 @@ import { useWebSocketStore } from '@mojjen/usewebsocketstore';
  *
  * Modified: Stefan Mogren
  * Added example code on how to access the updated order from WebSocket
+ *
+ * Modified: Stefan Mogren
+ * Added proper WebSocket integration
  */
 
 export const ConfirmedOrderPage = () => {
 	const navigate: NavigateFunction = useNavigate();
 	const location = useLocation();
 	const order = location.state;
-	const [status, setStatus] = useState(order.status);
-
-	// Example code of how to access the updated variable from the WebSocket
+	const [status, setStatus] = useState<string>('');
 	const { orderFromWs } = useWebSocketStore();
+	const [activeOrder, setActiveOrder] = useState<Order | null>(null);
+
 	useEffect(() => {
-		console.log('Do something when WebSocket sends an updated order');
+		const fetchOrdersByUser = async () => {
+			const response = await apiGetOrdersByUser(order.user);
+
+			if (response) {
+				// Currently have an array of all orders from the user. Need to find the one being displayed on the page.
+				const currentOrder: Order = response.orders.find(
+					(o: Order) => o.SK.substring(6) === order.orderId
+				);
+				if (currentOrder) {
+					setActiveOrder(currentOrder);
+					setStatus(currentOrder.status);
+				}
+			}
+		};
+
+		fetchOrdersByUser();
 	}, [orderFromWs]);
 
-	if (!order)
+	if (!activeOrder)
 		return <Page titleText="Orderbekräftelse">Ingen order hittades.</Page>;
-	console.log('order: ', order);
+	console.log('This is the activeOrder!: ', activeOrder);
 	// ! Acivate this when the function accepts a proper order object instead of a testobject.
 	// ! The design may be updated in a future sprint
 	// useEffect(()=>{setStatus(order.status)},[status])
 
 	const generateOrderArticles = (): ReactNode => {
-		return order.items.map(
-			(item: {
-				name: string;
-				subtotal: number;
-				summary: string;
-				includeDrinkName: string;
-			}) => <OrderArticle key={item.name} item={item} />
-		);
+		return activeOrder.attribute.items.map((item) => (
+			<OrderArticle key={item.name} item={item} />
+		));
 	};
 	const handleClick = () => {
 		navigate('/');
@@ -59,7 +74,7 @@ export const ConfirmedOrderPage = () => {
 		<Page titleText="Orderbekräftelse" extraClasses="grid order">
 			{/* Content: "Tack för din order" */}
 			<OrderStatusBox
-				orderId={order.orderId}
+				orderId={activeOrder.SK.substring(6)}
 				status={status}
 				setStatus={setStatus}
 			></OrderStatusBox>
