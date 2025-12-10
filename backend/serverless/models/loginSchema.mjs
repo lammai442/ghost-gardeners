@@ -1,13 +1,5 @@
 import Joi from 'joi';
 
-/**
- * Author: Klara
- * Login user schema.
- *
- * Update: Lam/Stefan
- * Added return of messages if any of the requiremnts are false
- */
-
 export const loginSchema = Joi.object({
 	// email: Joi.string().email().required(),
 	email: Joi.string().email().required().messages({
@@ -17,3 +9,11 @@ export const loginSchema = Joi.object({
 	}),
 	password: Joi.string().required(),
 });
+
+/**
+ * Author: Klara
+ * Login user schema.
+ *
+ * Update: Lam/Stefan
+ * Added return of messages if any of the requiremnts are false
+ */

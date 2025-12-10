@@ -38,6 +38,12 @@ functions:
       - httpApi:
           path: /api/auth/login
           method: POST
+  UpdateUser:
+    handler: functions/auth/UpdateUser/index.handler
+    events:
+      - httpApi:
+          path: /api/auth/update/{id}
+          method: PATCH     
   # Products
   GetMenu:
     handler: functions/menu/GetMenu/index.handler
