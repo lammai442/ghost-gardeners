@@ -1,5 +1,5 @@
 import './index.scss';
-
+import type { Meal } from '@mojjen/productdata';
 /**
  * Author: Klara Sköld
  * Details for each article in the order.
@@ -9,12 +9,7 @@ import './index.scss';
  */
 
 type Props = {
-	item: {
-		name: string;
-		subtotal: number;
-		summary: string;
-		includeDrinkName: string;
-	};
+	item: Meal;
 };
 
 export const OrderArticle = ({ item }: Props) => {
