@@ -237,6 +237,18 @@ export const OrderPage = () => {
 								/>
 							))}
 
+							{/* User Comment (read-only) */}
+							{selectedOrder.attribute.userComment && (
+								<div className="comment read-only">
+									<h5 className="heading-5 font-color-red text-ketchup">
+										Kommentar från kund
+									</h5>
+									<p className="base-small">
+										{selectedOrder.attribute.userComment}
+									</p>
+								</div>
+							)}
+
 							{/* Staff Comment */}
 							{selectedOrder.status === 'pending' ? (
 								<Comment
@@ -264,7 +276,7 @@ export const OrderPage = () => {
 									<h5 className="heading-5 font-color-red text-ketchup">
 										Kommentar från personalen
 									</h5>
-									<p className="base">
+									<p className="base-small">
 										{selectedOrder.attribute.staffComment || '-'}
 									</p>
 								</div>
