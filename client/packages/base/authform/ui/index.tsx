@@ -122,10 +122,20 @@ export const AuthForm = ({ setModalOpen, setAuthTitle }: Props) => {
 			return;
 		}
 
-		user = response.data.data as User;
+		const token = response.data.data.token;
 
+		const meRes = await fetch('/api/auth/me', {
+			headers: { Authorization: `Bearer ${token}` },
+		});
+		const meData = await meRes.json();
+
+		if (!meData.success) {
+			setErrors({ apiError: 'Kunde inte hämta användardata' });
+			setSubmitting(false);
+			return;
+		}
 		// On successful login/register, update global user state
-		updateUserStorage(user);
+		updateUserStorage({ token, userId: meData.data.userId });
 
 		setSubmitting(false);
 

@@ -1,19 +1,3 @@
-/**
- * Author: ninerino
- * Function to fetch menu items from the API, as well as map the product IDs to their correct name
- */
-
-/**
- * Author: ninerino
- * Function to fetch menu items from the API, including stock-based status
- *
- * Modified: StefanMogren
- * Changed so function fetches all products instead of just meals
- *
- * Updated: Lam
- * Changed details to description for menuItem and added Allergenes
- */
-
 import { client } from '../../../services/client.mjs';
 import { QueryCommand } from '@aws-sdk/client-dynamodb';
 import { errorHandler } from '../../../middlewares/errorHandler.mjs';
@@ -87,3 +71,19 @@ export const handler = async () => {
 		return errorHandler().onError({ response: null, error });
 	}
 };
+
+/**
+ * Author: ninerino
+ * Function to fetch menu items from the API, as well as map the product IDs to their correct name
+ */
+
+/**
+ * Author: ninerino
+ * Function to fetch menu items from the API, including stock-based status
+ *
+ * Modified: StefanMogren
+ * Changed so function fetches all products instead of just meals
+ *
+ * Updated: Lam
+ * Changed details to description for menuItem and added Allergenes
+ */

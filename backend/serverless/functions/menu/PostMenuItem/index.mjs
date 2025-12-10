@@ -5,11 +5,6 @@ import httpJsonBodyParser from '@middy/http-json-body-parser';
 import { errorHandler } from '../../../middlewares/errorHandler.mjs';
 import { validateProduct } from '../../../middlewares/validateProduct.mjs';
 
-/**
- * Author: KlaraSk
- * bodyParser, validator and errorHandler added
- */
-
 export const handler = middy(async (event) => {
 	const response = await postProductItem(event.body);
 	if (response) {
@@ -27,3 +22,8 @@ export const handler = middy(async (event) => {
 	.use(httpJsonBodyParser())
 	.use(validateProduct())
 	.use(errorHandler());
+
+/**
+ * Author: KlaraSk
+ * bodyParser, validator and errorHandler added
+ */

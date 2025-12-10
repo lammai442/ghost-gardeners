@@ -5,34 +5,37 @@ import { errorHandler } from '../../../middlewares/errorHandler.mjs';
 import { validateUserUpdate } from '../../../middlewares/validateUserUpdate.mjs';
 import { getUserById, updateUserById } from '../../../services/users.mjs';
 import { validateEmptyBody } from '../../../middlewares/validateEmptyBody.mjs';
-
+import { authenticateUser } from '../../../middlewares/authenticateUser.mjs';
 /**
  * Author: Klara
  * Function to update a user.
+ * Edited by: ninerino
+ * Edited function based on JWT
  */
 
 export const handler = middy(async (event) => {
 	const userId = event.pathParameters.id;
 	const updatedUser = event.body;
-	const user = await getUserById(userId);
+	const payload = event.user;
 
-	if (user) {
-		const result = await updateUserById(updatedUser, userId);
-
-		if (result) {
-			return sendResponses(201, {
-				success: true,
-				messages: 'User successfully updated',
-			});
-		}
-	} else {
-		return sendResponses(404, {
-			success: false,
-			message: 'Unauthorized user or invalid userId',
-		});
+	if (payload.sub !== userId) {
+		return sendResponses(403, { success: false, message: 'Forbidden' });
 	}
+
+	const user = await getUserById(userId);
+	if (!user) {
+		return sendResponses(404, { success: false, message: 'User not found' });
+	}
+
+	await updateUserById(updatedUser, userId);
+
+	return sendResponses(200, {
+		success: true,
+		message: 'User successfully updated',
+	});
 })
 	.use(httpJsonBodyParser())
 	.use(validateEmptyBody())
-	.use(errorHandler())
-	.use(validateUserUpdate());
+	.use(validateUserUpdate())
+	.use(authenticateUser())
+	.use(errorHandler());

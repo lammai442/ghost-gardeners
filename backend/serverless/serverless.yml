@@ -100,8 +100,8 @@ functions:
       - httpApi:
           path: /api/orders/status/{status}
           method: GET
-  PUTDeleteItemByOrderId:
-    handler: functions/orders/PUTDeleteItemByOrderId/index.handler
+  PutDeleteItemByOrderId:
+    handler: functions/orders/PutDeleteItemByOrderId/index.handler
     events:
       - httpApi:
           path: /api/orders/deleteitem/{id}
