@@ -9,7 +9,7 @@ export const apiGetMeals = async () => {
 		.then((response) => {
 			return {
 				success: true,
-				data: response.data,
+				data: response.data.menuItems,
 				status: response.status,
 			};
 		})

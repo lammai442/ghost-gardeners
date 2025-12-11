@@ -5,7 +5,10 @@ import {
 	generateId,
 } from '../utils/index.mjs';
 import { client } from './client.mjs';
-import { PutItemCommand } from '@aws-sdk/client-dynamodb';
+import { PutItemCommand, QueryCommand } from '@aws-sdk/client-dynamodb';
+import { getProductsByIds } from '../utils/orderHelpers.mjs';
+import { getMealStatus } from '../utils/orderHelpers.mjs';
+import { errorHandler } from '../middlewares/errorHandler.mjs';
 
 export const postMenuItem = async () => {
 	const command = new PutItemCommand({
@@ -51,18 +54,6 @@ export const postMenuItem = async () => {
 		console.log('Error in postMenuItem in client ', error.message);
 	}
 };
-
-/**
- * Author: KlaraSk
- * Updated the function to accept a full product object. Added utility helpers for id and date generation and now use marshall to convert the payload to DynamoDB-compatible format.
- */
-/**
- * Update: Lam, KlaraSK, Nikki
- * Made description to be optional for the body
- *
- * Update: Lam
- * Changed so includeDrink comes from either body or a default prodId
- */
 
 export const postProductItem = async (product) => {
 	const prodId =
@@ -115,3 +106,82 @@ export const postProductItem = async (product) => {
 		console.error('Error in postMenuItem in client ', error.message);
 	}
 };
+
+export const getAllMenu = async () => {
+	try {
+		const menuResponse = await client.send(
+			new QueryCommand({
+				TableName: 'mojjen-table',
+				// IndexName: 'GSI1',
+				KeyConditionExpression: 'PK = :pk',
+				ExpressionAttributeValues: {
+					':pk': { S: 'PRODUCT' },
+				},
+			})
+		);
+
+		//
+		const allProductIds = [
+			...new Set(
+				(menuResponse.Items || []).flatMap((item) => {
+					const a = item.attribute?.M || {};
+					return [
+						...(a.items?.L?.map((i) => i.S) || []),
+						...(a.includeDrink?.S ? [a.includeDrink.S] : []), // <-- lägg till dryckens ID
+					];
+				})
+			),
+		];
+
+		//
+		const productMap = await getProductsByIds(allProductIds);
+
+		//
+		const menuItems = (menuResponse.Items || []).map((item) => {
+			const a = item.attribute?.M || {};
+			const base = {
+				id: a.id?.S || '',
+				name: a.name?.S || '',
+				category: a.category?.S || '',
+				price: a.price?.N ? Number(a.price.N) : null,
+				summary: a.summary?.S || '',
+				description: a.description?.S || '',
+				img: a.img?.S || '',
+				includeDrink: a.includeDrink?.S || null,
+				// includeDrinkName: a.includeDrinkName?.S
+				// 	? productMap[a.includeDrinkName.S]?.name || null
+				// 	: null,
+				includeDrinkName: a.includeDrinkName?.S || null,
+				createdAt: a.createdAt?.S || '',
+				items: a.items?.L?.map((i) => i.S) || [],
+				allergenes: a.allergenes?.L?.map((x) => x.S) || [],
+			};
+
+			//
+			base.status = getMealStatus(base, productMap);
+
+			return base;
+		});
+
+		return menuItems;
+		// return {
+		// 	// statusCode: 200,
+		// 	// body: JSON.stringify(menuItems),
+		// };
+	} catch (error) {
+		console.error('Error in Menu Handler:', error);
+		return errorHandler().onError({ response: null, error });
+	}
+};
+
+/**
+ * Author: KlaraSk
+ * Updated the function to accept a full product object. Added utility helpers for id and date generation and now use marshall to convert the payload to DynamoDB-compatible format.
+ */
+/**
+ * Update: Lam, KlaraSK, Nikki
+ * Made description to be optional for the body
+ *
+ * Update: Lam
+ * Changed so includeDrink comes from either body or a default prodId
+ */

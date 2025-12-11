@@ -23,7 +23,6 @@ provider:
           - ".amazonaws.com/"
           - ${self:provider.stage}
 
-
 functions:
   # Auth
   RegisterUser:
@@ -51,12 +50,6 @@ functions:
       - httpApi:
           path: /api/menu
           method: GET
-  PostOrder:
-    handler: functions/menu/PostOrder/index.handler
-    events:
-      - httpApi:
-          path: /api/order
-          method: POST
   PostMenuItem:
     handler: functions/menu/PostMenuItem/index.handler
     events:
@@ -65,7 +58,7 @@ functions:
           method: POST
   # Orders
   GetOrder:
-    handler: functions/menu/GetOrder/index.handler
+    handler: functions/orders/GetOrder/index.handler
     events:
       - httpApi:
           path: /api/order/{id}
@@ -76,18 +69,6 @@ functions:
       - httpApi:
           path: /api/order/user/{id}
           method: GET
-  DeleteOrder:
-    handler: functions/menu/DeleteOrder/index.handler
-    events:
-      - httpApi:
-          path: /api/order/{id}
-          method: DELETE
-  ChangeOrder:
-    handler: functions/menu/ChangeOrder/index.handler
-    events:
-      - httpApi:
-          path: /api/order/{id}
-          method: PUT
   GetAllOrders:
     handler: functions/orders/GetAllOrders/index.handler
     events:
@@ -100,6 +81,24 @@ functions:
       - httpApi:
           path: /api/orders/status/{status}
           method: GET
+  PostOrder:
+    handler: functions/menu/PostOrder/index.handler
+    events:
+      - httpApi:
+          path: /api/order
+          method: POST
+  DeleteOrder:
+    handler: functions/orders/DeleteOrder/index.handler
+    events:
+      - httpApi:
+          path: /api/order/{id}
+          method: DELETE
+  ChangeOrder:
+    handler: functions/orders/ChangeOrder/index.handler
+    events:
+      - httpApi:
+          path: /api/order/{id}
+          method: PUT
   PutDeleteItemByOrderId:
     handler: functions/orders/PutDeleteItemByOrderId/index.handler
     events:

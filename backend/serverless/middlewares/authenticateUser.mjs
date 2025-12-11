@@ -1,3 +1,4 @@
+import { sendResponses } from '../responses/index.mjs';
 import { verifyToken } from '../utils/tokens.mjs';
 
 export const authenticateUser = () => ({
@@ -12,12 +13,15 @@ export const authenticateUser = () => ({
 		try {
 			const user = verifyToken(token);
 
-			if (!user) throw new Error('Unauthorized');
+			if (!user) throw new Error('Ogiltig eller utgången token.');
 
 			handler.event.user = user;
 		} catch (error) {
 			console.error('ERROR in authenticateUser()', error.message);
-			throw new Error('Unauthorized');
+			return sendResponses(401, {
+				success: false,
+				message: error.message,
+			});
 		}
 	},
 });
@@ -25,4 +29,7 @@ export const authenticateUser = () => ({
 /**
  * Author: Klara
  * Verifies token.
+ *
+ * Update: Lam
+ * Added sendResponses for returning error message.
  */
