@@ -3,7 +3,6 @@ import axios from 'axios';
 
 export const apiGetMeals = async () => {
 	const apiUrl: string = import.meta.env.VITE_API_URL;
-
 	const response = await axios
 		.get(`${apiUrl}/menu`)
 		.then((response) => {
@@ -57,9 +56,9 @@ export async function apiRegisterUser(user: User) {
 
 export async function apiLoginUser(user: User) {
 	const apiUrl: string = import.meta.env.VITE_API_URL;
-
 	try {
 		const response = await axios.post(`${apiUrl}/auth/login`, user);
+		console.log('response: ', response);
 		return {
 			success: true,
 			data: response.data,

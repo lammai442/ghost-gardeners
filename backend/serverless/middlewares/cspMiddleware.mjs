@@ -5,8 +5,14 @@ export const cspMiddleware = () => ({
 		const response = request.response;
 
 		// Lägger till CSP-headern på svaret
-		response.headers['Content-Security-Policy'] =
-			"default-src 'self'; img-src 'self'; script-src 'self'; style-src 'self'";
+		response.headers['Content-Security-Policy'] = `
+			default-src 'self';
+			script-src 'self' https://cdnjs.cloudflare.com https://assets10.lottiefiles.com;
+			style-src 'self' https://fonts.googleapis.com;
+			font-src 'self' https://fonts.gstatic.com;
+			img-src 'self' data:;
+			connect-src 'self' ws:;
+		`;
 
 		// Returnerar uppdaterat svar
 		return response;

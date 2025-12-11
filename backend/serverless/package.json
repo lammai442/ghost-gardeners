@@ -26,5 +26,8 @@
     "nodemon": "^3.1.11",
     "serverless-offline": "^14.4.0",
     "uuid": "^13.0.0"
+  },
+  "devDependencies": {
+    "serverless-prune-plugin": "^2.1.0"
   }
 }

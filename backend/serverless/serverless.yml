@@ -82,7 +82,7 @@ functions:
           path: /api/orders/status/{status}
           method: GET
   PostOrder:
-    handler: functions/menu/PostOrder/index.handler
+    handler: functions/orders/PostOrder/index.handler
     events:
       - httpApi:
           path: /api/order
@@ -138,6 +138,13 @@ functions:
 
 plugins:
   - serverless-offline
+  - serverless-prune-plugin
+
+custom:
+  prune:
+    automatic: true
+    number: 5  # behåll senaste 5 versionerna
+
 
 resources:
   Resources:
