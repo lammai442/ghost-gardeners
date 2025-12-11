@@ -25,16 +25,14 @@ export const optionalAuthenticateUser = () => ({
 				if (!tokenData) throw new Error('Expired or invalid token.');
 
 				// Koden här används innan rätt payload från token är fixad
-				if (tokenData.attribute.userId !== userIdFromParams) {
-					throw new Error('Unauthorized. UserId does not match token.');
-				}
+				// if (tokenData.attribute.userId !== userIdFromParams) {
+				// 	throw new Error('Unauthorized. UserId does not match token.');
+				// }
 
-				/* 
-				Koden här använder man istället när token innehåller rätt payload
+				// Koden här använder man istället när token innehåller rätt payload
 				if (tokenData.sub !== userIdFromParams) {
 					throw new Error('Unauthorized. UserId does not match token.');
-				} */
-
+				}
 				handler.event.user = tokenData;
 			} else {
 				throw new Error('No userId provided.');

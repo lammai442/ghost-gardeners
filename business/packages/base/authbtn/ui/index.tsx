@@ -1,8 +1,22 @@
 import './index.scss';
 import { useAuthStore } from '@mojjen/useauthstore';
+import { useEffect, useState } from 'react';
+import { apiGetUserById } from '../../../../../client/packages/core/api/apiusers/data';
 
 export const AuthBtn = () => {
 	const { user, logout } = useAuthStore();
+	const [currentUserName, setCurrentUserName] = useState<string | null>(null);
+
+	useEffect(() => {
+		if (!user) setCurrentUserName(null);
+
+		const fetchUser = async () => {
+			if (!user?.userId || !user.token) return;
+			const userFromBackend = await apiGetUserById(user?.userId, user?.token);
+			setCurrentUserName(userFromBackend.data.user.attribute.firstname);
+		};
+		fetchUser();
+	}, [user]);
 
 	return (
 		<>
@@ -14,7 +28,7 @@ export const AuthBtn = () => {
 						src="/assets/profile-icon.svg"
 						alt="Profilikon"
 					/>
-					<h5 className="heading-5 text-light-beige">{user?.firstname}</h5>
+					<h5 className="heading-5 text-light-beige">{currentUserName}</h5>
 				</section>
 
 				{/* Placeholder för utloggningsfunktionen */}

@@ -40,7 +40,7 @@ export const handler = middy(async (event) => {
 
 	// Säkerställ att det är rätt användare
 	const user = event.user;
-	if (user.sub !== order.userId && user.role !== 'ADMIN') {
+	if (user.sub !== order.id && user.role !== 'ADMIN') {
 		return sendResponses(403, { success: false, message: 'Forbidden' });
 	}
 

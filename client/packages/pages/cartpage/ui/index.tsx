@@ -28,7 +28,6 @@ export const CartPage = () => {
 	const [comment, setComment] = useState('');
 	const [loading, setLoading] = useState<boolean>(false);
 	const [commentCount, setCommentCount] = useState(0);
-	const apiUrl = import.meta.env.VITE_API_URL;
 
 	useEffect(() => {
 		const fetchMeals = async () => {
@@ -57,7 +56,6 @@ export const CartPage = () => {
 				throw new Error('User token is required');
 			}
 			const response = await apiPostOrder(order, user.token);
-			console.log('response: ', response.data.order);
 			// const response = await fetch(`${apiUrl}/order`, {
 			// 	method: 'POST',
 			// 	headers: { 'Content-Type': 'application/json' },

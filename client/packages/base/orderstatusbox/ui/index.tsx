@@ -84,14 +84,21 @@ export const OrderStatusBox = ({ orderId, status, setStatus }: Props) => {
 			const data = await res.json();
 
 			// Sätt status till cancelled i backend
-			await fetch(`${import.meta.env.VITE_API_URL}/order/${orderId}`, {
-				method: 'PUT',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({
-					items: data.order.attribute.items,
-					status: 'cancelled',
-				}),
-			});
+			const response = await fetch(
+				`${import.meta.env.VITE_API_URL}/order/${orderId}`,
+				{
+					method: 'PUT',
+					headers: {
+						Authorization: `Bearer ${user.token}`,
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+						items: data.order.attribute.items,
+						status: 'cancelled',
+					}),
+				}
+			);
+			console.log('response: ', response);
 
 			// Lägg tillbaka samma orderId i cart
 			const itemsForCart = data.order.attribute.items.map((item: any) => ({
