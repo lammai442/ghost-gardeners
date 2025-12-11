@@ -27,6 +27,6 @@ export const handler = middy(async (event) => {
 /**
  * Author:
  *
- * Updated: Lam / ninero
+ * Updated: Lam / ninerino
  * Added authenticateUser for verify JWT
  */

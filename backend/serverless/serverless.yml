@@ -49,6 +49,12 @@ functions:
       - httpApi:
           path: /api/auth/me/{id}
           method: GET     
+  GetUserByToken:
+    handler: functions/auth/GetUserByToken/index.handler
+    events:
+      - httpApi:
+          path: /api/auth/me
+          method: GET     
   # Products
   GetMenu:
     handler: functions/menu/GetMenu/index.handler

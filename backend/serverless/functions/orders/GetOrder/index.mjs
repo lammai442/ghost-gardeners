@@ -14,7 +14,7 @@ export const handler = middy(async (event) => {
 	const order = await getOrder(id);
 
 	const user = event.user;
-	if (order.userId !== user.sub && user.role !== 'ADMIN') {
+	if (order.id !== user.sub && user.role !== 'ADMIN') {
 		return sendResponses(403, {
 			success: false,
 			message: 'Du har inte behörighet att se denna order',

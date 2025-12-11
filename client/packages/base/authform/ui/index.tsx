@@ -12,6 +12,7 @@ import {
 import { Modal } from '@mojjen/modal';
 import type { User } from '@mojjen/productdata';
 import { LoadingMsg } from '@mojjen/loading-msg';
+import { apiGetUserByToken } from '../../../../../business/packages/core/api/apiproducts/data';
 
 type Props = {
 	setModalOpen?: (open: boolean) => void;
@@ -124,18 +125,15 @@ export const AuthForm = ({ setModalOpen, setAuthTitle }: Props) => {
 
 		const token = response.data.data.token;
 
-		const meRes = await fetch('/api/auth/me', {
-			headers: { Authorization: `Bearer ${token}` },
-		});
-		const meData = await meRes.json();
+		const meRes = await apiGetUserByToken(token);
 
-		if (!meData.success) {
+		if (!meRes.success) {
 			setErrors({ apiError: 'Kunde inte hämta användardata' });
 			setSubmitting(false);
 			return;
 		}
 		// On successful login/register, update global user state
-		updateUserStorage({ token, userId: meData.data.userId });
+		updateUserStorage({ token, userId: meRes.data.user.id });
 
 		setSubmitting(false);
 

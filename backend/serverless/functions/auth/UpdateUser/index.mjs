@@ -33,3 +33,11 @@ export const handler = middy(async (event) => {
 	.use(validateUserUpdate())
 	.use(authenticateUser())
 	.use(errorHandler());
+
+/**
+ * Author: Klara
+ * Function to update a user.
+ *
+ * Update: Klara
+ * authenticateUser added
+ */

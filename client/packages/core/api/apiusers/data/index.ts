@@ -6,7 +6,6 @@ export const apiGetOrdersByUser = async (
 	token: string | undefined
 ) => {
 	const apiUrl: string = import.meta.env.VITE_API_URL;
-	console.log('här');
 
 	if (!userId || !token) {
 		return {
@@ -21,7 +20,7 @@ export const apiGetOrdersByUser = async (
 		const response = await fetch(`${apiUrl}/order/user/${userId}`, {
 			method: 'GET',
 			headers: {
-				Authorization: token,
+				Authorization: `Bearer ${token}`,
 				'Content-Type': 'application/json',
 			},
 		});
@@ -63,7 +62,6 @@ export const apiUpdateUser = async (
 	token: string | undefined
 ) => {
 	const apiUrl: string = import.meta.env.VITE_API_URL;
-	console.log('token: ', token);
 	const response = await axios
 		.patch(`${apiUrl}/auth/update/${userId}`, updatedUser, {
 			headers: {
@@ -79,5 +77,3 @@ export const apiUpdateUser = async (
 		});
 	return response;
 };
-
-

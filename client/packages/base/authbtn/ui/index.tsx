@@ -3,14 +3,27 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../../core/stores/useauthstore/data';
 import type { User } from '@mojjen/productdata';
 import { Modal } from '../../modal/ui';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AuthForm } from '@mojjen/authform';
+import { apiGetUserById } from '../../../core/api/apiusers/data';
 
 export const AuthBtn = () => {
 	const { user, logout } = useAuthStore();
 	const navigate = useNavigate();
 	const [modalOpen, setModalOpen] = useState<boolean>(false);
 	const [authTitle, setAuthTitle] = useState<string>('Logga in');
+	const [currentUserName, setCurrentUserName] = useState<string | null>(null);
+
+	useEffect(() => {
+		if (!user) setCurrentUserName(null);
+
+		const fetchUser = async () => {
+			if (!user?.userId || !user.token) return;
+			const userFromBackend = await apiGetUserById(user?.userId, user?.token);
+			setCurrentUserName(userFromBackend.data.user.attribute.firstname);
+		};
+		fetchUser();
+	}, [user]);
 
 	const handleLogin = (user: User | null) => {
 		if (user) {
@@ -43,7 +56,7 @@ export const AuthBtn = () => {
 						alt="Profilikon"
 					/>
 					<h5 className="heading-5 text-light-beige">
-						{user ? user.firstname : 'Logga in'}
+						{currentUserName ? currentUserName : 'Logga in'}
 					</h5>
 				</button>
 

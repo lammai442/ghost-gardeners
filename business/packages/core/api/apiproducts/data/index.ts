@@ -25,8 +25,13 @@ export const apiGetMeals = async () => {
 };
 
 export async function cancelOrder(orderId: string) {
+	const token = localStorage.getItem('token');
 	const res = await fetch(`${import.meta.env.VITE_API_URL}/order/${orderId}`, {
 		method: 'DELETE',
+		headers: {
+			Authorization: `${token}`,
+			'Content-Type': 'application/json',
+		},
 	});
 
 	if (!res.ok) {
@@ -41,6 +46,30 @@ export async function apiRegisterUser(user: User) {
 
 	try {
 		const response = await axios.post(`${apiUrl}/auth/register`, user);
+		return {
+			success: true,
+			data: response.data,
+			status: response.status,
+		};
+	} catch (error: any) {
+		return {
+			success: false,
+			data: error.response?.data || { message: error.message },
+			status: error.response?.status || 500,
+		};
+	}
+}
+
+export async function apiGetUserByToken(token: string) {
+	const apiUrl: string = import.meta.env.VITE_API_URL;
+
+	try {
+		const response = await axios.get(`${apiUrl}/auth/me`, {
+			headers: {
+				Authorization: `Bearer ${token}`,
+				'Content-Type': 'application/json',
+			},
+		});
 		return {
 			success: true,
 			data: response.data,
@@ -79,11 +108,21 @@ export async function apiDeletItemFromOrder(
 	itemId: string
 ) {
 	const apiUrl: string = import.meta.env.VITE_API_URL;
+	const token = localStorage.getItem('token');
 
 	try {
-		const response = await axios.put(`${apiUrl}/orders/deleteitem/${orderId}`, {
-			itemId: itemId,
-		});
+		const response = await axios.put(
+			`${apiUrl}/orders/deleteitem/${orderId}`,
+			{
+				itemId: itemId,
+			},
+			{
+				headers: {
+					Authorization: `${token}`,
+					'Content-Type': 'application/json',
+				},
+			}
+		);
 		return {
 			success: true,
 			updatedOrder: response.data.updatedOrder,

@@ -65,22 +65,27 @@ export const OrderPage = () => {
 	 */
 	useEffect(() => {
 		const fetchOrders = async () => {
+			const token = localStorage.getItem('token');
+
 			try {
+				const apiUrl = import.meta.env.VITE_API_URL;
+
+				// Helper för fetch + auth
+				const fetchWithAuth = (url: string) =>
+					fetch(url, {
+						headers: {
+							Authorization: `Bearer ${token}`,
+							'Content-Type': 'application/json',
+						},
+					}).then((res) => res.json());
+
+				// Kör alla anrop parallellt
 				const [pendingRes, confirmedRes, doneRes] = await Promise.all([
-					fetch(`${import.meta.env.VITE_API_URL}/orders/status/pending`).then(
-						(res) => res.json()
-					),
-					fetch(`${import.meta.env.VITE_API_URL}/orders/status/confirmed`).then(
-						(res) => res.json()
-					),
-					fetch(`${import.meta.env.VITE_API_URL}/orders/status/done`).then(
-						(res) => res.json()
-					),
+					fetchWithAuth(`${apiUrl}/orders/status/pending`),
+					fetchWithAuth(`${apiUrl}/orders/status/confirmed`),
+					fetchWithAuth(`${apiUrl}/orders/status/done`),
 				]);
 
-				/**
-				 * Updates states with the orders
-				 */
 				setPendingOrders(pendingRes.orders || []);
 				setConfirmedOrders(confirmedRes.orders || []);
 				setDoneOrders(doneRes.orders || []);
@@ -102,11 +107,15 @@ export const OrderPage = () => {
 		updatedItems?: OrderItem[]
 	) => {
 		const orderIdForApi = trimOrderId(selectedOrder?.SK, true);
+		const token = localStorage.getItem('token');
 
 		try {
 			await fetch(`${import.meta.env.VITE_API_URL}/order/${orderIdForApi}`, {
 				method: 'PUT',
-				headers: { 'Content-Type': 'application/json' },
+				headers: {
+					Authorization: `Bearer ${token}`,
+					'Content-Type': 'application/json',
+				},
 				body: JSON.stringify({
 					status: newStatus,
 					userComment: selectedOrder?.attribute?.userComment,

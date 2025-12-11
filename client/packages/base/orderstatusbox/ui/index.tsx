@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { cancelOrder } from '../../../core/api/apiproducts/data';
 import { useCartStore } from '../../../core/stores/usecartstore/data';
 import { Modal } from '@mojjen/modal';
+import { useAuthStore } from '@mojjen/useauthstore';
 
 type Props = {
 	orderId?: string;
@@ -31,6 +32,7 @@ export const OrderStatusBox = ({ orderId, status, setStatus }: Props) => {
 	};
 
 	const [showCancelModal, setShowCancelModal] = useState(false);
+	const { user } = useAuthStore();
 
 	const handleCancel = () => {
 		console.log('handleCancel clicked');
@@ -39,9 +41,16 @@ export const OrderStatusBox = ({ orderId, status, setStatus }: Props) => {
 
 	const confirmCancel = async () => {
 		try {
+			let response;
 			if (orderId) {
-				await cancelOrder(orderId);
+				if (!user?.token) {
+					throw new Error('User token is required');
+				}
+
+				response = await cancelOrder(orderId, user.token);
 			}
+
+			console.log('response: ', response);
 
 			setStatus('cancelled');
 			navigate('/');
@@ -56,11 +65,22 @@ export const OrderStatusBox = ({ orderId, status, setStatus }: Props) => {
 
 	const handleEdit = async () => {
 		if (!orderId) return;
+		if (!user?.token) {
+			throw new Error('User token is required');
+		}
 		// setLoading(true);
 		try {
 			const res = await fetch(
-				`${import.meta.env.VITE_API_URL}/order/${orderId}`
+				`${import.meta.env.VITE_API_URL}/order/${orderId}`,
+				{
+					method: 'GET',
+					headers: {
+						Authorization: `Bearer ${user.token}`,
+						'Content-Type': 'application/json',
+					},
+				}
 			);
+
 			if (!res.ok) throw new Error('Kunde inte hämta ordern');
 			const data = await res.json();
 
