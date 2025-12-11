@@ -10,12 +10,15 @@ import type { FullUser } from '@mojjen/productdata';
 
 import { apiUpdateUser } from '@mojjen/apiusers';
 
+import { Modal } from '@mojjen/modal';
+
 type Props = {
 	fetchedUser: FullUser | null;
 };
 
 export const ProfileForm = ({ fetchedUser }: Props) => {
 	const { user } = useAuthStore();
+	const [modalOpen, setModalOpen] = useState<boolean>(false);
 
 	if (!user) return null;
 	if (fetchedUser === null) return;
@@ -28,6 +31,8 @@ export const ProfileForm = ({ fetchedUser }: Props) => {
 	const [repeatedPassword, setRepeatedPassword] = useState('***********');
 	const [readOnly, setReadOnly] = useState(true);
 
+	const [errorMsg, setErrorMsg] = useState('');
+
 	const handleChange = (
 		e: ChangeEvent<HTMLInputElement>,
 		setFunction: (string: string) => void
@@ -35,126 +40,164 @@ export const ProfileForm = ({ fetchedUser }: Props) => {
 		setFunction(e.target.value);
 	};
 
+	const handleCancel = () => {
+		setFirstname(fetchedUser.attribute.firstname);
+		setLastname(fetchedUser.attribute.lastname);
+		setEmail(fetchedUser.email);
+		setPhone(fetchedUser.attribute.phone);
+		setPassword('***********');
+		setRepeatedPassword('***********');
+		setReadOnly(true);
+	};
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
-		let updatedUser = {};
-		// ! Not so DRY... In a galaxy far far away I plan to fix it later.
-		firstname !== fetchedUser.attribute.firstname &&
-			(updatedUser = { ...updatedUser, firstname: firstname });
+		try {
+			let updatedUser = {};
 
-		lastname !== fetchedUser.attribute.lastname &&
-			(updatedUser = { ...updatedUser, lastname: lastname });
+			firstname !== fetchedUser.attribute.firstname &&
+				(updatedUser = { ...updatedUser, firstname: firstname });
 
-		email !== fetchedUser.email &&
-			(updatedUser = { ...updatedUser, email: email });
+			lastname !== fetchedUser.attribute.lastname &&
+				(updatedUser = { ...updatedUser, lastname: lastname });
 
-		phone !== fetchedUser.attribute.phone &&
-			(updatedUser = { ...updatedUser, phone: phone });
+			email !== fetchedUser.email &&
+				(updatedUser = { ...updatedUser, email: email });
 
-		password !== '***********' &&
-			password === repeatedPassword &&
-			(updatedUser = { ...updatedUser, password: password });
+			phone !== fetchedUser.attribute.phone &&
+				(updatedUser = { ...updatedUser, phone: phone });
 
-		const result = await apiUpdateUser(user.userId, updatedUser, user.token);
-		console.log('result: ', result);
+			password !== '***********' &&
+				password === repeatedPassword &&
+				(updatedUser = { ...updatedUser, password: password });
 
-		setReadOnly(true);
+			const result = await apiUpdateUser(user.userId, updatedUser, user.token);
+
+			if (result?.data?.success === true) {
+				const newData = result.data.user;
+				setFirstname(newData.attribute.firstname);
+				setLastname(newData.attribute.lastname);
+				setEmail(newData.email);
+				setPhone(newData.attribute.phone);
+				setPassword('***********');
+				setRepeatedPassword('***********');
+				setReadOnly(true);
+			} else {
+				console.log(result);
+
+				setErrorMsg(result || 'Ett oväntat fel inträffade');
+				setModalOpen(true);
+			}
+		} catch (error) {
+			setErrorMsg('Ett oväntat fel inträffade');
+			setModalOpen(true);
+		}
 	};
 
 	return (
-		<form
-			onSubmit={handleSubmit}
-			className="flex flex__column flex__gap-1 profile-form"
-		>
-			<h3 className="heading-3">Profilinformation</h3>
-			<ContentBox extraClass="flex flex__column flex__gap-1-5 profile-form__content">
-				<ReusableInput
-					type="text"
-					name="firstname"
-					onChange={(e) => handleChange(e, setFirstname)}
-					value={firstname || ''}
-					label="Förnamn"
-					autocomplete="given-name"
-					readonly={readOnly}
-				/>
-				<ReusableInput
-					type="text"
-					name="lastname"
-					onChange={(e) => handleChange(e, setLastname)}
-					value={lastname || ''}
-					label="Efternamn"
-					autocomplete="family-name"
-					readonly={readOnly}
-				/>
-				<ReusableInput
-					type="email"
-					name="email"
-					onChange={(e) => handleChange(e, setEmail)}
-					value={email}
-					label="Mailadress"
-					autocomplete="email"
-					readonly={readOnly}
-				/>
-				<ReusableInput
-					type="tel"
-					name="phone"
-					onChange={(e) => handleChange(e, setPhone)}
-					value={phone || ''}
-					label="Telefonnummer"
-					autocomplete="tel"
-					readonly={readOnly}
-				/>
-				<ReusableInput
-					type="password"
-					name="password"
-					onChange={(e) => handleChange(e, setPassword)}
-					value={password}
-					label={readOnly ? 'Lösenord' : 'Ändra lösenord'}
-					autocomplete="current-password"
-					readonly={readOnly}
-				/>
-				{readOnly === false && (
+		<>
+			<Modal
+				open={modalOpen}
+				titleContent={
+					<h3 className="heading-3 text-light-beige">Aj då, försök igen</h3>
+				}
+				setModalOpen={setModalOpen}
+			>
+				<p className="base">{errorMsg}</p>
+			</Modal>
+			<form
+				onSubmit={handleSubmit}
+				className="flex flex__column flex__gap-1 profile-form"
+			>
+				<h3 className="heading-3">Profilinformation</h3>
+				<ContentBox extraClass="flex flex__column flex__gap-1-5 profile-form__content">
+					<ReusableInput
+						type="text"
+						name="firstname"
+						onChange={(e) => handleChange(e, setFirstname)}
+						value={firstname || ''}
+						label="Förnamn"
+						autocomplete="given-name"
+						readonly={readOnly}
+					/>
+					<ReusableInput
+						type="text"
+						name="lastname"
+						onChange={(e) => handleChange(e, setLastname)}
+						value={lastname || ''}
+						label="Efternamn"
+						autocomplete="family-name"
+						readonly={readOnly}
+					/>
+					<ReusableInput
+						type="email"
+						name="email"
+						onChange={(e) => handleChange(e, setEmail)}
+						value={email}
+						label="Mailadress"
+						autocomplete="email"
+						readonly={readOnly}
+					/>
+					<ReusableInput
+						type="tel"
+						name="phone"
+						onChange={(e) => handleChange(e, setPhone)}
+						value={phone || ''}
+						label="Telefonnummer"
+						autocomplete="tel"
+						readonly={readOnly}
+					/>
 					<ReusableInput
 						type="password"
 						name="password"
-						onChange={(e) => handleChange(e, setRepeatedPassword)}
-						value={repeatedPassword}
-						label="Upprepa nytt lösenord"
+						onChange={(e) => handleChange(e, setPassword)}
+						value={password}
+						label={readOnly ? 'Lösenord' : 'Ändra lösenord'}
 						autocomplete="current-password"
 						readonly={readOnly}
 					/>
-				)}
-				{readOnly === true ? (
-					<Button
-						extraClasses="profile-form__btn"
-						onClick={() => setReadOnly(false)}
-						aria="Uppdatera dina uppgifter"
-					>
-						Uppdatera
-					</Button>
-				) : (
-					<div className="flex flex__gap-1 profile-form__btns">
+					{readOnly === false && (
+						<ReusableInput
+							type="password"
+							name="password"
+							onChange={(e) => handleChange(e, setRepeatedPassword)}
+							value={repeatedPassword}
+							label="Upprepa nytt lösenord"
+							autocomplete="current-password"
+							readonly={readOnly}
+						/>
+					)}
+					{readOnly === true ? (
 						<Button
 							extraClasses="profile-form__btn"
 							onClick={() => setReadOnly(false)}
-							style="red"
 							aria="Uppdatera dina uppgifter"
 						>
-							Avbryt
+							Uppdatera
 						</Button>
+					) : (
+						<div className="flex flex__gap-1 profile-form__btns">
+							<Button
+								extraClasses="profile-form__btn"
+								onClick={handleCancel}
+								style="red"
+								aria="Uppdatera dina uppgifter"
+							>
+								Avbryt
+							</Button>
 
-						<Button
-							type={'submit'}
-							aria="Uppdatera dina uppgifter"
-							extraClasses="profile-form__btn"
-						>
-							Ändra uppgifter
-						</Button>
-					</div>
-				)}
-			</ContentBox>
-		</form>
+							<Button
+								type={'submit'}
+								aria="Uppdatera dina uppgifter"
+								extraClasses="profile-form__btn"
+							>
+								Ändra uppgifter
+							</Button>
+						</div>
+					)}
+				</ContentBox>
+			</form>
+		</>
 	);
 };
 
@@ -162,4 +205,6 @@ export const ProfileForm = ({ fetchedUser }: Props) => {
  * Author: Klara Sköld
  * Form for editing profile info.
  *
+ * Update: Klara
+ * Added VERY basic mvp validation with error messages from backend. This component needs refactoring. Or to be deleted and replaced with an updated Authform.
  */

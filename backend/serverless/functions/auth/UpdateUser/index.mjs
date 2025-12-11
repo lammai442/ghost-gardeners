@@ -18,6 +18,7 @@ export const handler = middy(async (event) => {
 		if (result) {
 			return sendResponses(201, {
 				success: true,
+				user: result,
 				messages: 'User successfully updated',
 			});
 		}
@@ -40,4 +41,7 @@ export const handler = middy(async (event) => {
  *
  * Update: Klara
  * authenticateUser added
+ *
+ * Update: Klara
+ * Return updated user
  */
