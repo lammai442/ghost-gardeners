@@ -19,19 +19,16 @@ export const handler = middy(async (event) => {
 
 	if (!validPassword) throw new Error('Fel lösenord');
 
-	const token = generateToken(user);
+	const token = generateToken({
+		id: user.attribute.userId,
+		role: user.attribute.role,
+	});
 
 	return sendResponses(200, {
 		success: true,
 		messages: 'Inloggningen lyckades',
 		data: {
-			firstname: user.attribute.firstname,
-			phone: user.attribute.phone,
-			lastname: user.attribute.lastname,
-			email: user.email,
-			role: user.attribute.role,
-			token: token,
-			userId: user.attribute.userId,
+			token,
 		},
 	});
 })

@@ -13,6 +13,7 @@ import type { Meal } from '@mojjen/productdata';
 import { Comment } from '@mojjen/comment';
 import { ModalLoading } from '@mojjen/modalloading';
 import { useAuthStore } from '@mojjen/useauthstore';
+import { apiPostOrder } from '../../../core/api/apiorders';
 
 type GetMealsResponse = {
 	data: Meal[];
@@ -45,21 +46,33 @@ export const CartPage = () => {
 			// Transformera cart → order-format
 			const items = getItemsForOrder();
 			// POST till backend
-			const response = await fetch(`${apiUrl}/order`, {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({
-					items,
-					userComment: comment,
-					staffComment: '',
-					userId: user?.userId,
-				}),
-			});
-			const data = await response.json();
+			const order = {
+				items,
+				userComment: comment,
+				staffComment: '',
+				userId: user?.userId || null,
+			};
+
+			if (!user?.token) {
+				throw new Error('User token is required');
+			}
+			const response = await apiPostOrder(order, user.token);
+			console.log('response: ', response.data.order);
+			// const response = await fetch(`${apiUrl}/order`, {
+			// 	method: 'POST',
+			// 	headers: { 'Content-Type': 'application/json' },
+			// 	body: JSON.stringify({
+			// 		items,
+			// 		userComment: comment,
+			// 		staffComment: '',
+			// 		userId: user?.userId,
+			// 	}),
+			// });
+			// const data = await response.json();
 			setLoading(false);
 			emptyCart();
 			// Navigera till ConfirmedOrderPage med orderdata
-			navigate('/order', { state: data.order });
+			navigate('/order', { state: response.data.order });
 		} catch (error) {
 			console.error('Error creating order:', error);
 		}

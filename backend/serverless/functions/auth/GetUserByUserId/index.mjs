@@ -13,7 +13,7 @@ export const handler = middy(async (event) => {
 	const userId = event.pathParameters.id;
 
 	// Continue only if the logged-in user matches the userId from the path parameter.
-	if (event.user.attribute.userId === userId) {
+	if (event.user.sub === userId) {
 		const user = await getUserById(userId);
 
 		if (user) {

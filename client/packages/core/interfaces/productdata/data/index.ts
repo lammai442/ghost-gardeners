@@ -66,7 +66,7 @@ export interface User {
 	firstname?: string;
 	lastname?: string;
 	phone?: string;
-	email: string;
+	email?: string;
 	password?: string;
 	token?: string;
 	role?: string;

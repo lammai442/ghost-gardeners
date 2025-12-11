@@ -7,8 +7,18 @@ export const apiGetOrdersByUser = async (
 ) => {
 	const apiUrl: string = import.meta.env.VITE_API_URL;
 
+	if (!userId || !token) {
+		return {
+			success: false,
+			data: null,
+			status: 400,
+			message: 'User ID eller token saknas',
+		};
+	}
+
 	try {
 		const response = await fetch(`${apiUrl}/order/user/${userId}`, {
+			method: 'GET',
 			headers: {
 				Authorization: `Bearer ${token}`,
 				'Content-Type': 'application/json',

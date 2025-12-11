@@ -10,15 +10,23 @@ import { optionalAuthenticateUser } from '../../../middlewares/optionalAuthentic
 export const handler = middy(async (event) => {
 	const userId = event.pathParameters.id;
 
-	const response = await getAllOrdersByUserId(userId);
+	// Checking authorization
+	const user = event.user;
 
-	if (response) {
+	if (user.role !== 'ADMIN' && user.sub !== userId) {
+		return sendResponses(403, {
+			success: false,
+			message: 'Du har inte behörighet att komma åt dessa orders',
+		});
+	}
+
+	const orders = await getAllOrdersByUserId(userId);
+
+	if (orders) {
 		// ChatGPT solution for getting all itemId from all orders and remove duplicates
 		const uniqueItemIds = Array.from(
 			new Set(
-				response.flatMap((order) =>
-					order.attribute.items.map((item) => item.id)
-				)
+				orders.flatMap((order) => order.attribute.items.map((item) => item.id))
 			)
 		);
 
@@ -29,7 +37,7 @@ export const handler = middy(async (event) => {
 		return sendResponses(200, {
 			success: true,
 			messages: 'Successfully fetching all orders by userId',
-			orders: response,
+			orders: orders,
 			mealList: mealList,
 		});
 	} else {
@@ -39,6 +47,7 @@ export const handler = middy(async (event) => {
 		});
 	}
 })
+	// .use(authenticateUser())
 	.use(httpCors())
 	.use(optionalAuthenticateUser())
 	.use(errorHandler());
@@ -46,4 +55,5 @@ export const handler = middy(async (event) => {
 /**
  * Author: Lam
  * Lambda-handler to get all orders by userId
+ * Added authenticateUser for verify JWT
  */

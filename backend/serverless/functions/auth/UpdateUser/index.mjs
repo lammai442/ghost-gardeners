@@ -10,7 +10,11 @@ import { authenticateUser } from '../../../middlewares/authenticateUser.mjs';
 export const handler = middy(async (event) => {
 	const userId = event.pathParameters.id;
 	const updatedUser = event.body;
-	const user = await getUserById(userId);
+	const payload = event.user;
+
+	if (payload.sub !== userId) {
+		return sendResponses(403, { success: false, message: 'Forbidden' });
+	}
 
 	if (user) {
 		const result = await updateUserById(updatedUser, userId);
@@ -28,12 +32,24 @@ export const handler = middy(async (event) => {
 			message: 'Unauthorized user or invalid userId',
 		});
 	}
+
+	const user = await getUserById(userId);
+	if (!user) {
+		return sendResponses(404, { success: false, message: 'User not found' });
+	}
+
+	await updateUserById(updatedUser, userId);
+
+	return sendResponses(200, {
+		success: true,
+		message: 'User successfully updated',
+	});
 })
 	.use(httpJsonBodyParser())
 	.use(validateEmptyBody())
+	.use(validateUserUpdate())
 	.use(authenticateUser())
-	.use(errorHandler())
-	.use(validateUserUpdate());
+	.use(errorHandler());
 
 /**
  * Author: Klara
