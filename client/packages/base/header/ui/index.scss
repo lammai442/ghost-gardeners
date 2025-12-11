@@ -5,7 +5,9 @@
 	display: grid;
 	grid-template-columns: auto auto;
 	gap: 2rem;
+	z-index: 999;
 	align-items: center;
+	box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
 }
 
 .header__nav-container {
@@ -71,6 +73,13 @@
 	align-self: center;
 }
 
+.sticky {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	transition: all 0.5s ease;
+	animation: smoothScroll 1s forwards;
+}
 @media screen and (min-width: 993px) {
 	.header {
 		gap: 0;

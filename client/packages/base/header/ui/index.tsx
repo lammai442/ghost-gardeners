@@ -1,15 +1,22 @@
 import './index.scss';
 import { useCartStore } from '../../../core/stores/usecartstore/data';
 import { HamburgerMenu } from '@mojjen/hamburger-menu';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, type Ref } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 // import OutsideClickHandler from 'react-outside-click-handler';
 import { useOnClickOutside } from 'usehooks-ts';
 import { useRef } from 'react';
 import { HamburgerIcon } from '@mojjen/hamburger-icon';
 import { AuthBtn } from '../../authbtn/ui';
+import clsx from 'clsx';
 
-export const HeaderComp = () => {
+type Props = {
+	id: string;
+	headerRef: Ref<HTMLElement>;
+	sticky: { isSticky: boolean; offset: number };
+};
+
+export const HeaderComp = ({ id, headerRef, sticky }: Props) => {
 	const { cartCount } = useCartStore();
 	const [showNavMenu, setShowNavMenu] = useState(false);
 	const [cartAnimation, setCartAnimation] = useState(false);
@@ -21,6 +28,8 @@ export const HeaderComp = () => {
 	const handleClickOutside = (): void => {
 		setShowNavMenu(false);
 	};
+
+	const classNames = clsx('header bg-ketchup', { sticky: sticky.isSticky });
 
 	// Cartanimation
 	useEffect(() => {
@@ -40,7 +49,7 @@ export const HeaderComp = () => {
 	}, [location.pathname]);
 
 	return (
-		<header className="header bg-ketchup">
+		<header id={id} ref={headerRef} className={classNames}>
 			{/* <section className="header__container flex flex__space-between"> */}
 			{/**
 			 * * ----- Sidloggan -----
@@ -146,4 +155,7 @@ export const HeaderComp = () => {
  * Modified: Lam
  * Added user from usaAuthStore and implemented ternary operator for log in or username
  * Added animation to cartCount
+ *
+ * Modified: Klara
+ * Sticky header.
  */
