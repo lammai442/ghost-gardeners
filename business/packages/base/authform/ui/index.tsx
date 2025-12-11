@@ -5,7 +5,7 @@ import { Button } from '@mojjen/button';
 import { ReusableInput } from '@mojjen/reusableinput';
 import { validateAuthForm } from '@mojjen/helpfunctions';
 import { loginInputs } from '@mojjen/data';
-import { apiLoginUser } from '@mojjen/apiusers';
+import { apiGetUserByToken, apiLoginUser } from '@mojjen/apiusers';
 import type { User } from '@mojjen/userdata';
 import { LoadingMsg } from '@mojjen/loadingmsg';
 import { Modal } from '@mojjen/modal';
@@ -56,7 +56,7 @@ export const AuthForm = () => {
 		// Locks submission to avoid spam clicks
 		setLoading(true);
 		// Builds user object to store after successful login/register
-		let user: User;
+		let user;
 
 		user = {
 			email: form.email,
@@ -72,14 +72,21 @@ export const AuthForm = () => {
 			return;
 		}
 
-		user = response.data.data as User;
-		if (user.role !== 'ADMIN') {
+		const token: string = response.data.data.token;
+		const res = await apiGetUserByToken(token);
+
+		const userFromBackend = res.data.user;
+		if (userFromBackend.attribute.role !== 'ADMIN') {
 			setErrors({ apiError: 'Ditt konto har inte tillgång till denna sida' });
 			return;
 		}
-
+		const localStorageUser = {
+			token: token,
+			userId: userFromBackend.attribute.userId,
+			role: userFromBackend.attribute.role,
+		};
 		// On successful login, update global user state and navigate to homepage
-		updateUserStorage(user);
+		updateUserStorage(localStorageUser);
 		navigate('/');
 	};
 

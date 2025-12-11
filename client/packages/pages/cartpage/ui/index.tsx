@@ -57,7 +57,6 @@ export const CartPage = () => {
 				throw new Error('User token is required');
 			}
 			const response = await apiPostOrder(order, user.token);
-			console.log('response: ', response.data.order);
 			// const response = await fetch(`${apiUrl}/order`, {
 			// 	method: 'POST',
 			// 	headers: { 'Content-Type': 'application/json' },

@@ -24,7 +24,7 @@ export const OrderPage = () => {
 	useEffect(() => {
 		const fetchMeals = async () => {
 			const res = await apiGetMeals();
-			if (res.success) setAllProdList(res.data);
+			if (res.success) setAllProdList(res.data.menuItems);
 		};
 		fetchMeals();
 	}, []);
@@ -65,7 +65,7 @@ export const OrderPage = () => {
 	 */
 	useEffect(() => {
 		const fetchOrders = async () => {
-			const token = localStorage.getItem('token');
+			const userFromLocal = JSON.parse(localStorage.getItem('user') || '{}');
 
 			try {
 				const apiUrl = import.meta.env.VITE_API_URL;
@@ -74,7 +74,7 @@ export const OrderPage = () => {
 				const fetchWithAuth = (url: string) =>
 					fetch(url, {
 						headers: {
-							Authorization: `Bearer ${token}`,
+							Authorization: `Bearer ${userFromLocal.token}`,
 							'Content-Type': 'application/json',
 						},
 					}).then((res) => res.json());

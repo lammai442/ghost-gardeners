@@ -38,7 +38,6 @@ export const ProfilePage = () => {
 			if (!user) return;
 
 			const response = await apiGetOrdersByUser(user.userId, user.token);
-			console.log('response: ', response);
 			if (response) setUserOrdersList(response.orders);
 		};
 		fetchOrdersByUser();

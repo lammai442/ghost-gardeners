@@ -66,15 +66,15 @@ export const ConfirmedOrderPage = () => {
 	// useEffect(()=>{setStatus(order.status)},[status])
 
 	const generateOrderArticles = (): ReactNode => {
-		return activeOrder.attribute.items.map((item) => (
-			<OrderArticle key={item.name} item={item} />
+		return activeOrder.attribute.items.map((item, index) => (
+			<OrderArticle key={index} item={item} />
 		));
 	};
 
 	const generateOrderDeletedArticles = (): ReactNode => {
 		if (activeOrder.attribute.deletedItems) {
-			return activeOrder.attribute.deletedItems.map((item) => (
-				<OrderArticle key={item.name} item={item} deletedItems={true} />
+			return activeOrder.attribute.deletedItems.map((item, index) => (
+				<OrderArticle key={index} item={item} deletedItems={true} />
 			));
 		}
 	};
