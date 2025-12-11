@@ -108,7 +108,7 @@ export async function apiDeletItemFromOrder(
 	itemId: string
 ) {
 	const apiUrl: string = import.meta.env.VITE_API_URL;
-	const token = localStorage.getItem('token');
+	const userFromLocal = JSON.parse(localStorage.getItem('user') || '{}');
 
 	try {
 		const response = await axios.put(
@@ -118,7 +118,7 @@ export async function apiDeletItemFromOrder(
 			},
 			{
 				headers: {
-					Authorization: `${token}`,
+					Authorization: `Bearer ${userFromLocal.token}`,
 					'Content-Type': 'application/json',
 				},
 			}

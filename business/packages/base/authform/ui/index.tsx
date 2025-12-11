@@ -6,7 +6,6 @@ import { ReusableInput } from '@mojjen/reusableinput';
 import { validateAuthForm } from '@mojjen/helpfunctions';
 import { loginInputs } from '@mojjen/data';
 import { apiGetUserByToken, apiLoginUser } from '@mojjen/apiusers';
-import type { User } from '@mojjen/userdata';
 import { LoadingMsg } from '@mojjen/loadingmsg';
 import { Modal } from '@mojjen/modal';
 import { useNavigate } from 'react-router-dom';

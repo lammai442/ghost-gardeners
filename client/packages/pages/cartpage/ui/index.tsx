@@ -28,7 +28,6 @@ export const CartPage = () => {
 	const [comment, setComment] = useState('');
 	const [loading, setLoading] = useState<boolean>(false);
 	const [commentCount, setCommentCount] = useState(0);
-	const apiUrl = import.meta.env.VITE_API_URL;
 
 	useEffect(() => {
 		const fetchMeals = async () => {

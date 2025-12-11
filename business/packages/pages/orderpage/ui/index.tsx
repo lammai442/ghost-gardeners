@@ -107,13 +107,13 @@ export const OrderPage = () => {
 		updatedItems?: OrderItem[]
 	) => {
 		const orderIdForApi = trimOrderId(selectedOrder?.SK, true);
-		const token = localStorage.getItem('token');
+		const userFromLocal = JSON.parse(localStorage.getItem('user') || '{}');
 
 		try {
 			await fetch(`${import.meta.env.VITE_API_URL}/order/${orderIdForApi}`, {
 				method: 'PUT',
 				headers: {
-					Authorization: `Bearer ${token}`,
+					Authorization: `Bearer ${userFromLocal.token}`,
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify({
