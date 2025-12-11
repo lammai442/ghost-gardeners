@@ -16,6 +16,23 @@ export const handler = middy(async (event) => {
 		return sendResponses(403, { success: false, message: 'Forbidden' });
 	}
 
+	if (user) {
+		const result = await updateUserById(updatedUser, userId);
+
+		if (result) {
+			return sendResponses(201, {
+				success: true,
+				user: result,
+				messages: 'User successfully updated',
+			});
+		}
+	} else {
+		return sendResponses(404, {
+			success: false,
+			message: 'Unauthorized user or invalid userId',
+		});
+	}
+
 	const user = await getUserById(userId);
 	if (!user) {
 		return sendResponses(404, { success: false, message: 'User not found' });
@@ -40,4 +57,7 @@ export const handler = middy(async (event) => {
  *
  * Update: Klara
  * authenticateUser added
+ *
+ * Update: Klara
+ * Return updated user
  */

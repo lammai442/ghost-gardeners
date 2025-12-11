@@ -11,6 +11,7 @@ import { useAuthStore } from '@mojjen/useauthstore';
 import { useEffect, useState } from 'react';
 import type { Order } from '@mojjen/productdata';
 import { useWebSocketStore } from '@mojjen/usewebsocketstore';
+import { LoadingMsg } from '@mojjen/loading-msg';
 
 export const ProfilePage = () => {
 	const { user } = useAuthStore();
@@ -36,7 +37,7 @@ export const ProfilePage = () => {
 		const fetchOrdersByUser = async () => {
 			if (!user) return;
 
-			const response = await apiGetOrdersByUser(user.userId);
+			const response = await apiGetOrdersByUser(user.userId, user.token);
 			if (response) setUserOrdersList(response.orders);
 		};
 		fetchOrdersByUser();
@@ -50,11 +51,12 @@ export const ProfilePage = () => {
 	};
 
 	// Rendera loading innan user finns
-	if (!user || loadingUser) return <div>Laddar...</div>;
+	if (!user || loadingUser) return <LoadingMsg title="Laddar" />;
 
 	return (
 		<Page titleText="Mitt konto" extraClasses="flex flex__column profile">
 			<ProfileForm fetchedUser={fetchedUser} />
+
 			<div className="flex flex__column flex__gap-2">
 				<h3 className="heading-3">Orderhistorik</h3>
 				<ul className="grid profile__orders-list">{generateListItems()}</ul>
