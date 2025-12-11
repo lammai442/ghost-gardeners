@@ -4,6 +4,13 @@
 	box-sizing: border-box;
 }
 
+// Makes the footer stick to the bottom of the page.
+.app {
+	min-height: 100vh;
+	background-color: $color-light-beige;
+	grid-template-rows: auto 1fr auto;
+}
+
 .flex {
 	display: flex;
 
@@ -87,10 +94,6 @@
 
 .d-none {
 	display: none;
-}
-
-body {
-	background-color: $color-light-beige;
 }
 
 button {

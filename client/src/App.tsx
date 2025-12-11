@@ -4,17 +4,14 @@ import { FooterComp } from '@mojjen/footer';
 import { Outlet } from 'react-router-dom';
 // import { useWebsocketStore } from '@mojjen/usewebsocketstore';
 import { useWebSocketHook } from '@mojjen/usewebsockethook';
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import { useAuthStore } from '@mojjen/useauthstore';
 
-/**
- * Modified: StefanMogren
- *
- * Adjusted how BrowserRouter and RouterProvider is set up
- */
-
 function App() {
+	const [sticky, setSticky] = useState({ isSticky: false, offset: 0 });
+	const headerRef = useRef<HTMLHeadingElement>(null);
+
 	// Initializes the WebSocket when the webpage is loaded.
 	useWebSocketHook();
 
@@ -38,10 +35,38 @@ function App() {
 		return () => clearInterval(interval);
 	}, [user, logout]);
 
+	// Keeps track on page scroll and toggles sticky header styling
+	const handleScroll = (elTopOffset: number, elHeight: number) => {
+		if (window.pageYOffset > elTopOffset + elHeight) {
+			setSticky({ isSticky: true, offset: elHeight });
+		} else {
+			setSticky({ isSticky: false, offset: 0 });
+		}
+	};
+
+	// Add/remove scroll event listener
+	useEffect(() => {
+		if (headerRef.current === null) return;
+		const header = headerRef.current.getBoundingClientRect();
+		const handleScrollEvent = () => {
+			handleScroll(header.top, header.height);
+		};
+
+		window.addEventListener('scroll', handleScrollEvent);
+
+		return () => {
+			window.removeEventListener('scroll', handleScrollEvent);
+		};
+	}, []);
+
 	return (
 		<>
-			<div className="app">
-				<HeaderComp />
+			<div className="app grid" style={{ marginTop: sticky.offset }}>
+				<HeaderComp
+					sticky={sticky}
+					headerRef={headerRef}
+					id={'sticky-header'}
+				/>
 
 				<Outlet />
 
@@ -52,3 +77,12 @@ function App() {
 }
 
 export default App;
+
+/**
+ * Modified: StefanMogren
+ *
+ * Adjusted how BrowserRouter and RouterProvider is set up
+ *
+ * Modified: Klara
+ * Sticky header. Inspo: https://stackblitz.com/edit/sticky-header-react?file=src%2Findex.css
+ */
