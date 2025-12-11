@@ -47,6 +47,6 @@ export const optionalAuthenticateUser = () => ({
 });
 
 /**
- * Author: Klara
- * Verifies token.
+ * Author: StefanMogren
+ * Optional verification of token depending on whether the user is logged in or just a guest.
  */
