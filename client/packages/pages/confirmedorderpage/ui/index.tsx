@@ -13,6 +13,7 @@ import { OrderStatusBox } from '@mojjen/orderstatusbox';
 import { useWebSocketStore } from '@mojjen/usewebsocketstore';
 import { apiGetOrdersByUser } from '@mojjen/apiusers';
 import type { Order } from '@mojjen/productdata';
+import { useAuthStore } from '@mojjen/useauthstore';
 
 /**
  * Author: Klara Sköld
@@ -34,10 +35,11 @@ export const ConfirmedOrderPage = () => {
 	const [status, setStatus] = useState<string>('');
 	const { orderFromWs } = useWebSocketStore();
 	const [activeOrder, setActiveOrder] = useState<Order | null>(null);
+	const { user } = useAuthStore();
 
 	useEffect(() => {
 		const fetchOrdersByUser = async () => {
-			const response = await apiGetOrdersByUser(order.user);
+			const response = await apiGetOrdersByUser(order.user, user?.token);
 
 			if (response) {
 				// Currently have an array of all orders from the user. Need to find the one being displayed on the page.

@@ -1,11 +1,19 @@
 import type { UpdatedUser } from '@mojjen/productdata';
 import axios from 'axios';
 
-export const apiGetOrdersByUser = async (userId: string | undefined) => {
+export const apiGetOrdersByUser = async (
+	userId: string | undefined,
+	token: string | undefined
+) => {
 	const apiUrl: string = import.meta.env.VITE_API_URL;
 
 	try {
-		const response = await fetch(`${apiUrl}/order/user/${userId}`);
+		const response = await fetch(`${apiUrl}/order/user/${userId}`, {
+			headers: {
+				Authorization: `Bearer ${token}`,
+				'Content-Type': 'application/json',
+			},
+		});
 
 		const data = await response.json();
 
@@ -60,5 +68,3 @@ export const apiUpdateUser = async (
 		});
 	return response;
 };
-
-

@@ -6,25 +6,43 @@ export const optionalAuthenticateUser = () => ({
 			handler.event.headers?.Authorization ||
 			handler.event.headers?.authorization;
 
-		/* 		if (!authHeader) {
-			handler.user = null;
-			return next();
-		} */
+		const userIdFromParams = handler.event?.pathParameters.id;
 
-		const { userId } = handler.event.pathParameters;
+		try {
+			// If the ID from pathParameters is a guest, the API call continues with using the guest-id for its code.
+			if (!userIdFromParams) throw new Error('No userId provided.');
 
-		if (userId.substring(0, 4))
-			// const token = authHeader.split(' ')[1];
-			try {
-				const user = verifyToken(token);
+			if (userIdFromParams.substring(0, 5) === 'guest') {
+				return;
 
-				if (!user) throw new Error('Unauthorized');
+				// If the ID from pathParameters is user, then check if the token is valid and matches the userID
+			} else if (userIdFromParams.substring(0, 4) === 'user') {
+				if (!authHeader) throw new Error('No token provided.');
 
-				handler.event.user = user;
-			} catch (error) {
-				console.error('ERROR in authenticateUser()', error.message);
-				throw new Error('Unauthorized');
+				const token = authHeader.split(' ')[1];
+
+				const tokenData = verifyToken(token);
+				if (!tokenData) throw new Error('Expired or invalid token.');
+
+				// Koden här används innan rätt payload från token är fixad
+				if (tokenData.attribute.userId !== userIdFromParams) {
+					throw new Error('Unauthorized. UserId does not match token.');
+				}
+
+				/* 
+				Koden här använder man istället när token innehåller rätt payload
+				if (tokenData.sub !== userIdFromParams) {
+					throw new Error('Unauthorized. UserId does not match token.');
+				} */
+
+				handler.event.user = tokenData;
+			} else {
+				throw new Error('No userId provided.');
 			}
+		} catch (error) {
+			console.error('ERROR in authenticateUser()', error.message);
+			throw new Error('Unauthorized');
+		}
 	},
 });
 
