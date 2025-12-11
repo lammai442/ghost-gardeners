@@ -4,8 +4,8 @@ import { getAllOrdersByUserId } from '../../../services/order.mjs';
 import { sendResponses } from '../../../responses/index.mjs';
 import httpCors from '@middy/http-cors';
 import { getProductsByIds } from '../../../utils/orderHelpers.mjs';
-// import { authenticateUser } from '../../../middlewares/authenticateUser.mjs';
-import { optionalAuthenticateUser } from '../../../middlewares/optionalAuthenticateUser.mjs';
+import { authenticateUser } from '../../../middlewares/authenticateUser.mjs';
+// import { optionalAuthenticateUser } from '../../../middlewares/optionalAuthenticateUser.mjs';
 
 export const handler = middy(async (event) => {
 	const userId = event.pathParameters.id;
@@ -47,9 +47,9 @@ export const handler = middy(async (event) => {
 		});
 	}
 })
-	// .use(authenticateUser())
+	.use(authenticateUser())
 	.use(httpCors())
-	.use(optionalAuthenticateUser())
+	// .use(optionalAuthenticateUser())
 	.use(errorHandler());
 
 /**

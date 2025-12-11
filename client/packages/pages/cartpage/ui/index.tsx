@@ -14,6 +14,8 @@ import { Comment } from '@mojjen/comment';
 import { ModalLoading } from '@mojjen/modalloading';
 import { useAuthStore } from '@mojjen/useauthstore';
 import { apiPostOrder } from '../../../core/api/apiorders';
+import { Modal } from '@mojjen/modal';
+import { AuthForm } from '@mojjen/authform';
 
 type GetMealsResponse = {
 	data: Meal[];
@@ -27,7 +29,10 @@ export const CartPage = () => {
 	const [allProdList, setAllProdList] = useState<Meal[]>([]);
 	const [comment, setComment] = useState('');
 	const [loading, setLoading] = useState<boolean>(false);
+	const [openModal, setOpenModal] = useState<boolean>(false);
+	const [openLoginModal, setOpenLoginModal] = useState<boolean>(false);
 	const [commentCount, setCommentCount] = useState(0);
+	const [authTitle, setAuthTitle] = useState('Logga in');
 
 	useEffect(() => {
 		const fetchMeals = async () => {
@@ -39,6 +44,10 @@ export const CartPage = () => {
 
 	const navigate = useNavigate();
 	const handleSubmit = async () => {
+		if (!user) {
+			setOpenModal(true);
+			return;
+		}
 		setLoading(true);
 
 		try {
@@ -97,6 +106,46 @@ export const CartPage = () => {
 
 	return (
 		<Page titleText="Varukorg" extraClasses="cart flex">
+			{openModal && (
+				<Modal
+					open={openModal}
+					titleContent={
+						<h3 className="heading-3 text-light-beige">Ej inloggad</h3>
+					}
+					setModalOpen={setOpenModal}
+				>
+					<div className="flex flex__column flex__gap-0-5">
+						<span className="base">
+							Du behöver logga in för att göra en beställning.
+						</span>
+						<Button
+							aria="To log in button"
+							onClick={() => {
+								setOpenModal(false);
+								setOpenLoginModal(true);
+							}}
+						>
+							Till inloggning
+						</Button>
+					</div>
+				</Modal>
+			)}
+
+			{openLoginModal && (
+				<Modal
+					open={openLoginModal}
+					titleContent={
+						<h3 className="heading-3 text-light-beige">{authTitle}</h3>
+					}
+					setModalOpen={setOpenLoginModal}
+				>
+					<AuthForm
+						setModalOpen={setOpenLoginModal}
+						setAuthTitle={setAuthTitle}
+					/>
+				</Modal>
+			)}
+
 			{/* Cart items */}
 			{generateCartProducts()}
 			{loading && (
