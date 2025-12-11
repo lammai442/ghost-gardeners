@@ -16,6 +16,7 @@ export const handler = middy(async (event) => {
 		return sendResponses(403, { success: false, message: 'Forbidden' });
 	}
 
+	const user = await getUserById(userId);
 	if (user) {
 		const result = await updateUserById(updatedUser, userId);
 
@@ -33,7 +34,6 @@ export const handler = middy(async (event) => {
 		});
 	}
 
-	const user = await getUserById(userId);
 	if (!user) {
 		return sendResponses(404, { success: false, message: 'User not found' });
 	}
