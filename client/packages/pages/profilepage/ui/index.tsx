@@ -2,7 +2,10 @@ import './index.scss';
 import { Page } from '@mojjen/page';
 import { OrderHistoryListItem } from '@mojjen/orderhistorylistitem';
 import { ProfileForm } from '@mojjen/profileform';
-import { apiGetOrdersByUser } from '../../../core/api/apiusers/data';
+import {
+	apiGetOrdersByUser,
+	apiGetUserById,
+} from '../../../core/api/apiusers/data';
 import { useAuthStore } from '@mojjen/useauthstore';
 
 import { useEffect, useState } from 'react';
@@ -13,29 +16,45 @@ export const ProfilePage = () => {
 	const { user } = useAuthStore();
 	const [userOrdersList, setUserOrdersList] = useState<Order[]>([]);
 	const { orderFromWs } = useWebSocketStore();
+	const [fetchedUser, setFetchedUser] = useState(null);
+	const [loadingUser, setLoadingUser] = useState(true);
 
-	if (user === null) return;
+	// Hooks körs alltid, även om user är null
+	useEffect(() => {
+		const fetchUserById = async () => {
+			if (!user) return;
+
+			setLoadingUser(true);
+			const response = await apiGetUserById(user.userId, user.token);
+			setFetchedUser(response.data.user);
+			setLoadingUser(false);
+		};
+		fetchUserById();
+	}, [user]);
 
 	useEffect(() => {
 		const fetchOrdersByUser = async () => {
-			const response = await apiGetOrdersByUser(user.userId);
+			if (!user) return;
 
+			const response = await apiGetOrdersByUser(user.userId);
 			if (response) setUserOrdersList(response.orders);
 		};
-
 		fetchOrdersByUser();
-	}, [orderFromWs]);
+	}, [orderFromWs, user]);
 
 	const generateListItems = () => {
-		if (!userOrdersList) return;
-
-		return userOrdersList.map((order, index) => {
-			return <OrderHistoryListItem key={index} order={order} />;
-		});
+		if (!userOrdersList) return null;
+		return userOrdersList.map((order, index) => (
+			<OrderHistoryListItem key={index} order={order} />
+		));
 	};
+
+	// Rendera loading innan user finns
+	if (!user || loadingUser) return <div>Laddar...</div>;
+
 	return (
 		<Page titleText="Mitt konto" extraClasses="flex flex__column profile">
-			<ProfileForm />
+			<ProfileForm fetchedUser={fetchedUser} />
 			<div className="flex flex__column flex__gap-2">
 				<h3 className="heading-3">Orderhistorik</h3>
 				<ul className="grid profile__orders-list">{generateListItems()}</ul>
@@ -54,4 +73,6 @@ export const ProfilePage = () => {
  * Update: StefanMogren
  * Added dynamic update when WebSocket sends an updated order
  *
+ * Update: Klara
+ * Fetched user from api.
  */

@@ -8,6 +8,9 @@
  * Updated: Lam
  * Added allergenes? and change details to description to Meal
  * Added interface User
+ *
+ * Update: Klara
+ * Added FullUser,UpdatedUser, AttributeUser
  */
 
 export interface Meal {
@@ -68,6 +71,33 @@ export interface User {
 	token?: string;
 	role?: string;
 	userId?: string;
+}
+
+export interface FullUser {
+	PK: string;
+	SK: string;
+	attribute: UserAttribute;
+	category: string;
+	email: string;
+	id: string;
+	status: string;
+	statusCategory: string;
+}
+export interface UserAttribute {
+	createdAt: string;
+	firstname: string;
+	lastname: string;
+	password: string;
+	phone: string;
+	role: string;
+	userId: string;
+}
+export interface UpdatedUser {
+	firstname?: string;
+	lastname?: string;
+	password?: string;
+	phone?: string;
+	email?: string;
 }
 
 export interface WebSocketOrder {
