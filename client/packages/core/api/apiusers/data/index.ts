@@ -52,7 +52,6 @@ export const apiUpdateUser = async (
 	token: string | undefined
 ) => {
 	const apiUrl: string = import.meta.env.VITE_API_URL;
-	console.log('token: ', token);
 	const response = await axios
 		.patch(`${apiUrl}/auth/update/${userId}`, updatedUser, {
 			headers: {

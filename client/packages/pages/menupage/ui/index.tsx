@@ -41,7 +41,7 @@ export const MenuPage = () => {
 
 		if (user) {
 			const fetchOrdersByUser = async () => {
-				const response = await apiGetOrdersByUser(user.userId);
+				const response = await apiGetOrdersByUser(user.userId, user.token);
 				const sortedMealList = sortMealListByLetter(response.mealList);
 				setUserOrdersList(sortedMealList);
 			};

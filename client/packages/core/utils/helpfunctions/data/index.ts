@@ -6,7 +6,10 @@ export const generateId = (): string => {
 };
 
 // Validationform for a User
-export const validateAuthForm = (form: any, mode: 'login' | 'register') => {
+export const validateAuthForm = (
+	form: any,
+	mode: 'login' | 'register' | 'update'
+) => {
 	const e: Record<string, string> = {};
 
 	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
