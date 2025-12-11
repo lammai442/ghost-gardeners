@@ -26,7 +26,7 @@ export const apiGetMeals = async () => {
 export async function cancelOrder(orderId: string, token: string | undefined) {
 	const apiUrl: string = import.meta.env.VITE_API_URL;
 	const response = await axios
-		.post(`${apiUrl}/order/${orderId}`, {
+		.delete(`${apiUrl}/order/${orderId}`, {
 			headers: {
 				Authorization: `Bearer ${token}`,
 				'Content-Type': 'application/json',
@@ -46,6 +46,8 @@ export async function cancelOrder(orderId: string, token: string | undefined) {
 				status: error.response?.status || 500,
 			};
 		});
+
+	return response;
 
 	// const res = await fetch(`${import.meta.env.VITE_API_URL}/order/${orderId}`, {
 	// 	method: 'DELETE',

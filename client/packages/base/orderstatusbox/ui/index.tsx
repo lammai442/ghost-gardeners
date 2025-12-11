@@ -41,16 +41,15 @@ export const OrderStatusBox = ({ orderId, status, setStatus }: Props) => {
 
 	const confirmCancel = async () => {
 		try {
-			let response;
 			if (orderId) {
 				if (!user?.token) {
 					throw new Error('User token is required');
 				}
 
-				response = await cancelOrder(orderId, user.token);
-			}
+				const response = await cancelOrder(orderId, user.token);
 
-			console.log('response: ', response);
+				console.log('response: ', response);
+			}
 
 			setStatus('cancelled');
 			navigate('/');
