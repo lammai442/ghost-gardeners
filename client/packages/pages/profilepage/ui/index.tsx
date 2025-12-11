@@ -20,10 +20,10 @@ export const ProfilePage = () => {
 	const [fetchedUser, setFetchedUser] = useState(null);
 	const [loadingUser, setLoadingUser] = useState(true);
 
-	// Hooks körs alltid, även om user är null
 	useEffect(() => {
 		const fetchUserById = async () => {
 			if (!user) return;
+			console.log('user: ', user);
 
 			setLoadingUser(true);
 			const response = await apiGetUserById(user.userId, user.token);

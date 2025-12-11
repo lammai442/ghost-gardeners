@@ -18,6 +18,7 @@ export const handler = middy(async (event) => {
 
 	const user = await getUserById(userId);
 
+	const user = await getUserById(userId);
 	if (user) {
 		const result = await updateUserById(updatedUser, userId);
 
