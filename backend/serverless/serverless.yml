@@ -43,7 +43,13 @@ functions:
     events:
       - httpApi:
           path: /api/auth/update/{id}
-          method: PATCH     
+          method: PATCH
+  GetUserByUserId:
+    handler: functions/auth/GetUserByUserId/index.handler
+    events:
+      - httpApi:
+          path: /api/auth/me/{id}
+          method: GET     
   # Products
   GetMenu:
     handler: functions/menu/GetMenu/index.handler
