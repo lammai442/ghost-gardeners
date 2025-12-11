@@ -6,12 +6,6 @@ import { validateUserUpdate } from '../../../middlewares/validateUserUpdate.mjs'
 import { getUserById, updateUserById } from '../../../services/users.mjs';
 import { validateEmptyBody } from '../../../middlewares/validateEmptyBody.mjs';
 import { authenticateUser } from '../../../middlewares/authenticateUser.mjs';
-/**
- * Author: Klara
- * Function to update a user.
- * Edited by: ninerino
- * Edited function based on JWT
- */
 
 export const handler = middy(async (event) => {
 	const userId = event.pathParameters.id;
