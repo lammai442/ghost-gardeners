@@ -6,18 +6,24 @@ import { useAuthStore } from '@mojjen/useauthstore';
 import { ContentBox } from '@mojjen/contentbox';
 
 import { type ChangeEvent, useState } from 'react';
+import type { FullUser } from '@mojjen/productdata';
 
-type Props = {};
+import { apiUpdateUser } from '@mojjen/apiusers';
 
-export const ProfileForm = ({}: Props) => {
+type Props = {
+	fetchedUser: FullUser | null;
+};
+
+export const ProfileForm = ({ fetchedUser }: Props) => {
 	const { user } = useAuthStore();
 
 	if (!user) return null;
+	if (fetchedUser === null) return;
 
-	const [firstname, setFirstname] = useState(user.firstname);
-	const [lastname, setLastname] = useState(user.lastname);
-	const [email, setEmail] = useState(user.email);
-	const [phone, setPhone] = useState(user.phone);
+	const [firstname, setFirstname] = useState(fetchedUser.attribute.firstname);
+	const [lastname, setLastname] = useState(fetchedUser.attribute.lastname);
+	const [email, setEmail] = useState(fetchedUser.email);
+	const [phone, setPhone] = useState(fetchedUser.attribute.phone);
 	const [password, setPassword] = useState('***********');
 	const [repeatedPassword, setRepeatedPassword] = useState('***********');
 	const [readOnly, setReadOnly] = useState(true);
@@ -29,22 +35,31 @@ export const ProfileForm = ({}: Props) => {
 		setFunction(e.target.value);
 	};
 
-	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		console.log('handleSubmit()');
+
+		let updatedUser = {};
+		// ! Not so DRY... In a galaxy far far away I plan to fix it later.
+		firstname !== fetchedUser.attribute.firstname &&
+			(updatedUser = { ...updatedUser, firstname: firstname });
+
+		lastname !== fetchedUser.attribute.lastname &&
+			(updatedUser = { ...updatedUser, lastname: lastname });
+
+		email !== fetchedUser.email &&
+			(updatedUser = { ...updatedUser, email: email });
+
+		phone !== fetchedUser.attribute.phone &&
+			(updatedUser = { ...updatedUser, phone: phone });
+
+		password !== '***********' &&
+			password === repeatedPassword &&
+			(updatedUser = { ...updatedUser, password: password });
+
+		const result = await apiUpdateUser(user.userId, updatedUser, user.token);
+		console.log('result: ', result);
 
 		setReadOnly(true);
-
-		const updatedUser = {
-			firstname: firstname,
-			lastname: lastname,
-			email: email,
-			phone: phone,
-			password: password,
-		};
-
-		// ! Todo: validate inputs and create a function in backend and frontend that updates the user info.
-		console.log('updatedUser: ', updatedUser);
 	};
 
 	return (

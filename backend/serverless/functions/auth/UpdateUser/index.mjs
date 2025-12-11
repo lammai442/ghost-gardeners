@@ -5,11 +5,7 @@ import { errorHandler } from '../../../middlewares/errorHandler.mjs';
 import { validateUserUpdate } from '../../../middlewares/validateUserUpdate.mjs';
 import { getUserById, updateUserById } from '../../../services/users.mjs';
 import { validateEmptyBody } from '../../../middlewares/validateEmptyBody.mjs';
-
-/**
- * Author: Klara
- * Function to update a user.
- */
+import { authenticateUser } from '../../../middlewares/authenticateUser.mjs';
 
 export const handler = middy(async (event) => {
 	const userId = event.pathParameters.id;
@@ -34,5 +30,14 @@ export const handler = middy(async (event) => {
 })
 	.use(httpJsonBodyParser())
 	.use(validateEmptyBody())
+	.use(authenticateUser())
 	.use(errorHandler())
 	.use(validateUserUpdate());
+
+/**
+ * Author: Klara
+ * Function to update a user.
+ *
+ * Update: Klara
+ * authenticateUser added
+ */
