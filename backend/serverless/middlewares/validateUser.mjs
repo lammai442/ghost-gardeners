@@ -8,3 +8,8 @@ export const validateUser = () => ({
 		return;
 	},
 });
+
+/**
+ * Author: Klara
+ * Validate user
+ */

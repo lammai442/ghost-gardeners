@@ -8,3 +8,8 @@ export const validateUserUpdate = () => ({
 		return;
 	},
 });
+
+/**
+ * Author: Klara
+ * Validate user update
+ */

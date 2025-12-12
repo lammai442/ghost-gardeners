@@ -1,12 +1,6 @@
 import Joi from 'joi';
 import { passwordRegEx, safeCharacters } from './patterns.mjs';
 
-/**
- * Author: KlaraSk
- * Update user schema
- *
- */
-
 export const updateUserSchema = Joi.object({
 	firstname: Joi.string()
 		.min(2)
@@ -44,3 +38,9 @@ export const updateUserSchema = Joi.object({
 			'Lösenordet måste innehålla minst en stor och en liten bokstav, en siffra och ett specialtecken.',
 	}),
 });
+
+/**
+ * Author: KlaraSk
+ * Update user schema
+ *
+ */

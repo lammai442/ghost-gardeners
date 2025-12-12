@@ -4,10 +4,7 @@ import { errorHandler } from '../../../middlewares/errorHandler.mjs';
 import { getUserById } from '../../../services/users.mjs';
 import { authenticateUser } from '../../../middlewares/authenticateUser.mjs';
 
-/**
- * Author: Klara
- * Function to get a user by id.
- */
+
 
 export const handler = middy(async (event) => {
 	const userId = event.pathParameters.id;
@@ -37,3 +34,11 @@ export const handler = middy(async (event) => {
 })
 	.use(errorHandler())
 	.use(authenticateUser());
+
+	/**
+ * Author: Klara
+ * Function to get a user by id.
+ *
+ * Updated: ninerino
+ * Edited to work with credentials
+ */

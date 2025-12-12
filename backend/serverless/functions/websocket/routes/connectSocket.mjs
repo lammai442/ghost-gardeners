@@ -6,3 +6,8 @@ export default async (connectionId, body, event) => {
 	});
 	return { statusCode: 200 };
 };
+
+/**
+ * Author: StefanMogren
+ * Connect socket
+ */

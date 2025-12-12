@@ -5,11 +5,6 @@ import { errorHandler } from '../../../middlewares/errorHandler.mjs';
 import { validateUser } from '../../../middlewares/validateUser.mjs';
 import { createUser } from '../../../services/users.mjs';
 
-/**
- * Author: Klara
- * Function to create a user.
- */
-
 export const handler = middy(async (event) => {
 	const result = await createUser(event.body);
 	if (result === 201) {
@@ -27,3 +22,8 @@ export const handler = middy(async (event) => {
 	.use(httpJsonBodyParser())
 	.use(validateUser())
 	.use(errorHandler());
+
+/**
+ * Author: Klara
+ * Function to create a user.
+ */

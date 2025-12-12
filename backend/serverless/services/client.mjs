@@ -6,3 +6,8 @@ export const client = new DynamoDBClient({
 });
 
 export const docClient = DynamoDBDocumentClient.from(client);
+
+/**
+ * Author: Lam
+ * Client connection for DynamoDB
+ */

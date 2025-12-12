@@ -25,7 +25,8 @@ export const handler = middy(async (event) => {
 	.use(errorHandler());
 
 /**
- * Author:
+ * Author: ninerino
+ * Function to post order
  *
  * Updated: Lam / ninerino
  * Added authenticateUser for verify JWT

@@ -21,11 +21,6 @@ export const handler = middy(async () => {
 
 /**
  * Author: ninerino
- * Function to fetch menu items from the API, as well as map the product IDs to their correct name
- */
-
-/**
- * Author: ninerino
  * Function to fetch menu items from the API, including stock-based status
  *
  * Modified: StefanMogren
