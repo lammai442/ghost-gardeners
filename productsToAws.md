@@ -112,6 +112,7 @@ allergenes: ["ägg", "skaldjur", "gluten", "mjölkprotein", "laktos" ]
 			"price": 66,
 			"summary": "Krisp, ost och metal-explosion.",
 			"description": "Två saftiga Ostkôrv-monster med pômmes så krispiga att de nästan låter som trumvirvlar i en moshpit. En smakexplosion som får smaklökarna att headbanga. Kan orsaka spontana luftgitarrsolon.",
+			"img": "assets/icons/nikkis-metal-madness.png",
 			"items": [
 				"prod-916aa",
 				"prod-f7779",
@@ -137,7 +138,7 @@ allergenes: ["ägg", "skaldjur", "gluten", "mjölkprotein", "laktos" ]
 			"category": "MEAL",
 			"price": 67,
 			"summary": "Grillkôrv i bröd med mos och räksallad ovanpå.",
-			"description": "En tjock grillkôrv i bröd med ketchup, senap, mos, räksallad och rostad lök ovanpå i den ordningen. En jätte till meal serverad direkt i handed för den som är extra hungrig och fortfarande vill ha andra handen fri.",
+			"description": "En tjock grillkôrv i bröd med ketchup, senap, mos, räksallad och rostad lök. En jättemåltid serverad direkt i handen för den som är extra hungrig och vill ha fri andra hand.",
 			"img": "assets/icons/mojjen-meny-stefans-big-meal.png",
 			"items": [
 				"prod-e6f54",

@@ -1,5 +1,3 @@
-// import middy from '@middy/core';
-// import { errorHandler } from '../../../middlewares/errorHandler.mjs';
 import {
 	removeConnection,
 	sendToConnection,

@@ -25,3 +25,8 @@ export const handler = middy(async (event) => {
 })
 	.use(authenticateUser())
 	.use(errorHandler());
+
+/**
+ * Author: ninerino
+ * Function to get order
+ */

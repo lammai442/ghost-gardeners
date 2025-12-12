@@ -8,3 +8,8 @@ export const errorHandler = () => ({
 		});
 	},
 });
+
+/**
+ * Author: Lam
+ * Error handler
+ */

@@ -24,6 +24,6 @@ export const handler = middy(async (event) => {
 	.use(errorHandler());
 
 /**
- * Author: KlaraSk
+ * Author: Klara
  * bodyParser, validator and errorHandler added
  */

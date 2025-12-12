@@ -29,7 +29,7 @@ export const handler = middy(async (event) => {
 		status,
 	} = JSON.parse(event.body);
 
-	// Hämta order
+	// Fetch the order
 	const order = await getOrder(id);
 	if (!order) {
 		return sendResponses(404, {
@@ -38,7 +38,7 @@ export const handler = middy(async (event) => {
 		});
 	}
 
-	// Säkerställ att det är rätt användare
+	// Check if it's the correct user
 	const user = event.user;
 	if (user.sub !== order.id && user.role !== 'ADMIN') {
 		return sendResponses(403, { success: false, message: 'Forbidden' });
@@ -59,3 +59,11 @@ export const handler = middy(async (event) => {
 })
 	.use(authenticateUser())
 	.use(errorHandler());
+
+/**
+ * Author: ninerino
+ * Funktion to change order
+ *
+ * Update: ninerino and Lam
+ * Added credentials
+ */
