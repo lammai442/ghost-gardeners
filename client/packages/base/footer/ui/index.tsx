@@ -1,11 +1,4 @@
 import './index.scss';
-/**
- * Author: StefanMogren
- * Created mobile view for footer component
- *
- * Update: Klara
- * Added responsive design
- */
 
 export const FooterComp = () => {
 	return (
@@ -17,7 +10,7 @@ export const FooterComp = () => {
 					 * * ----- Kontakt -----
 					 */}
 					<section className="flex-column-1-5">
-						<h3 className="heading-4 text-dark-beige">Kontakt</h3>
+						<h3 className="heading-4 text-light-beige">Kontakt</h3>
 						<address className="footer__container base-small text-light-beige">
 							<span>Korvgatan 1</span>
 							<span>666 66 Edsvalla</span>
@@ -34,7 +27,7 @@ export const FooterComp = () => {
 					 * * ----- Öppettider -----
 					 */}
 					<section className="flex-column-1-5">
-						<h3 className="heading-4 text-dark-beige">Öppettider</h3>
+						<h3 className="heading-4 text-light-beige">Öppettider</h3>
 						<ul className="footer__container text-light-beige base-small">
 							<li className="footer__open-hours">
 								<span>Mån-Fre:</span>
@@ -66,7 +59,7 @@ export const FooterComp = () => {
 					 * * ----- Följ oss -----
 					 */}
 					<section className="flex-column-1-5">
-						<h3 className="heading-4 text-dark-beige">Följ oss</h3>
+						<h3 className="heading-4 text-light-beige">Följ oss</h3>
 						<section className="footer__social-container">
 							<a
 								href="https://www.facebook.com/"
@@ -103,7 +96,7 @@ export const FooterComp = () => {
 				</div>
 				<hr className="footer__horizontal-rule bg-dark-beige" />
 				<section className="footer__bottom-container">
-					<h3 className="heading-4 text-dark-beige">
+					<h3 className="heading-4 text-light-beige">
 						Det är alltid läge för en kôrv
 					</h3>
 					<p className="text-light-beige base-small">
@@ -114,3 +107,14 @@ export const FooterComp = () => {
 		</>
 	);
 };
+
+/**
+ * Author: StefanMogren
+ * Created mobile view for footer component
+ *
+ * Update: Klara
+ * Added responsive design
+ *
+ * Update: Klara
+ * Switched from brown to light-beige color on headings to remove color contrast warnings in Wave.
+ */

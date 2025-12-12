@@ -172,78 +172,76 @@ export const OrderPage = () => {
 	return (
 		<>
 			<HeaderComp></HeaderComp>
-			<Page>
-				<section className="order-page__container flex flex__column flex__gap-3">
-					<section className="order-page__orders">
-						<section className="flex flex__column flex__gap-2">
-							<h2 className="heading-4">
-								Väntande ({pendingOrders.length} st)
-							</h2>
-							{/* PENDING ORDERS */}
-							<ul className={`order-page__orders-container`}>
-								{pendingOrders.map((o) => (
-									<div
-										key={o.SK}
-										onClick={() => {
-											setSelectedOrder(o);
-											setIsModalOpen(true);
-										}}
-									>
-										<Order
-											orderId={trimOrderId(o.SK)}
-											time={formatTime(o.attribute?.createdAt)}
-											orderStatus={o.status}
-										/>
-									</div>
-								))}
-							</ul>
-						</section>
-						{/* CONFIRMED ORDERS */}
-						<section className="flex flex__column flex__gap-2">
-							<h2 className="heading-4">
-								Tillagas ({confirmedOrders.length} st)
-							</h2>
-							<ul className="order-page__orders-container">
-								{confirmedOrders.map((o) => (
-									<div
-										key={o.SK}
-										onClick={() => {
-											setSelectedOrder(o);
-											setIsModalOpen(true);
-										}}
-									>
-										<Order
-											orderId={trimOrderId(o.SK)}
-											time={formatTime(o.attribute?.createdAt)}
-											orderStatus={o.status}
-										/>
-									</div>
-								))}
-							</ul>
-						</section>
-						{/* DONE ORDERS */}
-						<section className="flex flex__column flex__gap-2">
-							<h2 className="heading-4">Redo ({doneOrders.length} st)</h2>
-							<ul className="order-page__orders-container">
-								{doneOrders.map((o) => (
-									<div
-										key={o.SK}
-										onClick={() => {
-											setSelectedOrder(o);
-											setIsModalOpen(true);
-										}}
-									>
-										<Order
-											orderId={trimOrderId(o.SK)}
-											time={formatTime(o.attribute?.createdAt)}
-											orderStatus={o.status}
-										/>
-									</div>
-								))}
-							</ul>
-						</section>
+			<Page titleText="Ordrar" srOnly={true}>
+				{/* <section className="order-page__container flex flex__column flex__gap-3"> */}
+				<section className="order-page__orders">
+					<section className="flex flex__column flex__gap-2">
+						<h2 className="heading-4">Väntande ({pendingOrders.length} st)</h2>
+						{/* PENDING ORDERS */}
+						<ul className={`order-page__orders-container`}>
+							{pendingOrders.map((o) => (
+								<div
+									key={o.SK}
+									onClick={() => {
+										setSelectedOrder(o);
+										setIsModalOpen(true);
+									}}
+								>
+									<Order
+										orderId={trimOrderId(o.SK)}
+										time={formatTime(o.attribute?.createdAt)}
+										orderStatus={o.status}
+									/>
+								</div>
+							))}
+						</ul>
+					</section>
+					{/* CONFIRMED ORDERS */}
+					<section className="flex flex__column flex__gap-2">
+						<h2 className="heading-4">
+							Tillagas ({confirmedOrders.length} st)
+						</h2>
+						<ul className="order-page__orders-container">
+							{confirmedOrders.map((o) => (
+								<div
+									key={o.SK}
+									onClick={() => {
+										setSelectedOrder(o);
+										setIsModalOpen(true);
+									}}
+								>
+									<Order
+										orderId={trimOrderId(o.SK)}
+										time={formatTime(o.attribute?.createdAt)}
+										orderStatus={o.status}
+									/>
+								</div>
+							))}
+						</ul>
+					</section>
+					{/* DONE ORDERS */}
+					<section className="flex flex__column flex__gap-2">
+						<h2 className="heading-4">Redo ({doneOrders.length} st)</h2>
+						<ul className="order-page__orders-container">
+							{doneOrders.map((o) => (
+								<div
+									key={o.SK}
+									onClick={() => {
+										setSelectedOrder(o);
+										setIsModalOpen(true);
+									}}
+								>
+									<Order
+										orderId={trimOrderId(o.SK)}
+										time={formatTime(o.attribute?.createdAt)}
+										orderStatus={o.status}
+									/>
+								</div>
+							))}
+						</ul>
 					</section>
 				</section>
+				{/* </section> */}
 				{/* MODAL OPENS WHEN CLICKING ON A ORDERITEM */}
 				<Modal
 					open={isModalOpen}
@@ -382,5 +380,8 @@ export const OrderPage = () => {
  *
  * Modified by: Lam
  * CSS on the site
+ *
+ * Modified by: Klara
+ * WCAG sr-only h1, added more gap between columns "Väntande"/"Tillagas"/"Redo"
  *
  */

@@ -17,7 +17,7 @@ export const Page = ({
 	srOnly,
 	extraClasses,
 }: Props) => {
-	const classNames = clsx('heading-1', {
+	const classNames = clsx('heading-1 text-black', {
 		'sr-only': srOnly,
 	});
 	return (
@@ -40,4 +40,7 @@ export const Page = ({
  *
  * Update: Klara
  * Removed margin-bottom on h1
+ *
+ * Update: Klara
+ * Added our black color to h1
  */

@@ -4,6 +4,10 @@
 
 	&__wrapper {
 		padding: 3rem 2rem 8rem 2rem;
+
+		&--none {
+			padding: 0;
+		}
 	}
 }
 

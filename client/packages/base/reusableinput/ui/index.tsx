@@ -30,19 +30,21 @@ export const ReusableInput = ({
 
 	return (
 		<div className="input-wrapper">
-			<label className="base">{label}</label>
+			<label className="base flex flex__column flex__gap-0-5">
+				{label}
 
-			<input
-				name={name}
-				type={type}
-				value={value}
-				placeholder={placeholder}
-				onChange={onChange}
-				className={classNames}
-				// className="input-base"
-				autoComplete={autocomplete}
-				readOnly={readonly}
-			/>
+				<input
+					name={name}
+					type={type}
+					value={value}
+					placeholder={placeholder}
+					onChange={onChange}
+					className={classNames}
+					// className="input-base"
+					autoComplete={autocomplete}
+					readOnly={readonly}
+				/>
+			</label>
 
 			{/* Om error finns visas det här under inputen */}
 			{error && <p className="form-error base">{error}</p>}
@@ -57,4 +59,8 @@ export const ReusableInput = ({
  *
  *Update: Klara
  * Props autocomplete and readonly with clsx class added
+ *
+ * Update: Klara
+ *
+ * Labels connected with inputs (WAVE-warning)
  */

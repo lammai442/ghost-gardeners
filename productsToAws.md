@@ -91,7 +91,75 @@ allergenes: ["ägg", "skaldjur", "gluten", "mjölkprotein", "laktos" ]
 			"description": "Mild växtbaserad kôrv serverad med krispiga pômmes och bostongurka. Perfekt för dig som vill ha ett lättare alternativ.",
 			"img": "assets/icons/mojjen-meny-vegansk-pommes.png",
 			"items": ["prod-7b757", "prod-f7779", "prod-91b1f"]
-		}
+		},
+		{
+			"name": "Lams Inferno",
+			"category": "MEAL",
+			"price": 65,
+			"summary": "Het och smakrik combo som vågar sticka ut.",
+			"description": "En kraftfull smakexplosion med kryddig chorizo, krispiga pômmes, syrlig bostongurka och extra crunch från rostad lök. Endast för de modiga.",
+			"img": "assets/icons/mojjen-meny-lams-inferno.png",
+			"items": [
+				"prod-bdb7a",   // Chorizokôrv
+				"prod-f7779",   // Pômmes
+				"prod-91b1f",   // Bostongurka
+				"prod-5a941"    // Rostad lök
+			]
+		 },
+		 {
+			"name": "Nikkis metal madness",
+			"category": "MEAL",
+			"price": 66,
+			"summary": "Krisp, ost och metal-explosion.",
+			"description": "Två saftiga Ostkôrv-monster med pômmes så krispiga att de nästan låter som trumvirvlar i en moshpit. En smakexplosion som får smaklökarna att headbanga. Kan orsaka spontana luftgitarrsolon.",
+			"items": [
+				"prod-916aa",
+				"prod-f7779",
+				"prod-91b1f",
+					"prod-0f2ca"
+			]
+			},
+			{
+			"name": "Klaranoss",
+			"category": "MEAL",
+			"price": 66,
+			"summary": "En kabanoss med swag (och picklad rödlök)",
+			"description": "Våga vägra vegokorv! En kabanoss i fullkornsbröd med smokey bbq-sås och picklad rödlök skare va. Strunta i pommes, låt din kille beställa det och sno från hans tallrik istället.",
+			"img": "assets/icons/mojjen-meny-klaranoss.png",
+			"items": [
+				"prod-f7779",
+				"prod-91b1f",
+				"prod-0f2ca"
+			]
+		},
+		{
+			"name": "Stefans Big Meal",
+			"category": "MEAL",
+			"price": 67,
+			"summary": "Grillkôrv i bröd med mos och räksallad ovanpå.",
+			"description": "En tjock grillkôrv i bröd med ketchup, senap, mos, räksallad och rostad lök ovanpå i den ordningen. En jätte till meal serverad direkt i handed för den som är extra hungrig och fortfarande vill ha andra handen fri.",
+			"img": "assets/icons/mojjen-meny-stefans-big-meal.png",
+			"items": [
+				"prod-e6f54",
+				"prod-ed8d6",
+				"prod-6a656",
+				"prod-ff90f",
+				"prod-5a941"
+			]
+			},
+			{
+			"name": "Poké-kôrv",
+			"category": "MEAL",
+			"price": "199",
+			"summary": "Ett hett val för tränare som inte backar från strid.",
+			"description": "Kryddig korv som ger "Burn"-känsla, pommes som boostar din HP, syrlig relish som får dig att vakna till och rostad lök för en episk "Critical Hit". Ett val för tränaren som vågar möta utmaningar.",
+			"img": "assets/icons/mojjen-meny-poke-korv.png",
+			"items": [
+				"prod-6a656",
+				"prod-ff90f",
+				"prod-5a941"
+			]
+			}
 	],
 	"sides": [
 		{
