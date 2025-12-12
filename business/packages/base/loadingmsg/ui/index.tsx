@@ -1,9 +1,4 @@
 import './index.scss';
-/**
- * Author: Lam
- * Loading component with spinner animation and options for title and text
- *
- */
 
 type Props = {
 	extraClasses?: string;
@@ -21,3 +16,9 @@ export const LoadingMsg = ({ title, text, extraClasses }: Props) => {
 		</section>
 	);
 };
+
+/**
+ * Author: Lam
+ * Loading component with spinner animation and options for title and text
+ *
+ */

@@ -4,14 +4,14 @@ import './index.scss';
 import { RouterProvider } from 'react-router-dom';
 import { router } from '@mojjen/router';
 
-/**
- * Modified: StefanMogren
- *
- * Adjusted how BrowserRouter and RouterProvider is set up
- */
-
 createRoot(document.getElementById('root')!).render(
 	<StrictMode>
 		<RouterProvider router={router} />
 	</StrictMode>
 );
+
+/**
+ * Update: StefanMogren
+ *
+ * Adjusted how BrowserRouter and RouterProvider is set up
+ */

@@ -51,21 +51,6 @@ export const Modal = ({
 		};
 	}, [open]);
 
-	// Listens for all keyboard events. If the Escape key is pressed, the modal closes.
-	// useEffect(() => {
-	// 	const handleKeyDown = (e: KeyboardEvent) => {
-	// 		if (e.key === 'Escape' && open) {
-	// 			closeModal();
-	// 		}
-	// 	};
-	// 	// Disables Background Scrolling whilst the SideDrawer/Modal is open
-	// 	if (typeof window != 'undefined' && window.document) {
-	// 		document.body.style.overflow = 'hidden';
-	// 	}
-	// 	document.addEventListener('keydown', handleKeyDown);
-	// 	return () => document.removeEventListener('keydown', handleKeyDown);
-	// }, [open, closeModal]);
-
 	if (!open) return null;
 
 	return (
@@ -85,12 +70,14 @@ export const Modal = ({
 							aria="Stäng rutan"
 							extraClasses="flex flex__justify-center"
 						>
-							<IoClose className="modal__icon" style={{color: "#f3f0e7"}} />
+							<IoClose className="modal__icon" style={{ color: '#f3f0e7' }} />
 						</Button>
 					</header>
 				)}
 
-				<section className="modal__content flex flex__column flex__gap-1-5">{children}</section>
+				<section className="modal__content flex flex__column flex__gap-1-5">
+					{children}
+				</section>
 			</ContentBox>
 		</div>
 	);

@@ -24,7 +24,7 @@ export const ProductPage = () => {
 };
 
 /**
- * Modified by: Klara
+ * Update: Klara
  * WCAG sr-only h1
  *
  */

@@ -10,7 +10,7 @@ import { apiDeletItemFromOrder } from '@mojjen/apiproducts';
 type Props = {
 	item: OrderItem;
 	allProdList: OrderItem[]; // Ändrat från Meal
-	// classBgColor: string;
+
 	selectedOrder?: OrderItems; // OrderItems kommer från OrderPage
 	setSelectedOrder?: React.Dispatch<React.SetStateAction<OrderItems | null>>; //React.Dispatch<React.SetStateAction<OrderItems | null>> kommer från OrderPage
 };
@@ -116,6 +116,6 @@ export const CartProductCard = ({
 /**
  * Author:?
  *
- * Updated: Lam
+ * Update: Lam
  * Added functionality of delete item button
  */

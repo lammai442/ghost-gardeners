@@ -371,17 +371,17 @@ export const OrderPage = () => {
 /**
  * Author: StefanMogren
  * Created most of OrderPage. Missing actually fetching the orders from database.
- * Modified by: ninerino
+ * Update: ninerino
  * Added functions to fetch orders, show them on the page, trim the orderId, change it to uppercase and change time format to HH:mm
  * Added functions to confirm and complete orders
  *
- * Modified by: StefanMogren
+ * Update: StefanMogren
  * Updated useEffect to run every time WebSocket sends an order and not just once.
  *
- * Modified by: Lam
+ * Update: Lam
  * CSS on the site
  *
- * Modified by: Klara
+ * Update: Klara
  * WCAG sr-only h1, added more gap between columns "Väntande"/"Tillagas"/"Redo"
  *
  */
