@@ -10,7 +10,6 @@ import {
 	getProductsByIds,
 	enrichItems,
 	calculateTotal,
-	trimFields,
 	deleteAllItemsFromOrder,
 } from '../utils/orderHelpers.mjs';
 import { generateId } from '../utils/index.mjs';
@@ -173,24 +172,24 @@ export const changeOrder = async ({
 	const exprAttrValues = {};
 	const now = new Date().toISOString();
 
-	// Villkorlig uppdatering av items
+	// Conditional update of items
 	let mergedItems = existing.attribute.items;
 
-	// Uppdatera items om det finns nya
+	// Update items if there are new ones
 	if (items && Array.isArray(items)) {
-		// Mergar varje item baserat på itemId
+		// Merges every item based on itemId
 		mergedItems = existing.attribute.items.map((orig) => {
 			const update = items.find((i) => i.itemId === orig.itemId);
-			return update ? { ...orig, ...update } : orig; // Uppdatera eller behåll original
+			return update ? { ...orig, ...update } : orig; // Update or keep the original
 		});
 
-		// Bygg update-expression EFTER att mergedItems är klart
+		// Build update-expression AFTER mergedItems is done
 		updateExprParts.push('#attr.#items = :items');
 		exprAttrNames['#attr'] = 'attribute';
 		exprAttrNames['#items'] = 'items';
 		exprAttrValues[':items'] = mergedItems;
 
-		// Uppdatera total om alla items har subtotal
+		// Update total if all items has subtotal
 		const hasSubtotal = mergedItems.every(
 			(i) => typeof i.subtotal === 'number'
 		);
@@ -202,25 +201,25 @@ export const changeOrder = async ({
 		}
 	}
 
-	// Villkorlig uppdatering av staffComment
+	// Conditional update of staffComment
 	if (staffComment !== undefined) {
-		updateExprParts.push('#attr.#staffComment = :staffComment'); // Uppdateras på rätt sätt (enligt Insomnia)
+		updateExprParts.push('#attr.#staffComment = :staffComment');
 		exprAttrNames['#attr'] = 'attribute';
 		exprAttrNames['#staffComment'] = 'staffComment';
 		exprAttrValues[':staffComment'] = staffComment;
 	}
 
-	// Villkorlig uppdatering av userComment
+	// Conditional update of userComment
 	if (userComment !== undefined) {
-		updateExprParts.push('#attr.#userComment = :userComment'); // Uppdateras på rätt sätt (enligt Insomnia)
+		updateExprParts.push('#attr.#userComment = :userComment');
 		exprAttrNames['#attr'] = 'attribute';
 		exprAttrNames['#userComment'] = 'userComment';
 		exprAttrValues[':userComment'] = userComment;
 	}
 
-	// Villkorlig uppdatering av status
+	// Conditional update of status
 	if (status !== undefined) {
-		updateExprParts.push('#statusRoot = :status'); // Uppdateras på rätt sätt
+		updateExprParts.push('#statusRoot = :status');
 		exprAttrNames['#statusRoot'] = 'status';
 		exprAttrValues[':status'] = status;
 	}
@@ -229,7 +228,7 @@ export const changeOrder = async ({
 	updateExprParts.push('modifiedAt = :now');
 	exprAttrValues[':now'] = now;
 
-	// Skicka uppdateringen
+	// Send update
 	await client.send(
 		new UpdateItemCommand({
 			TableName: 'mojjen-table',
@@ -269,7 +268,7 @@ export const getOrder = async (orderId) => {
 	);
 
 	if (!res.Item) {
-		// Returnera ett "tomt" objekt istället för null
+		// Return an empty object instead of null
 		return {
 			id: orderId,
 			status: 'unknown',
@@ -356,7 +355,7 @@ export const replaceOrder = async (order) => {
 
 /**
  * Author: ninerino
- * Functions to handle everything with orders.
+ * Functions to handle everything with orders. Ideally these are refactored and put into separate files in a newer version of the app.
  *
  * Updated: Lam
  * Added in createOrder if userId comes from bodyreq then use it i GSI1SK Id otherwise create new guestId

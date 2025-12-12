@@ -18,3 +18,8 @@ export const cspMiddleware = () => ({
 		return response;
 	},
 });
+
+/**
+ * Author: Lam
+ * CSP Middleware
+ */

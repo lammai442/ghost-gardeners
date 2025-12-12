@@ -1,17 +1,5 @@
 import Joi from 'joi';
 
-/**
- * Author: KlaraSk
- * Product schema
- *
- */
-/**
- * Update: Lam, KlaraSk, Nikki
- * Added when state for description to only apply on category:Meal and change name to 33 characters and summary to 70
- * Update: Lam
- * Changed includeDrink to optional for meals
- * */
-
 const regExItemId = /^prod-[0-9a-fA-F]{5}$/;
 
 export const productSchema = Joi.object({
@@ -54,3 +42,15 @@ export const productSchema = Joi.object({
 		)
 		.unique(),
 });
+
+/**
+ * Author: KlaraSk
+ * Product schema
+ *
+ */
+/**
+ * Update: Lam, KlaraSk, Nikki
+ * Added when state for description to only apply on category:Meal and change name to 33 characters and summary to 70
+ * Update: Lam
+ * Changed includeDrink to optional for meals
+ * */

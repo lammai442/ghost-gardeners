@@ -112,7 +112,6 @@ export const getAllMenu = async () => {
 		const menuResponse = await client.send(
 			new QueryCommand({
 				TableName: 'mojjen-table',
-				// IndexName: 'GSI1',
 				KeyConditionExpression: 'PK = :pk',
 				ExpressionAttributeValues: {
 					':pk': { S: 'PRODUCT' },
@@ -148,9 +147,6 @@ export const getAllMenu = async () => {
 				description: a.description?.S || '',
 				img: a.img?.S || '',
 				includeDrink: a.includeDrink?.S || null,
-				// includeDrinkName: a.includeDrinkName?.S
-				// 	? productMap[a.includeDrinkName.S]?.name || null
-				// 	: null,
 				includeDrinkName: a.includeDrinkName?.S || null,
 				createdAt: a.createdAt?.S || '',
 				items: a.items?.L?.map((i) => i.S) || [],
@@ -164,10 +160,6 @@ export const getAllMenu = async () => {
 		});
 
 		return menuItems;
-		// return {
-		// 	// statusCode: 200,
-		// 	// body: JSON.stringify(menuItems),
-		// };
 	} catch (error) {
 		console.error('Error in Menu Handler:', error);
 		return errorHandler().onError({ response: null, error });

@@ -1,8 +1,3 @@
-/**
- * Author: ninerino
- * LAMBDA handler for delete order
- */
-
 import middy from '@middy/core';
 import { errorHandler } from '../../../middlewares/errorHandler.mjs';
 import { sendResponses } from '../../../responses/index.mjs';
@@ -10,7 +5,6 @@ import { cancelOrder } from '../../../services/order.mjs';
 import { authenticateUser } from '../../../middlewares/authenticateUser.mjs';
 import { getOrder } from '../../../services/order.mjs';
 
-// DELETE /order/:id, ändra status till cancelled
 export const handler = middy(async (event) => {
 	const { id } = event.pathParameters || {};
 
@@ -21,7 +15,7 @@ export const handler = middy(async (event) => {
 		});
 	}
 
-	// Hämtar order
+	// Get order
 	const order = await getOrder(id);
 	if (!order) {
 		return sendResponses(404, {
@@ -48,3 +42,8 @@ export const handler = middy(async (event) => {
 })
 	.use(authenticateUser())
 	.use(errorHandler());
+
+/**
+ * Author: ninerino
+ * Delete order
+ */
