@@ -175,7 +175,7 @@ export const AuthForm = ({ setModalOpen, setAuthTitle }: Props) => {
 						}
 					}}
 				>
-					Din registrering lyckades!
+					<span className="base">Din registrering lyckades!</span>
 				</Modal>
 			)}
 			<form className="auth-form" onSubmit={handleSubmit} noValidate>

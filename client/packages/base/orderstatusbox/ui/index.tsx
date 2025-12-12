@@ -175,7 +175,7 @@ export const OrderStatusBox = ({ orderId, status, setStatus }: Props) => {
 				<h4 className="heading-4">
 					Ordernr:{' #'}
 					{orderId
-						? orderId
+						? orderId.slice(6)
 						: 'Vi kunde inte hämta ditt ordernummer. Prata med oss i kassan'}
 				</h4>
 				{status === 'pending' && renderButtons()}
