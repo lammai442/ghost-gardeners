@@ -5,14 +5,14 @@ import { Button } from '@mojjen/button';
 import { ReusableInput } from '@mojjen/reusableinput';
 import { validateAuthForm } from '@mojjen/helpfunctions';
 import { getAllInputs } from '@mojjen/data';
-import {
-	apiLoginUser,
-	apiRegisterUser,
-} from '../../../core/api/apiproducts/data';
 import { Modal } from '@mojjen/modal';
 import type { User } from '@mojjen/productdata';
 import { LoadingMsg } from '@mojjen/loading-msg';
-import { apiGetUserByToken } from '../../../../../business/packages/core/api/apiproducts/data';
+import {
+	apiLoginUser,
+	apiRegisterUser,
+	apiGetUserByToken,
+} from '@mojjen/apiproducts/';
 
 type Props = {
 	setModalOpen?: (open: boolean) => void;

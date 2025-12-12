@@ -1,13 +1,12 @@
 import './index.scss';
-import { useCartStore } from '../../../core/stores/usecartstore/data';
+import { useCartStore } from '@mojjen/usecartstore';
 import { HamburgerMenu } from '@mojjen/hamburger-menu';
 import { useState, useEffect, type Ref } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-// import OutsideClickHandler from 'react-outside-click-handler';
 import { useOnClickOutside } from 'usehooks-ts';
 import { useRef } from 'react';
 import { HamburgerIcon } from '@mojjen/hamburger-icon';
-import { AuthBtn } from '../../authbtn/ui';
+import { AuthBtn } from '@mojjen/authbtn';
 import clsx from 'clsx';
 
 type Props = {
