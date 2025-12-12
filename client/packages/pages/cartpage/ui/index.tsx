@@ -1,19 +1,18 @@
 import './index.scss';
 import { Page } from '@mojjen/page';
 import { ProductsList } from '@mojjen/productslist';
-import { useCartStore } from '../../../core/stores/usecartstore/data';
-import { Button } from '../../../base/button/ui';
-import { getItemsForOrder } from '../../../core/stores/usecartstore/data';
+import { useCartStore, getItemsForOrder } from '@mojjen/usecartstore';
+import { Button } from '@mojjen/button';
 import { useNavigate } from 'react-router-dom';
 import { ContentBox } from '@mojjen/contentbox';
-import { calcSum } from '../../../../src/utils/utils';
+import { calcSum } from '@mojjen/helpfunctions';
 import { useEffect, useState, type ChangeEvent } from 'react';
 import { apiGetMeals } from '@mojjen/apiproducts';
 import type { Meal } from '@mojjen/productdata';
 import { Comment } from '@mojjen/comment';
 import { ModalLoading } from '@mojjen/modalloading';
 import { useAuthStore } from '@mojjen/useauthstore';
-import { apiPostOrder } from '../../../core/api/apiorders';
+import { apiPostOrder } from '@mojjen/apiorders';
 import { Modal } from '@mojjen/modal';
 import { AuthForm } from '@mojjen/authform';
 
@@ -65,17 +64,7 @@ export const CartPage = () => {
 				throw new Error('User token is required');
 			}
 			const response = await apiPostOrder(order, user.token);
-			// const response = await fetch(`${apiUrl}/order`, {
-			// 	method: 'POST',
-			// 	headers: { 'Content-Type': 'application/json' },
-			// 	body: JSON.stringify({
-			// 		items,
-			// 		userComment: comment,
-			// 		staffComment: '',
-			// 		userId: user?.userId,
-			// 	}),
-			// });
-			// const data = await response.json();
+
 			setLoading(false);
 			emptyCart();
 			// Navigera till ConfirmedOrderPage med orderdata

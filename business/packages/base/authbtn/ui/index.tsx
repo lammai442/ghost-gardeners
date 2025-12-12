@@ -28,11 +28,17 @@ export const AuthBtn = () => {
 						src="/assets/profile-icon.svg"
 						alt="Profilikon"
 					/>
-					<h5 className="heading-5 text-light-beige">{currentUserName}</h5>
+					{currentUserName && (
+						<h5 className="heading-5 text-light-beige">{currentUserName}</h5>
+					)}
 				</section>
 
 				{/* Placeholder för utloggningsfunktionen */}
-				<button className="header__logout-btn" onClick={() => logout()}>
+				<button
+					className="header__logout-btn"
+					onClick={() => logout()}
+					aria-label="Logga ut"
+				>
 					<img
 						className="header__logout-img"
 						src="/assets/log-out-icon.svg"
@@ -48,4 +54,6 @@ export const AuthBtn = () => {
  * Author: Lam
  * Auth button that can be used in header. If user is not logged in then modal with authForm opens
  *
+ * Modified by: Klara
+ * Ternary operator on currentUserName to avoid empty button warning from Wave.
  */

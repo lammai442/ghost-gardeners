@@ -1,11 +1,11 @@
 import './index.scss';
-import { Button } from '../../button/ui';
+import { Button } from '@mojjen/button';
 import clsx from 'clsx';
 import { useEffect, useState, useRef } from 'react';
 import type { Meal } from '@mojjen/productdata';
-import { useCartStore } from '../../../core/stores/usecartstore/data';
-import { Modal } from '../../modal/ui';
-import { ModalProductCard } from '../../modalproductcard/ui';
+import { useCartStore } from '@mojjen/usecartstore';
+import { Modal } from '@mojjen/modal';
+import { ModalProductCard } from '@mojjen/modalproductcard';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 type Props = {
@@ -73,7 +73,7 @@ export const ProductCard = ({
 					<img
 						className={imgClassNames}
 						src={img}
-						alt="Image of meal"
+						alt={name}
 						onClick={handleModal}
 					/>
 					{/* {IncramentBtn ( */}
@@ -113,88 +113,12 @@ export const ProductCard = ({
 				</section>
 			</li>
 		</>
-		// <section className={productCardClassNames}>
-		// 	{status === 'inactive' && (
-		// 		<div className="inactive">
-		// 			<span className="heading-2">SLUT</span>
-		// 		</div>
-		// 	)}
-		// 	<section className={`product-card__img-box ${classBgColor}`}>
-		// 		<img className="product-card__img" src={img} alt="Image of meal" />
-		// 		{showIncramentBtn && (
-		// 			<button className="product-card__add-btn">+</button>
-		// 		)}
-		// 	</section>
-		// 	<section className="product-card__info-box">
-		// 		<h2 className="heading-5">{name}</h2>
-		// 		<p className="base-small">{summary}</p>
-		// 		<span className="product-card__price btn-text">{price} kr</span>
-		// 		{showQty && (
-		// 			<section className="quantity">
-		// 				<button className="btn-qty-base--decrament">-</button>
-		// 				<span className="btn-text">{quantity}</span>
-		// 				<button className="btn-qty-base--incrament">+</button>
-		// 			</section>
-		// 		)}
-		// 	</section>
-		// </section>
 	);
 };
 
 /**
- * Author: Lam
- * Menupage that display the menu of Mojjens meals with connection to cart of useCartStore.
- *
+ * Author: 
+
  * Update: Klara
- * When the user clicks on a product card a modal opens.
- *
- * Update: Klara
- * Updated maxwidth on card, same width on card and img.
- *
- * Update: Lam
- * Added animation to incramentBtn
- *
+ * Added name as alt-text
  */
-
-// ! Original
-// export const ProductCard = ({
-// 	item,
-// 	classBgColor,
-// 	showQty,
-// 	showIncramentBtn,
-// 	isFlexColumn,
-// }: Props) => {
-// 	const { name, img, summary, price, status } = item;
-// 	const [quantity, setQuantity] = useState<number>(0);
-
-// 	const productCardClassNames = clsx('flex product-card', {
-// 		flex__column: isFlexColumn,
-// 	});
-// 	return (
-// 		<section className={productCardClassNames}>
-// 			{status === 'inactive' && (
-// 				<div className="inactive">
-// 					<span className="heading-2">SLUT</span>
-// 				</div>
-// 			)}
-// 			<section className={`product-card__img-box ${classBgColor}`}>
-// 				<img className="product-card__img" src={img} alt="Image of meal" />
-// 				{showIncramentBtn && (
-// 					<button className="product-card__add-btn">+</button>
-// 				)}
-// 			</section>
-// 			<section className="product-card__info-box">
-// 				<h2 className="heading-5">{name}</h2>
-// 				<p className="base-small">{summary}</p>
-// 				<span className="product-card__price btn-text">{price} kr</span>
-// 				{showQty && (
-// 					<section className="quantity">
-// 						<button className="btn-qty-base--decrament">-</button>
-// 						<span className="btn-text">{quantity}</span>
-// 						<button className="btn-qty-base--incrament">+</button>
-// 					</section>
-// 				)}
-// 			</section>
-// 		</section>
-// 	);
-// };

@@ -1,13 +1,13 @@
 import './index.scss';
 import clsx from 'clsx';
 import type { Meal } from '@mojjen/productdata';
-import { useCartStore } from '../../../core/stores/usecartstore/data';
+import { useCartStore } from '@mojjen/usecartstore';
 import { ContentBox } from '@mojjen/contentbox';
 import { CircleIcon } from '@mojjen/circleicon';
 import { IoClose } from 'react-icons/io5';
 import { useState } from 'react';
-import { Modal } from '../../modal/ui';
-import { ModalProductCard } from '../../modalproductcard/ui';
+import { Modal } from '@mojjen/modal';
+import { ModalProductCard } from '@mojjen/modalproductcard';
 
 type Props = {
 	item: Meal;
@@ -59,7 +59,7 @@ export const CartProductCard = ({ item, classBgColor, allProdList }: Props) => {
 						onClick={() => setModalOpen(true)}
 						className={`cart-item__img-box grid grid__center ${classBgColor}`}
 					>
-						<img className={imgClassNames} src={img} alt="Image of meal" />
+						<img className={imgClassNames} src={img} alt={`Bild på ${name}`} />
 					</div>
 
 					<section
@@ -110,4 +110,7 @@ export const CartProductCard = ({ item, classBgColor, allProdList }: Props) => {
  *
  * Update: Klara
  * Fixed mobile view.
+ *
+ * Update: Klara
+ * Added name as alt-texts.
  */

@@ -14,10 +14,7 @@ export const AboutPage = () => {
 			<section className="about-page__container base flex flex__column flex__gap-2">
 				<article className="about-page__story base text-black">
 					<div className="about-page__hero">
-						<img
-							src={'/assets/hero-about-mojjen.png'}
-							alt="Korvmojen: en klassisk korvstand från 1974 i Edsvalla"
-						/>
+						<img src={'/assets/hero-about-mojjen.png'} alt="Mojjen" />
 					</div>
 					<h2 className="heading-2">"Det var en gång..."</h2>
 					<p>
@@ -44,12 +41,16 @@ export const AboutPage = () => {
 					</p>
 				</article>
 
-				<section className="about-page__values">
-					<h2 className="heading-3 text-mustard">Våra hjärtefrågor</h2>
+				<section className="about-page__values text-black">
+					<h2 className="heading-3 ">Våra hjärtefrågor</h2>
 					<div className="about-page__values-grid">
 						<ContentBox
 							icon={
-								<img src={'/assets/icons/meal.png'} alt="" aria-hidden="true" />
+								<img
+									src={'/assets/icons/hotdog.png'}
+									alt=""
+									aria-hidden="true"
+								/>
 							}
 							titleLevel="h4"
 							titleTxt="Kvalitet"
@@ -126,4 +127,6 @@ export const AboutPage = () => {
  * AI Generated Content as part of this weeks assignments.
  * Page component added. The page content was generated using the AI tool included in vsCode.
  *
+ * Update: Klara
+ * Fixed img-src. Changed heading levels to remove WAVE warning about skipped levels.
  */
