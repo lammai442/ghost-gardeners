@@ -96,3 +96,13 @@
 .notification__deleted-items {
 	text-decoration: line-through;
 }
+
+@media (max-width: 530px) {
+	.notification__list {
+		justify-content: center;
+	}
+
+	.notification__list-item {
+		width: 80%;
+	}
+}

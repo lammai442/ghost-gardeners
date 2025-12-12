@@ -45,4 +45,4 @@ export const cspHeader =
 	"style-src 'self' https://fonts.googleapis.com; " +
 	"font-src 'self' https://fonts.gstatic.com; " +
 	"img-src 'self' data:; " +
-	`connect-src 'self' ${process.env.API_URL} ws:;`;
+	`connect-src 'self' ${process.env.API_URL} ${process.env.CLIENT_API_URL} ws:;`;
