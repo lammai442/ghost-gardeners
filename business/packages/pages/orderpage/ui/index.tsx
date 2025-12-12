@@ -13,7 +13,7 @@ import { useWebSocketStore } from '@mojjen/usewebsocketstore';
 import { Page } from '@mojjen/page';
 import { useAuthStore } from '@mojjen/useauthstore';
 import { apiGetUserByToken } from '@mojjen/apiusers';
-import { User } from '@mojjen/userdata';
+import type { User } from '@mojjen/userdata';
 
 export const OrderPage = () => {
 	const [pendingOrders, setPendingOrders] = useState<OrderItems[]>([]);
