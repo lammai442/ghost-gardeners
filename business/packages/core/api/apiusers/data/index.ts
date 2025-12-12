@@ -20,6 +20,29 @@ export async function apiLoginUser(user: User) {
 	}
 }
 
+export const apiGetUserById = async (
+	userId: string | undefined,
+	token: string | undefined
+) => {
+	const apiUrl: string = import.meta.env.VITE_API_URL;
+
+	const response = await axios
+		.get(`${apiUrl}/auth/me/${userId}`, {
+			headers: {
+				// Authorization: token,
+				Authorization: `Bearer ${token}`,
+				'Content-Type': 'application/json',
+			},
+		})
+		.then((response) => {
+			return response;
+		})
+		.catch((error) => {
+			return error.response.data.message;
+		});
+	return response;
+};
+
 export async function apiGetUserByToken(token: string | undefined) {
 	const apiUrl: string = import.meta.env.VITE_API_URL;
 
