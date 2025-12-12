@@ -48,6 +48,7 @@ export const HeaderComp = () => {
 				<button
 					className="header__nav-btn bg-none border-none"
 					onClick={(): void => setShowNavMenu(!showNavMenu)}
+					aria-label="Öppna meny"
 				>
 					<HamburgerIcon showNavMenu={showNavMenu} />
 					{/* <img src="/assets/hamburger-meny.svg" alt="Menyknapp" /> */}

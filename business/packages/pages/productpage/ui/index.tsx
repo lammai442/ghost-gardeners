@@ -7,7 +7,7 @@ export const ProductPage = () => {
 	return (
 		<>
 			<HeaderComp />
-			<Page>
+			<Page titleText="Produkter" srOnly={true}>
 				{/* <main className="page__auth"> */}
 				<ConstructError
 					color="bg-cucumber"
@@ -22,3 +22,9 @@ export const ProductPage = () => {
 		</>
 	);
 };
+
+/**
+ * Modified by: Klara
+ * WCAG sr-only h1
+ *
+ */

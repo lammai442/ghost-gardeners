@@ -59,7 +59,7 @@ export const CartProductCard = ({ item, classBgColor, allProdList }: Props) => {
 						onClick={() => setModalOpen(true)}
 						className={`cart-item__img-box grid grid__center ${classBgColor}`}
 					>
-						<img className={imgClassNames} src={img} alt="Image of meal" />
+						<img className={imgClassNames} src={img} alt={`Bild på ${name}`} />
 					</div>
 
 					<section
@@ -110,4 +110,7 @@ export const CartProductCard = ({ item, classBgColor, allProdList }: Props) => {
  *
  * Update: Klara
  * Fixed mobile view.
+ *
+ * Update: Klara
+ * Added name as alt-texts.
  */

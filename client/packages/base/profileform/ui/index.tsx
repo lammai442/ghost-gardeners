@@ -161,7 +161,7 @@ export const ProfileForm = ({ fetchedUser }: Props) => {
 				onSubmit={handleSubmit}
 				className="flex flex__column flex__gap-1 profile-form"
 			>
-				<h3 className="heading-3">Profilinformation</h3>
+				<h2 className="heading-3">Profilinformation</h2>
 				<ContentBox extraClass="flex flex__column flex__gap-1-5 profile-form__content">
 					<ReusableInput
 						type="text"
@@ -263,4 +263,6 @@ export const ProfileForm = ({ fetchedUser }: Props) => {
  * Update: Klara and Nikki
  * Bugfix, merged state variables into one from obj. Simplified validation. Help from Claude to understand why the form updated randomly.
  *
+ * Update: Klara
+ * Changed heading levels to remove WAVE warning about skipped levels.
  */

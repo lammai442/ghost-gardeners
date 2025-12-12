@@ -2,14 +2,13 @@
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	justify-content: space-between;
-	gap: 1rem;
+	gap: 3rem;
 }
 
 .order-page__orders-container {
 	display: grid;
 	gap: 1rem;
 	grid-template-columns: repeat(auto-fit, minmax(100px, 100px));
-	cursor: pointer;
 }
 
 .order-page__order {
@@ -21,6 +20,7 @@
 	border-radius: 4px;
 	list-style-type: none;
 	justify-content: center;
+	cursor: pointer;
 
 	&-pending {
 		border: 2px solid $color-ketchup;
