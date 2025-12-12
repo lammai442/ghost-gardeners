@@ -3,8 +3,8 @@ import { AuthPage } from '@mojjen/authpage';
 import { OrderPage } from '@mojjen/orderpage';
 import { ProductPage } from '@mojjen/productpage';
 import App from '../../../../src/App';
-import { ProtectedRoute } from '../../../base/protectedroute/ui';
-import { ErrorPage } from '../../../pages/errorPage';
+import { ProtectedRoute } from '@mojjen/protectedroute/ui';
+import { ErrorPage } from '@mojjen/errorPage';
 
 export const router = createBrowserRouter([
 	{

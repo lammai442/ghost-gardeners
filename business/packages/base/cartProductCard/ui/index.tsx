@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { DrinkFilter } from '@mojjen/drinkfilter';
-import { CircleIcon } from '../../circleicon/ui';
+import { CircleIcon } from '@mojjen/circleicon';
 import { IoClose } from 'react-icons/io5';
 import type { OrderItem, OrderItems } from '@mojjen/orderitems';
 import './index.scss';
 import { LoadingMsg } from '@mojjen/loadingmsg';
-import { apiDeletItemFromOrder } from '../../../core/api/apiproducts/data';
+import { apiDeletItemFromOrder } from '@mojjen/apiproducts';
 
 type Props = {
 	item: OrderItem;
