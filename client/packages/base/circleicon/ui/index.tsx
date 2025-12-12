@@ -2,12 +2,6 @@ import type { ReactNode } from 'react';
 import './index.scss';
 import clsx from 'clsx';
 
-/**
- * Author: Klara Sköld
- * Created a reusable round icon.
- *
- */
-
 type Props = {
 	children: ReactNode;
 	style?: string;
@@ -27,3 +21,9 @@ export const CircleIcon = ({ children, style, extraClasses }: Props) => {
 
 	return <div className={classNames}>{children}</div>;
 };
+
+/**
+ * Author: Klara Sköld
+ * Created a reusable round icon.
+ *
+ */

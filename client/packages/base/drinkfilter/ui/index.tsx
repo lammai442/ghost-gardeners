@@ -44,8 +44,6 @@ export const DrinkFilter = ({
 			if (prodItem.category === 'DRINK') drinkList.push(prodItem);
 		});
 
-		// const findDrink = drinkList.find((d) => d.id === item.includeDrink);
-		// const findDrinkName = findDrink ? findDrink.name : '';
 		setSelected(item.includeDrinkName);
 		SetDrinks(drinkList);
 	}, []);

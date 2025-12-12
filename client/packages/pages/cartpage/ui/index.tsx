@@ -213,14 +213,14 @@ export const CartPage = () => {
 /**
  * Author: Klara Sköld
  * This is the cart page.
- * Updated: Lam
+ * Update: Lam
  * Change calculation of sum of articles and total amount
  * Added fetching of apiGetMeals to send allProdList to modal
  *
- * Updated: Klara
+ * Update: Klara
  * Added a textarea for user comment on order.
  *
- * Updated: Lam
+ * Updat: Lam
  * Added loadingModal when fetching createOrder and user from useUserStore
  *
  *  Update: Klara

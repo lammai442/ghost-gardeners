@@ -3,13 +3,25 @@
 	background: $bg;
 
 	&:hover {
-		// background: darken($bg, 8%);
 		transition: all 0.3s ease;
 		background: color.adjust($bg, $lightness: -8%);
 	}
 	&:active {
-		// background: darken($bg, 25%);
 		background: color.adjust($bg, $lightness: -25%);
+	}
+}
+
+@mixin button-outlined($color) {
+	@include button-bg(transparent);
+	color: $color;
+	border: 2px solid $color;
+
+	&:hover {
+		transition: all 0.3s ease;
+		border: 2px dotted $color;
+	}
+	&:active {
+		border: 2px dotted $color;
 	}
 }
 
@@ -40,20 +52,12 @@
 .btn-simple {
 	background-color: transparent;
 	padding: 0;
-	// color: $color-black;
 }
 
-.btn-outlined {
-	@include button-bg(transparent);
+.btn.btn-outlined {
+	@include button-outlined($color-black);
+}
 
-	color: $color-black;
-	border: 2px solid $color-black;
-
-	&:hover {
-		transition: all 0.3s ease;
-		border: 2px dotted $color-black;
-	}
-	&:active {
-		border: 2px dotted $color-black;
-	}
+.btn.btn-outlined-red {
+	@include button-outlined($color-ketchup);
 }

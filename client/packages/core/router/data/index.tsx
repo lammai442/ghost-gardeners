@@ -58,16 +58,16 @@ export const router = createBrowserRouter([
 ]);
 
 /**
- * Modified: StefanMogren
+ * Author: StefanMogren
  *
  * Adjusted how BrowserRouter and RouterProvider is set up
  *
- * Modified: Klara
+ * Update: Klara
  * Switched from under construction page to about page on the about route.
  *
- * Modified: Klara
+ * Update: Klara
  * ProtectedRoute added
  *
- * Modified: Klara
+ * Update: Klara
  * Added /buildmeny with a under construction page as element.
  */

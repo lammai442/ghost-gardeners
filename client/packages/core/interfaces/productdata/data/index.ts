@@ -1,18 +1,3 @@
-/**
- * Author: Lam
- * Interface for Meal products
- *
- * Modified: StefanMogren
- * Added category to Meal
- *
- * Updated: Lam
- * Added allergenes? and change details to description to Meal
- * Added interface User
- *
- * Update: Klara
- * Added FullUser,UpdatedUser, AttributeUser
- */
-
 export interface Meal {
 	category: string;
 	id: string;
@@ -43,12 +28,10 @@ export interface Drink {
 export interface Order {
 	PK: string;
 	SK: string;
-	// orderId: string;
 	status: string;
 	statusCategory: string;
 	category: string;
-	// total: number;
-	// userComment?: string;
+
 	attribute: {
 		items: Meal[];
 		createdAt: string;
@@ -106,3 +89,18 @@ export interface WebSocketOrder {
 	type: string;
 	order: Order;
 }
+
+/**
+ * Author: Lam
+ * Interface for Meal products
+ *
+ * Update: StefanMogren
+ * Added category to Meal
+ *
+ * Update: Lam
+ * Added allergenes? and change details to description to Meal
+ * Added interface User
+ *
+ * Update: Klara
+ * Added FullUser,UpdatedUser, AttributeUser
+ */

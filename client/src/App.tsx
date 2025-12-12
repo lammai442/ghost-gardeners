@@ -2,7 +2,6 @@ import './App.scss';
 import { HeaderComp } from '@mojjen/header';
 import { FooterComp } from '@mojjen/footer';
 import { Outlet } from 'react-router-dom';
-// import { useWebsocketStore } from '@mojjen/usewebsocketstore';
 import { useWebSocketHook } from '@mojjen/usewebsockethook';
 import { useEffect, useRef, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
@@ -78,10 +77,10 @@ function App() {
 export default App;
 
 /**
- * Modified: StefanMogren
+ * Author: StefanMogren
  *
  * Adjusted how BrowserRouter and RouterProvider is set up
  *
- * Modified: Klara
+ * Update: Klara
  * Sticky header. Inspo: https://stackblitz.com/edit/sticky-header-react?file=src%2Findex.css
  */

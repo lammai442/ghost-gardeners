@@ -65,11 +65,7 @@ export const ProductCard = ({
 			</Modal>
 
 			<li className={productCardClassNames}>
-				{/* <li className="product-card flex flex__column"> */}
-				<section
-					// onClick={handleModal}
-					className={`product-card__img-box flex ${classBgColor}`}
-				>
+				<section className={`product-card__img-box flex ${classBgColor}`}>
 					<img
 						className={imgClassNames}
 						src={img}

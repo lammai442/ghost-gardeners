@@ -28,7 +28,6 @@ export const useWebSocketHook = () => {
 			const websocket = new WebSocket(webSocketUrl);
 
 			websocket.onopen = () => {
-				console.log('WebSocket connected');
 				setWebSocket(websocket);
 				setConnectionStatus(true);
 			};
@@ -40,7 +39,6 @@ export const useWebSocketHook = () => {
 			websocket.onmessage = (event) => {
 				try {
 					const message: WebSocketOrder = JSON.parse(event.data);
-					console.log('Received order update:', message);
 
 					if (message.type === 'orderUpdate' && message.order) {
 						updateOrder(message.order);
@@ -52,11 +50,9 @@ export const useWebSocketHook = () => {
 
 			// For when the WebSocket discovers that the connection is lost. Sets a timeout to automatically reconnect the user.
 			websocket.onclose = () => {
-				console.log('WebSocket disconnected');
 				setConnectionStatus(false);
 
 				reconnectTimeoutRef.current = setTimeout(() => {
-					console.log('Attempting to reconnect...');
 					setWebSocket(null as any);
 				}, 3000);
 			};

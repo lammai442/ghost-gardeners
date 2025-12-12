@@ -3,10 +3,7 @@
 	position: absolute;
 	top: 100%;
 	left: 0;
-	// padding: 0rem 1rem;
 	overflow-y: hidden;
-	// transition: max-height 0.5s ease;
-	// transition: padding 1s;
 }
 
 .nav-menu-expand {
@@ -16,7 +13,6 @@
 	left: 0;
 	max-height: 200px;
 	transition: max-height 0.5s ease;
-	// transition: padding 1s;
 	overflow-y: hidden;
 }
 
@@ -52,6 +48,3 @@ li {
 		gap: 2rem;
 	}
 }
-/* @media screen and (max-width: 900px) {
-}
- */
