@@ -64,17 +64,7 @@ export const CartPage = () => {
 				throw new Error('User token is required');
 			}
 			const response = await apiPostOrder(order, user.token);
-			// const response = await fetch(`${apiUrl}/order`, {
-			// 	method: 'POST',
-			// 	headers: { 'Content-Type': 'application/json' },
-			// 	body: JSON.stringify({
-			// 		items,
-			// 		userComment: comment,
-			// 		staffComment: '',
-			// 		userId: user?.userId,
-			// 	}),
-			// });
-			// const data = await response.json();
+
 			setLoading(false);
 			emptyCart();
 			// Navigera till ConfirmedOrderPage med orderdata
