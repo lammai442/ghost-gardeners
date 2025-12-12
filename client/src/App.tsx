@@ -26,7 +26,6 @@ function App() {
 
 			const isExpired = decoded.exp * 1000 < Date.now();
 			isExpired && logout();
-			console.log('checkTokenExp()');
 		};
 
 		checkTokenExp();

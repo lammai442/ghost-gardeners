@@ -3,7 +3,7 @@ import type { User } from '@mojjen/userdata';
 
 type userStore = {
 	user: User | null;
-	updateUserStorage: (user: User) => void;
+	updateUserStorage: (user: User | null) => void;
 	logout: () => void;
 };
 
@@ -14,7 +14,7 @@ localStorage.setItem('user', JSON.stringify(initialUser));
 
 export const useAuthStore = create<userStore>((set) => ({
 	user: initialUser,
-	updateUserStorage: (user: User) => {
+	updateUserStorage: (user: User | null) => {
 		set({ user: user });
 		localStorage.setItem('user', JSON.stringify(user));
 	},

@@ -20,7 +20,7 @@ export async function apiLoginUser(user: User) {
 	}
 }
 
-export async function apiGetUserByToken(token: string) {
+export async function apiGetUserByToken(token: string | undefined) {
 	const apiUrl: string = import.meta.env.VITE_API_URL;
 
 	try {

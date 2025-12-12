@@ -11,6 +11,7 @@ import {
 	enrichItems,
 	calculateTotal,
 	trimFields,
+	deleteAllItemsFromOrder,
 } from '../utils/orderHelpers.mjs';
 import { generateId } from '../utils/index.mjs';
 
@@ -109,6 +110,9 @@ export const cancelOrder = async (orderId) => {
 	if (!getRes.Item) {
 		throw new Error(`Order med ID ${orderId} hittades inte.`);
 	}
+	const order = unmarshall(getRes.Item);
+
+	deleteAllItemsFromOrder(order);
 
 	const now = new Date().toISOString();
 
@@ -117,21 +121,28 @@ export const cancelOrder = async (orderId) => {
 			TableName: 'mojjen-table',
 			Key: key,
 			UpdateExpression: `
-        SET #status = :cancelled,
-            modifiedAt = :now
-      `,
+			SET #status = :cancelled,
+				modifiedAt = :now,
+				#attribute.#items = :items,
+				#attribute.#deleted = :deleted
+		`,
 			ExpressionAttributeNames: {
 				'#status': 'status',
+				'#attribute': 'attribute',
+				'#items': 'items',
+				'#deleted': 'deletedItems',
 			},
 			ExpressionAttributeValues: marshall({
 				':cancelled': 'cancelled',
 				':now': now,
+				':items': order.attribute.items,
+				':deleted': order.attribute.deletedItems,
 			}),
 		})
 	);
 
 	return {
-		...unmarshall(getRes.Item),
+		...order,
 		status: 'cancelled',
 		modifiedAt: now,
 	};

@@ -1,0 +1,4 @@
+{
+	"name": "@mojjen/notification",
+	"main": "./index.ts"
+}

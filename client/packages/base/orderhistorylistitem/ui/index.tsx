@@ -22,12 +22,27 @@ export const OrderHistoryListItem = ({ order }: Props) => {
 					key={index}
 					className="flex flex__align-end flex__space-between base-small products-list__list-item flex__gap-1-5"
 				>
-					<span>
+					{/* <span>
 						•{'  '}
 						{orderItem.name}{' '}
 						{orderItem.includeDrink && `+ ${orderItem.includeDrinkName}`}
 					</span>
-					<span className="order__price">{orderItem.price} kr</span>
+					<span className="order__price">{orderItem.price} kr</span> */}
+					<span
+						className={`base-class ${
+							order.status === 'cancelled' ? 'order__deleted-items' : ''
+						}`}
+					>
+						• {orderItem.name}{' '}
+						{orderItem.includeDrink && `+ ${orderItem.includeDrinkName}`}
+					</span>
+					<span
+						className={`order__price ${
+							order.status === 'cancelled' ? 'order__deleted-items' : ''
+						}`}
+					>
+						{orderItem.price} kr
+					</span>
 				</li>
 			);
 		});
@@ -62,7 +77,7 @@ export const OrderHistoryListItem = ({ order }: Props) => {
 			bgColor: 'brown',
 		},
 		done: {
-			text: 'Levererad',
+			text: 'Redo',
 			bgColor: 'cucumber',
 		},
 		cancelled: {
@@ -90,8 +105,12 @@ export const OrderHistoryListItem = ({ order }: Props) => {
 	const handleDuplicateOrder = () => {
 		order.attribute.items.map((orderItem) => {
 			incrament(orderItem);
-			navigate('/cart');
 		});
+
+		order.attribute.deletedItems?.map((orderItem) => {
+			incrament(orderItem);
+		});
+		navigate('/cart');
 	};
 
 	return (
@@ -122,12 +141,12 @@ export const OrderHistoryListItem = ({ order }: Props) => {
 								{generateOrderItems()}
 							</>
 						)}
-						{order.status === 'cancelled' &&
+						{(order.status === 'cancelled' || order.status === 'pending') &&
 							order.attribute.deletedItems &&
 							order.attribute.deletedItems.length > 0 && (
 								<>
 									<h5 className="heading-5">{`${
-										order.status === 'cancelled'
+										order.status === 'cancelled' || order.status === 'pending'
 											? 'Avbrutna produkter'
 											: 'Beställda produkter'
 									}`}</h5>

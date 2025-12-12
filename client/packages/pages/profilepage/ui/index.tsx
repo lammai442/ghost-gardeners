@@ -23,7 +23,6 @@ export const ProfilePage = () => {
 	useEffect(() => {
 		const fetchUserById = async () => {
 			if (!user) return;
-			console.log('user: ', user);
 
 			setLoadingUser(true);
 			const response = await apiGetUserById(user.userId, user.token);
