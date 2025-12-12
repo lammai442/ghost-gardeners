@@ -54,6 +54,6 @@ export const AuthBtn = () => {
  * Author: Lam
  * Auth button that can be used in header. If user is not logged in then modal with authForm opens
  *
- * Modified by: Klara
+ * Update: Klara
  * Ternary operator on currentUserName to avoid empty button warning from Wave.
  */

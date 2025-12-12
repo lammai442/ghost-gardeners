@@ -29,7 +29,6 @@ export const apiGetUserById = async (
 	const response = await axios
 		.get(`${apiUrl}/auth/me/${userId}`, {
 			headers: {
-				// Authorization: token,
 				Authorization: `Bearer ${token}`,
 				'Content-Type': 'application/json',
 			},
@@ -70,6 +69,6 @@ export async function apiGetUserByToken(token: string | undefined) {
 /**
  * Author: Lam
  * Api fetch of products using axios
- * Modified by: ninerino
+ * Update: ninerino
  * Added fetch for delete
  */

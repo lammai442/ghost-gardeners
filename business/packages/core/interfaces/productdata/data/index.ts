@@ -1,15 +1,3 @@
-/**
- * Author: Lam
- * Interface for Meal products
- *
- * Modified: StefanMogren
- * Added category to Meal
- *
- * Updated: Lam
- * Added allergenes? and change details to description to Meal
- * Added interface User
- */
-
 export interface Meal {
 	category: string;
 	id: string;
@@ -86,3 +74,15 @@ export interface WebSocketOrder {
 		timestamp: string;
 	};
 }
+
+/**
+ * Author: Lam
+ * Interface for Meal products
+ *
+ * Update: StefanMogren
+ * Added category to Meal
+ *
+ * Update: Lam
+ * Added allergenes? and change details to description to Meal
+ * Added interface User
+ */

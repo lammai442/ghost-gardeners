@@ -140,9 +140,10 @@ export async function apiDeletItemFromOrder(
 /**
  * Author: Lam
  * Api fetch of products using axios
- * Modified by: ninerino
+ *
+ * Update: ninerino
  * Added fetch for delete
  *
- * Updated: Lam
+ * Update: Lam
  * Added apiDeletItemFromOrder for delete an item from an order
  */

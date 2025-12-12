@@ -138,5 +138,4 @@ export const AuthForm = () => {
  * AI-assisted code creation: Github Copilot and ChatGPT
  * Created a reusable authentication form for login and registration. Uses localStorage to store user data upon successful login/registration.
  *
- *
  */

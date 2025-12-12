@@ -95,16 +95,16 @@ export const HeaderComp = () => {
  * Author: StefanMogren
  * Created base header component
  *
- * Modified: Stefan Mogren
+ * Update: Stefan Mogren
  * Added profile placeholder and initial cart button functionality.
  *
- * Modified: Lam
+ * Update: Lam
  * Added cartCount from useCartStore
  *
- * Modified: Stefan Mogren
+ * Update: Stefan Mogren
  * Reworked positioning of content inside the header.
  *
- * Modified: Lam
+ * Update: Lam
  * Added user from usaAuthStore and implemented ternary operator for log in or username
  *
  */

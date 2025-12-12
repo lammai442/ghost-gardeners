@@ -1,12 +1,7 @@
-/**
- * Author: StefanMogren
- * A global and accessable state for websocket connection.
- * Created with the help of Amazon Q (AWS:s own AI)
- */
-
 import { useEffect, useRef } from 'react';
 import { useWebSocketStore } from '@mojjen/usewebsocketstore';
 import type { WebSocketOrder } from '@mojjen/orderitems';
+
 const webSocketUrl: string = import.meta.env.VITE_WEBSOCKET_URL;
 
 export const useWebSocketHook = () => {
@@ -83,3 +78,9 @@ export const useWebSocketHook = () => {
 		ws,
 	};
 };
+
+/**
+ * Author: StefanMogren
+ * A global and accessable state for websocket connection.
+ * Created with the help of Amazon Q (AWS:s own AI)
+ */

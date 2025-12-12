@@ -3,12 +3,6 @@ import './index.scss';
 import clsx from 'clsx';
 import { useOnClickOutside } from 'usehooks-ts';
 
-/**
- * Author: Klara Sköld
- * Created a reusable white box that accepts children and can be used across different parts of the design.
- *
- */
-
 type Props = {
 	extraClass?: string;
 	titleTxt?: string;
@@ -71,3 +65,9 @@ export const ContentBox = ({
 		</div>
 	);
 };
+
+/**
+ * Author: Klara Sköld
+ * Created a reusable white box that accepts children and can be used across different parts of the design.
+ *
+ */

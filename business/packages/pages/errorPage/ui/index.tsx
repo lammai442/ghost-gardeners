@@ -1,10 +1,4 @@
-// import { Page } from '@mojjen/page';
 import './index.scss';
-/**
- * Author: StefanMogren
- * Created ErrorPage. Catches any page not inside the Router.
- *
- */
 
 import { ConstructError } from '@mojjen/construct-error';
 
@@ -17,3 +11,9 @@ export const ErrorPage = () => {
 		/>
 	);
 };
+
+/**
+ * Author: StefanMogren
+ * Created ErrorPage. Catches any page not inside the Router.
+ *
+ */

@@ -6,17 +6,9 @@ import { useOnClickOutside } from 'usehooks-ts';
 import { useRef, useEffect } from 'react';
 import type { OrderItem } from '@mojjen/orderitems';
 
-/**
- * Author: Lam Mai
- * Filtering options section for menu page. Content from Lam.
- * Edited by: ninerino
- * Changed props to fit what we need
- */
-
 type Props = {
 	extraClasses?: string;
-	item: //| Meal
-	OrderItem;
+	item: OrderItem;
 	allProdList: OrderItem[]; // Ändrat från Meal
 	setCurrentItem: Dispatch<SetStateAction<OrderItem>>;
 };
@@ -97,3 +89,10 @@ export const DrinkFilter = ({
 		</div>
 	);
 };
+
+/**
+ * Author: Lam Mai
+ * Filtering options section for menu page. Content from Lam.
+ * Edited by: ninerino
+ * Changed props to fit what we need
+ */
