@@ -1,9 +1,5 @@
 import './index.scss';
-/**
- * Author: StefanMogren
- * Created component for both UnderConstructionPage and 404-error page
- *
- */
+
 type DataContent = {
 	color: string;
 	title: string;
@@ -28,3 +24,9 @@ export const ConstructError = ({ color, title, text }: DataContent) => {
 		</section>
 	);
 };
+
+/**
+ * Author: StefanMogren
+ * Created component for both UnderConstructionPage and 404-error page
+ *
+ */

@@ -5,12 +5,6 @@ import { useEffect } from 'react';
 import { useAuthStore } from '@mojjen/useauthstore';
 import { jwtDecode } from 'jwt-decode';
 
-/**
- * Modified: StefanMogren
- *
- * Adjusted how BrowserRouter and RouterProvider is set up
- */
-
 function App() {
 	const { user, logout } = useAuthStore();
 
@@ -42,3 +36,9 @@ function App() {
 }
 
 export default App;
+
+/**
+ * Update: StefanMogren
+ *
+ * Adjusted how BrowserRouter and RouterProvider is set up
+ */

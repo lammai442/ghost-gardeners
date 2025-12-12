@@ -31,7 +31,7 @@ export const AuthPage = () => {
 };
 
 /**
- * Modified by: Klara
+ * Update: Klara
  * WCAG sr-only h1
  *
  */

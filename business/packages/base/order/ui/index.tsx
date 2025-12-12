@@ -1,11 +1,5 @@
 import './index.scss';
 
-/**
- * Author: StefanMogren
- * Created Order component
- *
- */
-
 type Props = {
 	orderId: string;
 	time: string;
@@ -48,3 +42,9 @@ export const Order = ({ orderId, time, orderStatus }: Props) => {
 		</li>
 	);
 };
+
+/**
+ * Author: StefanMogren
+ * Created Order component
+ *
+ */
