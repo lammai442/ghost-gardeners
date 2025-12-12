@@ -1,11 +1,11 @@
 import './index.scss';
-import { Button } from '../../button/ui';
+import { Button } from '@mojjen/button';
 import clsx from 'clsx';
 import { useEffect, useState, useRef } from 'react';
 import type { Meal } from '@mojjen/productdata';
-import { useCartStore } from '../../../core/stores/usecartstore/data';
-import { Modal } from '../../modal/ui';
-import { ModalProductCard } from '../../modalproductcard/ui';
+import { useCartStore } from '@mojjen/usecartstore';
+import { Modal } from '@mojjen/modal';
+import { ModalProductCard } from '@mojjen/modalproductcard';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 type Props = {

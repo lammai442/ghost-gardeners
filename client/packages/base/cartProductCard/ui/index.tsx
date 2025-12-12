@@ -1,13 +1,13 @@
 import './index.scss';
 import clsx from 'clsx';
 import type { Meal } from '@mojjen/productdata';
-import { useCartStore } from '../../../core/stores/usecartstore/data';
+import { useCartStore } from '@mojjen/usecartstore';
 import { ContentBox } from '@mojjen/contentbox';
 import { CircleIcon } from '@mojjen/circleicon';
 import { IoClose } from 'react-icons/io5';
 import { useState } from 'react';
-import { Modal } from '../../modal/ui';
-import { ModalProductCard } from '../../modalproductcard/ui';
+import { Modal } from '@mojjen/modal';
+import { ModalProductCard } from '@mojjen/modalproductcard';
 
 type Props = {
 	item: Meal;

@@ -11,7 +11,7 @@
 
 import { create } from 'zustand';
 import type { Meal } from '@mojjen/productdata';
-import { generateId } from '../../../utils/helpfunctions';
+import { generateId } from '@mojjen/helpfunctions';
 
 type CartStore = {
 	cartCount: number;
