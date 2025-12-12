@@ -15,19 +15,6 @@ import { apiGetOrdersByUser } from '@mojjen/apiusers';
 import type { Order } from '@mojjen/productdata';
 import { useAuthStore } from '@mojjen/useauthstore';
 
-/**
- * Author: Klara Sköld
- * This page is rendered after a successful order.It contains white boxes with different type of content.
- * Modified by: ninerino
- * Fixed orderId-splicing to map with cancelOrder and changeOrder functions
- *
- * Modified: Stefan Mogren
- * Added example code on how to access the updated order from WebSocket
- *
- * Modified: Stefan Mogren
- * Added proper WebSocket integration
- */
-
 export const ConfirmedOrderPage = () => {
 	const navigate: NavigateFunction = useNavigate();
 	const location = useLocation();
@@ -61,9 +48,6 @@ export const ConfirmedOrderPage = () => {
 
 	if (!activeOrder) return;
 	<Page titleText="Orderbekräftelse">Ingen order hittades.</Page>;
-	// ! Acivate this when the function accepts a proper order object instead of a testobject.
-	// ! The design may be updated in a future sprint
-	// useEffect(()=>{setStatus(order.status)},[status])
 
 	const generateOrderArticles = (): ReactNode => {
 		return activeOrder.attribute.items.map((item, index) => (
@@ -173,3 +157,16 @@ export const ConfirmedOrderPage = () => {
 		</Page>
 	);
 };
+
+/**
+ * Author: Klara Sköld
+ * This page is rendered after a successful order.It contains white boxes with different type of content.
+ * Update: ninerino
+ * Fixed orderId-splicing to map with cancelOrder and changeOrder functions
+ *
+ * Update: Stefan Mogren
+ * Added example code on how to access the updated order from WebSocket
+ *
+ * Update: Stefan Mogren
+ * Added proper WebSocket integration
+ */

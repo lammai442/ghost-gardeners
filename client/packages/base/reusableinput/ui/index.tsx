@@ -40,7 +40,6 @@ export const ReusableInput = ({
 					placeholder={placeholder}
 					onChange={onChange}
 					className={classNames}
-					// className="input-base"
 					autoComplete={autocomplete}
 					readOnly={readonly}
 				/>

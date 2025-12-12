@@ -219,6 +219,6 @@ export const OrderStatusBox = ({ orderId, status, setStatus }: Props) => {
 /**
  * Author: Klara Sköld
  * A white box on the order confirmation page that updates as the order status changes.
- * Modified by: ninerino
+ * Update: ninerino
  * Added functionality to handleCancel
  */

@@ -1,18 +1,6 @@
 import { Page } from '@mojjen/page';
 import './index.scss';
 
-/**
- * Author: StefanMogren
- * Created UnderConstructionPage. Placeholder for every currently unfinished pages.
- *
- */
-
-/**
- * Update: Klara
- * Page component added
- *
- */
-
 import { ConstructError } from '@mojjen/construct-error';
 
 export const UnderConstructionPage = () => {
@@ -28,3 +16,15 @@ export const UnderConstructionPage = () => {
 		</Page>
 	);
 };
+
+/**
+ * Author: StefanMogren
+ * Created UnderConstructionPage. Placeholder for every currently unfinished pages.
+ *
+ */
+
+/**
+ * Update: Klara
+ * Page component added
+ *
+ */

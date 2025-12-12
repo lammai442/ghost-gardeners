@@ -48,16 +48,6 @@ export async function cancelOrder(orderId: string, token: string | undefined) {
 		});
 
 	return response;
-
-	// const res = await fetch(`${import.meta.env.VITE_API_URL}/order/${orderId}`, {
-	// 	method: 'DELETE',
-	// });
-
-	// if (!res.ok) {
-	// 	throw new Error('Kunde inte avbryta order.');
-	// }
-
-	// return res.json();
 }
 
 export async function apiRegisterUser(user: User) {
@@ -124,6 +114,6 @@ export async function apiGetUserByToken(token: string) {
 /**
  * Author: Lam
  * Api fetch of products using axios
- * Modified by: ninerino
+ * Update: ninerino
  * Added fetch for delete
  */

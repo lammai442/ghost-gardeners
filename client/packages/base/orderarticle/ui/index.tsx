@@ -1,12 +1,5 @@
 import './index.scss';
 import type { Meal } from '@mojjen/productdata';
-/**
- * Author: Klara Sköld
- * Details for each article in the order.
- *
- * Author: ninerino
- * Additional functionality to fetch and write to database.
- */
 
 type Props = {
 	item: Meal;
@@ -53,3 +46,11 @@ export const OrderArticle = ({ item, deletedItems }: Props) => {
 		</>
 	);
 };
+
+/**
+ * Author: Klara Sköld
+ * Details for each article in the order.
+ *
+ * Author: ninerino
+ * Additional functionality to fetch and write to database.
+ */

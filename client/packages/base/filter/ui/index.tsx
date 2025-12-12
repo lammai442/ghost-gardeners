@@ -3,16 +3,8 @@ import { Button } from '@mojjen/button';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import { CiFilter } from 'react-icons/ci';
 
-/**
- * Author: Lam Mai
- * Filtering options section for menu page. Content from Lam.
- *
- */
-
 export const Filter = () => {
-	const handleClick = () => {
-		console.log('handleClick(), filter button');
-	};
+	const handleClick = () => {};
 
 	return (
 		<div className="filter">
@@ -29,3 +21,9 @@ export const Filter = () => {
 		</div>
 	);
 };
+
+/**
+ * Author: Lam Mai
+ * Filtering options section for menu page. Content from Lam.
+ *
+ */

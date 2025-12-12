@@ -1,8 +1,3 @@
-/**
- * Author: Lam
- * A global and accessable state for user
- */
-
 import { create } from 'zustand';
 import type { User } from '@mojjen/productdata';
 
@@ -29,3 +24,8 @@ export const useAuthStore = create<userStore>((set) => ({
 		localStorage.setItem('user', JSON.stringify(currentUser));
 	},
 }));
+
+/**
+ * Author: Lam
+ * A global and accessable state for user
+ */

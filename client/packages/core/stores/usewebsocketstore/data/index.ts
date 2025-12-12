@@ -1,8 +1,3 @@
-/**
- * Author: StefanMogren
- * A global and accessable state for websocket connection
- */
-
 import { create } from 'zustand';
 import type { Order } from '@mojjen/productdata';
 
@@ -53,3 +48,8 @@ export const useWebSocketStore = create<WebSocketState>((set, get) => ({
 		});
 	},
 }));
+
+/**
+ * Author: StefanMogren
+ * A global and accessable state for websocket connection
+ */

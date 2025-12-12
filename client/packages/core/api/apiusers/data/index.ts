@@ -42,7 +42,6 @@ export const apiGetUserById = async (
 	const response = await axios
 		.get(`${apiUrl}/auth/me/${userId}`, {
 			headers: {
-				// Authorization: token,
 				Authorization: `Bearer ${token}`,
 				'Content-Type': 'application/json',
 			},

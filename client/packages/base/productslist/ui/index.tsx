@@ -24,7 +24,6 @@ export const ProductsList = ({
 	prodList,
 	allProdList = [],
 }: Props) => {
-	// const productList2: OrderItem[] = prodlist;
 	const classNames = clsx('product-list', {
 		'flex flex__column product-list__cart': isCartItem,
 		grid: !isCartItem,
@@ -67,7 +66,7 @@ export const ProductsList = ({
  * Author: Klara Sköld
  * Products list
  *
- * Modified: StefanMogren
+ * Update: StefanMogren
  * Added filter to the API response from GetMenu
  * Update: Klara
  * Ternary operator: CartPage = CartProductCard, menuPage= ProductCard

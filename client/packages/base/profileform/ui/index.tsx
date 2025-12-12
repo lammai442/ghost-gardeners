@@ -228,7 +228,7 @@ export const ProfileForm = ({ fetchedUser }: Props) => {
 							<Button
 								extraClasses="profile-form__btn"
 								onClick={handleCancel}
-								style="red"
+								style="outlined-red"
 								aria="Avbryt redigering"
 							>
 								Avbryt
