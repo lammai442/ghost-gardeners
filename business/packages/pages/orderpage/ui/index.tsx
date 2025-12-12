@@ -13,7 +13,6 @@ import { useWebSocketStore } from '@mojjen/usewebsocketstore';
 import { Page } from '@mojjen/page';
 import { useAuthStore } from '@mojjen/useauthstore';
 import { apiGetUserByToken } from '@mojjen/apiusers';
-import type { User } from '@mojjen/userdata';
 
 export const OrderPage = () => {
 	const [pendingOrders, setPendingOrders] = useState<OrderItems[]>([]);
@@ -24,7 +23,6 @@ export const OrderPage = () => {
 	const [allProdList, setAllProdList] = useState<OrderItem[]>([]);
 	const { orderFromWs } = useWebSocketStore();
 	const { user, updateUserStorage } = useAuthStore();
-	const [activeUser, setActiveUser] = useState<User | null>(null);
 
 	useEffect(() => {
 		const getUser = async () => {
@@ -33,7 +31,6 @@ export const OrderPage = () => {
 				const nullUser: null = null;
 				updateUserStorage(nullUser);
 			}
-			setActiveUser(user);
 		};
 
 		getUser();
@@ -78,8 +75,9 @@ export const OrderPage = () => {
 	/**
 	 * Fetches the orders based on pending/confirmed/done
 	 */
+
 	useEffect(() => {
-		if (!activeUser) {
+		if (user) {
 			const fetchOrders = async () => {
 				const userFromLocal = JSON.parse(localStorage.getItem('user') || '{}');
 
