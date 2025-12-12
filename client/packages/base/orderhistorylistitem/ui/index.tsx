@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import './index.scss';
-import { formatDate } from '@mojjen/formatdate';
+import { formatDate } from '@mojjen/helpfunctions';
 import { Button } from '@mojjen/button';
 import type { Order, Meal } from '@mojjen/productdata';
 import { useCartStore } from '@mojjen/usecartstore';

@@ -2,10 +2,7 @@ import './index.scss';
 import { Page } from '@mojjen/page';
 import { OrderHistoryListItem } from '@mojjen/orderhistorylistitem';
 import { ProfileForm } from '@mojjen/profileform';
-import {
-	apiGetOrdersByUser,
-	apiGetUserById,
-} from '../../../core/api/apiusers/data';
+import { apiGetOrdersByUser, apiGetUserById } from '@mojjen/apiusers';
 import { useAuthStore } from '@mojjen/useauthstore';
 
 import { useEffect, useState } from 'react';
