@@ -8,9 +8,9 @@ import { Page } from '@mojjen/page';
 import { Button } from '@mojjen/button';
 import { ProductsList } from '@mojjen/productslist';
 import { useNavigate } from 'react-router-dom';
-import { Modal } from '../../../base/modal/ui';
-import { useAuthStore } from '../../../core/stores/useauthstore/data';
-import { apiGetOrdersByUser } from '../../../core/api/apiusers/data';
+import { Modal } from '@mojjen/modal';
+import { useAuthStore } from '@mojjen/useauthstore';
+import { apiGetOrdersByUser } from '@mojjen/apiusers';
 import { sortMealListByLetter } from '@mojjen/helpfunctions';
 
 type GetMealsResponse = {

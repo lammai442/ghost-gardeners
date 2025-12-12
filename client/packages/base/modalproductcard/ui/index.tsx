@@ -1,7 +1,7 @@
 import './index.scss';
 import type { Meal } from '@mojjen/productdata';
-import { DrinkFilter } from '../../drinkfilter/ui';
-import { Button } from '../../button/ui';
+import { DrinkFilter } from '@mojjen/drinkfilter';
+import { Button } from '@mojjen/button';
 import { useState } from 'react';
 import type { Dispatch, SetStateAction } from 'react';
 import { useCartStore } from '@mojjen/usecartstore';

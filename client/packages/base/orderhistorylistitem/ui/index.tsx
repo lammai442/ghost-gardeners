@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import './index.scss';
-import { formatDate } from '../../../../src/utils/utils';
+import { formatDate } from '@mojjen/helpfunctions';
 import { Button } from '@mojjen/button';
 import type { Order, Meal } from '@mojjen/productdata';
-import { useCartStore } from '../../../core/stores/usecartstore/data';
+import { useCartStore } from '@mojjen/usecartstore';
 import { useNavigate } from 'react-router-dom';
 
 type Props = {

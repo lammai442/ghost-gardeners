@@ -1,15 +1,11 @@
 import './index.scss';
-
 import { Button } from '@mojjen/button';
 import { ReusableInput } from '@mojjen/reusableinput';
 import { useAuthStore } from '@mojjen/useauthstore';
 import { ContentBox } from '@mojjen/contentbox';
-
 import { type ChangeEvent, useState, useEffect } from 'react';
 import type { FullUser } from '@mojjen/productdata';
-
 import { apiUpdateUser } from '@mojjen/apiusers';
-
 import { Modal } from '@mojjen/modal';
 
 type Props = {
