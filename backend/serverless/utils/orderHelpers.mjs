@@ -166,3 +166,18 @@ export const deletedItemsFromOrder = async (id, itemId) => {
 
 	return order;
 };
+
+export const deleteAllItemsFromOrder = (order) => {
+	const currentItems = order.attribute.items || [];
+
+	const deleted = order.attribute.deletedItems || [];
+
+	const updatedDeleted = [...deleted, ...currentItems];
+
+	const updatedItems = [];
+
+	order.attribute.deletedItems = updatedDeleted;
+	order.attribute.items = updatedItems;
+
+	return order;
+};

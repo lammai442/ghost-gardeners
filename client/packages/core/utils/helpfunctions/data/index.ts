@@ -70,4 +70,5 @@ export const sortMealListByLetter = (list: Meal[]): Meal[] => {
  * Update: Lam
  * Added validateAuthForm with code from ChatGPT for AI assignment
  * Added sortMealListByLetter
+ *
  */

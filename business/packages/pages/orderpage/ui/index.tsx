@@ -11,6 +11,9 @@ import { HeaderComp } from '@mojjen/header';
 import { IoLockClosedOutline } from 'react-icons/io5';
 import { useWebSocketStore } from '@mojjen/usewebsocketstore';
 import { Page } from '@mojjen/page';
+import { useAuthStore } from '@mojjen/useauthstore';
+import { apiGetUserByToken } from '@mojjen/apiusers';
+import { User } from '@mojjen/userdata';
 
 export const OrderPage = () => {
 	const [pendingOrders, setPendingOrders] = useState<OrderItems[]>([]);
@@ -20,8 +23,20 @@ export const OrderPage = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [allProdList, setAllProdList] = useState<OrderItem[]>([]);
 	const { orderFromWs } = useWebSocketStore();
+	const { user, updateUserStorage } = useAuthStore();
+	const [activeUser, setActiveUser] = useState<User | null>(null);
 
 	useEffect(() => {
+		const getUser = async () => {
+			const res = await apiGetUserByToken(user?.token);
+			if (!res.success) {
+				const nullUser: null = null;
+				updateUserStorage(nullUser);
+			}
+			setActiveUser(user);
+		};
+
+		getUser();
 		const fetchMeals = async () => {
 			const res = await apiGetMeals();
 			if (res.success) setAllProdList(res.data.menuItems);
@@ -64,37 +79,39 @@ export const OrderPage = () => {
 	 * Fetches the orders based on pending/confirmed/done
 	 */
 	useEffect(() => {
-		const fetchOrders = async () => {
-			const userFromLocal = JSON.parse(localStorage.getItem('user') || '{}');
+		if (!activeUser) {
+			const fetchOrders = async () => {
+				const userFromLocal = JSON.parse(localStorage.getItem('user') || '{}');
 
-			try {
-				const apiUrl = import.meta.env.VITE_API_URL;
+				try {
+					const apiUrl = import.meta.env.VITE_API_URL;
 
-				// Helper för fetch + auth
-				const fetchWithAuth = (url: string) =>
-					fetch(url, {
-						headers: {
-							Authorization: `Bearer ${userFromLocal.token}`,
-							'Content-Type': 'application/json',
-						},
-					}).then((res) => res.json());
+					// Helper för fetch + auth
+					const fetchWithAuth = (url: string) =>
+						fetch(url, {
+							headers: {
+								Authorization: `Bearer ${userFromLocal.token}`,
+								'Content-Type': 'application/json',
+							},
+						}).then((res) => res.json());
 
-				// Kör alla anrop parallellt
-				const [pendingRes, confirmedRes, doneRes] = await Promise.all([
-					fetchWithAuth(`${apiUrl}/orders/status/pending`),
-					fetchWithAuth(`${apiUrl}/orders/status/confirmed`),
-					fetchWithAuth(`${apiUrl}/orders/status/done`),
-				]);
+					// Kör alla anrop parallellt
+					const [pendingRes, confirmedRes, doneRes] = await Promise.all([
+						fetchWithAuth(`${apiUrl}/orders/status/pending`),
+						fetchWithAuth(`${apiUrl}/orders/status/confirmed`),
+						fetchWithAuth(`${apiUrl}/orders/status/done`),
+					]);
 
-				setPendingOrders(pendingRes.orders || []);
-				setConfirmedOrders(confirmedRes.orders || []);
-				setDoneOrders(doneRes.orders || []);
-			} catch (error) {
-				console.error('Kunde inte hämta ordrar:', error);
-			}
-		};
+					setPendingOrders(pendingRes.orders || []);
+					setConfirmedOrders(confirmedRes.orders || []);
+					setDoneOrders(doneRes.orders || []);
+				} catch (error) {
+					console.error('Kunde inte hämta ordrar:', error);
+				}
+			};
 
-		fetchOrders();
+			fetchOrders();
+		}
 	}, [orderFromWs]);
 
 	/**

@@ -8,6 +8,8 @@ import { cancelOrder } from '../../../core/api/apiproducts/data';
 import { useCartStore } from '../../../core/stores/usecartstore/data';
 import { Modal } from '@mojjen/modal';
 import { useAuthStore } from '@mojjen/useauthstore';
+import { LoadingMsg } from '@mojjen/loading-msg';
+import { ModalLoading } from '@mojjen/modalloading';
 
 type Props = {
 	orderId?: string;
@@ -17,7 +19,6 @@ type Props = {
 
 export const OrderStatusBox = ({ orderId, status, setStatus }: Props) => {
 	const navigate = useNavigate();
-	// const [loading, setLoading] = useState(false);
 	const generateString = (
 		status: string,
 		pendingString: string,
@@ -32,10 +33,11 @@ export const OrderStatusBox = ({ orderId, status, setStatus }: Props) => {
 	};
 
 	const [showCancelModal, setShowCancelModal] = useState(false);
+	const [loading, setLoading] = useState<boolean>(false);
+	const [loadingModal, setLoadingModal] = useState<boolean>(false);
 	const { user } = useAuthStore();
 
 	const handleCancel = () => {
-		console.log('handleCancel clicked');
 		setShowCancelModal(true);
 	};
 
@@ -45,10 +47,10 @@ export const OrderStatusBox = ({ orderId, status, setStatus }: Props) => {
 				if (!user?.token) {
 					throw new Error('User token is required');
 				}
-
+				setLoading(true);
 				const response = await cancelOrder(orderId, user.token);
-
-				console.log('response: ', response);
+				if (!response.success) throw new Error('Cannot cancel order');
+				setLoading(false);
 			}
 
 			setStatus('cancelled');
@@ -67,7 +69,7 @@ export const OrderStatusBox = ({ orderId, status, setStatus }: Props) => {
 		if (!user?.token) {
 			throw new Error('User token is required');
 		}
-		// setLoading(true);
+		setLoadingModal(true);
 		try {
 			const res = await fetch(
 				`${import.meta.env.VITE_API_URL}/order/${orderId}`,
@@ -98,7 +100,6 @@ export const OrderStatusBox = ({ orderId, status, setStatus }: Props) => {
 					}),
 				}
 			);
-			console.log('response: ', response);
 
 			// Lägg tillbaka samma orderId i cart
 			const itemsForCart = data.order.attribute.items.map((item: any) => ({
@@ -108,7 +109,7 @@ export const OrderStatusBox = ({ orderId, status, setStatus }: Props) => {
 			}));
 
 			useCartStore.getState().setCartItems(itemsForCart);
-
+			setLoadingModal(false);
 			navigate(-1); // tillbaka till cart
 		} catch (err) {
 			console.error('Fel vid ändra order:', err);
@@ -118,15 +119,25 @@ export const OrderStatusBox = ({ orderId, status, setStatus }: Props) => {
 	};
 
 	const renderButtons = (): ReactNode => {
-		return (
-			<div className="flex btns">
-				<Button aria="Avbryt order" onClick={handleCancel} style="red">
-					Avbryt
-				</Button>
-				<Button aria="Ändra order" onClick={handleEdit} style="outlined">
-					Ändra order
-				</Button>
-			</div>
+		return loadingModal ? (
+			<ModalLoading
+				headTitle="Laddar"
+				title="Avbryter beställningen"
+				text="Tillbaka till kundvagn"
+				setModalOpen={setLoadingModal}
+			/>
+		) : (
+			<>
+				<div className="flex btns">
+					<Button aria="Avbryt order" onClick={handleCancel} style="red">
+						Avbryt
+					</Button>
+
+					<Button aria="Ändra order" onClick={handleEdit} style="outlined">
+						Ändra order
+					</Button>
+				</div>
+			</>
 		);
 	};
 
@@ -180,25 +191,29 @@ export const OrderStatusBox = ({ orderId, status, setStatus }: Props) => {
 					<h2 className="heading-2 text-light-beige">Avbryt order</h2>
 				}
 			>
-				<div className="flex flex__column flex__gap-1">
-					<p className="base cancel-text">
-						Är du säker på att du vill avbryta din order?
-					</p>
+				{loading ? (
+					<LoadingMsg title="Avbryter ordern"></LoadingMsg>
+				) : (
+					<div className="flex flex__column flex__gap-1">
+						<p className="base cancel-text">
+							Är du säker på att du vill avbryta din order?
+						</p>
 
-					<div className="flex flex__gap-2 flex__justify-end">
-						<Button
-							style="outlined"
-							onClick={closeCancelModal}
-							aria={'Gå tillbaka'}
-						>
-							Gå tillbaka utan att ändra
-						</Button>
+						<div className="flex flex__gap-2 flex__justify-end">
+							<Button
+								style="outlined"
+								onClick={closeCancelModal}
+								aria={'Gå tillbaka'}
+							>
+								Gå tillbaka utan att ändra
+							</Button>
 
-						<Button style="red" onClick={confirmCancel} aria={'Avbryt order'}>
-							Ja, avbryt ordern
-						</Button>
+							<Button style="red" onClick={confirmCancel} aria={'Avbryt order'}>
+								Ja, avbryt ordern
+							</Button>
+						</div>
 					</div>
-				</div>
+				)}
 			</Modal>
 		</>
 	);

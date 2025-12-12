@@ -63,3 +63,36 @@
 	border: none;
 	cursor: pointer;
 }
+
+.notification__btn {
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+}
+
+.notification__list {
+	display: flex;
+	flex-direction: row;
+	gap: 1rem;
+	flex-wrap: wrap;
+}
+
+.notification__list-item {
+	padding: 1rem;
+	background-color: white;
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+}
+
+.notification__status {
+	margin-left: 0.3rem;
+	padding: 0.2rem 0.4rem;
+	border-radius: 1rem;
+	color: white;
+	align-self: center;
+}
+
+.notification__deleted-items {
+	text-decoration: line-through;
+}
