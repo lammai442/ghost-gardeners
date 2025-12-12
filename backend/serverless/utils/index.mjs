@@ -1,5 +1,6 @@
 import { v4 as uuid } from 'uuid';
 import { getProductsByIds } from './orderHelpers.mjs';
+import 'dotenv/config';
 
 /**
  * Author: Lam
@@ -37,3 +38,11 @@ export const generateAllergenes = async (prodIds) => {
 	// Convert the set to an array and return the list
 	return Array.from(allergenesSet);
 };
+
+export const cspHeader =
+	"default-src 'self'; " +
+	"script-src 'self' https://cdnjs.cloudflare.com https://assets10.lottiefiles.com; " +
+	"style-src 'self' https://fonts.googleapis.com; " +
+	"font-src 'self' https://fonts.gstatic.com; " +
+	"img-src 'self' data:; " +
+	`connect-src 'self' ${process.env.API_URL} ws:;`;
