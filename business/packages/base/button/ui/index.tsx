@@ -2,13 +2,6 @@ import type { ReactNode } from 'react';
 import './index.scss';
 import clsx from 'clsx';
 
-/**
- * Author: Klara Sköld
- * Created a reusable button that accepts children and can be used across different parts of the design.
- * Edited by: ninerino
- * Added btn-outlined-red
- */
-
 type Props = {
 	children: ReactNode;
 	onClick: () => void;
@@ -28,13 +21,13 @@ export const Button = ({
 	onClick,
 }: Props) => {
 	const classNames = clsx('btn', 'base-bold', 'border-radius', extraClasses, {
-		'btn-green border-radius': !style,
-		'btn-red border-radius': style === 'red',
-		'btn-black border-radius': style === 'black',
-		'btn-brown border-radius': style === 'brown',
+		'btn-green': !style,
+		'btn-red': style === 'red',
+		'btn-black': style === 'black',
+		'btn-brown': style === 'brown',
 		'btn-simple': style === 'simple',
 		'btn-outlined': style === 'outlined',
-		'btn-outlined-red': style ==='outlined-red'
+		'btn-outlined-red': style === 'outlined-red',
 	});
 
 	return (
@@ -48,3 +41,13 @@ export const Button = ({
 		</button>
 	);
 };
+
+/**
+ * Author: Klara Sköld
+ * Created a reusable button that accepts children and can be used across different parts of the design.
+ * Update: ninerino
+ * Added btn-outlined-red
+ *
+ * Update: Klara
+ * Outlined btns as mixins
+ */

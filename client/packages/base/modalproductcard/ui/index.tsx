@@ -6,12 +6,6 @@ import { useState } from 'react';
 import type { Dispatch, SetStateAction } from 'react';
 import { useCartStore } from '@mojjen/usecartstore';
 
-/**
- * Author: Lam
- * A component for opening a modal with productCard from menupage och cartpage when clicking on the meal.
- *
- */
-
 type Props = {
 	item: Meal;
 	allProdList: Meal[];
@@ -104,3 +98,9 @@ export const ModalProductCard = ({
 		</section>
 	);
 };
+
+/**
+ * Author: Lam
+ * A component for opening a modal with productCard from menupage och cartpage when clicking on the meal.
+ *
+ */

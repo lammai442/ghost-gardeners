@@ -1,9 +1,5 @@
 import './index.scss';
-/**
- * Author: StefanMogren
- *
- * Created animated Hamburger icon
- */
+
 type Props = {
 	showNavMenu: boolean;
 };
@@ -24,3 +20,9 @@ export const HamburgerIcon = ({ showNavMenu }: Props) => {
 		</svg>
 	);
 };
+
+/**
+ * Author: StefanMogren
+ *
+ * Created animated Hamburger icon
+ */

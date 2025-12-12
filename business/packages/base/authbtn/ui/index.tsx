@@ -1,7 +1,7 @@
 import './index.scss';
 import { useAuthStore } from '@mojjen/useauthstore';
 import { useEffect, useState } from 'react';
-import { apiGetUserById } from '../../../../../client/packages/core/api/apiusers/data';
+import { apiGetUserById } from '@mojjen/apiusers/data';
 
 export const AuthBtn = () => {
 	const { user, logout } = useAuthStore();
