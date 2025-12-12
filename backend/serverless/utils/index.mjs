@@ -39,14 +39,10 @@ export const generateAllergenes = async (prodIds) => {
 	return Array.from(allergenesSet);
 };
 
-// Antag att du har en miljövariabel process.env.API_URL
-const API_URL = process.env.API_URL;
-
-export const cspHeader = `
-  default-src 'self'; 
-  script-src 'self' https://cdnjs.cloudflare.com https://assets10.lottiefiles.com; 
-  style-src 'self' https://fonts.googleapis.com; 
-  font-src 'self' https://fonts.gstatic.com; 
-  img-src 'self' data:; 
-  connect-src 'self' ${process.env.API_URL} ws:;
-`.trim();
+export const cspHeader =
+	"default-src 'self'; " +
+	"script-src 'self' https://cdnjs.cloudflare.com https://assets10.lottiefiles.com; " +
+	"style-src 'self' https://fonts.googleapis.com; " +
+	"font-src 'self' https://fonts.gstatic.com; " +
+	"img-src 'self' data:; " +
+	`connect-src 'self' ${process.env.API_URL} ws:;`;
