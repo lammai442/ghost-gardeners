@@ -1,0 +1,19 @@
+.page {
+	height: 100%;
+	background-color: $color-light-beige;
+
+	&__wrapper {
+		padding: 3rem 10rem 8rem 10rem;
+	}
+}
+
+@media screen and (max-width: 992px) {
+	.page__wrapper {
+		padding: 4.5rem 3.5rem;
+	}
+}
+@media screen and (max-width: 556px) {
+	.page__wrapper {
+		padding: 4.5rem 1.75rem;
+	}
+}

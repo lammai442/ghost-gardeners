@@ -1,0 +1,63 @@
+// Inspo from: https://codepen.io/rodica/pen/jWzGvd
+@mixin button-bg($bg) {
+	background: $bg;
+
+	&:hover {
+		transition: all 0.3s ease;
+		background: color.adjust($bg, $lightness: -8%);
+	}
+	&:active {
+		background: color.adjust($bg, $lightness: -25%);
+	}
+}
+
+@mixin button-outlined($color) {
+	@include button-bg(transparent);
+	color: $color;
+	border: 2px solid $color;
+
+	&:hover {
+		transition: all 0.3s ease;
+		border: 2px dotted $color;
+	}
+	&:active {
+		border: 2px dotted $color;
+	}
+}
+
+.btn {
+	color: $color-light-beige;
+	text-decoration: none;
+	padding: 1rem 1rem;
+	border: none;
+	cursor: pointer;
+	position: relative;
+}
+
+.btn-green {
+	@include button-bg($color-cucumber);
+}
+.btn-black {
+	@include button-bg($color-black);
+}
+
+.btn-brown {
+	@include button-bg($color-brown);
+}
+
+.btn-red {
+	@include button-bg($color-ketchup);
+}
+
+.btn-simple {
+	background-color: transparent;
+	padding: 0;
+}
+
+.btn.btn-outlined {
+	@include button-outlined($color-black);
+}
+
+.btn.btn-outlined-red {
+	@include button-outlined($color-ketchup);
+}

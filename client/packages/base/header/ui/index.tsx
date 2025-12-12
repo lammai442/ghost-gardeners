@@ -1,0 +1,174 @@
+import './index.scss';
+import { useCartStore } from '@mojjen/usecartstore';
+import { HamburgerMenu } from '@mojjen/hamburger-menu';
+import { useState, useEffect, type Ref } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { useOnClickOutside } from 'usehooks-ts';
+import { useRef } from 'react';
+import { HamburgerIcon } from '@mojjen/hamburger-icon';
+import { AuthBtn } from '@mojjen/authbtn';
+import clsx from 'clsx';
+
+type Props = {
+	id: string;
+	headerRef: Ref<HTMLElement>;
+	sticky: { isSticky: boolean; offset: number };
+};
+
+export const HeaderComp = ({ id, headerRef, sticky }: Props) => {
+	const { cartCount } = useCartStore();
+	const [showNavMenu, setShowNavMenu] = useState(false);
+	const [cartAnimation, setCartAnimation] = useState(false);
+
+	const location = useLocation();
+
+	const ref = useRef<HTMLDivElement>(null!);
+
+	const handleClickOutside = (): void => {
+		setShowNavMenu(false);
+	};
+
+	const classNames = clsx('header bg-ketchup', { sticky: sticky.isSticky });
+
+	// Cartanimation
+	useEffect(() => {
+		setCartAnimation(true);
+
+		const timeout = setTimeout(() => {
+			setCartAnimation(false);
+		}, 300);
+
+		return () => clearTimeout(timeout);
+	}, [cartCount]);
+
+	useOnClickOutside(ref, handleClickOutside);
+
+	useEffect(() => {
+		setShowNavMenu(false);
+	}, [location.pathname]);
+
+	return (
+		<header id={id} ref={headerRef} className={classNames}>
+			{/* <section className="header__container flex flex__space-between"> */}
+			{/**
+			 * * ----- Sidloggan -----
+			 */}
+			{/* <a href="/"></a> */}
+			{location.pathname === '/' ? (
+				<div className="header__logo-nav">
+					<img
+						src="/assets/mojjen-logo.svg"
+						className="header__logo-img"
+						alt="Mojjen AB"
+					/>
+				</div>
+			) : (
+				<Link to="/" className="header__logo-nav" aria-label="Mojjen startsida">
+					<img
+						src="/assets/mojjen-logo.svg"
+						className="header__logo-img"
+						alt="Mojjen AB"
+					/>
+				</Link>
+			)}
+
+			{/**
+			 * * ----- Hamburgarmenyn -----
+			 */}
+			<div className="header__nav-container" ref={ref}>
+				<HamburgerMenu showNavMenu={showNavMenu} />
+				<button
+					className="header__nav-btn bg-none border-none"
+					onClick={(): void => setShowNavMenu(!showNavMenu)}
+					aria-label="Öppna meny"
+				>
+					<HamburgerIcon showNavMenu={showNavMenu} />
+					{/* <img src="/assets/hamburger-meny.svg" alt="Menyknapp" /> */}
+				</button>
+			</div>
+			{/* </section> */}
+
+			<section className="header__user-content flex flex__space-between flex__gap-1">
+				{/**
+				 * * ----- Profil -----
+				 */}
+				<AuthBtn />
+				{/* 
+				<div className="flex flex__gap-1 flex__align-items">
+					<button
+						className="header__user-profile flex flex__align-items  bg-dark-ketchup"
+						onClick={() => handleLogin(user)}
+						>
+						<img
+							className="header__profile-img"
+							src="/assets/profile-icon.svg"
+							alt="Profilikon"
+							/>
+						<h5 className="heading-5 text-light-beige">
+							{user ? user.firstname : 'Logga in'}
+						</h5>
+					</button>
+					<img
+						className="header__logout-img"
+						src="/assets/log-out-icon.svg"
+						alt="Utloggningsknapp"
+						/>
+				</div>
+				*/}
+
+				{/**
+				 * * ----- Varukorg -----
+				 */}
+
+				<div>
+					<Link
+						to="/cart"
+						className="header__cart flex btn-base bg-light-beige"
+					>
+						<img
+							src="/assets/cart-icon.svg"
+							className="header__cart-img"
+							alt="Varukorgsikon"
+						/>
+						<section className="heading-5 text-black header__cart-amount">
+							<section className="flex flex__row flex__gap-0-5">
+								<span>Varukorg </span>
+								<div
+									className={`${cartCount > 0 ? 'header__cart-circle' : ''} ${
+										cartAnimation ? 'cart__animate' : ''
+									}`}
+								>
+									{cartCount}
+								</div>
+							</section>
+						</section>
+					</Link>
+				</div>
+			</section>
+		</header>
+	);
+};
+
+/**
+ * Author: StefanMogren
+ * Created base header component
+ *
+ * Update: Stefan Mogren
+ * Added profile placeholder and initial cart button functionality.
+ *
+ * Update: Lam
+ * Added cartCount from useCartStore
+ *
+ * Update: Stefan Mogren
+ * Reworked positioning of content inside the header.
+ *
+ * Update: Lam
+ * Added user from usaAuthStore and implemented ternary operator for log in or username
+ * Added animation to cartCount
+ *
+ * Update: Klara
+ * Sticky header.
+ *
+ * Update: Klara
+ * The logo only redirects when user is on other pages than start. Aria-label on burger menu.
+ */

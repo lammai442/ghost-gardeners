@@ -1,0 +1,222 @@
+# prettier-ignore
+org: ${file(./config.yml):aws.org, 'default-org'}
+# "service" is the name of this project. This will also be added to your AWS resource names.
+service: mojjen
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: eu-north-1
+  stage: ${opt:stage, 'dev'}
+  httpApi:
+    cors: true
+  iam:
+    role: ${file(./config.yml):aws.role}
+  environment:
+    WEBSOCKET_ENDPOINT:
+      Fn::Join:
+        - ""
+        - - "https://"
+          - Ref: WebsocketsApi
+          - ".execute-api."
+          - Ref: AWS::Region
+          - ".amazonaws.com/"
+          - ${self:provider.stage}
+
+functions:
+  # Auth
+  RegisterUser:
+    handler: functions/auth/RegisterUser/index.handler
+    events:
+      - httpApi:
+          path: /api/auth/register
+          method: POST
+  LoginUser:
+    handler: functions/auth/LoginUser/index.handler
+    events:
+      - httpApi:
+          path: /api/auth/login
+          method: POST
+  UpdateUser:
+    handler: functions/auth/UpdateUser/index.handler
+    events:
+      - httpApi:
+          path: /api/auth/update/{id}
+          method: PATCH
+  GetUserByUserId:
+    handler: functions/auth/GetUserByUserId/index.handler
+    events:
+      - httpApi:
+          path: /api/auth/me/{id}
+          method: GET     
+  GetUserByToken:
+    handler: functions/auth/GetUserByToken/index.handler
+    events:
+      - httpApi:
+          path: /api/auth/me
+          method: GET     
+  # Products
+  GetMenu:
+    handler: functions/menu/GetMenu/index.handler
+    events:
+      - httpApi:
+          path: /api/menu
+          method: GET
+  PostMenuItem:
+    handler: functions/menu/PostMenuItem/index.handler
+    events:
+      - httpApi:
+          path: /api/menu
+          method: POST
+  # Orders
+  GetOrder:
+    handler: functions/orders/GetOrder/index.handler
+    events:
+      - httpApi:
+          path: /api/order/{id}
+          method: GET
+  GetOrdersByUserId:
+    handler: functions/orders/GetOrdersByUserId/index.handler
+    events:
+      - httpApi:
+          path: /api/order/user/{id}
+          method: GET
+  GetAllOrders:
+    handler: functions/orders/GetAllOrders/index.handler
+    events:
+      - httpApi:
+          path: /api/orders
+          method: GET
+  GetAllOrdersByStatus:
+    handler: functions/orders/GetAllOrdersByStatus/index.handler
+    events:
+      - httpApi:
+          path: /api/orders/status/{status}
+          method: GET
+  PostOrder:
+    handler: functions/orders/PostOrder/index.handler
+    events:
+      - httpApi:
+          path: /api/order
+          method: POST
+  DeleteOrder:
+    handler: functions/orders/DeleteOrder/index.handler
+    events:
+      - httpApi:
+          path: /api/order/{id}
+          method: DELETE
+  ChangeOrder:
+    handler: functions/orders/ChangeOrder/index.handler
+    events:
+      - httpApi:
+          path: /api/order/{id}
+          method: PUT
+  PutDeleteItemByOrderId:
+    handler: functions/orders/PutDeleteItemByOrderId/index.handler
+    events:
+      - httpApi:
+          path: /api/orders/deleteitem/{id}
+          method: PUT
+  # 
+	# ----- Websocket functions -----
+  # 
+  # (Amazon Q (built-in AI on AWS) solution)
+  # Handler function which first checks whether the connection request to the Websocket is valid or not. Then sends the request to either $connect or $disconnect.
+  # $connect saves the "connectId" to the database
+  # $disconnect removes the "connectId" from the database
+  # $default catches any request which isn't $connect or $disconnect
+  WebsocketHandler:
+    handler: functions/websocket/WebsocketHandler/index.handler
+    events:
+      - websocket:
+          route: $connect
+      - websocket:
+          route: $disconnect
+      - websocket:
+          route: $default
+
+  # Keeps track of any updates to the table/databse related to ORDER (specified in the code).
+  # Also sends back the updated ORDER data to connected users. Frontend already filters who can se what order.
+  # Also removes unused/stale connections
+  StreamProcessor:
+    handler: functions/websocket/StreamProcessor/index.handler
+    events:
+      - stream:
+          type: dynamodb
+          arn:
+            Fn::GetAtt: [MojjenTable, StreamArn]
+          batchSize: 10
+          startingPosition: LATEST
+
+plugins:
+  - serverless-offline
+  - serverless-prune-plugin
+
+custom:
+  prune:
+    automatic: true
+    number: 5  # behåll senaste 5 versionerna
+
+
+resources:
+  Resources:
+    # Sets up a WebsocketAPI on AWS
+    WebsocketsAPI:
+      Type: AWS::ApiGatewayV2::Api
+      Properties:
+        Name: mojjen-websocket-api
+        ProtocolType: WEBSOCKET
+        RouteSelectionExpression: "$request.body.action"
+    MojjenTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: mojjen-table
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: PK
+            AttributeType: S
+          - AttributeName: SK
+            AttributeType: S
+          - AttributeName: category #GSI1PK
+            AttributeType: S
+          - AttributeName: id #GSI1SK
+            AttributeType: S
+          - AttributeName: statusCategory #GSI2PK
+            AttributeType: S
+          - AttributeName: status #GSI2SK
+            AttributeType: S
+          - AttributeName: email #GSI2SK
+            AttributeType: S
+        KeySchema:
+          - AttributeName: PK
+            KeyType: HASH
+          - AttributeName: SK
+            KeyType: RANGE
+        GlobalSecondaryIndexes:
+          - IndexName: GSI1
+            KeySchema:
+              - AttributeName: category
+                KeyType: HASH
+              - AttributeName: id
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
+          - IndexName: GSI2
+            KeySchema:
+              - AttributeName: statusCategory
+                KeyType: HASH
+              - AttributeName: status
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
+          - IndexName: GSI3
+            KeySchema:
+              - AttributeName: email
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+        # (Amazon Q AI solution)
+        # Tells DynamoDB to enable streams for the table
+        StreamSpecification:
+          # Sets so you can get access to both the old and the new values when the table updates.
+          StreamViewType: NEW_AND_OLD_IMAGES

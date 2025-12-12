@@ -1,0 +1,18 @@
+.comment {
+	gap: 0.1rem;
+	&__textarea {
+		flex: 1;
+		border: 2px solid $color-ketchup;
+		padding: 1rem;
+		background-color: transparent;
+
+		&:focus {
+			outline: none;
+			border: 2px dashed $color-ketchup;
+		}
+	}
+
+	&__max-characters {
+		align-self: end;
+	}
+}

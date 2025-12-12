@@ -1,0 +1,11 @@
+.cart-item {
+	padding: 0.5rem;
+
+	.order__delete-item-btn {
+		background-color: transparent;
+		border: none;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+}

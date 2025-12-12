@@ -1,0 +1,39 @@
+.cart {
+	gap: 4rem;
+
+	&__comment-summary-div {
+		height: fit-content;
+	}
+
+	&__ctas {
+		gap: 0.75rem;
+	}
+	&__summary {
+		padding: 2rem 1.5rem;
+		gap: 2rem;
+		height: fit-content;
+		flex: 1;
+	}
+
+	&__summary--gap {
+		gap: 9rem;
+	}
+}
+
+.cart__empty-text {
+	text-align: center;
+	margin-bottom: 0.8rem;
+}
+
+@media screen and (max-width: 1300px) {
+	.cart {
+		flex-direction: column;
+	}
+}
+
+/**
+ * Update: Klara
+ * Changed the media query from 992 to 1200. 
+ * Update: Klara
+ * Added height: fit-content on cart__comment-summary-div to prevent the div to fill up the entire column.
+ */

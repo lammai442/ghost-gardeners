@@ -1,0 +1,30 @@
+.menu {
+	gap: 2rem;
+	&__top-content {
+		margin-bottom: 5rem;
+	}
+
+	&__button {
+		margin-top: 2rem;
+		align-self: flex-end;
+	}
+}
+
+.filter__btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+}
+
+.filter__icon {
+	font-size: 1.2rem;
+}
+
+@media screen and (max-width: 768px) {
+	.menu {
+		&__button {
+			align-self: auto;
+		}
+	}
+}

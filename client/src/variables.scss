@@ -1,0 +1,55 @@
+@use 'sass:color';
+
+// * Help from Chat GPT to create colors and font styles that meets WCAG standards.
+
+// ======================================
+// COLORS (namngivna efter utseende)
+// ======================================
+$color-mustard: #b38e1d;
+$color-ketchup: #9b3b2e;
+$color-dark-ketchup: #8a3a26;
+$color-cucumber: #556b54;
+$color-dark-beige: #cbae87;
+$color-brown: #66482b;
+$color-grey: #7e8071;
+$color-black: #2e2e2e;
+$color-white: #ffffff;
+$color-light-beige: #f3f0e7;
+$color-super-light-beige: #fafaf8;
+
+// ======================================
+// FONTS
+// ======================================
+@import url('https://fonts.googleapis.com/css2?family=Concert+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+$font-heading: 'Concert One', sans-serif;
+$font-base: 'Open Sans', sans-serif;
+
+// ======================================
+// BORDERS
+// ======================================
+$border-radius: 0.25rem 0.9rem 0rem 0.9rem;
+
+// ======================================
+// FONT SIZES (clamp versions)
+// ======================================
+// Headings – Concert One
+$h1-size: clamp(2.2rem, 5vw + 1rem, 3rem); // ca 35px–48px
+$h2-size: clamp(2rem, 4vw + 0.8rem, 2.5rem); // ca 32px–40px
+$h3-size: clamp(1.6rem, 3vw + 0.8rem, 2rem); // ca 26px–32px
+$h4-size: clamp(1.3rem, 2vw + 0.7rem, 1.5rem); // ca 20px–24px
+
+// h5 – Open Sans Bold
+$h5-size: clamp(1rem, 1.2vw, 1.1rem); // ca 16–18px
+
+// Base text – Open Sans
+$base-size: clamp(1rem, 1vw, 1.125rem); // 16–18px
+$base-small-size: clamp(0.85rem, 0.8vw, 0.95rem); // 14–15px
+
+// ======================================
+// FONT WEIGHTS
+// ======================================
+$base-bold-weight: 700; // ExtraBold
+$base-regular-weight: 400;
+$h5-bold-weight: 700;

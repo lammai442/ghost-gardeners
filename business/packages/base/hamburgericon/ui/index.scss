@@ -1,0 +1,23 @@
+svg {
+	.line {
+		stroke: white;
+		stroke-width: 3;
+		stroke-linecap: round;
+		transition: transform 0.3s ease, opacity 0.3s ease;
+		transform-origin: center;
+	}
+
+	&.open {
+		.top {
+			transform: translateY(8px) rotate(45deg);
+		}
+
+		.middle {
+			opacity: 0;
+		}
+
+		.bottom {
+			transform: translateY(-8px) rotate(-45deg);
+		}
+	}
+}

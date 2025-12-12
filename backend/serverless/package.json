@@ -1,0 +1,33 @@
+{
+  "name": "serverless",
+  "version": "1.0.0",
+  "description": "A serverless backend for a React-based take away application, built with AWS Lambda, API Gateway, and DynamoDB.",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.931.0",
+    "@aws-sdk/lib-dynamodb": "^3.948.0",
+    "@aws-sdk/util-dynamodb": "^3.931.0",
+    "@middy/core": "^6.4.5",
+    "@middy/http-cors": "^6.4.5",
+    "@middy/http-json-body-parser": "^6.4.5",
+    "@middy/validator": "^6.4.5",
+    "aws-sdk": "^2.1692.0",
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.2.3",
+    "joi": "^18.0.1",
+    "jsonwebtoken": "^9.0.2",
+    "nodemon": "^3.1.11",
+    "serverless-offline": "^14.4.0",
+    "uuid": "^13.0.0"
+  },
+  "devDependencies": {
+    "serverless-prune-plugin": "^2.1.0"
+  }
+}

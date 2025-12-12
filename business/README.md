@@ -1,11 +1,6 @@
 ## Mojjen - There is always time for kôrv
-### Links to website
-Client: http://mojjen.s3-website.eu-north-1.amazonaws.com <br>Business: http://mojjen-business.s3-website.eu-north-1.amazonaws.com
-
 
 A fullstack takeaway application built with React, TypeScript, and AWS. The project follows a package architecture for modularity and scalability, and was developed by four developers: Lam Mai, Nikki Axelsson, Stefan Mogren, and Klara Sköld. The application provides two separate frontends, one for clients and one for business staff, to optimize the user experience for each group.
-
-Real-time updates are implemented using WebSockets, enabling instant order status notifications and live interactions between clients and business staff.
 
 ## Client site
 
