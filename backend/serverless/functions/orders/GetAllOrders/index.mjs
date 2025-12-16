@@ -4,8 +4,9 @@ import { authenticateUser } from '../../../middlewares/authenticateUser.mjs';
 import middy from '@middy/core';
 import { sendResponses } from '../../../responses/index.mjs';
 
+// GetAllOrders is secured so only ADMIN users are allowed to access it.
 export const handler = middy(async (event) => {
-	// Checking authorization
+	// Checking authorization from the token
 	const user = event.user;
 
 	if (user.role !== 'ADMIN') {

@@ -25,28 +25,28 @@ export const Modal = ({
 	};
 
 	useEffect(() => {
-		// Rad 1. Funktion som lyssnar på tangenter
+		// Functions that listens to key stokes.
 		const handleKeyDown = (e: KeyboardEvent) => {
-			// Rad 2. Om man trycker Escape och modalen är öppen
+			// Closes the modal closes if its open and the user hits Escape.
 			if (e.key === 'Escape' && open) {
 				closeModal(); // Rad 3. Stäng modalen
 			}
 		};
 
-		// Rad 4. Om modalen är öppen. Lås scroll
+		// Locks background scroll when the modal is open.
 		if (open) {
 			document.body.style.overflow = 'hidden';
 		}
 
-		// Rad 5. Lägg till keydown-eventlyssnaren
+		// Adds eventlistener
 		document.addEventListener('keydown', handleKeyDown);
 
-		// Rad 6. Cleanup körs när open ändras eller komponenten tas bort
+		// Cleanup runs when open toggles or when the component is removed.
 		return () => {
-			// Rad 7. Ta bort keydown-eventlyssnaren
+			// Remove eventlistener
 			document.removeEventListener('keydown', handleKeyDown);
 
-			// Rad 8. Återställ scroll när modalen stängs
+			// Reset scroll the the modal closes.
 			document.body.style.overflow = 'auto';
 		};
 	}, [open]);

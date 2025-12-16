@@ -6,6 +6,7 @@ import httpJsonBodyParser from '@middy/http-json-body-parser';
 import { deletedItemsFromOrder } from '../../../utils/orderHelpers.mjs';
 import { authenticateUser } from '../../../middlewares/authenticateUser.mjs';
 
+// Function to deleting a specific meal from an order
 export const handler = middy(async (event) => {
 	// Checking authorization
 	const user = event.user;
@@ -17,8 +18,10 @@ export const handler = middy(async (event) => {
 		});
 	}
 
+	// Id is referring to orderId
 	const { id } = event.pathParameters || {};
 
+	// Checking for if id is in pathParameters
 	if (!id) {
 		return sendResponses(400, {
 			success: false,
@@ -26,6 +29,7 @@ export const handler = middy(async (event) => {
 		});
 	}
 
+	// Checking for the body is send in the req
 	if (!event.body) {
 		return sendResponses(400, {
 			success: false,
@@ -33,10 +37,13 @@ export const handler = middy(async (event) => {
 		});
 	}
 
+	// Decomposing itemId from body with is the id for the specific meal
 	const { itemId } = event.body;
 
+	// Invoke function for deleting a specific item from the order and get the updated order in return
 	const updatedOrder = await deletedItemsFromOrder(id, itemId);
 
+	// Invoke updating the order with the new updated order
 	await replaceOrder(updatedOrder);
 
 	return sendResponses(200, {

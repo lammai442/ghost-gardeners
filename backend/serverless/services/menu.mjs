@@ -10,6 +10,7 @@ import { getProductsByIds } from '../utils/orderHelpers.mjs';
 import { getMealStatus } from '../utils/orderHelpers.mjs';
 import { errorHandler } from '../middlewares/errorHandler.mjs';
 
+// A function which created in the beginning for posting a specific meal to AWS
 export const postMenuItem = async () => {
 	const command = new PutItemCommand({
 		TableName: 'mojjen-table',
@@ -55,6 +56,7 @@ export const postMenuItem = async () => {
 	}
 };
 
+// Function to post a product to AWS
 export const postProductItem = async (product) => {
 	const prodId =
 		product.category === 'MEAL' ? generateId('meal') : generateId('prod');
@@ -78,7 +80,8 @@ export const postProductItem = async (product) => {
 				category: product.category,
 				price: Number(product.price),
 				summary: product.summary,
-				...(product.description && { description: product.description }), // Solution from ChatGPT to avoid description: undefined
+				// Solution from ChatGPT to avoid description: undefined
+				...(product.description && { description: product.description }),
 				img: product.img,
 				allergenes,
 				stock: 25,
@@ -119,23 +122,21 @@ export const getAllMenu = async () => {
 			})
 		);
 
-		//
+		// Including a drink to all meals because default included a Coca-cola to all meals
 		const allProductIds = [
 			...new Set(
 				(menuResponse.Items || []).flatMap((item) => {
 					const a = item.attribute?.M || {};
 					return [
 						...(a.items?.L?.map((i) => i.S) || []),
-						...(a.includeDrink?.S ? [a.includeDrink.S] : []), // <-- lägg till dryckens ID
+						...(a.includeDrink?.S ? [a.includeDrink.S] : []),
 					];
 				})
 			),
 		];
 
-		//
 		const productMap = await getProductsByIds(allProductIds);
 
-		//
 		const menuItems = (menuResponse.Items || []).map((item) => {
 			const a = item.attribute?.M || {};
 			const base = {
@@ -153,7 +154,7 @@ export const getAllMenu = async () => {
 				allergenes: a.allergenes?.L?.map((x) => x.S) || [],
 			};
 
-			//
+			// Setting status for the meal with inactive/active
 			base.status = getMealStatus(base, productMap);
 
 			return base;

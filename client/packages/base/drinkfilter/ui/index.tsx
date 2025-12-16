@@ -6,12 +6,6 @@ import type { Dispatch, SetStateAction } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
 import { useRef, useEffect } from 'react';
 
-/**
- * Author: Lam Mai
- * Filtering options section for menu page. Content from Lam.
- *
- */
-
 type Props = {
 	extraClasses?: string;
 	item: Meal;
@@ -32,6 +26,7 @@ export const DrinkFilter = ({
 		item.includeDrink
 	);
 
+	// Open the list of drink choices
 	const handleSelectBtn = (): void => {
 		setOpenList((prev) => !prev);
 	};
@@ -49,7 +44,7 @@ export const DrinkFilter = ({
 	}, []);
 
 	// If user choose other drink the name will change in the filter choice.
-	// Send back the new prodId for the drinkt to modalProductCard
+	// Send back the new prodId for the drink to modalProductCard
 	const handleSelectItem = (name: string, id: string): void => {
 		setSelected(name);
 		setOpenList((prev) => !prev);
@@ -59,6 +54,7 @@ export const DrinkFilter = ({
 		setCurrentItem(updatedItem);
 	};
 
+	// Close the choice of list when click is outside the choice drink list
 	useOnClickOutside(ref as React.RefObject<HTMLElement>, () => {
 		setOpenList(false);
 	});
@@ -97,3 +93,9 @@ export const DrinkFilter = ({
 		</div>
 	);
 };
+
+/**
+ * Author: Lam Mai
+ * Filtering options section for menu page. Content from Lam.
+ *
+ */

@@ -20,6 +20,7 @@ export const Comment = ({
 			<p className="base">Något särskilt som vi behöver veta?</p>
 
 			<label className="flex comment__label">
+				{/* commentCount and handleChangeComment counts the characters in the comment and displays the sum to the user below the comment field. */}
 				<textarea
 					rows={6}
 					value={comment}

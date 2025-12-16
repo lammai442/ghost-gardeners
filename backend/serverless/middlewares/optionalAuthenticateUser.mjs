@@ -1,5 +1,7 @@
 import { verifyToken } from '../utils/tokens.mjs';
 
+// Middleware that take account if it is a guest or a logged in user
+// Due to choice of not accepting guest purchase, we didn't use this middleware but intend to in next sprint
 export const optionalAuthenticateUser = () => ({
 	before: (handler) => {
 		const authHeader =
@@ -24,12 +26,7 @@ export const optionalAuthenticateUser = () => ({
 				const tokenData = verifyToken(token);
 				if (!tokenData) throw new Error('Expired or invalid token.');
 
-				// Koden här används innan rätt payload från token är fixad
-				// if (tokenData.attribute.userId !== userIdFromParams) {
-				// 	throw new Error('Unauthorized. UserId does not match token.');
-				// }
-
-				// Koden här använder man istället när token innehåller rätt payload
+				// Checking for if userId in the params is the same from the payload
 				if (tokenData.sub !== userIdFromParams) {
 					throw new Error('Unauthorized. UserId does not match token.');
 				}

@@ -1,6 +1,7 @@
 import type { User } from '@mojjen/productdata';
 import axios from 'axios';
 
+// API-call to login a user
 export async function apiLoginUser(user: User) {
 	const apiUrl: string = import.meta.env.VITE_API_URL;
 
@@ -20,6 +21,7 @@ export async function apiLoginUser(user: User) {
 	}
 }
 
+// API-call to get user by id
 export const apiGetUserById = async (
 	userId: string | undefined,
 	token: string | undefined
@@ -42,6 +44,7 @@ export const apiGetUserById = async (
 	return response;
 };
 
+// API-call to get user by token
 export async function apiGetUserByToken(token: string | undefined) {
 	const apiUrl: string = import.meta.env.VITE_API_URL;
 

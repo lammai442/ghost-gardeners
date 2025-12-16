@@ -7,7 +7,9 @@ import { generateToken } from '../../../utils/tokens.mjs';
 import { validateLogin } from '../../../middlewares/validateLogin.mjs';
 import { getUserByEmail } from '../../../services/users.mjs';
 
+// Login function
 export const handler = middy(async (event) => {
+	// Users log in by using their email
 	const user = await getUserByEmail(event.body.email);
 
 	if (!user) throw new Error('Användaren gick inte att hitta.');

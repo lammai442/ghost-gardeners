@@ -5,7 +5,9 @@ import { changeOrder } from '../../../services/order.mjs';
 import { authenticateUser } from '../../../middlewares/authenticateUser.mjs';
 import { getOrder } from '../../../services/order.mjs';
 
+//
 export const handler = middy(async (event) => {
+	// id is the orderId
 	const { id } = event.pathParameters || {};
 
 	if (!id) {
@@ -22,6 +24,7 @@ export const handler = middy(async (event) => {
 		});
 	}
 
+	//
 	const {
 		items = [],
 		userComment = '',
@@ -38,7 +41,7 @@ export const handler = middy(async (event) => {
 		});
 	}
 
-	// Check if it's the correct user
+	// Check if it's the correct user based on the user ID of the token and the user ID of the order
 	const user = event.user;
 	if (user.sub !== order.id && user.role !== 'ADMIN') {
 		return sendResponses(403, { success: false, message: 'Forbidden' });
@@ -62,7 +65,7 @@ export const handler = middy(async (event) => {
 
 /**
  * Author: ninerino
- * Funktion to change order
+ * Function to change order
  *
  * Update: ninerino and Lam
  * Added credentials

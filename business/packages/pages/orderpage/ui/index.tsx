@@ -72,10 +72,8 @@ export const OrderPage = () => {
 		return match ? match[1].toUpperCase() : clean.toUpperCase();
 	};
 
-	/**
-	 * Fetches the orders based on pending/confirmed/done
-	 */
-
+	// Fetches the orders based on pending/confirmed/done
+	// Runs every time when WebSocket sends an updated order to 'orderFromWs'
 	useEffect(() => {
 		if (user) {
 			const fetchOrders = async () => {
@@ -171,7 +169,6 @@ export const OrderPage = () => {
 		<>
 			<HeaderComp></HeaderComp>
 			<Page titleText="Ordrar" srOnly={true}>
-				{/* <section className="order-page__container flex flex__column flex__gap-3"> */}
 				<section className="order-page__orders">
 					<section className="flex flex__column flex__gap-2">
 						<h2 className="heading-4">Väntande ({pendingOrders.length} st)</h2>
@@ -239,7 +236,7 @@ export const OrderPage = () => {
 						</ul>
 					</section>
 				</section>
-				{/* </section> */}
+
 				{/* MODAL OPENS WHEN CLICKING ON A ORDERITEM */}
 				<Modal
 					open={isModalOpen}

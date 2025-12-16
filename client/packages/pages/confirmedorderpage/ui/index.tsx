@@ -24,6 +24,7 @@ export const ConfirmedOrderPage = () => {
 	const [activeOrder, setActiveOrder] = useState<Order | null>(null);
 	const { user } = useAuthStore();
 
+	// Runs every time when WebSocket sends an updated order to 'orderFromWs'
 	useEffect(() => {
 		const fetchOrdersByUser = async () => {
 			if (!user?.token) {

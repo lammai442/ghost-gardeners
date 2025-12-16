@@ -55,6 +55,8 @@ export const CartProductCard = ({
 									</button>
 								)}
 							</h2>
+
+							{/* Check whether the option to choose a different drink should be available or not */}
 							{item.includeDrink &&
 							selectedOrder &&
 							selectedOrder.status === 'pending' ? (
@@ -98,6 +100,7 @@ export const CartProductCard = ({
 									</article>
 								</section>
 							) : (
+								// The else-statement if the drink should be unchangeable
 								<>
 									<div>
 										<span className="base-bold text-ketchup">Vald dryck:</span>
@@ -114,7 +117,11 @@ export const CartProductCard = ({
 };
 
 /**
- * Author:?
+ * Author: Klara
+ * Base functions
+ *
+ * Update: ninerino
+ * Changed code to fit business instead of client
  *
  * Update: Lam
  * Added functionality of delete item button

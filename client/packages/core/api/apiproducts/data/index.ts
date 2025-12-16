@@ -1,6 +1,7 @@
 import type { User } from '@mojjen/productdata';
 import axios from 'axios';
 
+// Fetches all meals
 export const apiGetMeals = async () => {
 	const apiUrl: string = import.meta.env.VITE_API_URL;
 	const response = await axios
@@ -23,6 +24,7 @@ export const apiGetMeals = async () => {
 	return response;
 };
 
+// Cancels an order by setting its status to 'cancelled'
 export async function cancelOrder(orderId: string, token: string | undefined) {
 	const apiUrl: string = import.meta.env.VITE_API_URL;
 	const response = await axios
@@ -50,6 +52,7 @@ export async function cancelOrder(orderId: string, token: string | undefined) {
 	return response;
 }
 
+// Registers a new user
 export async function apiRegisterUser(user: User) {
 	const apiUrl: string = import.meta.env.VITE_API_URL;
 
@@ -69,6 +72,7 @@ export async function apiRegisterUser(user: User) {
 	}
 }
 
+// Logs in a user
 export async function apiLoginUser(user: User) {
 	const apiUrl: string = import.meta.env.VITE_API_URL;
 	try {
@@ -87,6 +91,7 @@ export async function apiLoginUser(user: User) {
 	}
 }
 
+// Fetches user info based on token
 export async function apiGetUserByToken(token: string) {
 	const apiUrl: string = import.meta.env.VITE_API_URL;
 

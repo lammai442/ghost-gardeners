@@ -29,6 +29,8 @@ export const ProfilePage = () => {
 		fetchUserById();
 	}, [user]);
 
+	// Runs every time whenever 'user' from localStorage updates
+	// Runs every time when WebSocket sends an updated order to 'orderFromWs'
 	useEffect(() => {
 		const fetchOrdersByUser = async () => {
 			if (!user) return;

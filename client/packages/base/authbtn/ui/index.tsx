@@ -24,6 +24,7 @@ export const AuthBtn = () => {
 	useEffect(() => {
 		if (!user) setCurrentUserName(null);
 
+		// Displays username in header
 		const fetchUser = async () => {
 			if (!user?.userId || !user.token) return;
 			const userFromBackend = await apiGetUserById(user?.userId, user?.token);
@@ -32,6 +33,8 @@ export const AuthBtn = () => {
 		fetchUser();
 	}, [user]);
 
+	// Runs every time whenever 'user' from localStorage updates
+	// Runs every time when WebSocket sends an updated order to 'orderFromWs'
 	useEffect(() => {
 		if (user) {
 			setAutoPlay(true);
@@ -55,10 +58,13 @@ export const AuthBtn = () => {
 	};
 
 	const handleNotification = () => {
+		// When click on the notification icon, AutoPlay stops the notification
 		setAutoPlay(false);
+		// Toggle for opening the modal for orderstatus
 		setOpenOrderStatus((prev) => !prev);
 	};
 
+	// A function for generating a orderCard displayen the current order status and info
 	const generateOrder = () => {
 		return (
 			<ul className="notification__list">
@@ -123,6 +129,7 @@ export const AuthBtn = () => {
 
 	return (
 		<>
+			{/* Modal for opening the login/register form */}
 			<Modal
 				open={modalOpen}
 				titleContent={
@@ -133,6 +140,7 @@ export const AuthBtn = () => {
 				<AuthForm setModalOpen={setModalOpen} setAuthTitle={setAuthTitle} />
 			</Modal>
 			{openOrderStatus && (
+				// Modal for opening the orderstatus
 				<Modal
 					open={openOrderStatus}
 					titleContent={
@@ -146,7 +154,6 @@ export const AuthBtn = () => {
 				</Modal>
 			)}
 			<div className="flex flex__gap-1 flex__align-items">
-				{/* Placeholder för profilsidan */}
 				<button className="notification__btn" onClick={handleNotification}>
 					<Notification key={autoPlay ? 'play' : 'stop'} autoPlay={autoPlay} />
 				</button>
@@ -164,7 +171,6 @@ export const AuthBtn = () => {
 					</h5>
 				</button>
 
-				{/* Placeholder för utloggningsfunktionen */}
 				<button className="header__logout-btn" onClick={() => logout()}>
 					<img
 						className="header__logout-img"

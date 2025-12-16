@@ -26,11 +26,10 @@ export const HeaderComp = () => {
 
 	return (
 		<header className="header bg-ketchup">
-			{/* <section className="header__container flex flex__space-between"> */}
 			{/**
 			 * * ----- Sidloggan -----
 			 */}
-			{/* <a href="/"></a> */}
+
 			<Link to="/" className="header__logo-nav">
 				<img
 					src="/assets/mojjen-logo.svg"
@@ -50,38 +49,14 @@ export const HeaderComp = () => {
 					aria-label="Öppna meny"
 				>
 					<HamburgerIcon showNavMenu={showNavMenu} />
-					{/* <img src="/assets/hamburger-meny.svg" alt="Menyknapp" /> */}
 				</button>
 			</div>
-			{/* </section> */}
 
 			<section className="header__user-content flex flex__space-between flex__gap-1">
 				{/**
 				 * * ----- Profil -----
 				 */}
 				<AuthBtn />
-				{/* 
-				<div className="flex flex__gap-1 flex__align-items">
-					<button
-						className="header__user-profile flex flex__align-items  bg-dark-ketchup"
-						onClick={() => handleLogin(user)}
-						>
-						<img
-							className="header__profile-img"
-							src="/assets/profile-icon.svg"
-							alt="Profilikon"
-							/>
-						<h5 className="heading-5 text-light-beige">
-							{user ? user.firstname : 'Logga in'}
-						</h5>
-					</button>
-					<img
-						className="header__logout-img"
-						src="/assets/log-out-icon.svg"
-						alt="Utloggningsknapp"
-						/>
-				</div>
-				*/}
 
 				{/**
 				 * * ----- Varukorg -----

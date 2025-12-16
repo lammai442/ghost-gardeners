@@ -7,8 +7,10 @@ export const safeCharacters =
 export const passwordRegEx =
 	/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-])[\p{L}\p{N}\p{P}\p{Z}]{8,}$/u;
 
+// Pattern for the orderId
 export const regExOrderId = /^order-[0-9a-fA-F]{5}$/;
 
+// Pattern for the itemId
 export const regExItemId = /^prod-[0-9a-fA-F]{5}$/;
 
 /**

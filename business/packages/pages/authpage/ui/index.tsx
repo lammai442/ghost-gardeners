@@ -10,7 +10,6 @@ export const AuthPage = () => {
 			extraClasses="page__auth"
 			paddingNone={true}
 		>
-			{/* <div className="page__auth"> */}
 			<img
 				className="login__img"
 				src="/mojjen-logo-text.png"
@@ -25,7 +24,6 @@ export const AuthPage = () => {
 				</section>
 				<AuthForm />
 			</section>
-			{/* </div> */}
 		</Page>
 	);
 };

@@ -5,6 +5,7 @@ import { getOrder } from '../../../services/order.mjs';
 import { authenticateUser } from '../../../middlewares/authenticateUser.mjs';
 
 export const handler = middy(async (event) => {
+	// Order id from the url
 	const { id } = event.pathParameters || {};
 
 	if (!id) {
