@@ -13,6 +13,7 @@ type Props = {
 	type?: 'button' | 'submit' | 'reset';
 };
 
+// A button component that receives children. Children can be strings, icons or whatever.
 export const Button = ({
 	extraClasses,
 	children,
@@ -22,6 +23,7 @@ export const Button = ({
 	type,
 	onClick,
 }: Props) => {
+	// Adds different classes depending on props
 	const classNames = clsx('btn', 'base-bold', 'border-radius', extraClasses, {
 		'btn-green': !style,
 		'btn-red': style === 'red',

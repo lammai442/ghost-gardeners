@@ -1,8 +1,4 @@
 import bcrypt from 'bcrypt';
-/**
- * Author: Klara
- * Utils functions for passwords.
- */
 
 const saltRounds = 10;
 
@@ -13,3 +9,8 @@ export const hashPassword = async (password) => {
 export const comparePasswords = async (password, storedPassword) => {
 	return await bcrypt.compare(password, storedPassword);
 };
+
+/**
+ * Author: Klara
+ * Utils functions for passwords.
+ */

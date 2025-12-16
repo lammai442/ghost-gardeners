@@ -1,16 +1,12 @@
 import './index.scss';
-/**
- * Author: StefanMogren
- *
- * Created animated Hamburger icon
- */
+
 type Props = {
 	showNavMenu: boolean;
 };
 
 export const HamburgerIcon = ({ showNavMenu }: Props) => {
 	return (
-		// ChatGPT-lösning för att animera SVG-linjer med CSS
+		// ChatGPT solution to animate SVG lines with CSS.
 		<svg
 			width="34"
 			height="19"
@@ -24,3 +20,9 @@ export const HamburgerIcon = ({ showNavMenu }: Props) => {
 		</svg>
 	);
 };
+
+/**
+ * Author: StefanMogren
+ *
+ * Created animated Hamburger icon
+ */

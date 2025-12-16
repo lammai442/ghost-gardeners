@@ -1,10 +1,9 @@
+// A middleware that was supposed to be used on the function which needed CSP but was never used because it didnt work correctly
+// We intend to apply it in next sprint.
 export const cspMiddleware = () => ({
-	// 'after' körs efter att din handler har körts
 	after: async (request) => {
-		// Hämtar svaret som ska skickas tillbaka
 		const response = request.response;
 
-		// Lägger till CSP-headern på svaret
 		response.headers['Content-Security-Policy'] = `
 			default-src 'self';
 			script-src 'self' https://cdnjs.cloudflare.com https://assets10.lottiefiles.com;
@@ -14,7 +13,6 @@ export const cspMiddleware = () => ({
 			connect-src 'self' ws:;
 		`;
 
-		// Returnerar uppdaterat svar
 		return response;
 	},
 });

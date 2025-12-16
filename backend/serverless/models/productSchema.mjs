@@ -47,10 +47,9 @@ export const productSchema = Joi.object({
  * Author: KlaraSk
  * Product schema
  *
- */
-/**
  * Update: Lam, KlaraSk, Nikki
  * Added when state for description to only apply on category:Meal and change name to 33 characters and summary to 70
+ *
  * Update: Lam
  * Changed includeDrink to optional for meals
  * */

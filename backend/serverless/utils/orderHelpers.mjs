@@ -1,18 +1,8 @@
-/**
- * Author: ninerino
- * Helper functions to fetch product information, add it to items array and calculate sum
- *
- * Update: Lam
- * Added allergenes in acc to getProductsByIds
- */
-
 import { client } from '../services/client.mjs';
 import { BatchGetItemCommand } from '@aws-sdk/client-dynamodb';
 import { getOrder } from '../services/order.mjs';
 
-/**
- * Fetch product by ID
- */
+// Fetch product by ID
 export async function getProductsByIds(ids) {
 	if (!ids.length) return {};
 
@@ -30,7 +20,7 @@ export async function getProductsByIds(ids) {
 	const response = await client.send(new BatchGetItemCommand(batchParams));
 	const items = response.Responses?.['mojjen-table'] || [];
 
-	// Bygg productMap
+	// Building productMap
 	const productMap = items.reduce((acc, item) => {
 		const a = item.attribute?.M || {};
 		const id = a.id?.S;
@@ -66,9 +56,7 @@ export async function getProductsByIds(ids) {
 	return productMap;
 }
 
-/**
- * Add name and price of product to item
- */
+// Add name and price of product to item
 export function enrichItems(items, productMap) {
 	return items.map((i) => {
 		const base = productMap[i.id];
@@ -87,16 +75,12 @@ export function enrichItems(items, productMap) {
 	});
 }
 
-/**
- * Calculate total sum
- */
+// Calculate total sum
 export function calculateTotal(items) {
 	return items.reduce((sum, i) => sum + i.subtotal, 0);
 }
 
-/**
- * Function to trim information from products
- */
+// Function to trim information from products
 export function trimFields(data, fieldsToRemove = []) {
 	if (Array.isArray(data)) {
 		return data.map((item) => trimFields(item, fieldsToRemove));
@@ -181,3 +165,11 @@ export const deleteAllItemsFromOrder = (order) => {
 
 	return order;
 };
+
+/**
+ * Author: ninerino
+ * Helper functions to fetch product information, add it to items array and calculate sum
+ *
+ * Update: Lam
+ * Added allergenes in acc to getProductsByIds
+ */

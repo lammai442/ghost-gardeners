@@ -2,11 +2,6 @@ import { v4 as uuid } from 'uuid';
 import { getProductsByIds } from './orderHelpers.mjs';
 import 'dotenv/config';
 
-/**
- * Author: Lam
- * Helper functions to search for all products and return allergenes if the product contains it
- */
-
 export const generateDate = () => {
 	return new Date().toISOString();
 };
@@ -39,6 +34,7 @@ export const generateAllergenes = async (prodIds) => {
 	return Array.from(allergenesSet);
 };
 
+// Data for CSP header
 export const cspHeader =
 	"default-src 'self'; " +
 	"script-src 'self' https://cdnjs.cloudflare.com https://assets10.lottiefiles.com; " +
@@ -46,3 +42,8 @@ export const cspHeader =
 	"font-src 'self' https://fonts.gstatic.com; " +
 	"img-src 'self' data:; " +
 	`connect-src 'self' ${process.env.API_URL} ${process.env.CLIENT_API_URL} ${process.env.WS_API_URL} ws:;`;
+
+/**
+ * Author: Lam
+ * Helper functions to search for all products and return allergenes if the product contains it
+ */

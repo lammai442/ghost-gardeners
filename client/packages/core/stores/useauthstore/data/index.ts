@@ -12,6 +12,9 @@ const saved = localStorage.getItem('user');
 const initialUser = saved ? JSON.parse(saved) : null;
 localStorage.setItem('user', JSON.stringify(initialUser));
 
+// Keeps 'user' as data container
+// updateUserStorage updates 'user'
+// logout empties 'user'
 export const useAuthStore = create<userStore>((set) => ({
 	user: initialUser,
 	updateUserStorage: (user: User) => {

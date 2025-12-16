@@ -7,7 +7,10 @@ type userStore = {
 	logout: () => void;
 };
 
-// Initializing user for global state and localStorage
+// Initializes the auth state from localStorage on app load.
+// If a user is found, it is parsed and used as the initial store state;
+// otherwise, the state defaults to null. The store keeps the user state
+// and localStorage in sync and provides helpers for updating and logging out.
 const saved = localStorage.getItem('user');
 const initialUser = saved ? JSON.parse(saved) : null;
 localStorage.setItem('user', JSON.stringify(initialUser));

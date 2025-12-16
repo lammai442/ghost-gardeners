@@ -3,6 +3,7 @@ import { Button } from '@mojjen/button';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import { CiFilter } from 'react-icons/ci';
 
+// Never used now but intend to use in next sprint
 export const Filter = () => {
 	const handleClick = () => {};
 

@@ -11,7 +11,7 @@ export const handler = middy(async (event) => {
 
 	// Checking authorization
 	const user = event.user;
-
+	// if role is NOT admin AND if ID is NOT matching
 	if (user.role !== 'ADMIN' && user.sub !== userId) {
 		return sendResponses(403, {
 			success: false,

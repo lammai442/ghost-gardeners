@@ -49,6 +49,7 @@ export const ContentBox = ({
 		return <p className="base ">{text}</p>;
 	};
 
+	// useOnClickOutside is an external library that executes a function when a user clicks on something outside the referenced object. In this case it closes the modal.
 	const handleClickoutside = (): void => {
 		if (setModalOpen) setModalOpen(false);
 	};

@@ -1,4 +1,4 @@
-## Produktkoder
+## Product codes
 
 ```
 // Mos: prod-6a656
@@ -26,14 +26,14 @@
 // Bostongurka: prod-91b1f
 ```
 
-## Allergener som finns i databasen
+## Allergens in the database
 
 ```
 allergenes: ["ägg", "skaldjur", "gluten", "mjölkprotein", "laktos" ]
 
 ```
 
-## Lägg in varje object var för sig via insomnia och PostMenuItem function
+## Add each object one by one in Insomnia by the PostMenuItem function
 
 ```
 {

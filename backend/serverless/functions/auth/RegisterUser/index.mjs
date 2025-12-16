@@ -5,6 +5,7 @@ import { errorHandler } from '../../../middlewares/errorHandler.mjs';
 import { validateUser } from '../../../middlewares/validateUser.mjs';
 import { createUser } from '../../../services/users.mjs';
 
+// Function to register new user
 export const handler = middy(async (event) => {
 	const result = await createUser(event.body);
 	if (result === 201) {

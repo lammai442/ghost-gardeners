@@ -23,10 +23,10 @@ export const handler = middy(async () => {
  * Author: ninerino
  * Function to fetch menu items from the API, including stock-based status
  *
- * Modified: StefanMogren
+ * Update: StefanMogren
  * Changed so function fetches all products instead of just meals
  *
- * Updated: Lam
+ * Update: Lam
  * Changed details to description for menuItem and added Allergenes
  * Moved invoke of getting menu from database to services/menu.mjs and added middy to handler
  */

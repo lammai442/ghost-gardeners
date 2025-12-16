@@ -1,16 +1,11 @@
 import jwt from 'jsonwebtoken';
 import 'dotenv/config';
 
-/**
- * Author: Klara
- * Generates and verifies tokens.
- * Edited by: ninerino and Lam
- * Changed payload and env secret
- */
-
 export const generateToken = (user) => {
+	// Payload containing userId and role
 	const payload = {
-		sub: user.id, // sub står för subject och är ett standardfält i JWT-payloaden enligt RFC 7519
+		// sub stands for subject it's a standard in JWT-payload occuring to RFC 7519
+		sub: user.id,
 		role: user.role,
 	};
 	return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
@@ -18,9 +13,17 @@ export const generateToken = (user) => {
 
 export const verifyToken = (token) => {
 	try {
+		// Returning the payload after a successfully verification
 		return jwt.verify(token, process.env.JWT_SECRET);
 	} catch (error) {
 		console.error('JWT error:', error.message);
 		return null;
 	}
 };
+
+/**
+ * Author: Klara
+ * Generates and verifies tokens.
+ * Edited by: ninerino and Lam
+ * Changed payload and env secret
+ */

@@ -19,6 +19,7 @@ type Props = {
 	isCartItem?: boolean;
 };
 
+// A product card used on the menu page. Clicking on a clicks renders a modal with detailed info.
 export const CartProductCard = ({ item, classBgColor, allProdList }: Props) => {
 	const [modalOpen, setModalOpen] = useState(false);
 	const { deleteCartItem } = useCartStore();

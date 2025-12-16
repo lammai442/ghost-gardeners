@@ -5,6 +5,7 @@ type DataContent = {
 	title: string;
 	text: string;
 };
+
 export const ConstructError = ({ color, title, text }: DataContent) => {
 	return (
 		<section className="info bg-super-light-beige">

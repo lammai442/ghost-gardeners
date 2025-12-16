@@ -17,9 +17,13 @@ type CartStore = {
 const savedCart = JSON.parse(localStorage.getItem('cart') || '[]');
 const initialCartCount: number = savedCart.length;
 
+// 'cartCount' contains the number of items in the cart
+// 'cart' contains the meal objects
 export const useCartStore = create<CartStore>((set) => ({
 	cartCount: initialCartCount,
 	cart: savedCart,
+
+	// incrament increases the number in 'cartCount'
 	incrament: (product: Meal) =>
 		set((state) => {
 			const productWithItemId = { ...product, itemId: generateId() };
@@ -32,6 +36,8 @@ export const useCartStore = create<CartStore>((set) => ({
 				cartCount: updatedCart.length,
 			};
 		}),
+
+	// decrament decreases the number in 'cartCount'
 	decrament: (itemId) =>
 		set((state) => {
 			const updatedCart = state.cart.filter((item) => item.itemId !== itemId);
@@ -43,6 +49,8 @@ export const useCartStore = create<CartStore>((set) => ({
 				cartCount: updatedCart.length,
 			};
 		}),
+
+	// emptyCart empties 'cart' and sets 'cartCount' to 0
 	emptyCart: () =>
 		set(() => {
 			const emptyArray: Meal[] = [];
@@ -54,6 +62,8 @@ export const useCartStore = create<CartStore>((set) => ({
 				cartCount: 0,
 			};
 		}),
+
+	// deleteCartItem removes a selected item from 'cart'
 	deleteCartItem: (itemId) =>
 		set((state) => {
 			const updatedCart: Meal[] = state.cart.filter((i) => i.itemId !== itemId);
@@ -65,9 +75,12 @@ export const useCartStore = create<CartStore>((set) => ({
 				cartCount: updatedCart.length,
 			};
 		}),
+
+	// setCartItems is an old (almost) unused code which sets the status of a meal to 'cancelled'
+	// It was originally meant to be used whenever a meal was missing ingredients and thus couldn't be offered to customers
 	setCartItems: (items: Meal[]) => {
 		set(() => {
-			// Mappa order-items till store-format
+			// Map order-items till store-format
 			const mappedItems = items.map((item) => ({
 				...item,
 				subtotal: item.price,
@@ -82,6 +95,8 @@ export const useCartStore = create<CartStore>((set) => ({
 			};
 		});
 	},
+
+	// updateCartItem adds a meal to 'cart'
 	updateCartItem: (item: Meal) => {
 		set((state) => {
 			const updatedCart = state.cart.map((i) =>

@@ -59,7 +59,8 @@ export const createOrder = async ({
 			user,
 			userComment,
 			staffComment,
-			items: trimmedItems, // Saving the trimmed version of the data to not fill up the database with unneccesary information about the order
+			// Saving the trimmed version of the data to not fill up the database with unneccesary information about the order
+			items: trimmedItems,
 			total,
 			createdAt: now,
 			modifiedAt: now,
@@ -156,7 +157,7 @@ export const changeOrder = async ({
 }) => {
 	const key = { PK: { S: 'ORDER' }, SK: { S: `ORDER#${orderId}` } };
 
-	// Hämta befintlig order
+	// Getting current order
 	const res = await client.send(
 		new GetItemCommand({ TableName: 'mojjen-table', Key: key })
 	);

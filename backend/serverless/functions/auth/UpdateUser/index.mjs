@@ -7,11 +7,14 @@ import { getUserById, updateUserById } from '../../../services/users.mjs';
 import { validateEmptyBody } from '../../../middlewares/validateEmptyBody.mjs';
 import { authenticateUser } from '../../../middlewares/authenticateUser.mjs';
 
+// Updates the information regarding the user
 export const handler = middy(async (event) => {
 	const userId = event.pathParameters.id;
 	const updatedUser = event.body;
 	const payload = event.user;
 
+	// payload.sub is the ID from the token of the logged in user. The token is stored in local storage.
+	// userId is the ID sent in through the pathParameters
 	if (payload.sub !== userId) {
 		return sendResponses(403, { success: false, message: 'Forbidden' });
 	}

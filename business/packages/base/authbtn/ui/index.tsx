@@ -7,6 +7,7 @@ export const AuthBtn = () => {
 	const { user, logout } = useAuthStore();
 	const [currentUserName, setCurrentUserName] = useState<string | null>(null);
 
+	// Fetches the user whenever the user key in localStorage changes and sets the name of the current user
 	useEffect(() => {
 		if (!user) setCurrentUserName(null);
 
@@ -21,7 +22,6 @@ export const AuthBtn = () => {
 	return (
 		<>
 			<div className="flex flex__gap-1 flex__align-items">
-				{/* Placeholder för profilsidan */}
 				<section className="header__user-profile flex flex__align-items bg-dark-ketchup">
 					<img
 						className="header__profile-img"
@@ -33,7 +33,6 @@ export const AuthBtn = () => {
 					)}
 				</section>
 
-				{/* Placeholder för utloggningsfunktionen */}
 				<button
 					className="header__logout-btn"
 					onClick={() => logout()}

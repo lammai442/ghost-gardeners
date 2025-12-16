@@ -14,9 +14,11 @@ export const Comment = ({
 }: Props) => {
 	return (
 		<div className="flex flex__column comment flex__gap-0">
-			<p className="base-bold font-color-red text-ketchup">Lägg till en kommentar</p>
+			<p className="base-bold font-color-red text-ketchup">
+				Lägg till en kommentar
+			</p>
 			<p className="base-small">Viktig info till kollegorna</p>
-
+			{/* handleChangeComment counts the characters in the comment and commentCount displays the sum below the comment field.  */}
 			<label className="flex comment__label">
 				<textarea
 					rows={6}
